@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "PruebaPacientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PruebaPacientes</h2>
+
+<div style="display: none;" id="tablaContainer">
+
+    <table id="miTabla" class="table" data-role="table">
+        <!-- El id "miTabla" es importante y debe coincidir con el que se usa en el script JavaScript -->
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+            </tr>
+        </thead>
+         
+
+
+        <tbody>
+            @{
+                var pacientes = ViewBag.data as List<ProyectoPREP.Models.DatosGenerale>;
+
+                foreach (var item in pacientes)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
