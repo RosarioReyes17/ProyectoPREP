@@ -7,6 +7,64 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\img\datatables\sort_asc.png" />
+    <None Include="wwwroot\img\datatables\sort_asc_disabled.png" />
+    <None Include="wwwroot\img\datatables\sort_both.png" />
+    <None Include="wwwroot\img\datatables\sort_desc.png" />
+    <None Include="wwwroot\img\datatables\sort_desc_disabled.png" />
+    <None Include="wwwroot\img\entorno\logo.png" />
+    <None Include="wwwroot\img\iconos\favicon.ico" />
+    <None Include="wwwroot\img\vectores\agua.svg" />
+    <None Include="wwwroot\img\vectores\body_fat_percentage.svg" />
+    <None Include="wwwroot\img\vectores\body_mass.svg" />
+    <None Include="wwwroot\img\vectores\calendario.svg" />
+    <None Include="wwwroot\img\vectores\cama.svg" />
+    <None Include="wwwroot\img\vectores\camas.svg" />
+    <None Include="wwwroot\img\vectores\camion.svg" />
+    <None Include="wwwroot\img\vectores\construccion.svg" />
+    <None Include="wwwroot\img\vectores\diastole.svg" />
+    <None Include="wwwroot\img\vectores\electricidad.svg" />
+    <None Include="wwwroot\img\vectores\exam.svg" />
+    <None Include="wwwroot\img\vectores\F.svg" />
+    <None Include="wwwroot\img\vectores\familia.svg" />
+    <None Include="wwwroot\img\vectores\femenino.svg" />
+    <None Include="wwwroot\img\vectores\fregadero.svg" />
+    <None Include="wwwroot\img\vectores\gas.svg" />
+    <None Include="wwwroot\img\vectores\head_circumference.svg" />
+    <None Include="wwwroot\img\vectores\heart_rate.svg" />
+    <None Include="wwwroot\img\vectores\height.svg" />
+    <None Include="wwwroot\img\vectores\historiaclinica.svg" />
+    <None Include="wwwroot\img\vectores\history.svg" />
+    <None Include="wwwroot\img\vectores\img.svg" />
+    <None Include="wwwroot\img\vectores\inodoro.svg" />
+    <None Include="wwwroot\img\vectores\lean_body_mass.svg" />
+    <None Include="wwwroot\img\vectores\logoazul.svg" />
+    <None Include="wwwroot\img\vectores\logoblanco.svg" />
+    <None Include="wwwroot\img\vectores\M.svg" />
+    <None Include="wwwroot\img\vectores\mascotas.svg" />
+    <None Include="wwwroot\img\vectores\masculino.svg" />
+    <None Include="wwwroot\img\vectores\medico.svg" />
+    <None Include="wwwroot\img\vectores\mosquito.svg" />
+    <None Include="wwwroot\img\vectores\mw.svg" />
+    <None Include="wwwroot\img\vectores\notes.svg" />
+    <None Include="wwwroot\img\vectores\oxygen_saturation.svg" />
+    <None Include="wwwroot\img\vectores\pared.svg" />
+    <None Include="wwwroot\img\vectores\piso.svg" />
+    <None Include="wwwroot\img\vectores\primerpaciente.png" />
+    <None Include="wwwroot\img\vectores\respiratory_rate.svg" />
+    <None Include="wwwroot\img\vectores\sns-icono.svg" />
+    <None Include="wwwroot\img\vectores\star-check.svg" />
+    <None Include="wwwroot\img\vectores\systole.svg" />
+    <None Include="wwwroot\img\vectores\techo.svg" />
+    <None Include="wwwroot\img\vectores\temperature.svg" />
+    <None Include="wwwroot\img\vectores\titulo.svg" />
+    <None Include="wwwroot\img\vectores\user.svg" />
+    <None Include="wwwroot\img\vectores\Web 1920 – 1%402x.png" />
+    <None Include="wwwroot\img\vectores\Web 1920 – 1.png" />
+    <None Include="wwwroot\img\vectores\weight.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -18,6 +76,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\" />
   </ItemGroup>
 
 </Project>
