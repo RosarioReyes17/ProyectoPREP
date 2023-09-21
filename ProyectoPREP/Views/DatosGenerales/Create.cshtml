@@ -1,0 +1,687 @@
+﻿@model ProyectoPREP.Models.DatosGenerale
+
+<div class="form-title">
+	Formulario de Selección Profilaxis Pre-Exposición
+</div>
+
+
+
+<form action="/FormPrep/Index" method="post">
+	<input type="hidden" id="hdEnRiesgo" name="hdEnRiesgo" autocomplete="error" require="true">
+	<input type="hidden" id="ValidacionMenores" name="ValidacionMenores" value="No Validar" autocomplete="error" require="true">
+	<div id="divValidarUsuario" class="form-visible">
+		<h3>Identificarse en PrEP</h3>
+		<table class="table">
+			<tbody>
+				<tr>
+					<td>
+						<strong>Tipo de Identificación(*):</strong>
+
+						<select id="TipoIdentificacion" name="TipoIdentificacion" class="form-control" required="" oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error" require="true">
+							<option value="">--Seleccione--</option>
+							<option value="C">Cédula</option>
+							<option value="P">Pasaporte</option>
+							<option value="N">NSS</option>
+							<option value="SN">Sin Documentación</option>
+
+						</select>
+					</td>
+					<td>
+						<strong>Identificación:</strong>
+						<input type="text" id="Identificacion" name="Identificacion" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required="" oninvalid="GetMensajeError('El campo identificación es requerido')" autocomplete="off" require="true" disabled="">
+
+					</td>
+					<td colspan="2"><br><input type="button" id="btnIdentificar" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:none;" autocomplete="error" require="true"></td>
+				</tr>
+				<tr id="trLoading" style="display:none;">
+					<td colspan="4" style="text-align:center;">
+						<img src="/Content/images/ajax-loader.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id="divFormPrEP" class="form-invisible">
+
+		<div id="divDatosGenerales" style="display: block;">
+			<h3>Datos Generales</h3>
+			<div class="tituloDiv">Información del Paciente</div>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td>
+							<div class="form-group col-md-8">
+								Fecha de Registro PrEP:  <input id="txtFechaRegistroPrep" name="txtFechaRegistroPrep" required="" oninvalid="GetMensajeError('Debe digitar la fecha de registro PrEP')" class="form-control" type="date" autocomplete="error" require="true">
+							</div>
+						</td>
+
+					</tr>
+					<tr>
+						<td>
+							1. Nombres(*):
+							<input id="txtNombre" name="txtNombre" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
+						</td>
+
+						<td>
+							2. Apellidos(*):
+							<input id="txtApellido" name="txtApellido" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
+						</td>
+
+						<td>
+							3. ¿Tiene cedula o pasaporte?(*):
+							<select class="form-control" id="ddlDocumentoOpcion" name="ddlDocumentoOpcion" required="" oninvalid="GetMensajeError('Debe seleccionar una opción')" onselect="" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Si">Si</option>
+								<option value="No">No</option>
+								<option value="No Sabe">No Sabe</option>
+								<option value="No Tiene">No Tiene</option>
+							</select>
+
+						</td>
+						<td>
+							4.Numero de cedula o pasaporte(*):
+
+							<input id="txtDocumento" name="txtDocumento" class="form-control" readonly="readonly" autocomplete="error" require="true" disabled="">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							5. Fecha de Nacimiento(*):<br>
+
+							<input id="txtFechaNacimiento" name="txtFechaNacimiento" class="form-control col-1" type="date" required="" oninvalid="GetMensajeError('La Fecha de Nacimiento es requerida')" autocomplete="error" require="true">
+
+						</td>
+						<td>
+							6. Nacionalidad(*):
+							<select class="form-control" id="ddlNacionalidad" name="ddlNacionalidad" oninvalid="GetMensajeError('La Nacionalidad es requerida')" required="True" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="1">DOMINICANA</option>
+								<option value="5">HAITIANA</option>
+								<option value="18">VENEZOLANA</option>
+								<option value="29">ESPAÑOLA</option>
+								<option value="56">AFGANA</option>
+								<option value="118">AFRICANA</option>
+								<option value="113">ALBANES</option>
+								<option value="24">ALEMANA</option>
+								<option value="71">ANGOLEYA</option>
+								<option value="136">ANTIGUANA</option>
+								<option value="72">ARGELINA</option>
+								<option value="8">ARGENTINA</option>
+								<option value="139">ARMENIA</option>
+								<option value="59">AUSTRALIANA</option>
+								<option value="25">AUSTRIACA</option>
+								<option value="109">BAHAMEYA</option>
+								<option value="132">BANGLADESHI</option>
+								<option value="117">BARBADIENSE</option>
+								<option value="135">BELARUS</option>
+								<option value="95">BELARUSA</option>
+								<option value="26">BELGA</option>
+								<option value="82">BELICENA</option>
+								<option value="9">BOLIVIANA</option>
+								<option value="124">BOSNIA</option>
+								<option value="10">BRASILEÑA</option>
+								<option value="79">BRITANICA</option>
+								<option value="27">BULGARA</option>
+								<option value="105">CABOVERDIANA</option>
+								<option value="110">CAMBOYANA</option>
+								<option value="111">CAMERUNESA</option>
+								<option value="3">CANADIENSE</option>
+								<option value="101">CHECA</option>
+								<option value="11">CHILENA</option>
+								<option value="60">CHINA</option>
+								<option value="99">CHIPRIOTA</option>
+								<option value="12">COLOMBIANA</option>
+								<option value="126">CONGOLESA</option>
+								<option value="64">COREANA</option>
+								<option value="19">COSTARRICENSE</option>
+								<option value="87">CROATA</option>
+								<option value="6">CUBANA</option>
+								<option value="102">CURAZALEYA</option>
+								<option value="28">DANESA</option>
+								<option value="114">DOMINICENSE</option>
+								<option value="13">ECUATORIANA</option>
+								<option value="73">EGIPCIA</option>
+								<option value="84">ESLOVENA</option>
+								<option value="128">ESTONIA</option>
+								<option value="74">ETIOPE</option>
+								<option value="61">FILIPINA</option>
+								<option value="30">FINLANDESA</option>
+								<option value="31">FRANCESA</option>
+								<option value="141">GHANA</option>
+								<option value="137">GIORGIANA</option>
+								<option value="106">GRENADINA</option>
+								<option value="32">GRIEGA</option>
+								<option value="23">GUATEMALTECA</option>
+								<option value="120">GUINEESE</option>
+								<option value="89">GUYANESA</option>
+								<option value="33">HOLANDESA</option>
+								<option value="20">HONDUREÑA</option>
+								<option value="34">HUNGARA</option>
+								<option value="62">INDONESA</option>
+								<option value="57">INDU</option>
+								<option value="35">INGLESA</option>
+								<option value="48">IRANI</option>
+								<option value="49">IRAQUI</option>
+								<option value="36">IRLANDESA</option>
+								<option value="37">ISLANDESA</option>
+								<option value="50">ISRAELITA</option>
+								<option value="38">ITALIANA</option>
+								<option value="7">JAMAIQUINA</option>
+								<option value="63">JAPONESA</option>
+								<option value="51">JORDANA</option>
+								<option value="130">KAZAKSTAN</option>
+								<option value="129">KENYAN</option>
+								<option value="115">KIRIBATI</option>
+								<option value="52">KUWAYTI</option>
+								<option value="97">LATVIA</option>
+								<option value="86">LETONA</option>
+								<option value="53">LIBANESA</option>
+								<option value="75">LIBERIANA</option>
+								<option value="76">LIBIA</option>
+								<option value="96">LIECHTENSTEIN</option>
+								<option value="88">LUXEMBURGUESA</option>
+								<option value="123">MACEDONIA</option>
+								<option value="121">MALAGASY</option>
+								<option value="65">MALAYA</option>
+								<option value="116">MALIENSE</option>
+								<option value="94">MALTES</option>
+								<option value="108">MARFILEYA</option>
+								<option value="81">MARROQUI</option>
+								<option value="83">MAURICIANA</option>
+								<option value="134">MELDOVIANA</option>
+								<option value="4">MEXICANA</option>
+								<option value="54">MONGOLESA</option>
+								<option value="103">NEOZELANDESA</option>
+								<option value="98">NEPALESA</option>
+								<option value="21">NICARAGUENSE</option>
+								<option value="77">NIGERIANA</option>
+								<option value="2">NORTEAMERICANA</option>
+								<option value="39">NORUEGA</option>
+								<option value="58">PAKISTANI</option>
+								<option value="125">PALESTINA</option>
+								<option value="22">PANAMEÑA</option>
+								<option value="14">PARAGUAYA</option>
+								<option value="15">PERUANA</option>
+								<option value="66">POLACA</option>
+								<option value="40">PORTUGUESA</option>
+								<option value="100">RUANDESA</option>
+								<option value="41">RUMANA</option>
+								<option value="42">RUSA</option>
+								<option value="16">SALVADOREÑA</option>
+								<option value="127">SAN MARINO</option>
+								<option value="133">SANTA LUCIA</option>
+								<option value="47">SAUDI</option>
+								<option value="138">SENEGALES</option>
+								<option value="91">SIERRA LEONE</option>
+								<option value="93">SINGAPUR</option>
+								<option value="55">SIRIA</option>
+								<option value="78">SOMALI</option>
+								<option value="131">SRILANKAN</option>
+								<option value="104">ST KITTS AND NEVIS</option>
+								<option value="70">SUDAFRICANA</option>
+								<option value="43">SUECA</option>
+								<option value="44">SUIZA</option>
+								<option value="90">SURINAMESA</option>
+								<option value="67">TAILANDESA</option>
+								<option value="68">TAIWANESA</option>
+								<option value="140">TIMORENSE</option>
+								<option value="119">TOGOLESA</option>
+								<option value="92">TRINITARIA</option>
+								<option value="107">TUNECINA</option>
+								<option value="45">TURCA</option>
+								<option value="112">UCRANIA</option>
+								<option value="17">URUGUAYA</option>
+								<option value="122">UZBEKISTAN</option>
+								<option value="69">VIETNAMITA</option>
+								<option value="80">VINCENCIANA</option>
+								<option value="46">YUGOSLAVA</option>
+								<option value="85">ZAIREYA</option>
+							</select>
+						</td>
+						<td>
+							7. ¿Descendiente de Migrante?
+							<select class="form-control" id="ddlDecendiente" name="ddlDecendiente" required="" oninvalid="GetMensajeError('La pregunta descendiente de migrante es requerida')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="SI">SI</option>
+								<option value="NO">NO</option>
+							</select>
+						</td>
+						<td id="tdNacionalidadMadre" style="display: none;">
+							Especificar Descendencia(*):
+							<select class="form-control" id="ddlNacionalidadMadre" name="ddlNacionalidadMadre" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="1">DOMINICANA</option>
+								<option value="5">HAITIANA</option>
+								<option value="18">VENEZOLANA</option>
+								<option value="29">ESPAÑOLA</option>
+								<option value="56">AFGANA</option>
+								<option value="118">AFRICANA</option>
+								<option value="113">ALBANES</option>
+								<option value="24">ALEMANA</option>
+								<option value="71">ANGOLEYA</option>
+								<option value="136">ANTIGUANA</option>
+								<option value="72">ARGELINA</option>
+								<option value="8">ARGENTINA</option>
+								<option value="139">ARMENIA</option>
+								<option value="59">AUSTRALIANA</option>
+								<option value="25">AUSTRIACA</option>
+								<option value="109">BAHAMEYA</option>
+								<option value="132">BANGLADESHI</option>
+								<option value="117">BARBADIENSE</option>
+								<option value="135">BELARUS</option>
+								<option value="95">BELARUSA</option>
+								<option value="26">BELGA</option>
+								<option value="82">BELICENA</option>
+								<option value="9">BOLIVIANA</option>
+								<option value="124">BOSNIA</option>
+								<option value="10">BRASILEÑA</option>
+								<option value="79">BRITANICA</option>
+								<option value="27">BULGARA</option>
+								<option value="105">CABOVERDIANA</option>
+								<option value="110">CAMBOYANA</option>
+								<option value="111">CAMERUNESA</option>
+								<option value="3">CANADIENSE</option>
+								<option value="101">CHECA</option>
+								<option value="11">CHILENA</option>
+								<option value="60">CHINA</option>
+								<option value="99">CHIPRIOTA</option>
+								<option value="12">COLOMBIANA</option>
+								<option value="126">CONGOLESA</option>
+								<option value="64">COREANA</option>
+								<option value="19">COSTARRICENSE</option>
+								<option value="87">CROATA</option>
+								<option value="6">CUBANA</option>
+								<option value="102">CURAZALEYA</option>
+								<option value="28">DANESA</option>
+								<option value="114">DOMINICENSE</option>
+								<option value="13">ECUATORIANA</option>
+								<option value="73">EGIPCIA</option>
+								<option value="84">ESLOVENA</option>
+								<option value="128">ESTONIA</option>
+								<option value="74">ETIOPE</option>
+								<option value="61">FILIPINA</option>
+								<option value="30">FINLANDESA</option>
+								<option value="31">FRANCESA</option>
+								<option value="141">GHANA</option>
+								<option value="137">GIORGIANA</option>
+								<option value="106">GRENADINA</option>
+								<option value="32">GRIEGA</option>
+								<option value="23">GUATEMALTECA</option>
+								<option value="120">GUINEESE</option>
+								<option value="89">GUYANESA</option>
+								<option value="33">HOLANDESA</option>
+								<option value="20">HONDUREÑA</option>
+								<option value="34">HUNGARA</option>
+								<option value="62">INDONESA</option>
+								<option value="57">INDU</option>
+								<option value="35">INGLESA</option>
+								<option value="48">IRANI</option>
+								<option value="49">IRAQUI</option>
+								<option value="36">IRLANDESA</option>
+								<option value="37">ISLANDESA</option>
+								<option value="50">ISRAELITA</option>
+								<option value="38">ITALIANA</option>
+								<option value="7">JAMAIQUINA</option>
+								<option value="63">JAPONESA</option>
+								<option value="51">JORDANA</option>
+								<option value="130">KAZAKSTAN</option>
+								<option value="129">KENYAN</option>
+								<option value="115">KIRIBATI</option>
+								<option value="52">KUWAYTI</option>
+								<option value="97">LATVIA</option>
+								<option value="86">LETONA</option>
+								<option value="53">LIBANESA</option>
+								<option value="75">LIBERIANA</option>
+								<option value="76">LIBIA</option>
+								<option value="96">LIECHTENSTEIN</option>
+								<option value="88">LUXEMBURGUESA</option>
+								<option value="123">MACEDONIA</option>
+								<option value="121">MALAGASY</option>
+								<option value="65">MALAYA</option>
+								<option value="116">MALIENSE</option>
+								<option value="94">MALTES</option>
+								<option value="108">MARFILEYA</option>
+								<option value="81">MARROQUI</option>
+								<option value="83">MAURICIANA</option>
+								<option value="134">MELDOVIANA</option>
+								<option value="4">MEXICANA</option>
+								<option value="54">MONGOLESA</option>
+								<option value="103">NEOZELANDESA</option>
+								<option value="98">NEPALESA</option>
+								<option value="21">NICARAGUENSE</option>
+								<option value="77">NIGERIANA</option>
+								<option value="2">NORTEAMERICANA</option>
+								<option value="39">NORUEGA</option>
+								<option value="58">PAKISTANI</option>
+								<option value="125">PALESTINA</option>
+								<option value="22">PANAMEÑA</option>
+								<option value="14">PARAGUAYA</option>
+								<option value="15">PERUANA</option>
+								<option value="66">POLACA</option>
+								<option value="40">PORTUGUESA</option>
+								<option value="100">RUANDESA</option>
+								<option value="41">RUMANA</option>
+								<option value="42">RUSA</option>
+								<option value="16">SALVADOREÑA</option>
+								<option value="127">SAN MARINO</option>
+								<option value="133">SANTA LUCIA</option>
+								<option value="47">SAUDI</option>
+								<option value="138">SENEGALES</option>
+								<option value="91">SIERRA LEONE</option>
+								<option value="93">SINGAPUR</option>
+								<option value="55">SIRIA</option>
+								<option value="78">SOMALI</option>
+								<option value="131">SRILANKAN</option>
+								<option value="104">ST KITTS AND NEVIS</option>
+								<option value="70">SUDAFRICANA</option>
+								<option value="43">SUECA</option>
+								<option value="44">SUIZA</option>
+								<option value="90">SURINAMESA</option>
+								<option value="67">TAILANDESA</option>
+								<option value="68">TAIWANESA</option>
+								<option value="140">TIMORENSE</option>
+								<option value="119">TOGOLESA</option>
+								<option value="92">TRINITARIA</option>
+								<option value="107">TUNECINA</option>
+								<option value="45">TURCA</option>
+								<option value="112">UCRANIA</option>
+								<option value="17">URUGUAYA</option>
+								<option value="122">UZBEKISTAN</option>
+								<option value="69">VIETNAMITA</option>
+								<option value="80">VINCENCIANA</option>
+								<option value="46">YUGOSLAVA</option>
+								<option value="85">ZAIREYA</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							8. Provincia(*):
+							<select class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" oninvalid="GetMensajeError('La Provincia es requerida')" required="True" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="01">DISTRITO NACIONAL</option>
+								<option value="02">AZUA</option>
+								<option value="03">BAHORUCO</option>
+								<option value="04">BARAHONA</option>
+								<option value="05">DAJABON</option>
+								<option value="06">DUARTE</option>
+								<option value="07">ELIAS PIÑA</option>
+								<option value="08">EL SEIBO</option>
+								<option value="09">ESPAILLAT</option>
+								<option value="10">INDEPENDENCIA</option>
+								<option value="11">LA ALTAGRACIA</option>
+								<option value="12">LA ROMANA</option>
+								<option value="13">LA VEGA</option>
+								<option value="14">MARIA TRINIDAD SANCHEZ</option>
+								<option value="15">MONTE CRISTI</option>
+								<option value="16">PEDERNALES</option>
+								<option value="17">PERAVIA</option>
+								<option value="18">PUERTO PLATA</option>
+								<option value="19">HERMANAS MIRABAL</option>
+								<option value="20">SAMANA</option>
+								<option value="21">SAN CRISTOBAL</option>
+								<option value="22">SAN JUAN</option>
+								<option value="23">SAN PEDRO DE MACORIS</option>
+								<option value="24">SANCHEZ RAMIREZ</option>
+								<option value="25">SANTIAGO</option>
+								<option value="26">SANTIAGO RODRIGUEZ</option>
+								<option value="27">VALVERDE</option>
+								<option value="28">MONSEÑOR NOUEL</option>
+								<option value="29">MONTE PLATA</option>
+								<option value="30">HATO MAYOR</option>
+								<option value="31">SAN JOSE DE OCOA</option>
+								<option value="32">SANTO DOMINGO</option>
+							</select>
+						</td>
+						<td>
+							9. Municipio(*):
+							<select asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
+							</select>
+						</td>
+						<td>10. Dirección(*):<input id="txtDireccion" name="txtDireccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección." autocomplete="error" require="true"></td>
+						<td>11. Teléfono(*):<input id="txtTelefono" name="txtTelefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true"></td>
+
+					</tr>
+					<tr>
+						<td>
+							12. Sector(*):
+							<input id="txtSector" name="txtSector" class="form-control" type="text" required="" placeholder="Introduzca su Sector." autocomplete="error" require="true">
+						</td>
+						<td>
+							13. Peso(*): <br><input id="txtPeso" name="txtPeso" class="form-control" type="text" min="90" max="350" required="" placeholder="Introduzca su Peso." onkeypress="return soloNumeros(event)" autocomplete="error" require="true"> Lbs.
+							<br><span id="spPeso" style="color:red;"></span>
+						</td>
+						<td>
+							14. Talla Pies(*):<br> <input id="txtTallaPies" name="txtTallaPies" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pies." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							<br><span id="spTallaPies" style="color:red;"></span>
+						</td>
+						<td>
+							15. Talla Pulgadas(*):<br> <input id="txtTallaPulgadas" name="txtTallaPulgadas" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pulgadas." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							<br><span id="spTallaPulgadas" style="color:red;"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							16. ¿Sexo asignado al nacer?(*):
+							<select class="form-control" id="ddlSexo" name="ddlSexo" required="" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="M">Masculino</option>
+								<option value="F">Femenino</option>
+							</select>
+						</td>
+						<td>
+							17. ¿Como se consideras a si mismo?(*):
+							<select class="form-control" id="ddlGenero" name="ddlGenero" required="True" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="1">Hombre</option>
+								<option value="2">Mujer</option>
+								<option value="3">Transgenero</option>
+								<option value="4">No reporta</option>
+							</select>
+						</td>
+						<td colspan="2">
+							18. Contacto de Confianza(*):
+
+							<select class="form-control" id="ddlContactoConfianza" name="ddlContactoConfianza" required="" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="SI">SI</option>
+								<option value="NO">NO</option>
+							</select>
+						</td>
+
+					</tr>
+					<tr id="trContacto" style="display: none;">
+						<td>Nombre de contacto(*):<input id="txtNombreContacto" name="txtNombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." autocomplete="error" require="true"></td>
+						<td>Teléfono de Contacto(*):<input id="txtTelefonoContacto" name="txtTelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." autocomplete="error" require="true"></td>
+						<td colspan="2">
+							Parentesco:
+							<select class="form-control" id="ddlParentesco" name="ddlParentesco" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="1">Padre</option>
+								<option value="2">Madre</option>
+								<option value="3">Tutor</option>
+								<option value="4">Abuelo</option>
+								<option value="5">Abuela</option>
+								<option value="6">Hermano</option>
+								<option value="7">Hermana</option>
+								<option value="8">Tio</option>
+								<option value="9">Tia</option>
+								<option value="10">Primo</option>
+								<option value="11">Prima</option>
+								<option value="12">Amigo</option>
+								<option value="13">Amiga</option>
+								<option value="14">Hijo</option>
+								<option value="15">Hija</option>
+							</select>
+
+						</td>
+					</tr>
+					<tr>
+						<td>
+							19. ARS(*):
+							<select class="form-control" id="ddlARS" name="ddlARS" required="" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="SI">SI</option>
+								<option value="NO">NO</option>
+							</select>
+						</td>
+						<td id="tdARS" style="display: none;">
+							Nombre de ARS(*):
+							<select class="form-control" id="txtNombreARS" name="txtNombreARS" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="1">APS                          </option>
+								<option value="2">ASEMAP</option>
+								<option value="3">BMI                     </option>
+								<option value="4">CMD                               </option>
+								<option value="5">FFAA                      </option>
+								<option value="6">FUTURO                    </option>
+								<option value="7">GALENO           </option>
+								<option value="8">GMA                        </option>
+								<option value="9">HUMANO        </option>
+								<option value="10">IGMAM              </option>
+								<option value="11">ISSPOL                    </option>
+								<option value="12">LA COLONIAL      </option>
+								<option value="13">META SALUD        </option>
+								<option value="14">MONUMENTAL     </option>
+								<option value="15">MAPFRE SALUD (ANTES PALIC)</option>
+								<option value="16">PLAMEDIN                  </option>
+								<option value="17">PLAN SALUD    </option>
+								<option value="18">RENACER          </option>
+								<option value="19">RESERVAS     </option>
+								<option value="20">SALUD SEGURA</option>
+								<option value="21">SEMMA                 </option>
+								<option value="22">SEMUNASED                 </option>
+								<option value="23">SENASA                </option>
+								<option value="24">SERVICIOS DOMINICANOS DE SALUD      </option>
+								<option value="25">SIMAG                    </option>
+								<option value="26">UASD</option>
+								<option value="27">UNIVERSAL        </option>
+								<option value="28">YUNEN</option>
+								<option value="29">CONSTITUCION</option>
+								<option value="30">NO ASEGURADO</option>
+							</select>
+						</td>
+						<td id="tdRegimen" style="display: none;">
+							Régimen(*):
+							<select class="form-control" id="ddlRegimen" name="ddlRegimen" autocomplete="error" require="true"><option value="">--Seleccione--</option><option value="Contributivo">Contributivo</option><option value="Subsidiado">Subsidiado</option></select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="divElegibilidadPre" style="display: block;">
+			<h3>Elegibilidad para PrEP</h3>
+			<div class="tituloDiv">Riesgos(En los ultimos 6 Meses)</div>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td>
+							20. ¿Ha tenido relaciones sexuales con?(*)
+							<select class="form-control" id="ddlSexoCon" name="ddlSexoCon" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Solamente con hombres">Solamente con hombres</option>
+								<option value="Solamente con mujeres">Solamente con mujeres</option>
+								<option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
+								<option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
+								<option value="Con Persona Trans">Con Persona Trans</option>
+								<option value="No responde">No responde</option>
+							</select>
+						</td>
+						<td colspan="2">
+							21. ¿Ha utilizado alguna droga ilícita?(*)
+							<select class="form-control" id="ddlDrogaIlicita" name="ddlDrogaIlicita" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Si(Endovenosas)">Si(Endovenosas)</option>
+								<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
+								<option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
+								<option value="No">No</option>
+								<option value="No responde">No responde</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							22. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
+							<select class="form-control" id="ddlIntercambiadoSexo" name="ddlIntercambiadoSexo" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Si">Si</option>
+								<option value="No">No</option>
+								<option value="No responde">No responde</option>
+							</select>
+						</td>
+						<td colspan="2">
+							23. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
+							<select class="form-control" id="ddlIntercambiadoSexo2" name="ddlIntercambiadoSexo2" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Si">Si</option>
+								<option value="No">No</option>
+								<option value="No sabe">No sabe</option>
+								<option value="No responde">No responde</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							24. ¿Ha tenido relaciones sexuales sin condón?(*)
+							<select class="form-control" id="ddlSexoSinProteccion" name="ddlSexoSinProteccion" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Si">Si</option>
+								<option value="No">No</option>
+								<option value="No responde">No responde</option>
+							</select>
+						</td>
+						<td colspan="2">
+							25. ¿Ha tenido 2 o más parejas sexuales?(*)
+							<select class="form-control" id="ddlCantParejas" name="ddlCantParejas" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Si">Si</option>
+								<option value="No">No</option>
+								<option value="No responde">No responde</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+
+						<td colspan="3">
+							26. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
+							<select class="form-control" id="ddlSexoVIHPositivo" name="ddlSexoVIHPositivo" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Si">Si</option>
+								<option value="No">No</option>
+								<option value="No sabe">No sabe</option>
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="divMensaje" style="color:red;"></div>
+	<div id="divBotones" style="display: block;">
+		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="error" require="true"><i class="glyphicon glyphicon-saved"></i>Registrar</button>
+		<a href="Consulta" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+	</div>
+	<script>
+		const dateInput = document.getElementById('txtFechaRegistroPrep');
+		// Deshabilitar la interacción con el teclado
+		dateInput.addEventListener('keydown', function (event) {
+			event.preventDefault();
+		});
+
+
+		const dateInput1 = document.getElementById('txtFechaNacimiento');
+		// Deshabilitar la interacción con el teclado
+		dateInput1.addEventListener('keydown', function (event) {
+			event.preventDefault();
+		});
+
+
+	</script>
+	<div style="color:red">
+		<div class="validation-summary-valid" data-valmsg-summary="true">
+			<ul>
+				<li style="display:none"></li>
+			</ul>
+		</div>
+	</div>
+</form>

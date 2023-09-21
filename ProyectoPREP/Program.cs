@@ -40,3 +40,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+ //services.AddControllersWithViews()
+ //               .AddNewtonsoftJson(options =>
+ //               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+ //           );
