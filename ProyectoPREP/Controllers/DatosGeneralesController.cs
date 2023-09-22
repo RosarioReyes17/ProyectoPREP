@@ -4,8 +4,15 @@ using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
+
+    
     public class DatosGeneralesController : Controller
     {
+        DbPrepContext db;
+        public DatosGeneralesController(DbPrepContext db) 
+        {
+            this.db = db;
+        }
         // GET: DatosGeneralesController
         public ActionResult Index()
         {
@@ -21,16 +28,32 @@ namespace ProyectoPREP.Controllers
         // GET: DatosGeneralesController/Create
         public ActionResult Create()
         {
+            var municipio = new VwMunicipio();
+            List<VwMunicipio> lista;
+
+
+            //using (DbPrepContext db = new DbPrepContext())
+            //{
+
+            //    lista = (from a in db.VwMunicipios
+            //             select a).ToList();
+            //}
+            ViewBag.Municipio = db.VwMunicipios.ToList();
             return View();
         }
-
         // POST: DatosGeneralesController/Create
         [HttpPost]
         public ActionResult Create(DatosGenerale generale,FormularioPrep formulario)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var datos = new DatosGenerale();
+                datos.Usuario = Convert.ToString(1);
+                datos.FechaIngresoSai = DateTime.Now;
+                db.DatosGenerales.Add(datos);
+
+                return View();
+
             }
             catch
             {

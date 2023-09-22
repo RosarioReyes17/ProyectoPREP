@@ -7,15 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<DbPrepContext>(o =>
-{
-    o.UseSqlServer(GetConnectionString("ConnectionPREP"));
-});
-
 Action<SqlServerDbContextOptionsBuilder>? GetConnectionString(string v)
 {
     throw new NotImplementedException();
 }
+
+builder.Services.AddDbContext<DbPrepContext>(o =>
+{
+    o.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionPREP"));
+});
+
 
 var app = builder.Build();
 

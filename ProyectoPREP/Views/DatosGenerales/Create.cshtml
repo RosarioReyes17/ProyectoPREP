@@ -6,7 +6,7 @@
 
 
 
-<form action="/FormPrep/Index" method="post">
+<form action="/DatosGenerales/Create" method="post">
 	<input type="hidden" id="hdEnRiesgo" name="hdEnRiesgo" autocomplete="error" require="true">
 	<input type="hidden" id="ValidacionMenores" name="ValidacionMenores" value="No Validar" autocomplete="error" require="true">
 	<div id="divValidarUsuario" class="form-visible">
@@ -51,7 +51,7 @@
 					<tr>
 						<td>
 							<div class="form-group col-md-8">
-								Fecha de Registro PrEP:  <input id="txtFechaRegistroPrep" name="txtFechaRegistroPrep" required="" oninvalid="GetMensajeError('Debe digitar la fecha de registro PrEP')" class="form-control" type="date" autocomplete="error" require="true">
+								Fecha de Registro PrEP:  <input asp-for="FechaIngresoSai" id="txtFechaRegistroPrep" name="FechaIngresoSai" required="" oninvalid="GetMensajeError('Debe digitar la fecha de registro PrEP')" class="form-control" type="date" autocomplete="error" require="true">
 							</div>
 						</td>
 
@@ -59,17 +59,17 @@
 					<tr>
 						<td>
 							1. Nombres(*):
-							<input id="txtNombre" name="txtNombre" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
+							<input asp-for="Nombres" id="txtNombre" name="Nombre" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
 						</td>
 
 						<td>
 							2. Apellidos(*):
-							<input id="txtApellido" name="txtApellido" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
+							<input asp-for="Apellidos" id="txtApellido" name="Apellido" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
 						</td>
 
 						<td>
 							3. ¿Tiene cedula o pasaporte?(*):
-							<select class="form-control" id="ddlDocumentoOpcion" name="ddlDocumentoOpcion" required="" oninvalid="GetMensajeError('Debe seleccionar una opción')" onselect="" autocomplete="error" require="true">
+							<select asp-for="TieneDocumentos"  class="form-control" id="ddlDocumentoOpcion" name="TieneDocumentos" required="" oninvalid="GetMensajeError('Debe seleccionar una opción')" onselect="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -81,19 +81,19 @@
 						<td>
 							4.Numero de cedula o pasaporte(*):
 
-							<input id="txtDocumento" name="txtDocumento" class="form-control" readonly="readonly" autocomplete="error" require="true" disabled="">
+							<input asp-for="Documento" id="txtDocumento" name="Documento" class="form-control" readonly="readonly" autocomplete="error" require="true" disabled="">
 						</td>
 					</tr>
 					<tr>
 						<td>
 							5. Fecha de Nacimiento(*):<br>
 
-							<input id="txtFechaNacimiento" name="txtFechaNacimiento" class="form-control col-1" type="date" required="" oninvalid="GetMensajeError('La Fecha de Nacimiento es requerida')" autocomplete="error" require="true">
+							<input asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" required="" oninvalid="GetMensajeError('La Fecha de Nacimiento es requerida')" autocomplete="error" require="true">
 
 						</td>
 						<td>
 							6. Nacionalidad(*):
-							<select class="form-control" id="ddlNacionalidad" name="ddlNacionalidad" oninvalid="GetMensajeError('La Nacionalidad es requerida')" required="True" autocomplete="error" require="true">
+							<select asp-for="Nacionalidad" class="form-control" id="ddlNacionalidad" name="Nacionalidad" oninvalid="GetMensajeError('La Nacionalidad es requerida')" required="True" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">DOMINICANA</option>
 								<option value="5">HAITIANA</option>
@@ -240,7 +240,7 @@
 						</td>
 						<td>
 							7. ¿Descendiente de Migrante?
-							<select class="form-control" id="ddlDecendiente" name="ddlDecendiente" required="" oninvalid="GetMensajeError('La pregunta descendiente de migrante es requerida')" autocomplete="error" require="true">
+							<select asp-for="Descendiente" class="form-control" id="ddlDecendiente" name="Decendiente" required="" oninvalid="GetMensajeError('La pregunta descendiente de migrante es requerida')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
@@ -248,7 +248,7 @@
 						</td>
 						<td id="tdNacionalidadMadre" style="display: none;">
 							Especificar Descendencia(*):
-							<select class="form-control" id="ddlNacionalidadMadre" name="ddlNacionalidadMadre" autocomplete="error" require="true">
+							<select asp-for="NacionalidadMadre" class="form-control" id="ddlNacionalidadMadre" name="NacionalidadMadre" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">DOMINICANA</option>
 								<option value="5">HAITIANA</option>
@@ -397,7 +397,7 @@
 					<tr>
 						<td>
 							8. Provincia(*):
-							<select class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" oninvalid="GetMensajeError('La Provincia es requerida')" required="True" autocomplete="error" require="true">
+							<select asp-for="ProvinciaResidencia" class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" oninvalid="GetMensajeError('La Provincia es requerida')" required="True" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="01">DISTRITO NACIONAL</option>
 								<option value="02">AZUA</option>
@@ -435,35 +435,35 @@
 						</td>
 						<td>
 							9. Municipio(*):
-							<select asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
+							<select asp-items="@(new SelectList(ViewBag.Municipio, "IdMunicipio","Municipio"))" asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
 							</select>
 						</td>
-						<td>10. Dirección(*):<input id="txtDireccion" name="txtDireccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección." autocomplete="error" require="true"></td>
-						<td>11. Teléfono(*):<input id="txtTelefono" name="txtTelefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true"></td>
+						<td>10. Dirección(*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección." autocomplete="error" require="true"></td>
+						<td>11. Teléfono(*):<input asp-for="Telefono" id="txtTelefono" name="Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true"></td>
 
 					</tr>
 					<tr>
 						<td>
 							12. Sector(*):
-							<input id="txtSector" name="txtSector" class="form-control" type="text" required="" placeholder="Introduzca su Sector." autocomplete="error" require="true">
+							<input asp-for="Sector" id="txtSector" name="Sector" class="form-control" type="text" required="" placeholder="Introduzca su Sector." autocomplete="error" require="true">
 						</td>
 						<td>
-							13. Peso(*): <br><input id="txtPeso" name="txtPeso" class="form-control" type="text" min="90" max="350" required="" placeholder="Introduzca su Peso." onkeypress="return soloNumeros(event)" autocomplete="error" require="true"> Lbs.
+							13. Peso(*): <br><input asp-for="Peso" id="txtPeso" name="Peso" class="form-control" type="text" min="90" max="350" required="" placeholder="Introduzca su Peso." onkeypress="return soloNumeros(event)" autocomplete="error" require="true"> Lbs.
 							<br><span id="spPeso" style="color:red;"></span>
 						</td>
 						<td>
-							14. Talla Pies(*):<br> <input id="txtTallaPies" name="txtTallaPies" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pies." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							14. Talla Pies(*):<br> <input asp-for="TallaPies" id="txtTallaPies" name="TallaPies" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pies." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
 							<br><span id="spTallaPies" style="color:red;"></span>
 						</td>
 						<td>
-							15. Talla Pulgadas(*):<br> <input id="txtTallaPulgadas" name="txtTallaPulgadas" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pulgadas." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							15. Talla Pulgadas(*):<br> <input asp-for="TallaPulgadas" id="TallaPulgadas" name="txtTallaPulgadas" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pulgadas." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
 							<br><span id="spTallaPulgadas" style="color:red;"></span>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							16. ¿Sexo asignado al nacer?(*):
-							<select class="form-control" id="ddlSexo" name="ddlSexo" required="" autocomplete="error" require="true">
+							<select class="form-control"  asp-for="Sexo" id="ddlSexo" name="Sexo" required="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="M">Masculino</option>
 								<option value="F">Femenino</option>
@@ -471,7 +471,7 @@
 						</td>
 						<td>
 							17. ¿Como se consideras a si mismo?(*):
-							<select class="form-control" id="ddlGenero" name="ddlGenero" required="True" autocomplete="error" require="true">
+							<select class="form-control" asp-for="Genero" id="ddlGenero" name="Genero" required="True" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">Hombre</option>
 								<option value="2">Mujer</option>
@@ -482,7 +482,7 @@
 						<td colspan="2">
 							18. Contacto de Confianza(*):
 
-							<select class="form-control" id="ddlContactoConfianza" name="ddlContactoConfianza" required="" autocomplete="error" require="true">
+							<select asp-for="NombreContacto" class="form-control" id="ddlContactoConfianza" name="NombreContacto" required="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
@@ -491,11 +491,11 @@
 
 					</tr>
 					<tr id="trContacto" style="display: none;">
-						<td>Nombre de contacto(*):<input id="txtNombreContacto" name="txtNombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." autocomplete="error" require="true"></td>
-						<td>Teléfono de Contacto(*):<input id="txtTelefonoContacto" name="txtTelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." autocomplete="error" require="true"></td>
+						<td>Nombre de contacto(*):<input asp-for="NombreContacto" id="txtNombreContacto" name="NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." autocomplete="error" require="true"></td>
+						<td>Teléfono de Contacto(*):<input asp-for="TelefonoContacto" id="txtTelefonoContacto" name="TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." autocomplete="error" require="true"></td>
 						<td colspan="2">
 							Parentesco:
-							<select class="form-control" id="ddlParentesco" name="ddlParentesco" autocomplete="error" require="true">
+							<select class="form-control" id="ddlParentesco" asp-for="Parentesco" name="Parentesco" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">Padre</option>
 								<option value="2">Madre</option>
@@ -519,7 +519,7 @@
 					<tr>
 						<td>
 							19. ARS(*):
-							<select class="form-control" id="ddlARS" name="ddlARS" required="" autocomplete="error" require="true">
+							<select asp-for="Ars" class="form-control" id="ddlARS" name="ARS" required="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
@@ -527,35 +527,35 @@
 						</td>
 						<td id="tdARS" style="display: none;">
 							Nombre de ARS(*):
-							<select class="form-control" id="txtNombreARS" name="txtNombreARS" autocomplete="error" require="true">
+							<select asp-for="NombreArs" class="form-control" id="txtNombreARS" name="NombreARS" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
-								<option value="1">APS                          </option>
+								<option value="1">APS</option>
 								<option value="2">ASEMAP</option>
-								<option value="3">BMI                     </option>
-								<option value="4">CMD                               </option>
-								<option value="5">FFAA                      </option>
-								<option value="6">FUTURO                    </option>
-								<option value="7">GALENO           </option>
-								<option value="8">GMA                        </option>
-								<option value="9">HUMANO        </option>
-								<option value="10">IGMAM              </option>
-								<option value="11">ISSPOL                    </option>
-								<option value="12">LA COLONIAL      </option>
-								<option value="13">META SALUD        </option>
-								<option value="14">MONUMENTAL     </option>
+								<option value="3">BMI</option>
+								<option value="4">CMD</option>
+								<option value="5">FFAA</option>
+								<option value="6">FUTURO</option>
+								<option value="7">GALENO</option>
+								<option value="8">GMA</option>
+								<option value="9">HUMANO</option>
+								<option value="10">IGMAM</option>
+								<option value="11">ISSPOL</option>
+								<option value="12">LA COLONIAL</option>
+								<option value="13">META SALUD</option>
+								<option value="14">MONUMENTAL</option>
 								<option value="15">MAPFRE SALUD (ANTES PALIC)</option>
-								<option value="16">PLAMEDIN                  </option>
-								<option value="17">PLAN SALUD    </option>
-								<option value="18">RENACER          </option>
-								<option value="19">RESERVAS     </option>
+								<option value="16">PLAMEDIN </option>
+								<option value="17">PLAN SALUD</option>
+								<option value="18">RENACER</option>
+								<option value="19">RESERVAS</option>
 								<option value="20">SALUD SEGURA</option>
-								<option value="21">SEMMA                 </option>
-								<option value="22">SEMUNASED                 </option>
-								<option value="23">SENASA                </option>
-								<option value="24">SERVICIOS DOMINICANOS DE SALUD      </option>
-								<option value="25">SIMAG                    </option>
+								<option value="21">SEMMA</option>
+								<option value="22">SEMUNASED</option>
+								<option value="23">SENASA</option>
+								<option value="24">SERVICIOS DOMINICANOS DE SALUD</option>
+								<option value="25">SIMAG</option>
 								<option value="26">UASD</option>
-								<option value="27">UNIVERSAL        </option>
+								<option value="27">UNIVERSAL</option>
 								<option value="28">YUNEN</option>
 								<option value="29">CONSTITUCION</option>
 								<option value="30">NO ASEGURADO</option>
@@ -563,7 +563,7 @@
 						</td>
 						<td id="tdRegimen" style="display: none;">
 							Régimen(*):
-							<select class="form-control" id="ddlRegimen" name="ddlRegimen" autocomplete="error" require="true"><option value="">--Seleccione--</option><option value="Contributivo">Contributivo</option><option value="Subsidiado">Subsidiado</option></select>
+							<select asp-for="Regimen" class="form-control" id="ddlRegimen" name="Regimen" autocomplete="error" require="true"><option value="">--Seleccione--</option><option value="Contributivo">Contributivo</option><option value="Subsidiado">Subsidiado</option></select>
 						</td>
 					</tr>
 				</tbody>
@@ -577,7 +577,7 @@
 					<tr>
 						<td>
 							20. ¿Ha tenido relaciones sexuales con?(*)
-							<select class="form-control" id="ddlSexoCon" name="ddlSexoCon" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+							<select class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Solamente con hombres">Solamente con hombres</option>
 								<option value="Solamente con mujeres">Solamente con mujeres</option>
@@ -589,7 +589,7 @@
 						</td>
 						<td colspan="2">
 							21. ¿Ha utilizado alguna droga ilícita?(*)
-							<select class="form-control" id="ddlDrogaIlicita" name="ddlDrogaIlicita" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+							<select class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Si(Endovenosas)">Si(Endovenosas)</option>
 								<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
@@ -602,7 +602,7 @@
 					<tr>
 						<td>
 							22. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
-							<select class="form-control" id="ddlIntercambiadoSexo" name="ddlIntercambiadoSexo" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+							<select class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -611,7 +611,7 @@
 						</td>
 						<td colspan="2">
 							23. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
-							<select class="form-control" id="ddlIntercambiadoSexo2" name="ddlIntercambiadoSexo2" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+							<select class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -623,7 +623,7 @@
 					<tr>
 						<td>
 							24. ¿Ha tenido relaciones sexuales sin condón?(*)
-							<select class="form-control" id="ddlSexoSinProteccion" name="ddlSexoSinProteccion" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+							<select class="form-control" id="ddlSexoSinProteccion" name="SexoSinProteccion" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -632,7 +632,7 @@
 						</td>
 						<td colspan="2">
 							25. ¿Ha tenido 2 o más parejas sexuales?(*)
-							<select class="form-control" id="ddlCantParejas" name="ddlCantParejas" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+							<select class="form-control" id="ddlCantParejas" name="CantParejasSexuales" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -644,7 +644,7 @@
 
 						<td colspan="3">
 							26. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
-							<select class="form-control" id="ddlSexoVIHPositivo" name="ddlSexoVIHPositivo" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+							<select class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
