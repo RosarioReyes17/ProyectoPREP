@@ -14,11 +14,11 @@
 		<table class="table">
 			<tbody>
 				<tr>
+
 					<td>
 						<strong>Tipo de Identificación(*):</strong>
-
-						<select id="TipoIdentificacion" name="TipoIdentificacion" class="form-control" required="" oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error" require="true">
-							<option value="">--Seleccione--</option>
+						<select id="TipoIdentificacion" name="TipoIdentificacion" class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
+							<option value="Seleccione">--Seleccione--</option>
 							<option value="C">Cédula</option>
 							<option value="P">Pasaporte</option>
 							<option value="N">NSS</option>
@@ -28,10 +28,14 @@
 					</td>
 					<td>
 						<strong>Identificación:</strong>
-						<input type="text" id="Identificacion" name="Identificacion" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required="" oninvalid="GetMensajeError('El campo identificación es requerido')" autocomplete="off" require="true" disabled="">
+						<input type="text" id="Identificacion" asp-for="Documento" name="Documento" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required oninvalid="GetMensajeError('El campo identificación es requerido')" autocomplete="off">
 
 					</td>
-					<td colspan="2"><br><input type="button" id="btnIdentificar" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:none;" autocomplete="error" require="true"></td>
+					<td colspan="2">
+						<br>
+						<input type="button" id="btnIdentificar"  onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;" autocomplete="error" require="true">
+					</td>
+
 				</tr>
 				<tr id="trLoading" style="display:none;">
 					<td colspan="4" style="text-align:center;">
@@ -43,7 +47,7 @@
 	</div>
 	<div id="divFormPrEP" class="form-invisible">
 
-		<div id="divDatosGenerales" style="display: block;">
+		<div id="divDatosGenerales" style="display: none;">
 			<h3>Datos Generales</h3>
 			<div class="tituloDiv">Información del Paciente</div>
 			<table class="table">
@@ -59,23 +63,18 @@
 					<tr>
 						<td>
 							1. Nombres(*):
-							<input asp-for="Nombres" id="txtNombre" name="Nombre" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
+							<input asp-for="Nombres" id="txtNombre" name="Nombres" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
 						</td>
 
 						<td>
 							2. Apellidos(*):
-							<input asp-for="Apellidos" id="txtApellido" name="Apellido" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
+							<input asp-for="Apellidos" id="txtApellido" name="Apellidos" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
 						</td>
 
 						<td>
 							3. ¿Tiene cedula o pasaporte?(*):
-							<select asp-for="TieneDocumentos"  class="form-control" id="ddlDocumentoOpcion" name="TieneDocumentos" required="" oninvalid="GetMensajeError('Debe seleccionar una opción')" onselect="" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No Sabe">No Sabe</option>
-								<option value="No Tiene">No Tiene</option>
-							</select>
+							<input asp-for="TieneDocumentos" value="Si" readonly class="form-control" id="ddlDocumentoOpcion" name="TieneDocumentos" required="" oninvalid="GetMensajeError('Debe seleccionar una opción')" onselect="" autocomplete="error" require="true"/>
+							
 
 						</td>
 						<td>
@@ -240,15 +239,15 @@
 						</td>
 						<td>
 							7. ¿Descendiente de Migrante?
-							<select asp-for="Descendiente" class="form-control" id="ddlDecendiente" name="Decendiente" required="" oninvalid="GetMensajeError('La pregunta descendiente de migrante es requerida')" autocomplete="error" require="true">
+							<select asp-for="Descendiente" class="form-control" onchange="habilitarInput()" id="ddlDecendiente" name="Descendiente" required="" oninvalid="GetMensajeError('La pregunta descendiente de migrante es requerida')" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
 							</select>
 						</td>
-						<td id="tdNacionalidadMadre" style="display: none;">
-							Especificar Descendencia(*):
-							<select asp-for="NacionalidadMadre" class="form-control" id="ddlNacionalidadMadre" name="NacionalidadMadre" autocomplete="error" require="true">
+						<td id="tdNacionalidadMadre">
+							8. Especificar Descendencia(*):
+							<select asp-for="NacionalidadMadre" class="form-control" disabled id="ddlNacionalidadMadre" name="NacionalidadMadre" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">DOMINICANA</option>
 								<option value="5">HAITIANA</option>
@@ -396,8 +395,8 @@
 					</tr>
 					<tr>
 						<td>
-							8. Provincia(*):
-							<select asp-for="ProvinciaResidencia" class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" oninvalid="GetMensajeError('La Provincia es requerida')" required="True" autocomplete="error" require="true">
+							9. Provincia(*):
+							<select asp-for="ProvinciaResidencia" onchange="llenarMunicipio()" class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" oninvalid="GetMensajeError('La Provincia es requerida')" required="True" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="01">DISTRITO NACIONAL</option>
 								<option value="02">AZUA</option>
@@ -434,35 +433,35 @@
 							</select>
 						</td>
 						<td>
-							9. Municipio(*):
-							<select asp-items="@(new SelectList(ViewBag.Municipio, "IdMunicipio","Municipio"))" asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
+							10. Municipio(*):
+							<select asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
 							</select>
 						</td>
-						<td>10. Dirección(*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección." autocomplete="error" require="true"></td>
-						<td>11. Teléfono(*):<input asp-for="Telefono" id="txtTelefono" name="Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true"></td>
+						<td>11. Dirección(*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección." autocomplete="error" require="true"></td>
+						<td>12. Teléfono(*):<input asp-for="Telefono" id="txtTelefono" name="Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true"></td>
 
 					</tr>
 					<tr>
 						<td>
-							12. Sector(*):
+							13. Sector(*):
 							<input asp-for="Sector" id="txtSector" name="Sector" class="form-control" type="text" required="" placeholder="Introduzca su Sector." autocomplete="error" require="true">
 						</td>
 						<td>
-							13. Peso(*): <br><input asp-for="Peso" id="txtPeso" name="Peso" class="form-control" type="text" min="90" max="350" required="" placeholder="Introduzca su Peso." onkeypress="return soloNumeros(event)" autocomplete="error" require="true"> Lbs.
+							14. Peso(*): <br><input asp-for="Peso" id="txtPeso" name="Peso" class="form-control" type="text" min="90" max="350" required="" placeholder="Introduzca su Peso en Lbs." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
 							<br><span id="spPeso" style="color:red;"></span>
 						</td>
 						<td>
-							14. Talla Pies(*):<br> <input asp-for="TallaPies" id="txtTallaPies" name="TallaPies" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pies." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							15. Talla Pies(*):<br> <input asp-for="TallaPies" id="txtTallaPies" name="TallaPies" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pies." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
 							<br><span id="spTallaPies" style="color:red;"></span>
 						</td>
 						<td>
-							15. Talla Pulgadas(*):<br> <input asp-for="TallaPulgadas" id="TallaPulgadas" name="txtTallaPulgadas" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pulgadas." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							16. Talla Pulgadas(*):<br> <input asp-for="TallaPulgadas" id="TallaPulgadas" name="TallaPulgadas" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pulgadas." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
 							<br><span id="spTallaPulgadas" style="color:red;"></span>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							16. ¿Sexo asignado al nacer?(*):
+							17. ¿Sexo asignado al nacer?(*):
 							<select class="form-control"  asp-for="Sexo" id="ddlSexo" name="Sexo" required="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="M">Masculino</option>
@@ -470,7 +469,7 @@
 							</select>
 						</td>
 						<td>
-							17. ¿Como se consideras a si mismo?(*):
+							18. ¿Como se consideras a si mismo?(*):
 							<select class="form-control" asp-for="Genero" id="ddlGenero" name="Genero" required="True" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">Hombre</option>
@@ -480,9 +479,9 @@
 							</select>
 						</td>
 						<td colspan="2">
-							18. Contacto de Confianza(*):
+							19. Contacto de Confianza(*):
 
-							<select asp-for="NombreContacto" class="form-control" id="ddlContactoConfianza" name="NombreContacto" required="" autocomplete="error" require="true">
+							<select asp-for="NombreContacto" onchange="habilitarInput()" class="form-control" id="ddlContactoConfianza" name="NombreContacto" required="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
@@ -490,11 +489,11 @@
 						</td>
 
 					</tr>
-					<tr id="trContacto" style="display: none;">
-						<td>Nombre de contacto(*):<input asp-for="NombreContacto" id="txtNombreContacto" name="NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." autocomplete="error" require="true"></td>
-						<td>Teléfono de Contacto(*):<input asp-for="TelefonoContacto" id="txtTelefonoContacto" name="TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." autocomplete="error" require="true"></td>
+					<tr id="trContacto">
+						<td>20. Nombre de contacto(*):<input  asp-for="NombreContacto" disabled id="txtNombreContacto" name="NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." autocomplete="error" require="true"></td>
+						<td>21. Teléfono de Contacto(*):<input asp-for="TelefonoContacto" disabled id="txtTelefonoContacto" name="TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." autocomplete="error" require="true"></td>
 						<td colspan="2">
-							Parentesco:
+							22. Parentesco:
 							<select class="form-control" id="ddlParentesco" asp-for="Parentesco" name="Parentesco" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">Padre</option>
@@ -518,16 +517,16 @@
 					</tr>
 					<tr>
 						<td>
-							19. ARS(*):
-							<select asp-for="Ars" class="form-control" id="ddlARS" name="ARS" required="" autocomplete="error" require="true">
+							23. ARS(*):
+							<select asp-for="Ars" class="form-control" onchange="habilitarInput()" id="ddlARS" name="ARS" required="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
 							</select>
 						</td>
-						<td id="tdARS" style="display: none;">
-							Nombre de ARS(*):
-							<select asp-for="NombreArs" class="form-control" id="txtNombreARS" name="NombreARS" autocomplete="error" require="true">
+						<td id="tdARS">
+							24. Nombre de ARS(*):
+							<select asp-for="NombreArs" disabled class="form-control" id="txtNombreARS" name="NombreARS" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">APS</option>
 								<option value="2">ASEMAP</option>
@@ -561,15 +560,19 @@
 								<option value="30">NO ASEGURADO</option>
 							</select>
 						</td>
-						<td id="tdRegimen" style="display: none;">
-							Régimen(*):
-							<select asp-for="Regimen" class="form-control" id="ddlRegimen" name="Regimen" autocomplete="error" require="true"><option value="">--Seleccione--</option><option value="Contributivo">Contributivo</option><option value="Subsidiado">Subsidiado</option></select>
+						<td colspan="2" id="tdRegimen">
+							25. Régimen(*):
+							<select asp-for="Regimen" disabled class="form-control" id="ddlRegimen" name="Regimen"  require="true">
+								<option value="">--Seleccione--</option>
+								<option value="Contributivo">Contributivo</option>
+								<option value="Subsidiado">Subsidiado</option>
+							</select>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div id="divElegibilidadPre" style="display: block;">
+		<div id="divElegibilidadPre" style="display: none;">
 			<h3>Elegibilidad para PrEP</h3>
 			<div class="tituloDiv">Riesgos(En los ultimos 6 Meses)</div>
 			<table class="table">
@@ -685,3 +688,151 @@
 		</div>
 	</div>
 </form>
+
+
+@section scripts{
+	<script type="text/javascript">
+
+		function ValidarCedulaPasaporte(a) {
+			if (jQuery("#TipoIdentificacion").val() == "C") {
+
+				var ced = a.toString().substr(0, 3);
+
+				if (!isNaN(parseFloat(ced)) && isFinite(ced)) {
+					var datos = a;
+					datos = datos.replace("-", "");
+					let resultado = datos;
+					if (datos.length >= 3) {
+						resultado = datos.substr(0, 3) + "-";
+					}
+					if (datos.length >= 10) {
+						resultado += datos.substr(3, 7) + "-";
+					} else {
+						resultado += datos.substr(3, 11);
+					}
+					if (datos.length >= 11) {
+						resultado += datos.substr(10);
+					}
+					if (resultado.length <= 13) {
+						document.getElementById("Identificacion").value = resultado;
+					}
+				}
+			}
+		}
+
+		const buscarEnPadron = ()=>{
+			const Prefix = "402-1126691-7";
+			var Identificacion = document.getElementById("Identificacion").value;
+			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
+
+			if (TipoIdentificacion == "Seleccione") {
+				document.getElementById("divDatosGenerales").style = 'display:none';
+				document.getElementById("divElegibilidadPre").style = 'display:none';
+				alert("Seleccione una opcion");
+
+				return;
+			}
+
+			if (Identificacion == ""){
+				alert("Debe agregar su cedula");
+
+				return;
+			}
+			$.post("@Url.Action("BuscarEnPadron","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
+
+				
+				if(modelos.status == false){
+					var texto = modelos.msj;
+					alert(modelos.msj)
+
+				}else{
+					document.getElementById("divDatosGenerales").style = 'display:block';
+					document.getElementById("divElegibilidadPre").style = 'display:block';
+
+					var informacion = modelos.infoPaciente;
+					if (informacion.sexo == "M") {
+						document.getElementById("ddlSexo").value = ("M");
+
+					} else {
+						document.getElementById("ddlSexo").value = ("F");
+
+					}
+
+					document.getElementById("txtNombre").value = (informacion.nombres);
+					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
+					document.getElementById("txtDocumento").value = (Prefix);
+					//document.getElementById("ddlNacionalidad").options[informacion.nacionalidad].selected = true;
+
+					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento.toString();
+
+				}
+
+
+
+			});
+
+		}
+
+		const llenarMunicipio = () =>{
+			$("#MunicipioResidencia").empty();
+			var ProvinciaResidencia = document.getElementById("ProvinciaResidencia").value;
+
+			$.post("@Url.Action("llenarMunicipio","DatosGenerales")", { id: ProvinciaResidencia }, function (modelos) {
+				var municipios = modelos.lista
+				console.log(modelos);
+				for (let i = 0; i < municipios.length; i++) {
+					
+
+					const select = document.querySelector("#MunicipioResidencia");
+					const option = document.createElement('option');
+					const valor = municipios[i];
+					option.value = valor.idMunicipio;
+					option.text = valor.municipio;
+					select.appendChild(option);
+				}
+
+				//MunicipioResidencia
+			});
+		}
+		const habilitarInput = () => {
+
+			var descendiente = document.getElementById("ddlDecendiente").value;
+			var ddlContactoConfianza = document.getElementById("ddlContactoConfianza").value;
+			var ddlARS = document.getElementById("ddlARS").value;
+
+			if (descendiente == "SI") {
+
+				$("#ddlNacionalidadMadre").removeAttr("disabled");
+			} else {
+				$("#ddlNacionalidadMadre").attr("disabled",true);
+			}
+
+			if (ddlContactoConfianza == "SI") {
+
+				$("#txtNombreContacto").removeAttr("disabled");
+				$("#txtTelefonoContacto").removeAttr("disabled");
+			} else {
+				$("#txtNombreContacto").attr("disabled", true);
+				$("#txtTelefonoContacto").attr("disabled", true);
+			}
+
+
+			if (ddlARS == "SI") {
+
+				$("#txtNombreARS").removeAttr("disabled");
+				$("#ddlRegimen").removeAttr("disabled");
+			} else {
+				$("#txtNombreARS").attr("disabled", true);
+				$("#ddlRegimen").attr("disabled", true);
+			}
+
+			
+		};
+	</script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
+@* <span style="margin-left:30px;color:red;" asp-validation-for="Kilataje" class="text-danger"></span>
+<br />
+ *@

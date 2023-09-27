@@ -43,7 +43,19 @@ app.MapControllerRoute(
 app.Run();
 
 
- //services.AddControllersWithViews()
- //               .AddNewtonsoftJson(options =>
- //               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
- //           );
+//services.AddControllersWithViews()
+//               .AddNewtonsoftJson(options =>
+//               options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+//           );
+
+
+//Usuario:  402-4116042-9	
+
+//Clave: 12345
+//identificador: C
+//IdDeptoDepend :1641
+
+
+//Server = 190.94.103.222,3342
+//id = snsintranet;
+//password = Oblgg573uow4yZE8dt5L
