@@ -1,0 +1,49 @@
+/*Contenedores*/
+section{
+  width: 100%;
+}
+div {
+  width: 100%;
+}
+/* Formato para el div del titulo*/
+  .form-title {
+    font-size: 14pt;
+  }
+* {
+    box-sizing: border-box;
+  }
+
+   #txtIdentidad {
+      width: 50%;
+      display: initial;
+  } 
+  .subDiv {
+    padding: 1px;  
+    background-color: rgb(74, 196, 226);
+    color:white;
+  }
+
+  .encanto {
+    font-display: none;
+  }
+
+  .tituloDiv{
+    padding: 5px;  
+    background-color: black;
+    color:white;
+  }
+.datepicker{
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

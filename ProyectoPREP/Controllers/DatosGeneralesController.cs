@@ -73,12 +73,12 @@ namespace ProyectoPREP.Controllers
 				db.SaveChanges();
 
 
-				return View();
+				return RedirectToAction("PruebaPacientes", "Prueba");
 
 			}
-			catch
+			catch	
 			{
-				return View();
+				return RedirectToAction("PruebaPacientes", "Prueba"); //Revisar aqui
 			}
 		}
 		// POST: DatosGeneralesController/Create
@@ -99,15 +99,15 @@ namespace ProyectoPREP.Controllers
 				formulario.DatosGeneralesId = generale.Id;
 				generale.FormularioPreps.Add(formulario);
 				db.SaveChanges();
-				
 
-                return View();
 
-            }
+				return RedirectToAction("PruebaPacientes", "Prueba");
+
+			}
             catch
             {
-                return View();
-            }
+				return RedirectToAction("PruebaPacientes", "Prueba"); //Revisar aqui
+			}
         }
 
         [HttpPost]
