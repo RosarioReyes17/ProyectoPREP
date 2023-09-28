@@ -6,7 +6,7 @@
 
 
 
-<form action="/DatosGenerales/Create" method="post">
+<form action="/DatosGenerales/CreateSinDocumento" method="post">
 	<input type="hidden" id="hdEnRiesgo" name="hdEnRiesgo" autocomplete="error" require="true">
 	<input type="hidden" id="ValidacionMenores" name="ValidacionMenores" value="No Validar" autocomplete="error" require="true">
 	<div id="divValidarUsuario" class="form-visible">
@@ -15,25 +15,23 @@
 			<tbody>
 				<tr>
 
-					<td>
+					<td >
 						<strong>Tipo de Identificación(*):</strong>
-						<select id="TipoIdentificacion" name="TipoIdentificacion" class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
-							<option value="Seleccione">--Seleccione--</option>
-							<option value="C">Cédula</option>
-							<option value="P">Pasaporte</option>
-							<option value="N">NSS</option>
-							<option value="SN">Sin Documentación</option>
-
+						<select style="width:486.29px" id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
+							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
+							<option value="/DatosGenerales/CreateCedula">Cédula</option>
+							<option value="#">Pasaporte</option>
+							<option value="#">NSS</option>
 						</select>
 					</td>
-					<td>
+					<td style="display:none">
 						<strong>Identificación:</strong>
 						<input type="text" id="Identificacion" asp-for="Documento" name="Documento" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required oninvalid="GetMensajeError('El campo identificación es requerido')" autocomplete="off">
 
 					</td>
-					<td colspan="2">
+					<td style ="display:none" colspan="2">
 						<br>
-						<input type="button" id="btnIdentificar"  onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;" autocomplete="error" require="true">
+						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;" autocomplete="error" require="true">
 					</td>
 
 				</tr>
@@ -47,7 +45,7 @@
 	</div>
 	<div id="divFormPrEP" class="form-invisible">
 
-		<div id="divDatosGenerales" style="display: none;">
+		<div id="divDatosGenerales" style="display: block;">
 			<h3>Datos Generales</h3>
 			<div class="tituloDiv">Información del Paciente</div>
 			<table class="table">
@@ -73,14 +71,18 @@
 
 						<td>
 							3. ¿Tiene cedula o pasaporte?(*):
-							<input asp-for="TieneDocumentos" value="Si" readonly class="form-control" id="ddlDocumentoOpcion" name="TieneDocumentos" required="" oninvalid="GetMensajeError('Debe seleccionar una opción')" onselect="" autocomplete="error" require="true"/>
-							
+							<select class="form-control" asp-for="TieneDocumentos" onchange="habilitarInput();" id="ddlDocumentoOpcion" name="TieneDocumentos" required oninvalid="GetMensajeError('Debe seleccionar una opción')">
+								<option value="">--Seleccione--</option>
+								<option value="SI">Si</option>
+								<option value="No">No</option>
+							</select>
+
 
 						</td>
 						<td>
 							4.Numero de cedula o pasaporte(*):
 
-							<input asp-for="Documento" id="txtDocumento" name="Documento" class="form-control" readonly="readonly" autocomplete="error" require="true" disabled="">
+							<input asp-for="Documento" id="txtDocumento" disabled name="Documento" class="form-control"  autocomplete="error" require="true">
 						</td>
 					</tr>
 					<tr>
@@ -462,7 +464,7 @@
 					<tr>
 						<td>
 							17. ¿Sexo asignado al nacer?(*):
-							<select class="form-control"  asp-for="Sexo" id="ddlSexo" name="Sexo" required="" autocomplete="error" require="true">
+							<select class="form-control" asp-for="Sexo" id="ddlSexo" name="Sexo" required="" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="M">Masculino</option>
 								<option value="F">Femenino</option>
@@ -490,7 +492,7 @@
 
 					</tr>
 					<tr id="trContacto">
-						<td>20. Nombre de contacto(*):<input  asp-for="NombreContacto" disabled id="txtNombreContacto" name="NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." autocomplete="error" require="true"></td>
+						<td>20. Nombre de contacto(*):<input asp-for="NombreContacto" disabled id="txtNombreContacto" name="NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." autocomplete="error" require="true"></td>
 						<td>21. Teléfono de Contacto(*):<input asp-for="TelefonoContacto" disabled id="txtTelefonoContacto" name="TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." autocomplete="error" require="true"></td>
 						<td colspan="2">
 							22. Parentesco:
@@ -562,7 +564,7 @@
 						</td>
 						<td colspan="2" id="tdRegimen">
 							25. Régimen(*):
-							<select asp-for="Regimen" disabled class="form-control" id="ddlRegimen" name="Regimen"  require="true">
+							<select asp-for="Regimen" disabled class="form-control" id="ddlRegimen" name="Regimen" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="Contributivo">Contributivo</option>
 								<option value="Subsidiado">Subsidiado</option>
@@ -572,7 +574,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="divElegibilidadPre" style="display: none;">
+		<div id="divElegibilidadPre" style="display: block;">
 			<h3>Elegibilidad para PrEP</h3>
 			<div class="tituloDiv">Riesgos(En los ultimos 6 Meses)</div>
 			<table class="table">
@@ -720,7 +722,7 @@
 			}
 		}
 
-		const buscarEnPadron = ()=>{
+		const buscarEnPadron = () => {
 			const Prefix = "402-1126691-7";
 			var Identificacion = document.getElementById("Identificacion").value;
 			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
@@ -733,19 +735,19 @@
 				return;
 			}
 
-			if (Identificacion == ""){
+			if (Identificacion == "") {
 				alert("Debe agregar su cedula");
 
 				return;
 			}
 			$.post("@Url.Action("BuscarEnPadron","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
 
-				
-				if(modelos.status == false){
+
+				if (modelos.status == false) {
 					var texto = modelos.msj;
 					alert(modelos.msj)
 
-				}else{
+				} else {
 					document.getElementById("divDatosGenerales").style = 'display:block';
 					document.getElementById("divElegibilidadPre").style = 'display:block';
 
@@ -773,7 +775,7 @@
 
 		}
 
-		const llenarMunicipio = () =>{
+		const llenarMunicipio = () => {
 			$("#MunicipioResidencia").empty();
 			var ProvinciaResidencia = document.getElementById("ProvinciaResidencia").value;
 
@@ -781,7 +783,7 @@
 				var municipios = modelos.lista
 				console.log(modelos);
 				for (let i = 0; i < municipios.length; i++) {
-					
+
 
 					const select = document.querySelector("#MunicipioResidencia");
 					const option = document.createElement('option');
@@ -794,17 +796,29 @@
 				//MunicipioResidencia
 			});
 		}
+		function nav(value) {
+			if (value != "") { location.href = value }
+		}
 		const habilitarInput = () => {
 
 			var descendiente = document.getElementById("ddlDecendiente").value;
 			var ddlContactoConfianza = document.getElementById("ddlContactoConfianza").value;
 			var ddlARS = document.getElementById("ddlARS").value;
+			var ddlDocumentoOpcion = document.getElementById("ddlDocumentoOpcion").value;
 
 			if (descendiente == "SI") {
 
 				$("#ddlNacionalidadMadre").removeAttr("disabled");
 			} else {
-				$("#ddlNacionalidadMadre").attr("disabled",true);
+				$("#ddlNacionalidadMadre").attr("disabled", true);
+			}
+
+			if (ddlDocumentoOpcion == "SI") {
+				$("#txtDocumento").removeAttr("disabled");
+
+			}else{
+				$("#txtDocumento").attr("disabled", true);
+
 			}
 
 			if (ddlContactoConfianza == "SI") {
@@ -826,7 +840,7 @@
 				$("#ddlRegimen").attr("disabled", true);
 			}
 
-			
+
 		};
 	</script>
 	@{

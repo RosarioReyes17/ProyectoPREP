@@ -29,30 +29,67 @@ namespace ProyectoPREP.Controllers
        
 
         // GET: DatosGeneralesController/Create
-        public ActionResult Create()
+        public ActionResult CreateCedula()
         {
             var municipio = new VwMunicipio();
             List<VwMunicipio> lista;
 
-
-            //using (DbPrepContext db = new DbPrepContext())
-            //{
-
-            //    lista = (from a in db.VwMunicipios
-            //             select a).ToList();
-            //}
             ViewBag.Municipio = db.VwMunicipios.ToList();
             return View();
         }
-        // POST: DatosGeneralesController/Create
-        [HttpPost]
-        public ActionResult Create(DatosGenerale generale,FormularioPrep formulario)
+
+		public ActionResult CreateSinDocumento()
+		{
+			var municipio = new VwMunicipio();
+			List<VwMunicipio> lista;
+
+			ViewBag.Municipio = db.VwMunicipios.ToList();
+			return View();
+		}
+
+
+		[HttpPost]
+		public ActionResult CreateSinDocumento(DatosGenerale generale, FormularioPrep formulario)
+		{
+			try
+			{
+			
+				generale.Usuario = Convert.ToString(1);
+				generale.IdDeptoDepend = 1641;
+				generale.TieneDocumentos = "No";
+				generale.TipoDocumento = "SN";
+				generale.EnRiesgo = "Si";
+				if (generale.TieneDocumentos == "Si")
+				{
+					generale.TipoDocumento = "P";
+
+				}
+
+				db.DatosGenerales.Add(generale);
+
+				formulario.Usuario = Convert.ToString(1);
+				formulario.DatosGeneralesId = generale.Id;
+				generale.FormularioPreps.Add(formulario);
+				db.SaveChanges();
+
+
+				return View();
+
+			}
+			catch
+			{
+				return View();
+			}
+		}
+		// POST: DatosGeneralesController/Create
+		[HttpPost]
+        public ActionResult CreateCedula(DatosGenerale generale,FormularioPrep formulario)
         {
             try
             {
                 generale.Usuario = Convert.ToString(1);
 				generale.IdDeptoDepend = 1641;
-				generale.TieneDocumentos = "SI";
+				generale.TieneDocumentos = "Si";
 				generale.TipoDocumento = "C";
 				generale.EnRiesgo = "Si";
 
