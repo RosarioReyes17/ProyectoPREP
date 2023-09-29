@@ -16,3 +16,41 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Agregar un ancho mínimo para la tabla */
+.table {
+    min-width: 500px;
+}
+
+/* Agregar un margen y un relleno para la tabla */
+.table {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+    /* Agregar bordes para las celdas */
+    .table th,
+    .table td {
+        border: 1px solid #ccc;
+    }
+
+    /* Agregar colores para los encabezados y los datos */
+    .table thead th {
+        background-color: #eee;
+        color: #333;
+    }
+
+    .table tbody th,
+    .table tbody td {
+        color: #333;
+    }
+
+    /* Agregar estilos personalizados a la tabla */
+    .table thead th {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .table tbody td {
+        text-align: left;
+    }
