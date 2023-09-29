@@ -72,7 +72,7 @@ namespace ProyectoPREP.Controllers
 				generale.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
-
+				//algo
 				return RedirectToAction("PruebaPacientes", "Prueba");
 
 			}
