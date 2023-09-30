@@ -12,18 +12,28 @@ namespace ProyectoPREP.Padron
 
 		public static Padron_Imp Query_Imp(string _no_doc)
 		{
-			var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-			var url = MyConfig.GetValue<string>("ImpUri");
+			
+
+			try
+			{
+				var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+				var url = MyConfig.GetValue<string>("ImpUri");
 
 
-			string _key = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
-			string _searchItem = Base64Encode(_no_doc + _key);
-			string _imp_uri = url;
-			string _json = new WebClient() { Encoding = Encoding.UTF8 }.DownloadString(_imp_uri + _searchItem);
+				string _key = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();
+				string _searchItem = Base64Encode(_no_doc + _key);
+				string _imp_uri = url;
+				string _json = new WebClient() { Encoding = Encoding.UTF8 }.DownloadString(_imp_uri + _searchItem);
 
-			Padron_Imp _data = JsonConvert.DeserializeObject<Padron_Imp>(_json);
+				Padron_Imp _data = JsonConvert.DeserializeObject<Padron_Imp>(_json);
+				return _data;
 
-			return _data;
+			}
+			catch (Exception ex)
+			{
+				return new Padron_Imp();
+			}
+
 		}
 
 		public static string Base64Encode(string plainText)

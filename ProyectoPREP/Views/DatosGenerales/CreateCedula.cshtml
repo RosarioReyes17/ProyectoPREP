@@ -27,7 +27,7 @@
 					</td>
 					<td>
 						<strong>Identificación:</strong>
-						<input type="text" id="Identificacion" asp-for="Documento" name="Documento" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required oninvalid="GetMensajeError('El campo identificación es requerido')" autocomplete="off">
+						<input type="text" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" id="Identificacion" minlength="13" maxlength="13" asp-for="Documento" name="Documento" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required oninvalid="GetMensajeError('El campo identificación es requerido')" autocomplete="off">
 
 					</td>
 					<td colspan="2">
@@ -493,7 +493,7 @@
 						<td>21. Teléfono de Contacto(*):<input asp-for="TelefonoContacto" disabled id="txtTelefonoContacto" name="TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." autocomplete="error" require="true"></td>
 						<td colspan="2">
 							22. Parentesco:
-							<select class="form-control" id="ddlParentesco" asp-for="Parentesco" name="Parentesco" autocomplete="error" require="true">
+							<select class="form-control" id="ddlParentesco" disabled asp-for="Parentesco" name="Parentesco" autocomplete="error" require="true">
 								<option value="">--Seleccione--</option>
 								<option value="1">Padre</option>
 								<option value="2">Madre</option>
@@ -688,30 +688,49 @@
 	</div>
 </form>
 
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:red">Advertencia</h5>
+				<button type="button" onclick="cerrarModal();" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="cuerpoModal"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="cerrarModal();" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 @section scripts{
 	<script type="text/javascript">
-
+		// var Identificacion = document.getElementById('Identificacion');
+		// // Deshabilitar la interacción con el teclado
+		// Identificacion.addEventListener('keydown', function (event) {
+		// 	event.preventDefault();
+		// });
+	
 		function ValidarCedulaPasaporte(a) {
 			if (true) {
 
-				var ced = a.toString().substr(0, 3);
-
-				if (!isNaN(parseFloat(ced)) && isFinite(ced)) {
+				if (true) {
 					var datos = a;
-					datos = datos.replace("-", "");
 					let resultado = datos;
-					if (datos.length >= 3) {
-						resultado = datos.substr(0, 3) + "-";
+
+					if (resultado.length == 3) {
+						resultado = datos + "-";
 					}
-					if (datos.length >= 10) {
-						resultado += datos.substr(3, 7) + "-";
-					} else {
-						resultado += datos.substr(3, 11);
+
+					if (resultado.length == 11) {
+						resultado = datos + "-";
 					}
-					if (datos.length >= 11) {
-						resultado += datos.substr(10);
-					}
+				
 					if (resultado.length <= 13) {
 						document.getElementById("Identificacion").value = resultado;
 					}
@@ -719,6 +738,9 @@
 			}
 		}
 
+		const cerrarModal = () => {
+			$('#myModal').modal('hide');
+		}
 		const buscarEnPadron = ()=>{
 			//const Prefix = "402-1126691-7";
 			var Identificacion = document.getElementById("Identificacion").value;
@@ -727,13 +749,18 @@
 			if (TipoIdentificacion == "Seleccione") {
 				document.getElementById("divDatosGenerales").style = 'display:none';
 				document.getElementById("divElegibilidadPre").style = 'display:none';
-				alert("Seleccione una opcion");
 
+				$("#cuerpoModal").empty();
+				document.getElementById("cuerpoModal").innerHTML = "Seleccione una opcion";
+				$('#myModal').modal('show');
 				return;
 			}
 
 			if (Identificacion == ""){
-				alert("Debe agregar su cedula");
+
+				$("#cuerpoModal").empty();
+				document.getElementById("cuerpoModal").innerHTML = "Debe agregar su cedula";
+				$('#myModal').modal('show');
 
 				return;
 			}
@@ -742,7 +769,9 @@
 				
 				if(modelos.status == false){
 					var texto = modelos.msj;
-					alert(modelos.msj)
+					$("#cuerpoModal").empty();
+					document.getElementById("cuerpoModal").innerHTML = texto;
+					$('#myModal').modal('show');
 
 				}else{
 					document.getElementById("divDatosGenerales").style = 'display:block';
@@ -813,9 +842,11 @@
 
 				$("#txtNombreContacto").removeAttr("disabled");
 				$("#txtTelefonoContacto").removeAttr("disabled");
+				$("#ddlParentesco").removeAttr("disabled");
 			} else {
 				$("#txtNombreContacto").attr("disabled", true);
 				$("#txtTelefonoContacto").attr("disabled", true);
+				$("#ddlParentesco").attr("disabled", true);
 			}
 
 

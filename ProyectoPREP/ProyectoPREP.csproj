@@ -70,7 +70,7 @@
     <None Include="wwwroot\Content\bootstrap\modals.less" />
     <None Include="wwwroot\Content\bootstrap\navbar.less" />
     <None Include="wwwroot\Content\bootstrap\navs.less" />
-    <None Include="wwwroot\Content\bootstrap\normalize.less" />
+    <None Include="wwwroot\Content\contentalt\normalize.less" />
     <None Include="wwwroot\Content\bootstrap\pager.less" />
     <None Include="wwwroot\Content\bootstrap\pagination.less" />
     <None Include="wwwroot\Content\bootstrap\panels.less" />
@@ -183,6 +183,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
     <PackageReference Include="PagedList.Mvc" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Proc\" />
   </ItemGroup>
 
 </Project>

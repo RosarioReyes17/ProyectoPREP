@@ -15,7 +15,7 @@
 			<tbody>
 				<tr>
 
-					<td >
+					<td>
 						<strong>Tipo de Identificación(*):</strong>
 						<select style="width:486.29px" id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
 							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
@@ -29,7 +29,7 @@
 						<input type="text" id="Identificacion" asp-for="Documento" name="Documento" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required oninvalid="GetMensajeError('El campo identificación es requerido')" autocomplete="off">
 
 					</td>
-					<td style ="display:none" colspan="2">
+					<td style="display:none" colspan="2">
 						<br>
 						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;" autocomplete="error" require="true">
 					</td>
@@ -61,12 +61,12 @@
 					<tr>
 						<td>
 							1. Nombres(*):
-							<input asp-for="Nombres" id="txtNombre" name="Nombres" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
+							<input asp-for="Nombres" type="text"  id="txtNombre" name="Nombres" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
 						</td>
 
 						<td>
 							2. Apellidos(*):
-							<input asp-for="Apellidos" id="txtApellido" name="Apellidos" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
+							<input asp-for="Apellidos" type="text" id="txtApellido" name="Apellidos" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
 						</td>
 
 						<td>
@@ -82,7 +82,7 @@
 						<td>
 							4.Numero de cedula o pasaporte(*):
 
-							<input asp-for="Documento" id="txtDocumento" disabled name="Documento" class="form-control"  autocomplete="error" require="true">
+							<input asp-for="Documento" id="txtDocumento" disabled name="Documento" class="form-control" autocomplete="error" require="true">
 						</td>
 					</tr>
 					<tr>
@@ -436,7 +436,7 @@
 						</td>
 						<td>
 							10. Municipio(*):
-							<select asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
+							<select asp-for="MunicipioResidencia" asp-items="@(new SelectList(ViewBag.Municipios, "IdMunicipio","Municipio"))" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
 							</select>
 						</td>
 						<td>11. Dirección(*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección." autocomplete="error" require="true"></td>
@@ -579,84 +579,91 @@
 			<div class="tituloDiv">Riesgos(En los ultimos 6 Meses)</div>
 			<table class="table">
 				<tbody>
-					<tr>
-						<td>
-							20. ¿Ha tenido relaciones sexuales con?(*)
-							<select class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Solamente con hombres">Solamente con hombres</option>
-								<option value="Solamente con mujeres">Solamente con mujeres</option>
-								<option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
-								<option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
-								<option value="Con Persona Trans">Con Persona Trans</option>
-								<option value="No responde">No responde</option>
-							</select>
-						</td>
-						<td colspan="2">
-							21. ¿Ha utilizado alguna droga ilícita?(*)
-							<select class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Si(Endovenosas)">Si(Endovenosas)</option>
-								<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
-								<option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							22. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
-							<select class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-						</td>
-						<td colspan="2">
-							23. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
-							<select class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No sabe">No sabe</option>
-								<option value="No responde">No responde</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							24. ¿Ha tenido relaciones sexuales sin condón?(*)
-							<select class="form-control" id="ddlSexoSinProteccion" name="SexoSinProteccion" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-						</td>
-						<td colspan="2">
-							25. ¿Ha tenido 2 o más parejas sexuales?(*)
-							<select class="form-control" id="ddlCantParejas" name="CantParejasSexuales" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
+					@foreach (var item in Model.FormularioPreps)
+					{
+						<tr>
+						
+							
+						
+							<td>
+								20. ¿Ha tenido relaciones sexuales con?(*)
+								<select class="form-control" id="ddlSexoCon" asp-for="@item.TienesRelacionesCon"  name="TienesRelacionesCon" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+									<option value="">--Seleccione--</option>
+									<option value="Solamente con hombres">Solamente con hombres</option>
+									<option value="Solamente con mujeres">Solamente con mujeres</option>
+									<option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
+									<option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
+									<option value="Con Persona Trans">Con Persona Trans</option>
+									<option value="No responde">No responde</option>
+								</select>
+							</td>
+						
+							<td colspan="2">
+								21. ¿Ha utilizado alguna droga ilícita?(*)
+								<select class="form-control" id="ddlDrogaIlicita" asp-for="@item.DrogasIlicitas" name="DrogasIlicitas" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+									<option value="">--Seleccione--</option>
+									<option value="Si(Endovenosas)">Si(Endovenosas)</option>
+									<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
+									<option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								22. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
+								<select class="form-control" id="ddlIntercambiadoSexo" asp-for="@item.SexoPorBienes" name="SexoPorBienes" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+							</td>
+							<td colspan="2">
+								23. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
+								<select class="form-control" id="ddlIntercambiadoSexo2" asp-for="@item.SexoPorBienesPareja" name="SexoPorBienesPareja" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No sabe">No sabe</option>
+									<option value="No responde">No responde</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								24. ¿Ha tenido relaciones sexuales sin condón?(*)
+								<select class="form-control" id="ddlSexoSinProteccion" asp-for="@item.SexoSinProteccion" name="SexoSinProteccion" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+							</td>
+							<td colspan="2">
+								25. ¿Ha tenido 2 o más parejas sexuales?(*)
+								<select class="form-control" id="ddlCantParejas" asp-for="@item.CantParejasSexuales" name="CantParejasSexuales" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
 
-						<td colspan="3">
-							26. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
-							<select class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No sabe">No sabe</option>
-							</select>
-						</td>
-					</tr>
+							<td colspan="3">
+								26. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
+								<select class="form-control" id="ddlSexoVIHPositivo" asp-for="@item.SexoConVihpositivo" name="SexoConVihpositivo" required="" oninvalid="this.setCustomValidity('Debe seleccionar una de las opciones')" oninput="this.setCustomValidity('')" autocomplete="error" require="true">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No sabe">No sabe</option>
+								</select>
+							</td>
+						</tr>
+					}
 				</tbody>
 			</table>
 		</div>
@@ -695,32 +702,6 @@
 @section scripts{
 	<script type="text/javascript">
 
-		function ValidarCedulaPasaporte(a) {
-			if (jQuery("#TipoIdentificacion").val() == "C") {
-
-				var ced = a.toString().substr(0, 3);
-
-				if (!isNaN(parseFloat(ced)) && isFinite(ced)) {
-					var datos = a;
-					datos = datos.replace("-", "");
-					let resultado = datos;
-					if (datos.length >= 3) {
-						resultado = datos.substr(0, 3) + "-";
-					}
-					if (datos.length >= 10) {
-						resultado += datos.substr(3, 7) + "-";
-					} else {
-						resultado += datos.substr(3, 11);
-					}
-					if (datos.length >= 11) {
-						resultado += datos.substr(10);
-					}
-					if (resultado.length <= 13) {
-						document.getElementById("Identificacion").value = resultado;
-					}
-				}
-			}
-		}
 
 		const buscarEnPadron = () => {
 			var Identificacion = document.getElementById("Identificacion").value;
@@ -815,7 +796,7 @@
 			if (ddlDocumentoOpcion == "SI") {
 				$("#txtDocumento").removeAttr("disabled");
 
-			}else{
+			} else {
 				$("#txtDocumento").attr("disabled", true);
 
 			}
@@ -824,11 +805,9 @@
 
 				$("#txtNombreContacto").removeAttr("disabled");
 				$("#txtTelefonoContacto").removeAttr("disabled");
-				$("#ddlParentesco").removeAttr("disabled");
 			} else {
 				$("#txtNombreContacto").attr("disabled", true);
 				$("#txtTelefonoContacto").attr("disabled", true);
-				$("#ddlParentesco").attr("disabled", true);
 			}
 
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
 using ProyectoPREP.Padron;
 using System.Data;
-using System.Data.Entity;
+//using System.Data.Entity;
 //using System.Web.Mvc;
 
 namespace ProyectoPREP.Controllers
@@ -72,7 +72,6 @@ namespace ProyectoPREP.Controllers
 				generale.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
-				//algo
 				return RedirectToAction("PruebaPacientes", "Prueba");
 
 			}
@@ -122,7 +121,6 @@ namespace ProyectoPREP.Controllers
 			var SolicitudPrep = db.DatosGenerales.Where(x => x.Documento == Prefix).FirstOrDefault();
 			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
 
-			InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
 
 			if (SolicitudPrep != null)
 			{
@@ -137,7 +135,6 @@ namespace ProyectoPREP.Controllers
 				};
 				return Json(result);
 			
-
 				
 			}
 			else
@@ -147,7 +144,7 @@ namespace ProyectoPREP.Controllers
 				
 				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
 
-				if (InfoPaciente != null)
+				if (InfoPaciente != null && InfoPaciente.valido == true)
 				{
 					try
 					{
@@ -167,7 +164,7 @@ namespace ProyectoPREP.Controllers
 				}
 				else 
 				{
-					msj = "La Cédula consultada no ha retornado ningún valor";
+					msj = "La Cédula consultada no ha retornado ningún valor, favor de confirmar su Cédula";
 					result = new
 					{
 						status,
@@ -188,6 +185,7 @@ namespace ProyectoPREP.Controllers
 					return Json(result);
 
 				}
+
 				if (Resultado == 2)
 				{
 					msj = "El Ciudadano no califica, se encuentra registrado en SIRENP con VIH Positivo.";
@@ -259,20 +257,33 @@ namespace ProyectoPREP.Controllers
 		}
 
 		// GET: DatosGeneralesController/Edit/5
-		public ActionResult Edit(int id)
+		public ActionResult EditarDatosGenerales(int id)
         {
-            return View();
+			var lista = new List<VwMunicipio>();
+
+			DatosGenerale model = new DatosGenerale();
+
+			var a = db.DatosGenerales.Where(x=>x.Id == id).Include(x=>x.FormularioPreps).FirstOrDefault();
+			model = a;
+
+			lista = (from b in db.VwMunicipios
+					 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(a.ProvinciaResidencia)
+					 select b).ToList();
+			ViewBag.Municipios = lista;
+			return View(model);
         }
 
         // POST: DatosGeneralesController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult EditarDatosGenerales(int id, IFormCollection collection)
         {
             try
             {
                 return RedirectToAction(nameof(Index));
-            }
-            catch
+				//db.Entry(model).State = EntityState.Modified;
+
+			}
+			catch
             {
                 return View();
             }
