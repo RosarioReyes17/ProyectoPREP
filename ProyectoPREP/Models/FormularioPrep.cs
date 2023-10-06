@@ -23,13 +23,13 @@ public partial class FormularioPrep
 
     public string? CantParejasSexuales { get; set; }
 
-    public int DatosGeneralesId { get; set; }
+    public int? DatosGeneralesId { get; set; }
 
     public string? SexoConVihpositivo { get; set; }
 
-    public int Secuencia { get; set; }
+    public int? Secuencia { get; set; }
 
-    public string Usuario { get; set; } = null!;
+    public string? Usuario { get; set; } = null!;
 
     public string? UsuarioModifico { get; set; }
 

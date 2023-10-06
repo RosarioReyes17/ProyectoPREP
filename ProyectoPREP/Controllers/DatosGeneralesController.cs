@@ -49,27 +49,28 @@ namespace ProyectoPREP.Controllers
 
 
 		[HttpPost]
-		public ActionResult CreateSinDocumento(DatosGenerale generale, FormularioPrep formulario)
+		public ActionResult CreateSinDocumento(FormularioPrep formulario)
 		{
 			try
 			{
+
+				formulario.DatosGenerales.Usuario = Convert.ToString(1);
+				formulario.DatosGenerales.IdDeptoDepend = 1641;
+				formulario.DatosGenerales.TieneDocumentos = "No";
+				formulario.DatosGenerales.TipoDocumento = "SN";
+				formulario.DatosGenerales.EnRiesgo = "Si";
 			
-				generale.Usuario = Convert.ToString(1);
-				generale.IdDeptoDepend = 1641;
-				generale.TieneDocumentos = "No";
-				generale.TipoDocumento = "SN";
-				generale.EnRiesgo = "Si";
-				if (generale.TieneDocumentos == "Si")
+				if (formulario.DatosGenerales.TieneDocumentos == "Si")
 				{
-					generale.TipoDocumento = "P";
+					formulario.DatosGenerales.TipoDocumento = "P";
 
 				}
 
-				db.DatosGenerales.Add(generale);
+				db.DatosGenerales.Add(formulario.DatosGenerales);
 
 				formulario.Usuario = Convert.ToString(1);
-				formulario.DatosGeneralesId = generale.Id;
-				generale.FormularioPreps.Add(formulario);
+				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
+				formulario.DatosGenerales.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
 				return RedirectToAction("PruebaPacientes", "Prueba");
@@ -82,21 +83,21 @@ namespace ProyectoPREP.Controllers
 		}
 		// POST: DatosGeneralesController/Create
 		[HttpPost]
-        public ActionResult CreateCedula(DatosGenerale generale,FormularioPrep formulario)
+        public ActionResult CreateCedula(FormularioPrep formulario)
         {
             try
             {
-                generale.Usuario = Convert.ToString(1);
-				generale.IdDeptoDepend = 1641;
-				generale.TieneDocumentos = "Si";
-				generale.TipoDocumento = "C";
-				generale.EnRiesgo = "Si";
+				formulario.DatosGenerales.Usuario = Convert.ToString(1);
+				formulario.DatosGenerales.IdDeptoDepend = 1641;
+				formulario.DatosGenerales.TieneDocumentos = "Si";
+				formulario.DatosGenerales.TipoDocumento = "C";
+				formulario.DatosGenerales.EnRiesgo = "Si";
 
-				db.DatosGenerales.Add(generale);
+				db.DatosGenerales.Add(formulario.DatosGenerales);
 
 				formulario.Usuario = Convert.ToString(1);
-				formulario.DatosGeneralesId = generale.Id;
-				generale.FormularioPreps.Add(formulario);
+				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
+				formulario.DatosGenerales.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
 
@@ -257,30 +258,46 @@ namespace ProyectoPREP.Controllers
 		}
 
 		// GET: DatosGeneralesController/Edit/5
-		public ActionResult EditarDatosGenerales(int id)
+		public ActionResult EditarDatosGenerales(int? id)
         {
-			var lista = new List<VwMunicipio>();
+			try
+			{
+				var lista = new List<VwMunicipio>();
 
-			DatosGenerale model = new DatosGenerale();
+				DatosGenerale? model = new DatosGenerale();
 
-			var a = db.DatosGenerales.Where(x=>x.Id == id).Include(x=>x.FormularioPreps).FirstOrDefault();
-			model = a;
+				model = db.DatosGenerales.Where(x => x.Id == id).Include(x => x.FormularioPreps).FirstOrDefault();
 
-			lista = (from b in db.VwMunicipios
-					 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(a.ProvinciaResidencia)
-					 select b).ToList();
-			ViewBag.Municipios = lista;
-			return View(model);
+				lista = (from b in db.VwMunicipios
+						 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model.ProvinciaResidencia)
+						 select b).ToList();
+
+				ViewBag.Municipios = lista;
+				return View(model);
+			}
+			catch (Exception ex)
+			{
+
+				throw new Exception(ex.Message);
+			}
+			
         }
 
         // POST: DatosGeneralesController/Edit/5
         [HttpPost]
-        public ActionResult EditarDatosGenerales(int id, IFormCollection collection)
+        public ActionResult EditarDatosGenerales(int id, DatosGenerale datos, FormularioPrep formulario)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
-				//db.Entry(model).State = EntityState.Modified;
+				datos.FechaModificacion = DateTime.Now;
+				datos.UsuarioModifico = Convert.ToString(1);
+				formulario.FechaModificacion = DateTime.Now;
+				formulario.UsuarioModifico = Convert.ToString(1);
+				db.Entry(datos).State = EntityState.Modified;
+				db.Entry(formulario).State = EntityState.Modified;
+				db.SaveChanges();
+				return RedirectToAction("PruebaPacientes", "Prueba");
+
 
 			}
 			catch

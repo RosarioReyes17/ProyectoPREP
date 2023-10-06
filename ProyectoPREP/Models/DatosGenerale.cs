@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProyectoPREP.Models;
 
@@ -7,9 +8,12 @@ public partial class DatosGenerale
 {
     public int Id { get; set; }
 
-    public string Nombres { get; set; } = null!;
+    [Required(ErrorMessage ="Este campo es requerido")]
+    public string? Nombres { get; set; } = null!;
+	[Required(ErrorMessage = "Este campo es requerido")]
 
-    public string? Apellidos { get; set; }
+
+	public string? Apellidos { get; set; }
 
     public string? TieneDocumentos { get; set; }
 
@@ -29,15 +33,15 @@ public partial class DatosGenerale
 
     public decimal? TallaPulgadas { get; set; }
 
-    public string Genero { get; set; } = null!;
+    public string? Genero { get; set; } = null!;
 
-    public string Sexo { get; set; } = null!;
+    public string? Sexo { get; set; } = null!;
 
     public string? Ocupacion { get; set; }
 
     public string? Direccion { get; set; }
 
-    public DateTime FechaIngresoSai { get; set; }
+    public DateTime? FechaIngresoSai { get; set; }
 
     public string? ServicioSai { get; set; }
 
@@ -55,9 +59,13 @@ public partial class DatosGenerale
 
     public string? Descendiente { get; set; }
 
-    public string? NombreContacto { get; set; }
+	//[Required(ErrorMessage = "Este campo es requerido")]
 
-    public string? TelefonoContacto { get; set; }
+	public string? NombreContacto { get; set; }
+	//[Required(ErrorMessage = "Este campo es requerido")]
+
+
+	public string? TelefonoContacto { get; set; }
 
     public string? Ars { get; set; }
 
@@ -67,11 +75,11 @@ public partial class DatosGenerale
 
     public int? Parentesco { get; set; }
 
-    public string Usuario { get; set; } = null!;
+    public string? Usuario { get; set; } = null!;
 
     public string? Telefono { get; set; }
 
-    public int IdDeptoDepend { get; set; }
+    public int? IdDeptoDepend { get; set; }
 
     public string? UsuarioModifico { get; set; }
 
