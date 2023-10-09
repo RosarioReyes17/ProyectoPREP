@@ -11,6 +11,20 @@
 		<h3>Identificarse en PrEP</h3>
 		<table class="table">
 			<tbody>
+				<input type="hidden" value="@ViewBag.idFormulario" name="idFormulario" />
+				<input type="hidden" value="@ViewBag.idDatos" name="idDatos" />
+				@Html.HiddenFor(d => d.IdDeptoDepend)				
+				@Html.HiddenFor(d => d.Usuario)		
+				@Html.HiddenFor(d => d.TipoDocumento)		
+				
+				@foreach (var item in Model.FormularioPreps)
+				{
+					<input type="hidden" value="@item.Secuencia" name="Secuencia" />
+
+				}
+							
+
+
 				<tr>
 
 					<td>
@@ -59,12 +73,12 @@
 					<tr>
 						<td>
 							1. Nombres(*):
-							<input asp-for="Nombres" type="text"  id="txtNombre" name="Nombres" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
+							<input asp-for="Nombres"  type="text"  id="txtNombre" name="Nombres" class="form-control" required="" oninvalid="GetMensajeError('El Nombre es requerido')" autocomplete="error" require="true">
 						</td>
 
 						<td>
 							2. Apellidos(*):
-							<input asp-for="Apellidos" type="text" id="txtApellido" name="Apellidos" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
+							<input asp-for="Apellidos"  type="text" id="txtApellido" name="Apellidos" class="form-control" required="" oninvalid="GetMensajeError('El Apellido es requerido')" oninput="" autocomplete="error" require="true">
 						</td>
 
 						<td>
@@ -396,7 +410,7 @@
 					<tr>
 						<td>
 							9. Provincia(*):
-							<select asp-for="ProvinciaResidencia" onchange="llenarMunicipio()" class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" oninvalid="GetMensajeError('La Provincia es requerida')" required="True" autocomplete="error" require="true">
+							<select asp-for="ProvinciaResidencia" onchange="llenarMunicipio()" class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" required >
 								<option value="">--Seleccione--</option>
 								<option value="01">DISTRITO NACIONAL</option>
 								<option value="02">AZUA</option>
@@ -434,11 +448,11 @@
 						</td>
 						<td>
 							10. Municipio(*):
-							<select asp-for="MunicipioResidencia" asp-items="@(new SelectList(ViewBag.Municipios, "IdMunicipio","Municipio"))" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required="" oninvalid="GetMensajeError('El municipio es requerido')" autocomplete="error" require="true">
+							<select asp-for="MunicipioResidencia" asp-items="@(new SelectList(ViewBag.Municipios, "IdMunicipio","Municipio"))" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" required>
 							</select>
 						</td>
-						<td>11. Dirección(*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección." autocomplete="error" require="true"></td>
-						<td>12. Teléfono(*):<input asp-for="Telefono" id="txtTelefono" name="Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true"></td>
+						<td>11. Dirección(*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" required placeholder="Introduzca su Dirección." ></td>
+						<td>12. Teléfono(*):<input asp-for="Telefono" id="txtTelefono" name="Telefono" class="form-control telef" type="text" required placeholder="Introduzca su Teléfono."></td>
 
 					</tr>
 					<tr>
@@ -668,10 +682,12 @@
 	</div>
 	<div id="divMensaje" style="color:red;"></div>
 	<div id="divBotones" style="display: block;">
-		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="error" require="true"><i class="glyphicon glyphicon-saved"></i>Registrar</button>
+		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="error" require="true"><i class="glyphicon glyphicon-saved"></i>Guardar</button>
 		<a href="Consulta" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
 	</div>
+
 	<script>
+
 		const dateInput = document.getElementById('txtFechaRegistroPrep');
 		// Deshabilitar la interacción con el teclado
 		dateInput.addEventListener('keydown', function (event) {
@@ -684,74 +700,27 @@
 		dateInput1.addEventListener('keydown', function (event) {
 			event.preventDefault();
 		});
+		
+		
+		var id = @ViewBag.IdMunicipios;
+		if(parseInt(id) < 10){
+			document.getElementById("MunicipioResidencia").value = "0" + @ViewBag.IdMunicipios;
+
+		}else{
+			document.getElementById("MunicipioResidencia").value = @ViewBag.IdMunicipios;
+
+		}
+		
 
 
 	</script>
-	<div style="color:red">
-		<div class="validation-summary-valid" data-valmsg-summary="true">
-			<ul>
-				<li style="display:none"></li>
-			</ul>
-		</div>
-	</div>
 </form>
 
 
 @section scripts{
+
 	<script type="text/javascript">
 
-
-		const buscarEnPadron = () => {
-			var Identificacion = document.getElementById("Identificacion").value;
-			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
-
-			if (TipoIdentificacion == "Seleccione") {
-				document.getElementById("divDatosGenerales").style = 'display:none';
-				document.getElementById("divElegibilidadPre").style = 'display:none';
-				alert("Seleccione una opcion");
-
-				return;
-			}
-
-			if (Identificacion == "") {
-				alert("Debe agregar su cedula");
-
-				return;
-			}
-			$.post("@Url.Action("BuscarEnPadron","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
-
-
-				if (modelos.status == false) {
-					var texto = modelos.msj;
-					alert(modelos.msj)
-
-				} else {
-					document.getElementById("divDatosGenerales").style = 'display:block';
-					document.getElementById("divElegibilidadPre").style = 'display:block';
-
-					var informacion = modelos.infoPaciente;
-					if (informacion.sexo == "M") {
-						document.getElementById("ddlSexo").value = ("M");
-
-					} else {
-						document.getElementById("ddlSexo").value = ("F");
-
-					}
-
-					document.getElementById("txtNombre").value = (informacion.nombres);
-					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
-					document.getElementById("txtDocumento").value = Identificacion;
-					//document.getElementById("ddlNacionalidad").options[informacion.nacionalidad].selected = true;
-
-					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento.toString();
-
-				}
-
-
-
-			});
-
-		}
 
 		const llenarMunicipio = () => {
 			$("#MunicipioResidencia").empty();
@@ -778,6 +747,7 @@
 			if (value != "") { location.href = value }
 		}
 		const habilitarInput = () => {
+			//$("#MunicipioResidencia").val(03);
 
 			var descendiente = document.getElementById("ddlDecendiente").value;
 			var ddlContactoConfianza = document.getElementById("ddlContactoConfianza").value;

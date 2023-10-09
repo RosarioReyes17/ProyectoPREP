@@ -273,6 +273,13 @@ namespace ProyectoPREP.Controllers
 						 select b).ToList();
 
 				ViewBag.Municipios = lista;
+				ViewBag.IdMunicipios = model.MunicipioResidencia;
+				ViewBag.idDatos = model.Id;
+				foreach (var item in model.FormularioPreps)
+				{
+					ViewBag.idFormulario = item.Id;
+
+				}
 				return View(model);
 			}
 			catch (Exception ex)
@@ -285,24 +292,32 @@ namespace ProyectoPREP.Controllers
 
         // POST: DatosGeneralesController/Edit/5
         [HttpPost]
-        public ActionResult EditarDatosGenerales(int id, DatosGenerale datos, FormularioPrep formulario)
+        public ActionResult EditarDatosGenerales(int idDatos, int idFormulario, DatosGenerale datos, FormularioPrep formulario)
         {
             try
             {
+
+				
+
+				datos.Id = idDatos;	
+				formulario.Id = idFormulario;
+				formulario.Usuario = datos.Usuario;
+				formulario.DatosGeneralesId = datos.Id;
+
 				datos.FechaModificacion = DateTime.Now;
 				datos.UsuarioModifico = Convert.ToString(1);
 				formulario.FechaModificacion = DateTime.Now;
 				formulario.UsuarioModifico = Convert.ToString(1);
-				db.Entry(datos).State = EntityState.Modified;
 				db.Entry(formulario).State = EntityState.Modified;
+				db.Entry(datos).State = EntityState.Modified;
 				db.SaveChanges();
 				return RedirectToAction("PruebaPacientes", "Prueba");
 
 
 			}
-			catch
+			catch(Exception ex)
             {
-                return View();
+                throw new Exception (ex.Message);
             }
         }
 
