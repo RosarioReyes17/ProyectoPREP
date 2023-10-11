@@ -40,7 +40,6 @@ public partial class DatosGenerale
     public string? Ocupacion { get; set; }
 
     public string? Direccion { get; set; }
-
     public DateTime? FechaIngresoSai { get; set; }
 
     public string? ServicioSai { get; set; }

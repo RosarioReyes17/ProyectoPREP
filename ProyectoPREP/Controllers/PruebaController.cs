@@ -17,9 +17,9 @@ namespace PROYECTO_PREP.Controllers
         public ActionResult PruebaPacientes()
         {
 
-            List<DatosGenerale> data = _context.DatosGenerales.ToList();
-            ViewBag.data = data;
-            return View();
+            List<DatosGenerale> data = _context.DatosGenerales.ToList();        
+
+            return View(data);
         }
 
     }
