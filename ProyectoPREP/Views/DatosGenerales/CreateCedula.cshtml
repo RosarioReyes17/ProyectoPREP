@@ -777,6 +777,11 @@
 	</div>
 </div>
 
+<div class="text-center" id="spinner" style="display:none">
+	<div class="spinner-border" role="status">
+		<span class="sr-only"></span>
+	</div>
+</div>
 
 @section scripts{
 	<script type="text/javascript">
@@ -785,7 +790,7 @@
 		// Identificacion.addEventListener('keydown', function (event) {
 		// 	event.preventDefault();
 		// });
-	
+		
 		function ValidarCedulaPasaporte(a) {
 			if (true) {
 
@@ -811,10 +816,12 @@
 		const cerrarModal = () => {
 			$('#myModal').modal('hide');
 		}
+
 		const buscarEnPadron = ()=>{
 			//const Prefix = "402-1126691-7";
 			var Identificacion = document.getElementById("Identificacion").value;
 			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
+
 
 			if (TipoIdentificacion == "Seleccione") {
 				document.getElementById("divDatosGenerales").style = 'display:none';
@@ -834,9 +841,13 @@
 
 				return;
 			}
+
+			document.getElementById("spinner").style.display = "block";
+
 			$.post("@Url.Action("BuscarEnPadron","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
 
-				
+				document.getElementById("spinner").style.display = "none";
+
 				if(modelos.status == false){
 					var texto = modelos.msj;
 					$("#cuerpoModal").empty();
@@ -847,6 +858,8 @@
 					document.getElementById("divDatosGenerales").style = 'display:block';
 					document.getElementById("divElegibilidadPre").style = 'display:block';
 					document.getElementById("divBotones").style = 'display:block';
+					$("#Identificacion").attr("readonly", true);
+
 
 					var informacion = modelos.infoPaciente;
 					if (informacion.sexo == "M") {
@@ -860,7 +873,6 @@
 					document.getElementById("txtNombre").value = (informacion.nombres);
 					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
 					document.getElementById("txtDocumento").value = (Identificacion);
-					//document.getElementById("ddlNacionalidad").options[informacion.nacionalidad].selected = true;
 
 					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento.toString();
 					document.getElementById("ddlDocumentoOpcion").value = "SI";
@@ -936,9 +948,8 @@
 		};
 	</script>
 	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");	
 	}
 }
-@* <span style="margin-left:30px;color:red;" asp-validation-for="Kilataje" class="text-danger"></span>
-<br />
- *@
+
+
