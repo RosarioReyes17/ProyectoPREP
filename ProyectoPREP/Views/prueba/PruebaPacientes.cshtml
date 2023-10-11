@@ -1,26 +1,55 @@
 ﻿@{
+    
     ViewBag.Title = "PruebaPacientes";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    @using System.Linq;
+    ProyectoPREP.Models.DbPrepContext Entidad = new ProyectoPREP.Models.DbPrepContext();
+
+   
 }
+
+
+<script type="text/javascript">
+
+    jQuery(function () {
+        jQuery("#btnNuevo").click(function () {
+            var url = '@Url.Action("CreateCedula", "DatosGenerales")';
+            window.location.href = url;
+        });
+    });
+
+    jQuery(function () {
+        $(document).on('click', '.btnEditPaciente', function () {
+            var id = jQuery(this).data('id');
+            var url = '@Url.Action("EditarDatosGenerales", "DatosGenerales")' + '?Id=' + id;
+            window.location.href = url;
+        });
+    });
+</script>
+
+
 
 <h2>PruebaPacientes</h2>
 
 <div style="display: none;" id="tablaContainer" class="container">
+    <br />
+    <button style="margin-left:300px" type="submit" href="#" id="btnNuevo" name="btnNuevo" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Crear nuevo</button>
 
     <table id="miTabla" class="table display" data-role="table" width="100%">
-        <!-- El id "miTabla" es importante y debe coincidir con el que se usa en el script JavaScript -->
-
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Sexo</th>
+                <th>Documento</th>
 
 
-            </tr> 
+
+
+                <th>Acciones</th>
+            </tr>
         </thead>
-         
-
-
         <tbody>
             @{
                 var pacientes = ViewBag.data as List<ProyectoPREP.Models.DatosGenerale>;
@@ -30,11 +59,21 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Id)</td>
                         <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Apellidos)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Sexo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Documento)</td>
+                        
+
+                        
+
+                        <td>
+                            <button href="#" type="button" data-id="@item.Id" class="btn btn-primary btnEditPaciente">
+                                <i class="glyphicon glyphicon-pencil"></i> Editar
+                            </button>
+                        </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
 </div>
-
-
