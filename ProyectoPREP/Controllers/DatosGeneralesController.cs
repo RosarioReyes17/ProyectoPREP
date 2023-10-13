@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
 using ProyectoPREP.Padron;
 using System.Data;
+using X.PagedList;
 //using System.Data.Entity;
 //using System.Web.Mvc;
 
@@ -26,7 +27,18 @@ namespace ProyectoPREP.Controllers
             return View();
         }
 
-       
+
+        public ActionResult ConsultaDatosGenerales(int? page)
+        {
+            int pageSize = 25; // Número de elementos por página
+            int pageNumber = (page ?? 1); // Número de página actual
+
+            List<DatosGenerale> data = db.DatosGenerales.ToList();
+
+            IPagedList<DatosGenerale> pagedData = data.ToPagedList(pageNumber, pageSize);
+
+            return View(pagedData);
+        }
 
         // GET: DatosGeneralesController/Create
         public ActionResult CreateCedula()
@@ -73,12 +85,12 @@ namespace ProyectoPREP.Controllers
 				formulario.DatosGenerales.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
-				return RedirectToAction("PruebaPacientes", "Prueba");
+				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
 
 			}
 			catch	
 			{
-				return RedirectToAction("PruebaPacientes", "Prueba"); //Revisar aqui
+				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales"); //Revisar aqui
 			}
 		}
 		// POST: DatosGeneralesController/Create
@@ -101,12 +113,12 @@ namespace ProyectoPREP.Controllers
 				db.SaveChanges();
 
 
-				return RedirectToAction("PruebaPacientes", "Prueba");
+				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
 
 			}
             catch
             {
-				return RedirectToAction("PruebaPacientes", "Prueba"); //Revisar aqui
+				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales"); //Revisar aqui
 			}
         }
 
@@ -266,7 +278,7 @@ namespace ProyectoPREP.Controllers
 
 				DatosGenerale? model = new DatosGenerale();
 
-				model = db.DatosGenerales.Where(x => x.Id == id).Include(x => x.FormularioPreps).FirstOrDefault();
+                model = db.DatosGenerales.Where(x => x.Id == id).Include(x => x.FormularioPreps).FirstOrDefault();
 
 				lista = (from b in db.VwMunicipios
 						 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model.ProvinciaResidencia)
@@ -311,7 +323,7 @@ namespace ProyectoPREP.Controllers
 				db.Entry(formulario).State = EntityState.Modified;
 				db.Entry(datos).State = EntityState.Modified;
 				db.SaveChanges();
-				return RedirectToAction("PruebaPacientes", "Prueba");
+				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
 
 
 			}
