@@ -96,6 +96,7 @@ namespace ProyectoPREP.Controllers
 				db.DatosGenerales.Add(formulario.DatosGenerales);
 
 				formulario.Usuario = Convert.ToString(1);
+				formulario.Secuencia = 0;
 				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
 				formulario.DatosGenerales.FormularioPreps.Add(formulario);
 				db.SaveChanges();
@@ -271,6 +272,8 @@ namespace ProyectoPREP.Controllers
 				lista = (from b in db.VwMunicipios
 						 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model.ProvinciaResidencia)
 						 select b).ToList();
+
+				
 
 				ViewBag.Municipios = lista;
 				ViewBag.IdMunicipios = model.MunicipioResidencia;

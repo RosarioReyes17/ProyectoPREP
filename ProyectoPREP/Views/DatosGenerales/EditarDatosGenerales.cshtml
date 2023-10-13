@@ -495,7 +495,7 @@
 						<td colspan="2">
 							19. Contacto de Confianza(*):
 
-							<select asp-for="NombreContacto" onchange="habilitarInput()" class="form-control" id="ddlContactoConfianza" name="NombreContacto" required="" autocomplete="error" require="true">
+							<select onchange="habilitarInput()" class="form-control" id="ddlContactoConfianza" name="NombreContacto" required>
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
@@ -710,6 +710,17 @@
 			document.getElementById("MunicipioResidencia").value = @ViewBag.IdMunicipios;
 
 		}
+
+		var contacto = document.getElementById("txtNombreContacto").value;
+		if (contacto == "") {
+			document.getElementById("ddlContactoConfianza").value = "NO"
+		}
+		else {
+			document.getElementById("ddlContactoConfianza").value = "SI"
+			$("#txtNombreContacto").removeAttr("disabled");
+			$("#txtTelefonoContacto").removeAttr("disabled");
+			$("#ddlParentesco").removeAttr("disabled");
+		}
 		
 
 
@@ -773,9 +784,11 @@
 
 				$("#txtNombreContacto").removeAttr("disabled");
 				$("#txtTelefonoContacto").removeAttr("disabled");
+				$("#ddlParentesco").removeAttr("disabled");
 			} else {
 				$("#txtNombreContacto").attr("disabled", true);
 				$("#txtTelefonoContacto").attr("disabled", true);
+				$("#ddlParentesco").attr("disabled", true);
 			}
 
 
