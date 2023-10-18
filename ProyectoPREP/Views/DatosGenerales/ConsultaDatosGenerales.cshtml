@@ -1,4 +1,4 @@
-﻿@model IPagedList<ProyectoPREP.Models.DatosGenerale>
+﻿@model List<DatosGeneralesNacionalidad>
 @using X.PagedList.Mvc.Core
 @using X.PagedList;
 
@@ -22,6 +22,7 @@
                 <th>Apellidos</th>
                 <th>Sexo</th>
                 <th>Documento</th>
+                <th>Nacionalidad</th>
                 <th>Fecha</th>
                 <th>Acciones</th>
             </tr>
@@ -35,7 +36,8 @@
                     <td>@item.Apellidos</td>
                     <td>@item.Sexo</td>
                     <td>@item.Documento</td>
-                    <td>@item.FechaIngresoSai.ToString().Substring(0, 10)</td>
+                    <td>@item.NOMBRE_CORTO_ES</td>
+                    <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
                     <td>
                         <a class="btn btn-dark" href="~/DatosGenerales/EditarDatosGenerales/@item.Id">Edit</a>
                     </td>
@@ -45,7 +47,7 @@
     </table>
     
 </div>
-<div class="d-flex justify-content-center">
+@* <div class="d-flex justify-content-center">
     <ul class="pagination" style="margin: 0 auto;">
         <li class="page-item @(Model.IsFirstPage ? "disabled" : "")">
             <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = 1 })">Primera</a>
@@ -60,5 +62,5 @@
             <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = Model.PageCount })">Última</a>
         </li>
     </ul>
-</div>
+</div> *@
 

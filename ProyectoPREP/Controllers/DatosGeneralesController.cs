@@ -33,11 +33,23 @@ namespace ProyectoPREP.Controllers
             int pageSize = 25; // Número de elementos por página
             int pageNumber = (page ?? 1); // Número de página actual
 
-            List<DatosGenerale> data = db.DatosGenerales.ToList();
+            //List<DatosGenerale> data = db.DatosGenerales.ToList();
 
-            IPagedList<DatosGenerale> pagedData = data.ToPagedList(pageNumber, pageSize);
+            //IPagedList<DatosGenerale> pagedData = data.ToPagedList(pageNumber, pageSize);
 
-            return View(pagedData);
+
+
+			var lista = new List<DatosGeneralesNacionalidad>();
+			string sql = "DatosGeneralesNacionalidad";
+
+
+			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+			{
+				lista = connection.Query<DatosGeneralesNacionalidad>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+			
+			}
+
+			return View(lista);
         }
 
         // GET: DatosGeneralesController/Create
@@ -277,25 +289,22 @@ namespace ProyectoPREP.Controllers
 			{
 				var lista = new List<VwMunicipio>();
 
-				DatosGenerale? model = new DatosGenerale();
+				FormularioPrep? model1 = new FormularioPrep();
 
-                model = db.DatosGenerales.Where(x => x.Id == id).Include(x => x.FormularioPreps).FirstOrDefault();
+                model1 = db.FormularioPreps.Where(x => x.DatosGenerales.Id == id).Include(x => x.DatosGenerales).FirstOrDefault();
 
 				lista = (from b in db.VwMunicipios
-						 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model.ProvinciaResidencia)
+						 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model1.DatosGenerales.ProvinciaResidencia)
 						 select b).ToList();
 
 				
 
 				ViewBag.Municipios = lista;
-				ViewBag.IdMunicipios = model.MunicipioResidencia;
-				ViewBag.idDatos = model.Id;
-				foreach (var item in model.FormularioPreps)
-				{
-					ViewBag.idFormulario = item.Id;
-
-				}
-				return View(model);
+				ViewBag.IdMunicipios = model1.DatosGenerales.MunicipioResidencia;
+				ViewBag.IdProvincia = model1.DatosGenerales.ProvinciaResidencia;
+				ViewBag.idDatos = model1.DatosGenerales.Id;
+				
+				return View(model1);
 			}
 			catch (Exception ex)
 			{
@@ -307,24 +316,21 @@ namespace ProyectoPREP.Controllers
 
         // POST: DatosGeneralesController/Edit/5
         [HttpPost]
-        public ActionResult EditarDatosGenerales(int idDatos, int idFormulario, DatosGenerale datos, FormularioPrep formulario)
+        public ActionResult EditarDatosGenerales( int idFormulario , FormularioPrep formulario)
         {
             try
             {
 
-				
 
-				datos.Id = idDatos;	
-				formulario.Id = idFormulario;
-				formulario.Usuario = datos.Usuario;
-				formulario.DatosGeneralesId = datos.Id;
 
-				datos.FechaModificacion = DateTime.Now;
-				datos.UsuarioModifico = Convert.ToString(1);
+
+				formulario.DatosGenerales.FechaModificacion = DateTime.Now;
+				formulario.DatosGenerales.UsuarioModifico = Convert.ToString(1);
 				formulario.FechaModificacion = DateTime.Now;
 				formulario.UsuarioModifico = Convert.ToString(1);
+
 				db.Entry(formulario).State = EntityState.Modified;
-				db.Entry(datos).State = EntityState.Modified;
+				db.Entry(formulario.DatosGenerales).State = EntityState.Modified;
 				db.SaveChanges();
 				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
 
