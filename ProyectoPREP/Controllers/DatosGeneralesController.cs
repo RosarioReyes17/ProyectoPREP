@@ -77,11 +77,9 @@ namespace ProyectoPREP.Controllers
 		{
 			try
 			{
-
+				
 				formulario.DatosGenerales.Usuario = Convert.ToString(1);
 				formulario.DatosGenerales.IdDeptoDepend = 1641;
-				formulario.DatosGenerales.TieneDocumentos = "No";
-				formulario.DatosGenerales.TipoDocumento = "SN";
 				formulario.DatosGenerales.EnRiesgo = "Si";
 			
 				if (formulario.DatosGenerales.TieneDocumentos == "Si")
@@ -89,11 +87,17 @@ namespace ProyectoPREP.Controllers
 					formulario.DatosGenerales.TipoDocumento = "P";
 
 				}
+				else
+				{
+					formulario.DatosGenerales.TipoDocumento = "SN";
+
+				}
 
 				db.DatosGenerales.Add(formulario.DatosGenerales);
 
 				formulario.Usuario = Convert.ToString(1);
 				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
+				formulario.Secuencia = 0;
 				formulario.DatosGenerales.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
@@ -111,6 +115,7 @@ namespace ProyectoPREP.Controllers
         {
             try
             {
+				
 				formulario.DatosGenerales.Usuario = Convert.ToString(1);
 				formulario.DatosGenerales.IdDeptoDepend = 1641;
 				formulario.DatosGenerales.TieneDocumentos = "Si";
@@ -320,9 +325,6 @@ namespace ProyectoPREP.Controllers
         {
             try
             {
-
-
-
 
 				formulario.DatosGenerales.FechaModificacion = DateTime.Now;
 				formulario.DatosGenerales.UsuarioModifico = Convert.ToString(1);

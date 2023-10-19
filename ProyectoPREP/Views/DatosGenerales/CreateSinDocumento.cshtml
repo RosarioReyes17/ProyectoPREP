@@ -74,10 +74,10 @@
 						</td>
 
 						<td>
-							3. ¿Tiene cedula o pasaporte?(*):
+							3. ¿Tiene pasaporte?(*):
 							<select class="form-control" asp-for="DatosGenerales.TieneDocumentos" onchange="habilitarInput();" id="ddlDocumentoOpcion" name="DatosGenerales.TieneDocumentos" required>
 								<option value="">--Seleccione--</option>
-								<option value="SI">Si</option>
+								<option value="Si">Si</option>
 								<option value="No">No</option>
 							</select>
 							<span asp-validation-for="DatosGenerales.TieneDocumentos" style="color:red;margin-left:30px"></span>
@@ -86,8 +86,8 @@
 
 						</td>
 						<td>
-							4.Numero de cedula o pasaporte(*):
-							<input asp-for="DatosGenerales.Documento" id="txtDocumento" disabled name="DatosGenerales.Documento" class="form-control" required>
+							4. Pasaporte(*):
+							<input asp-for="DatosGenerales.Documento" id="txtDocumento" minlength="9" maxlength="9" disabled name="DatosGenerales.Documento" class="form-control" required>
 							<span asp-validation-for="DatosGenerales.Documento" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -464,7 +464,7 @@
 						</td>
 
 						<td>
-							12. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
+							12. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value);" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
 							<span asp-validation-for="DatosGenerales.Telefono" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -478,15 +478,15 @@
 
 						</td>
 						<td>
-							14. Peso(*): <br><input asp-for="DatosGenerales.Peso" id="txtPeso" name="DatosGenerales.Peso" class="form-control" type="text" min="90" max="350" required="" placeholder="Introduzca su Peso en Lbs." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							14. Peso(*): <br><input asp-for="DatosGenerales.Peso"  id="txtPeso" name="DatosGenerales.Peso" class="form-control" type="number" min="90" max="350" placeholder="Introduzca su Peso en Lbs." required>
 							<span asp-validation-for="DatosGenerales.Peso" style="color:red;margin-left:30px"></span>
 						</td>
 						<td>
-							15. Talla Pies(*):<br> <input asp-for="DatosGenerales.TallaPies" id="txtTallaPies" name="DatosGenerales.TallaPies" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pies." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							15. Talla Pies(*):<br> <input asp-for="DatosGenerales.TallaPies" id="txtTallaPies" name="DatosGenerales.TallaPies" class="form-control" type="number" min="1" placeholder="Introduzca su Talla en Pies." required>
 							<span asp-validation-for="DatosGenerales.TallaPies" style="color:red;margin-left:30px"></span>
 						</td>
 						<td>
-							16. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="text" min="1" required="" placeholder="Introduzca su Talla en Pulgadas." onkeypress="return soloNumeros(event)" autocomplete="error" require="true">
+							16. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="number" min="1" placeholder="Introduzca su Talla en Pulgadas." required>
 							<span asp-validation-for="DatosGenerales.TallaPulgadas" style="color:red;margin-left:30px"></span>
 						</td>
 					</tr>
@@ -760,7 +760,27 @@
 
 @section scripts{
 	<script type="text/javascript">
+		function ValidarCelular(a) {
+			if (true) {
 
+				if (true) {
+					var datos = a;
+					let resultado = datos;
+
+					if (resultado.length == 3) {
+						resultado = datos + "-";
+					}
+
+					if (resultado.length == 7) {
+						resultado = datos + "-";
+					}
+
+					if (resultado.length <= 11) {
+						document.getElementById("txtTelefono").value = resultado;
+					}
+				}
+			}
+		}
 	
 		const buscarEnPadron = () => {
 			var Identificacion = document.getElementById("Identificacion").value;
@@ -852,7 +872,7 @@
 				$("#ddlNacionalidadMadre").attr("disabled", true);
 			}
 
-			if (ddlDocumentoOpcion == "SI") {
+			if (ddlDocumentoOpcion == "Si") {
 				$("#txtDocumento").removeAttr("disabled");
 
 			}else{
