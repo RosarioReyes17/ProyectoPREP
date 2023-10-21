@@ -6,53 +6,18 @@
 
 
 
-<form action="/DatosGenerales/EditarDatosGenerales" method="post">
-	<div id="divValidarUsuario" class="form-visible">
-		<h3>Identificarse en PrEP</h3>
-		<table class="table">
-			<tbody>
-@* 				<input type="hidden" value="@ViewBag.idFormulario" name="idFormulario" />
- *@				@Html.HiddenFor(d => d.DatosGenerales.IdDeptoDepend)				
-				@Html.HiddenFor(d => d.DatosGenerales.Usuario)
-				@Html.HiddenFor(d => d.DatosGenerales.TipoDocumento)
-				@Html.HiddenFor(d => d.DatosGenerales.EnRiesgo)
-				@Html.HiddenFor(d => d.DatosGenerales.Id)		
-				@Html.HiddenFor(d => d.Id)		
-				@Html.HiddenFor(d => d.Usuario)		
-				@Html.HiddenFor(d => d.Secuencia)		
-				
-			
-				<tr>
-
-					<td>
-						<strong>Tipo de Identificación(*):</strong>
-						<select style="width:486.29px" id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required >
-							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
-							<option value="/DatosGenerales/CreateCedula">Cédula</option>
-							<option value="#">Pasaporte</option>
-							<option value="#">NSS</option>
-						</select>
-					</td>
-					<td style="display:none">
-						<strong>Identificación:</strong>
-						<input type="text" id="Identificacion" asp-for="DatosGenerales.Documento" name="DatosGenerales.Documento" class="form-control ui-autocomplete-input" required>
-
-					</td>
-					<td style="display:none" colspan="2">
-						<br>
-						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;" required>
-					</td>
-
-				</tr>
-				<tr id="trLoading" style="display:none;">
-					<td colspan="4" style="text-align:center;">
-						<img src="~/Content/images/ajax-loader.gif">
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<form action="/DatosGenerales/EditarDatosGenerales" method="post" enctype="multipart/form-data">
+		
 	<div id="divFormPrEP" class="form-invisible">
+		@Html.HiddenFor(d => d.DatosGenerales.IdDeptoDepend)
+		@Html.HiddenFor(d => d.DatosGenerales.Usuario)
+		@Html.HiddenFor(d => d.DatosGenerales.TipoDocumento)
+		@Html.HiddenFor(d => d.DatosGenerales.EnRiesgo)
+		<input type="hidden" value="@ViewBag.IdFormulario" name="IdFormulario" />
+		@Html.HiddenFor(d => d.DatosGeneralesId)
+		@Html.HiddenFor(d => d.DatosGenerales.Id)
+		@Html.HiddenFor(d => d.Usuario)
+		@Html.HiddenFor(d => d.Secuencia)
 
 		<div id="divDatosGenerales" >
 			<h3>Datos Generales</h3>
@@ -743,7 +708,7 @@
 	<div id="divMensaje" style="color:red;"></div>
 	<div id="divBotones" style="display: block;">
 		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="error" require="true"><i class="glyphicon glyphicon-saved"></i>Guardar</button>
-		<a href="Consulta" name="Cancelar" onclick="history.back()" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+		<a name="Cancelar" onclick="history.back()" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
 	</div>
 
 	<script>
@@ -783,8 +748,9 @@
 
 		//deshabilitar  inputs de contacto
 		var contacto = document.getElementById("txtNombreContacto").value;
-		if (contacto == "") {
+		if (contacto == "" || contacto == "NO") {
 			document.getElementById("ddlContactoConfianza").value = "NO";
+			document.getElementById("txtNombreContacto").value = "";
 		}
 		else {
 			document.getElementById("ddlContactoConfianza").value = "SI";
@@ -816,16 +782,7 @@
 			$("#ddlNacionalidadMadre").removeAttr("disabled");
 		}
 		
-		//pasar el texto de genero correspondiente al input
-		var sexo = document.getElementById("ddlSexo").value;
-		if(sexo == "M"){
-			document.getElementById("ddlSexo").ht = "MASCULINO";
-		}
-		else{
-			document.getElementById("ddlSexo").innerHTML = "FEMENINO";
-
-		}
-
+	
 
 	</script>
 </form>

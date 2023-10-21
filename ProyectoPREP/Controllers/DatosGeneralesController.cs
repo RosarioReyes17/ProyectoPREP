@@ -307,7 +307,7 @@ namespace ProyectoPREP.Controllers
 				ViewBag.Municipios = lista;
 				ViewBag.IdMunicipios = model1.DatosGenerales.MunicipioResidencia;
 				ViewBag.IdProvincia = model1.DatosGenerales.ProvinciaResidencia;
-				ViewBag.idDatos = model1.DatosGenerales.Id;
+				ViewBag.IdFormulario = model1.Id;
 				
 				return View(model1);
 			}
@@ -321,11 +321,11 @@ namespace ProyectoPREP.Controllers
 
         // POST: DatosGeneralesController/Edit/5
         [HttpPost]
-        public ActionResult EditarDatosGenerales( int idFormulario , FormularioPrep formulario)
+        public ActionResult EditarDatosGenerales(int IdFormulario, FormularioPrep? formulario)
         {
             try
             {
-
+				formulario.Id = IdFormulario;
 				formulario.DatosGenerales.FechaModificacion = DateTime.Now;
 				formulario.DatosGenerales.UsuarioModifico = Convert.ToString(1);
 				formulario.FechaModificacion = DateTime.Now;
