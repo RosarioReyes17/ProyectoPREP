@@ -98,7 +98,13 @@ namespace ProyectoPREP.Controllers
 				formulario.Usuario = Convert.ToString(1);
 				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
 				formulario.Secuencia = 0;
-				formulario.DatosGenerales.FormularioPreps.Add(formulario);
+
+				var elegibilidad = new ElegibilidadPrep();
+				elegibilidad.Estatus = 1;
+				elegibilidad.Usuario = Convert.ToString(1);
+				formulario.ElegibilidadPreps.Add(elegibilidad);
+
+				db.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
 				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
@@ -127,7 +133,13 @@ namespace ProyectoPREP.Controllers
 				formulario.Usuario = Convert.ToString(1);
 				formulario.Secuencia = 0;
 				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
-				formulario.DatosGenerales.FormularioPreps.Add(formulario);
+
+				var elegibilidad = new ElegibilidadPrep();
+				elegibilidad.Estatus = 1;
+				elegibilidad.Usuario = Convert.ToString(1);
+				formulario.ElegibilidadPreps.Add(elegibilidad);
+
+				db.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
 
