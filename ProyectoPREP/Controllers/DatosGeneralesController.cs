@@ -28,15 +28,14 @@ namespace ProyectoPREP.Controllers
         }
 
 
-        public ActionResult ConsultaDatosGenerales(int? page)
+        public ActionResult ConsultaDatosGenerales()
         {
-            int pageSize = 25; // Número de elementos por página
-            int pageNumber = (page ?? 1); // Número de página actual
+            //int pageSize = 25; // Número de elementos por página
+            //int pageNumber = (page ?? 1); // Número de página actual
 
-            //List<DatosGenerale> data = db.DatosGenerales.ToList();
+            ////List<DatosGenerale> data = db.DatosGenerales.ToList();
 
-            //IPagedList<DatosGenerale> pagedData = data.ToPagedList(pageNumber, pageSize);
-
+            ////IPagedList<DatosGenerale> pagedData = data.ToPagedList(pageNumber, pageSize);
 
 
 			var lista = new List<DatosGeneralesNacionalidad>();
@@ -51,6 +50,21 @@ namespace ProyectoPREP.Controllers
 
 			return View(lista);
         }
+
+        [HttpPost]
+        public ActionResult BuscarDatosGenerales(string filtro)
+        {
+            // Realiza la búsqueda en tu base de datos o en la lista 'lista' según el filtro
+            var lista = new List<DatosGeneralesNacionalidad>();
+            var resultados = lista.Where(item =>
+                item.Nombres.Contains(filtro) ||
+                item.Apellidos.Contains(filtro) ||
+                item.Documento.Contains(filtro)
+            ).ToList();
+
+            return View("ConsultaDatosGenerales", resultados);
+        }
+
 
         // GET: DatosGeneralesController/Create
         public ActionResult CreateCedula()
