@@ -17,9 +17,9 @@ namespace ProyectoPREP.Controllers
     public class DatosGeneralesController : Controller
     {
         DbPrepContext db;
-        public DatosGeneralesController(DbPrepContext db) 
+        public DatosGeneralesController(DbPrepContext _db) 
         {
-            this.db = db;
+            this.db = _db;
         }
         // GET: DatosGeneralesController
         public ActionResult Index()

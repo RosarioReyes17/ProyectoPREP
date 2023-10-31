@@ -1,5 +1,342 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model ElegibilidadPrep
+
+<div class="form-title">
+    <h3>Requisitos Elegibilidad PrEP</h3>
+</div>
+
+<div divinfo="">
+    <div class="tituloDiv">
+        Información del Donante
+    </div>
+
+    <strong>ID PREP:</strong>
+    <span id="id" name="id"> 3459</span>
+    <br>
+    <strong>Paciente PREP:</strong>
+    <span id="spPacienteNombre" name="spEsatus"> RUBEN ANDRES YSABEL</span>
+    <br>
+</div>
+
+<form action="/Elegibilidad/Create" method="post">
+    <input asp-for="Id" name="Id" type="hidden" />
+    <input asp-for="FormularioPrepId" name="FormularioPrepId" type="hidden" />
+    <input asp-for="Usuario" name="Usuario" type="hidden" />
+    <input asp-for="Estatus" name="Estatus" type="hidden" />
+
+
+    <div id="divFormPrEP" class="form-invisible">
+        <div id="divElegibilidadPre2">
+
+            <div class="tituloDiv">Se consideran elegibles todos(as) que satisfacen TODOS Y CADA UNO de los siguientes requisitos (En los últimos 6 meses):</div>
+
+
+            <!-- <div class="subTituloDiv"> </div> -->
+            <table class="table" id="tblElegibilidad">
+                <tbody>
+                    <tr>
+                        <td>
+                            ¿Prueba de VIH realizada?
+                            <div class="radio radio-info">
+                                <input id="chkSeronegativo1" name="Seronegativo" class="styled" type="radio" value="Si">
+                                <label for="chkSeronegativo1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkSeronegativo2" name="Seronegativo" class="styled" type="radio" value="No">
+                                <label for="chkSeronegativo2">
+                                    No
+                                </label>
+                            </div>
+                        </td>
+
+                        <td>
+                            Fecha de realización(Prueba VIH):
+                            <br>
+
+                            <div class="form-group col-md-8">
+
+                                <input id="txtFechaRealizacionPrueba" name="txtFechaRealizacionPrueba" class="form-control" type="date" required disabled>
+                            </div>
+                        </td>
+
+                        <td>
+                            Fecha de resultados(Prueba VIH):
+                            <br>
+                            <div class="form-group col-md-8">
+
+                                <input id="txtFechaEntregaResultados" name="txtFechaEntregaResultados" class="form-control" type="date" required disabled />
+                            </div>
+                        </td>
+
+                        <td>
+                            <strong>Resultado de la Prueba del VIH:</strong>
+                            <br>
+                            <div class="radio radio-info">
+                                <input id="rdVIH1" class="styled" type="radio" name="VIH" value="Negativo" disabled>
+                                <label for="rdVIH1">
+                                    Negativo.
+                                </label>
+                            </div>
+
+                            <div class="radio radio-info">
+                                <input id="rdVIH2" class="styled" type="radio" name="VIH" value="Positivo" disabled>
+                                <label for="rdVIH2">
+
+                                    Positivo
+                                </label>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            En riesgo significativo de infección por VIH
+                            <div class="radio radio-info">
+                                <input id="chkRiesgoVIH1" name="chkRiesgoVIH" class="styled" type="radio" value="Si">
+                                <label for="chkRiesgoVIH1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkRiesgoVIH2" name="chkRiesgoVIH" class="styled" type="radio" value="No">
+                                <label for="chkRiesgoVIH2">
+                                    No
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td colspan="2">
+
+                            ¿Tiene Signos y síntomas?
+                            <div class="radio radio-info">
+                                <input id="chkNoSignos1" name="chkNoSignos" class="styled" type="radio" value="Si" disabled>
+                                <label for="chkNoSignos1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkNoSignos2" name="chkNoSignos" class="styled" type="radio" value="No" disabled>
+                                <label for="chkNoSignos2">
+                                    No
+                                </label>
+                            </div>
+                        </td>
+                        <td colspan="2">
+                            <input type="checkbox" id="check1" name="check1" disabled class="chSignos"> Linfadenopatias cervicales e inguinales
+                            <br>
+                            <input type="checkbox" id="check2" name="check2" disabled class="chSignos"> Fiebre de origen desconocido
+                            <br>
+                            <input type="checkbox" id="check3" name="check3" disabled class="chSignos"> Diarrea prolongada de origen desconocido
+                            <br>
+                            <input type="checkbox" id="check4" name="check4" disabled class="chSignos"> Erupciones en la piel
+                            <br>
+                            <input type="checkbox" id="check5" name="check5" disabled class="chSignos"> Infecciones Recurrentes
+                            <br>
+                            <input type="checkbox" id="check6" name="check6" disabled class="chSignos"> Hepato/esplenomegalia
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            Se requiere CONFIRMAR CON PCR
+                            <div class="radio radio-info">
+                                <input id="chkRequierePCR1" name="chkRequierePCR" class="styled" type="radio" value="Si">
+                                <label for="chkRequierePCR1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkRequierePCR2" name="chkRequierePCR" class="styled" type="radio" value="No">
+                                <label for="chkRequierePCR2">
+                                    No
+                                </label>
+                            </div>
+                        </td>
+                        <td id="tdPCR3">
+
+                            <div class="form-group col-md-8">
+                                Fecha Visita PCR:
+                                <input type="date" class="form-control" id="txtFechaVisitaPCR" name="txtFechaVisitaPCR" disabled>
+                            </div>
+                        </td>
+
+
+
+                        <td id="tdPCR2">
+
+                            <div class="form-group col-md-8">
+                                Fecha Prueba PCR:
+                                <input type="date" class="form-control" id="txtFechaPruebaPCR" name="txtFechaPruebaPCR" disabled>
+                            </div>
+                        </td>
+                        <td id="tdPCR1">
+                            Resultado Prueba PCR:
+                            <select id="ddlResutaldoPruebaPCR" name="ddlResutaldoPruebaPCR" class="form-control" required disabled>
+                                <option value="-1">--Seleccione--</option>
+                                <option>Detectado</option>
+                                <option>No Detectado</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="trNota" class="invisible">
+                        <td colspan="4">*NOTA: Si no tiene los datos para confirmar puede guardar el formulario en este punto y continuar cuando tenga la información</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="divPrEPTratamiento" style="display:none">
+
+            <div class="tituloDiv"><strong>Pruebas Diagnósticas Iniciales</strong></div>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-6">
+                                Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
+                                <input type="checkbox" id="chkHormonal" name="chkHormonal" disabled>
+                                <br>
+                                <br>
+                                Resultado de Creatinina(Plasmatica):
+                                <br>
+                                <input id="txtResultadoCreatinina" name="txtResultadoCreatinina" type="text" min="0" max="60" style="width: 100%;" class="form-control col-sm-2 date" onchange="return soloNumeros(event)">
+                                <br>
+
+                                Fecha:
+                                <br>
+                                <input id="txtFechaResultadoCreatinina" name="txtFechaResultadoCreatinina" class="form-control col-sm-2 date" type="date">
+                                <br>
+                                Resultado:
+                                <br>
+                                <span id="ValorCreatinina" name="ValorCreatinina" class="form-control"></span>
+                            </div>
+                        </td>
+                        <td colspan="2">
+
+
+                            Rango valores de Creatinina
+                            <br>
+                            <input id="chkCreatinina2" name="creatinina" class="styled" type="radio" value="61-70 ml/min" disabled /> 61-70 ml/min
+                            <input id="chkCreatinina3" name="creatinina" class="styled" type="radio" value="71-80 ml/min" disabled /> 71-80 ml/min
+                            <br>
+                            <input id="chkCreatinina4" name="creatinina" class="styled" type="radio" value="81-90 ml/min" disabled /> 81-90 ml/min
+                            <input id="chkCreatinina5" name="creatinina" class="styled" type="radio" value="91-100 ml/min" disabled /> 91-100 ml/min
+                            <br>
+                            <input id="chkCreatinina6" name="creatinina" class="styled" type="radio" value=">100 ml/min" disabled /> &gt;100 ml/min
+                            <br>
+                            <span style="font-size:0.7em;">
+                                - Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
+                                - Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
+                                - Utilizar la fórmula de mujeres en mujeres biológicas y Trans que <br>tengan más de 6 meses en terapia de reemplazo hormonal.
+                                - Metodología Cockcroft-Gault Convencional
+                            </span>
+                        </td>
+                        <td>
+                            Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
+                            <div class="radio radio-info">
+                                <input id="chkaclaramiento1" name="chkaclaramiento" class="styled" type="radio" value="Si" readonly>
+                                <label for="chkaclaramiento1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkaclaramiento2" name="chkaclaramiento" class="styled" type="radio" value="No" readonly>
+                                <label for="chkaclaramiento2">
+                                    No
+                                </label>
+                            </div>
+
+                        </td>
+
+
+
+                    </tr>
+                    <tr>
+                        <td>
+
+
+
+                            <div class="form-group col-md-6">
+                                Sifilis(VDRL) Realizada:
+                                <br>
+                                <input id="rdsifilis1" class="styled" type="radio" name="sifilis" value="No Reactivo"> No Reactivo
+                                <input id="rdsifilis2" class="styled" type="radio" name="sifilis" value="Reactivo"> Reactivo
+                                <input id="txtfechasifilis1" name="txtfechasifilis1" class="form-control col-sm-2 date" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha sifilis es requerido.')">
+                            </div>
+                        </td>
+                        <td>
+
+
+                            <div class="form-group col-md-8">
+                                HBsAg Realizada:
+                                <br>
+
+                                <input id="rdHBsAg1" class="styled" type="radio" name="HB" value="Negativo"> Negativo
+                                <input id="rdHBsAg2" class="styled" type="radio" name="HB" value="Positivo"> Positivo
+
+                                <input id="txtfechaHBsAg1" name="txtfechaHBsAg1" class="form-control col-sm-5  date" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha HBsAg es requerido.')">
+                            </div>
+                        </td>
+
+                        <td>
+
+                            <div class="form-group col-md-8">
+                                Hepatitis C Realizada:
+                                <br>
+                                <input id="rdHepatitis1" class="styled" type="radio" name="hepatitis" value="Negativo"> Negativo
+                                <input id="rdHepatitis2" class="styled" type="radio" name="hepatitis" value="Positivo"> Positivo
+                                <input id="txtfechaHepatitis" name="txtfechaHepatitis" class="form-control col-sm-8 date" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                            </div>
+                        </td>
+                        <td>
+                            ITS sindrómico
+                            <input id="ITDSindromico2" class="styled" type="radio" name="ITDSindromico" value="Si">Si
+                            <input id="ITDSindromico1" class="styled" type="radio" name="ITDSindromico" value="No"> No
+                            <br>
+                            <br>
+                            <input id="chkITS1" name="chkITS1" class="styled" type="checkbox" value="Secrecion Uretral" disabled /> Secrecion Uretral
+                            <br>
+                            <input id="chkITS2" name="chkITS2" class="styled" type="checkbox" value="Secrecion Vaginal" disabled /> Secrecion Vaginal
+                            <br>
+                            <input id="chkITS3" name="chkITS3" class="styled" type="checkbox" value="Ulcera genital" disabled /> Ulcera genital
+                            <br>
+                            <input id="chkITS4" name="chkITS4" class="styled" type="checkbox" value="Verrugas genitales" disabled /> Verrugas genitales
+                            <br>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="Hemogramap" colspan="2">
+                            Hemograma:
+                            <br>
+                            <input id="rdHemo1" class="styled" type="radio" name="rdHemo" value="No Realizado"> No Realizado
+                            <input id="rdHemo2" class="styled" type="radio" name="rdHemo" value="Realizado"> Realizado
+                            <br>
+
+                        </td>
+                        <td id="UREAp" colspan="2">
+                            UREA:
+                            <br>
+                            <input id="rdUrea1" class="styled" type="radio" name="rdUrea" value="No Realizado"> No Realizado
+                            <input id="rdUrea2" class="styled" type="radio" name="rdUrea" value="Realizado"> Realizado
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-saved"></i>Registrar Elegibilidad</button>
+    <a onclick="history.back();" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+
+
+</form>
+
+
+

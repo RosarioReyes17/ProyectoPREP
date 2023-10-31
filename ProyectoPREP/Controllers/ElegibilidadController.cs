@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
 	public class ElegibilidadController : Controller
 	{
-		// GET: ElegibilidadController
-		public ActionResult Index()
+
+        DbPrepContext db;
+        public ElegibilidadController(DbPrepContext _db)
+        {
+            this.db = _db;
+        }
+        // GET: ElegibilidadController
+        public ActionResult Index()
 		{
 			return View();
 		}
@@ -18,21 +26,41 @@ namespace ProyectoPREP.Controllers
 		}
 
 		// GET: ElegibilidadController/Create
-		public ActionResult Create()
+		public ActionResult Create(int id)
 		{
-			return View();
+			var formulario = db.FormularioPreps.Where(p => p.DatosGeneralesId == id).FirstOrDefault();
+			var model = new ElegibilidadPrep();
+			model = db.ElegibilidadPreps.Where(x=>x.FormularioPrepId == formulario.Id).
+				Include(x=>x.FormularioPrep).ThenInclude(x=>x.DatosGenerales).FirstOrDefault();
+
+			//ViewBag.IdElegibilidad = model.Id;
+			//ViewBag.Idformulario = model.FormularioPrepId;
+			//ViewBag.Usuario = model.Usuario;
+
+			return View(model);
 		}
 
 		// POST: ElegibilidadController/Create
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Create(IFormCollection collection)
+		public ActionResult Create(int IdDatos, ElegibilidadPrep elegibilidad)
 		{
 			try
 			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
+
+                var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
+
+				var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
+				elegibilidad.Id = elegi.Id;
+				elegibilidad.Usuario = elegi.Usuario;
+				elegibilidad.Estatus = elegi.Estatus;
+
+                //db.Entry(elegibilidad).State = EntityState.Modified;
+				//db.SaveChanges();
+
+
+                return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+            }
+            catch
 			{
 				return View();
 			}
