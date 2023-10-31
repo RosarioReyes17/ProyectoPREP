@@ -9,12 +9,40 @@
 }
 
 <a>CONSULTA DATOS GENERALES</a>
-<a style="margin-left:300px" asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Crear nuevo</a>
 
 
-<div class="table table-responsive" style="height: 700px; overflow: auto">
+<div class="panel">
 
-    <table class="table tabletable-striped table-hover table-bordered" width="100%">
+    <a asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-primary"><i class="fa fa-plus"></i> Crear nuevo</a>
+    <br />
+</div>
+
+@* <div class="row">
+    <div class="col-md-4">
+
+        <a style="margin-left:300px" asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-primary"><i class="fa fa-plus"></i> Crear nuevo</a>
+    </div>
+
+</div> *@
+
+
+<div class="row">
+@*     <div class="col-md-4">
+        <label></label>
+        <input type="text" class="form-control" placeholder="Buscar por Documentacion, Nombre y Apellido" id="filtro" name="filtro" />
+    </div>
+    <div class="col-md-1">
+        <label></label>
+        <button type="submit" href="#" id="btnBuscar" name="btnBuscar" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Buscar</button>
+    </div> *@
+
+
+</div>
+
+
+<div style="display: none;" id="tablaContainer" class="container">
+    <br>
+    <table id="miTabla" class="table display" data-role="table" width="100%">
         <thead>
             <tr>
                 <th>ID</th>
@@ -39,11 +67,13 @@
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
                     <td>
-                        <a class="btn btn-dark" href="~/DatosGenerales/EditarDatosGenerales/@item.Id">Edit</a>
+                        <a title="Editar" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a class="btn btn-primary " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
                     </td>
+        
                 </tr>
             }
-        </tbody>
+        </tbody>    
     </table>
     
 </div>
@@ -64,3 +94,27 @@
     </ul>
 </div> *@
 
+@* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+ *@
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Configura DataTables sin mostrar la tabla
+            var table = $('#miTabla').DataTable({
+                columnDefs: [{
+                    targets: -1,
+                    className: 'right'
+                }],
+                "paging": true,
+                "pageLength": 10,
+                "searching": true,
+            });
+
+            // Después de que DataTables se haya configurado, muestra la tabla
+            $('#tablaContainer').css('display', 'block');
+
+            // Ahora, puedes ajustar la tabla según tus necesidades
+            // Por ejemplo, puedes agregar búsqueda o paginación personalizada aquí
+        });
+    </script>
+}
