@@ -1,4 +1,4 @@
-﻿@model ElegibilidadPrep
+﻿@model ProyectoPREP.Models.ElegibilidadPrep
 
 <div class="form-title">
     <h3>Requisitos Elegibilidad PrEP</h3>
@@ -37,13 +37,13 @@
                         <td>
                             ¿Prueba de VIH realizada?
                             <div class="radio radio-info">
-                                <input id="chkSeronegativo1" name="Seronegativo" class="styled" type="radio" value="Si">
+                                <input id="chkSeronegativo1" asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled" type="radio" value="Si">
                                 <label for="chkSeronegativo1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkSeronegativo2" name="Seronegativo" class="styled" type="radio" value="No">
+                                <input id="chkSeronegativo2" asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled" type="radio" value="No">
                                 <label for="chkSeronegativo2">
                                     No
                                 </label>
@@ -56,7 +56,7 @@
 
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaRealizacionPrueba" name="txtFechaRealizacionPrueba" class="form-control" type="date" required disabled>
+                                <input id="txtFechaRealizacionPrueba" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH" type="date" required disabled>
                             </div>
                         </td>
 
@@ -65,7 +65,7 @@
                             <br>
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaEntregaResultados" name="txtFechaEntregaResultados" class="form-control" type="date" required disabled />
+                                <input id="txtFechaEntregaResultados" asp-for="FechaEntregaVih" name="FechaEntregaVih" class="form-control pruebaVIH" type="date" required disabled />
                             </div>
                         </td>
 
@@ -73,14 +73,14 @@
                             <strong>Resultado de la Prueba del VIH:</strong>
                             <br>
                             <div class="radio radio-info">
-                                <input id="rdVIH1" class="styled" type="radio" name="VIH" value="Negativo" disabled>
+                                <input id="rdVIH1" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo" disabled>
                                 <label for="rdVIH1">
                                     Negativo.
                                 </label>
                             </div>
 
                             <div class="radio radio-info">
-                                <input id="rdVIH2" class="styled" type="radio" name="VIH" value="Positivo" disabled>
+                                <input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo" disabled>
                                 <label for="rdVIH2">
 
                                     Positivo
@@ -93,13 +93,13 @@
                         <td colspan="4">
                             En riesgo significativo de infección por VIH
                             <div class="radio radio-info">
-                                <input id="chkRiesgoVIH1" name="chkRiesgoVIH" class="styled" type="radio" value="Si">
+                                <input id="chkRiesgoVIH1" asp-for="RiesgoInfeccionVih" name="RiesgoInfeccionVih" class="styled" type="radio" value="Si">
                                 <label for="chkRiesgoVIH1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkRiesgoVIH2" name="chkRiesgoVIH" class="styled" type="radio" value="No">
+                                <input id="chkRiesgoVIH2" asp-for="RiesgoInfeccionVih" name="RiesgoInfeccionVih" class="styled" type="radio" value="No">
                                 <label for="chkRiesgoVIH2">
                                     No
                                 </label>
@@ -112,30 +112,30 @@
 
                             ¿Tiene Signos y síntomas?
                             <div class="radio radio-info">
-                                <input id="chkNoSignos1" name="chkNoSignos" class="styled" type="radio" value="Si" disabled>
+                                <input id="chkNoSignos1" asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled" type="radio" value="Si" disabled>
                                 <label for="chkNoSignos1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkNoSignos2" name="chkNoSignos" class="styled" type="radio" value="No" disabled>
+                                <input id="chkNoSignos2" asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled" type="radio" value="No" disabled/>
                                 <label for="chkNoSignos2">
                                     No
                                 </label>
                             </div>
                         </td>
                         <td colspan="2">
-                            <input type="checkbox" id="check1" name="check1" disabled class="chSignos"> Linfadenopatias cervicales e inguinales
+                            <input type="checkbox" id="check1"  name="Linfadenopatias" disabled class="chSignos" /> Linfadenopatias cervicales e inguinales
                             <br>
-                            <input type="checkbox" id="check2" name="check2" disabled class="chSignos"> Fiebre de origen desconocido
+                            <input type="checkbox" id="check2"  name="FiebreDesconocida" disabled class="chSignos"/> Fiebre de origen desconocido
                             <br>
-                            <input type="checkbox" id="check3" name="check3" disabled class="chSignos"> Diarrea prolongada de origen desconocido
+                            <input type="checkbox" id="check3"  name="DiarreaProlongada" disabled class="chSignos"/> Diarrea prolongada de origen desconocido
                             <br>
-                            <input type="checkbox" id="check4" name="check4" disabled class="chSignos"> Erupciones en la piel
+                            <input type="checkbox" id="check4"  name="ErupcionesPiel" disabled class="chSignos"/> Erupciones en la piel
                             <br>
-                            <input type="checkbox" id="check5" name="check5" disabled class="chSignos"> Infecciones Recurrentes
+                            <input type="checkbox" id="check5"  name="InfeccionesRecurrentes" disabled class="chSignos"/> Infecciones Recurrentes
                             <br>
-                            <input type="checkbox" id="check6" name="check6" disabled class="chSignos"> Hepato/esplenomegalia
+                            <input type="checkbox" id="check6"  name="HepatoEsplenomegalia" disabled class="chSignos"/> Hepato/esplenomegalia
                             <br>
                         </td>
                     </tr>
@@ -144,13 +144,13 @@
 
                             Se requiere CONFIRMAR CON PCR
                             <div class="radio radio-info">
-                                <input id="chkRequierePCR1" name="chkRequierePCR" class="styled" type="radio" value="Si">
+                                <input id="chkRequierePCR1" name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled" type="radio" value="Si">
                                 <label for="chkRequierePCR1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkRequierePCR2" name="chkRequierePCR" class="styled" type="radio" value="No">
+                                <input id="chkRequierePCR2" name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled" type="radio" value="No">
                                 <label for="chkRequierePCR2">
                                     No
                                 </label>
@@ -160,7 +160,7 @@
 
                             <div class="form-group col-md-8">
                                 Fecha Visita PCR:
-                                <input type="date" class="form-control" id="txtFechaVisitaPCR" name="txtFechaVisitaPCR" disabled>
+                                <input type="date" class="form-control pruebaPCR" id="txtFechaVisitaPCR" asp-for="FechaVisitaPcr" name="FechaVisitaPcr" disabled>
                             </div>
                         </td>
 
@@ -170,13 +170,13 @@
 
                             <div class="form-group col-md-8">
                                 Fecha Prueba PCR:
-                                <input type="date" class="form-control" id="txtFechaPruebaPCR" name="txtFechaPruebaPCR" disabled>
+                                <input type="date" class="form-control pruebaPCR" id="txtFechaPruebaPCR" asp-for="FechaPruebaPcr" name="FechaPruebaPcr" disabled>
                             </div>
                         </td>
                         <td id="tdPCR1">
                             Resultado Prueba PCR:
-                            <select id="ddlResutaldoPruebaPCR" name="ddlResutaldoPruebaPCR" class="form-control" required disabled>
-                                <option value="-1">--Seleccione--</option>
+                            <select id="ddlResutaldoPruebaPCR" name="ResultadoCargaViralPcr" asp-for="ResultadoCargaViralPcr" class="form-control pruebaPCR" required disabled>
+                                <option value="">--Seleccione--</option>
                                 <option>Detectado</option>
                                 <option>No Detectado</option>
                             </select>
@@ -199,21 +199,21 @@
                         <td>
                             <div class="form-group col-md-6">
                                 Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
-                                <input type="checkbox" id="chkHormonal" name="chkHormonal" disabled>
+                                <input type="checkbox" id="chkHormonal"  name="chkHormonal" disabled>
                                 <br>
                                 <br>
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
-                                <input id="txtResultadoCreatinina" name="txtResultadoCreatinina" type="text" min="0" max="60" style="width: 100%;" class="form-control col-sm-2 date" onchange="return soloNumeros(event)">
+                                <input id="txtResultadoCreatinina" asp-for="CreatininaValor" name="CreatininaValor" type="number" min="0" max="60" style="width: 100%;" class="form-control col-sm-2 date" >
                                 <br>
 
                                 Fecha:
                                 <br>
-                                <input id="txtFechaResultadoCreatinina" name="txtFechaResultadoCreatinina" class="form-control col-sm-2 date" type="date">
+                                <input id="txtFechaResultadoCreatinina" asp-for="FechaResultadoCreatinina" name="txtFechaResultadoCreatinina" class="form-control col-sm-2 date" type="date">
                                 <br>
                                 Resultado:
                                 <br>
-                                <span id="ValorCreatinina" name="ValorCreatinina" class="form-control"></span>
+                                <input id="ResultadoCreatinina" readonly asp-for="ResultadoCreatinina" name="ResultadoCreatinina" class="form-control" />
                             </div>
                         </td>
                         <td colspan="2">
@@ -295,9 +295,10 @@
                         </td>
                         <td>
                             ITS sindrómico
-                            <input id="ITDSindromico2" class="styled" type="radio" name="ITDSindromico" value="Si">Si
-                            <input id="ITDSindromico1" class="styled" type="radio" name="ITDSindromico" value="No"> No
                             <br>
+
+                            <input id="ITDSindromico2" class="styled" type="radio" name="ITDSindromico" value="Si"> Si
+                            <input id="ITDSindromico1" class="styled" type="radio" name="ITDSindromico" value="No"> No
                             <br>
                             <input id="chkITS1" name="chkITS1" class="styled" type="checkbox" value="Secrecion Uretral" disabled /> Secrecion Uretral
                             <br>
@@ -340,3 +341,70 @@
 
 
 
+@section scripts{
+
+	<script type="text/javascript">
+
+        var habilitarInputVIH = (e) => {
+            var valor = e;
+            if (valor == "Si") {
+
+                $(".pruebaVIH").removeAttr("disabled");
+
+            }
+            if (valor == "No") {
+                $(".pruebaVIH").attr("disabled", true);
+
+            }
+
+        }
+
+        var resultadoVIH = (e) => {
+            var valor = e;
+
+            if (valor == "Negativo") {
+                $("#chkNoSignos1").removeAttr("disabled");
+                $("#chkNoSignos2").removeAttr("disabled");
+
+            } 
+
+            if(valor == "Positivo"){
+                confirm("Esta seguro de este resultado?");
+                
+            }
+
+        }
+
+        var tieneSintomas = (e) => {
+            var valor = e;
+
+            if (valor == "Si") {
+                $(".chSignos").removeAttr("disabled");
+
+            }
+
+            if(valor == "No"){
+                $(".chSignos").attr("disabled", true);
+
+            }
+        }
+
+        var habilitarInputPCR = (e) => {
+            var valor = e;
+
+            if(valor == "Si"){
+                $(".pruebaPCR").removeAttr("disabled");
+                document.getElementById("divPrEPTratamiento").style.display = "none";
+
+
+            }
+            if (valor == "No") {
+                $(".pruebaPCR").attr("disabled", true);
+
+                document.getElementById("divPrEPTratamiento").style.display = "block";
+            }
+        }
+    
+    </script>
+
+}
