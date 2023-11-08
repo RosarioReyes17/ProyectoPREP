@@ -11,33 +11,50 @@
 <a>CONSULTA DATOS GENERALES</a>
 
 
-<div class="panel">
+<form action="/DatosGenerales/CreateCedula" method="post">
 
-    <a asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-primary"><i class="fa fa-plus"></i> Crear nuevo</a>
-    <br />
-</div>
+    
 
-@* <div class="row">
-    <div class="col-md-4">
+    <div class="row">
 
-        <a style="margin-left:300px" asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-primary"><i class="fa fa-plus"></i> Crear nuevo</a>
+        <div class="col-md-2">
+            
+            <br />
+            <a asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
+
+        </div>
+        <br />
+
+        <div class="col-2">
+
+            Ordenar por:
+            <select id="EstatusSolicitud" name="EstatusSolicitud" onChange=nav(this.value) class="form-control">
+                <option value="/#">--SELECCIONE--</option>
+                <option value="/Elegibilidad/Create">Elegibilidad</option>
+                <option value="#">Confirmación PCR</option>
+                <option value="#">Pendiente a Tratamiento PreP</option>
+                <option value="#">Prep Aprobado</option>
+                <option value="#">Prep Rechazado</option>
+                <option value="#">Prep Suspendida</option>
+
+            </select>
+        </div>
+
+        <div class="col-4">
+
+            Establecimiento:
+            <select id="FiltroEstablecimiento" name="FiltroEstablecimiento" onChange=nav(this.value) class="form-control">
+                <option value="/#">--SELECCIONE--</option>
+
+
+            </select>
+        </div>
+
     </div>
 
-</div> *@
+</form>
 
 
-<div class="row">
-@*     <div class="col-md-4">
-        <label></label>
-        <input type="text" class="form-control" placeholder="Buscar por Documentacion, Nombre y Apellido" id="filtro" name="filtro" />
-    </div>
-    <div class="col-md-1">
-        <label></label>
-        <button type="submit" href="#" id="btnBuscar" name="btnBuscar" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Buscar</button>
-    </div> *@
-
-
-</div>
 
 
 <div style="display: none;" id="tablaContainer" class="container">
@@ -65,10 +82,10 @@
                     <td>@item.Sexo</td>
                     <td>@item.Documento</td>
                     <td>@item.NOMBRE_CORTO_ES</td>
-                    <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
+                    <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>s
                     <td>
                         <a title="Editar" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a class="btn btn-primary " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
+                        <a class="btn btnElegibilidad " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
                     </td>
         
                 </tr>
@@ -94,12 +111,11 @@
     </ul>
 </div> *@
 
-@* <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
- *@
+
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            // Configura DataTables sin mostrar la tabla
+        
             var table = $('#miTabla').DataTable({
                 columnDefs: [{
                     targets: -1,
@@ -110,11 +126,13 @@
                 "searching": true,
             });
 
-            // Después de que DataTables se haya configurado, muestra la tabla
+     
             $('#tablaContainer').css('display', 'block');
 
-            // Ahora, puedes ajustar la tabla según tus necesidades
-            // Por ejemplo, puedes agregar búsqueda o paginación personalizada aquí
         });
+
+        function nav(value) {
+            if (value != "") { location.href = value }
+        }
     </script>
 }

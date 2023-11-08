@@ -51,20 +51,6 @@ namespace ProyectoPREP.Controllers
 			return View(lista);
         }
 
-        [HttpPost]
-        public ActionResult BuscarDatosGenerales(string filtro)
-        {
-            // Realiza la búsqueda en tu base de datos o en la lista 'lista' según el filtro
-            var lista = new List<DatosGeneralesNacionalidad>();
-            var resultados = lista.Where(item =>
-                item.Nombres.Contains(filtro) ||
-                item.Apellidos.Contains(filtro) ||
-                item.Documento.Contains(filtro)
-            ).ToList();
-
-            return View("ConsultaDatosGenerales", resultados);
-        }
-
 
         // GET: DatosGeneralesController/Create
         public ActionResult CreateCedula()
@@ -165,6 +151,11 @@ namespace ProyectoPREP.Controllers
 				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales"); //Revisar aqui
 			}
         }
+
+
+
+
+
 
         [HttpPost]
 		public ActionResult BuscarEnPadron(string Seleccion, string Prefix)
