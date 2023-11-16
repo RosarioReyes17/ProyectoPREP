@@ -3,15 +3,16 @@
 @using X.PagedList;
 
 @{
-    ViewBag.Title = "ConsultaDatsosGenerales";
+    ViewBag.Title = "Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ProyectoPREP.Models.DbPrepContext Entidad = new ProyectoPREP.Models.DbPrepContext();
 }
 
-<a>CONSULTA DATOS GENERALES</a>
+<h2>
+    Formulario de Selección Profilaxis Pre-Exposición
+</h2>
 
-
-
+<br />
 <form action="/DatosGenerales/CreateCedula" method="post">
 
     
@@ -21,7 +22,7 @@
         <div class="col-md-2">
             
             <br />
-            <a asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
+            <a asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
 
         </div>
         <br />
@@ -84,7 +85,7 @@
                     <td>@item.Sexo</td>
                     <td>@item.Documento</td>
                     <td>@item.NOMBRE_CORTO_ES</td>
-                    <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>s
+                    <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
                     <td>
                         <a title="Editar" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
                         <a class="btn btnElegibilidad " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
@@ -119,6 +120,9 @@
         $(document).ready(function () {
         
             var table = $('#miTabla').DataTable({
+
+               
+
                 columnDefs: [{
                     targets: -1,
                     className: 'right'
@@ -126,6 +130,27 @@
                 "paging": true,
                 "pageLength": 10,
                 "searching": true,
+
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
             });
 
      

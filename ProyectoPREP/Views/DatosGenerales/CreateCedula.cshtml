@@ -31,7 +31,7 @@
 					</td>
 					<td colspan="2">
 						<br>
-						<input type="button" id="btnIdentificar"  onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;" autocomplete="error" require="true">
+						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #5cb85c; color:white; display:block;" autocomplete="error" require="true">
 					</td>
 
 				</tr>
@@ -733,8 +733,11 @@
 	</div>
 	<div id="divMensaje" style="color:red;"></div>
 	<div id="divBotones" style="display: none;">
-		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="error" require="true"><i class="glyphicon glyphicon-saved"></i>Registrar</button>
-		<a href="Consulta" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
+		<a href="Consulta" name="Cancelar" id="Cancelar" class="btn btn-danger" ><i class="fa-solid fa-xmark"></i> Cancelar</a>
+		<br />
+		<br />
+		<label></label>
 	</div>
 	<script>
 		const dateInput = document.getElementById('txtFechaRegistroPrep');

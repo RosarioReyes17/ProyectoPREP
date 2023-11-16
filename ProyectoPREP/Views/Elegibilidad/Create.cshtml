@@ -1,4 +1,7 @@
 ﻿@model ProyectoPREP.Models.ElegibilidadPrep
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div class="form-title">
     <h3>Requisitos Elegibilidad PrEP</h3>
@@ -184,7 +187,7 @@
                         </td>
                     </tr>
                     <tr id="trNota">
-                        <td colspan="4">*NOTA: Si no tiene los datos para confirmar puede guardar el formulario en este punto y continuar cuando tenga la información</td>
+                        <td colspan="4">*NOTA: Si usted no tiene los datos para confirmar puede guardar el formulario en este punto y continuar cuando tenga la información</td>
                     </tr>
                 </tbody>
             </table>
@@ -319,7 +322,7 @@
                             <input disabled required id="rdHemo1" class="styled segundaParte" type="radio" name="Hemograma" value="No Realizado"> No Realizado
                             <input disabled id="rdHemo2" class="styled segundaParte" type="radio" name="Hemograma" value="Realizado"> Realizado
                             <br>
-
+  
                         </td>
                         <td id="UREAp" colspan="2">
                             UREA:
@@ -328,17 +331,25 @@
                             <input disabled id="rdUrea2" class="styled segundaParte" type="radio" name="Urea" value="Realizado"> Realizado
                             <br>
                         </td>
+
+
+
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Registrar Elegibilidad</button>
+        <a onclick="history.back();" class="btn btn-danger" href="~/DatosGenerales/ConsultaDatosGenerales"><i class="fa-solid fa-xmark"></i> Cancelar</a>
+        <br />
+        <br />
+        <br />
     </div>
-
-    <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-saved"></i>Registrar Elegibilidad</button>
-    <a onclick="history.back();" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
-
-
+        
 </form>
+
+
+
 
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
