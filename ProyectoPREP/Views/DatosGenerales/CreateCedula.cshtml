@@ -7,6 +7,7 @@
 
 
 <form action="CreateCedula" method="post">
+	<input name="DatosGenerales.Edad" asp-for="DatosGenerales.Edad" type="hidden" id="edad" />
 	<div id="divValidarUsuario" class="form-visible">
 		<h3>Identificarse en PrEP</h3>
 		<table class="table">
@@ -886,6 +887,7 @@
 					document.getElementById("txtNombre").value = (informacion.nombres);
 					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
 					document.getElementById("txtDocumento").value = (Identificacion);
+					document.getElementById("edad").value = modelos.edad;
 
 					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento.toString();
 					document.getElementById("ddlDocumentoOpcion").value = "Si";

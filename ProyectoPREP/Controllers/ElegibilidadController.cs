@@ -19,52 +19,81 @@ namespace ProyectoPREP.Controllers
 			return View();
 		}
 
-		// GET: ElegibilidadController/Details/5
-		public ActionResult Details(int id)
+        public JsonResult VIHPositivo(int id)
 		{
-			return View();
-		}
+            bool status = true;
 
-		// GET: ElegibilidadController/Create
-		public ActionResult Create(int id)
+            var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.Id == id);
+			elegibilidad.Estatus = 6;
+			db.Entry(elegibilidad).State = EntityState.Modified;
+			db.SaveChanges();
+
+            var result = new { status };
+            return Json(result);
+        }
+
+
+        public ActionResult Create(int id)
 		{
 			var formulario = db.FormularioPreps.Where(p => p.DatosGeneralesId == id).FirstOrDefault();
 			var model = new ElegibilidadPrep();
 			model = db.ElegibilidadPreps.Where(x=>x.FormularioPrepId == formulario.Id).
 				Include(x=>x.FormularioPrep).ThenInclude(x=>x.DatosGenerales).FirstOrDefault();
 
-			//ViewBag.IdElegibilidad = model.Id;
-			//ViewBag.Idformulario = model.FormularioPrepId;
-			//ViewBag.Usuario = model.Usuario;
+			var edad = model.FormularioPrep.DatosGenerales.Edad;
+			if (edad == null)
+			{
+				edad = 0;
+			}
+
+            ViewBag.Peso = model.FormularioPrep.DatosGenerales.Peso;
+			ViewBag.Edad = Convert.ToDecimal(edad);
+			ViewBag.Sexo = model.FormularioPrep.DatosGenerales.Sexo;
+			ViewBag.IdDatos = model.FormularioPrep.DatosGenerales.Id;
+			ViewBag.IdElegibilidad = model.Id;
+			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
 			return View(model);
 		}
 
 		// POST: ElegibilidadController/Create
 		[HttpPost]
-		public ActionResult Create(int IdDatos, ElegibilidadPrep elegibilidad)
+		public ActionResult Create(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
 		{
 			try
 			{
 
                 var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
 
-				var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
-				elegibilidad.Id = elegi.Id;
-				elegibilidad.Usuario = elegi.Usuario;
-				elegibilidad.Estatus = elegi.Estatus;
+                var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
 
-                //db.Entry(elegibilidad).State = EntityState.Modified;
-				//db.SaveChanges();
+				using (DbPrepContext db = new DbPrepContext())
+				{
+                    int id = elegi.Id;
 
+                    elegibilidad.Id = id;
+                    elegibilidad.Usuario = Convert.ToString(1);
+                    elegibilidad.Estatus = 3;
 
-                return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+                    seguimiento.ElegibilidadPrepId = id;
+                    seguimiento.SeguimimientoPruebaId = 1;
+                    seguimiento.Id = 0;
+
+                    db.Seguimientos.Add(seguimiento);
+                    db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }
+
+               
+				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
             }
-            catch
-			{
-				return View();
-			}
-		}
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
 
 		// GET: ElegibilidadController/Edit/5
 		public ActionResult Edit(int id)

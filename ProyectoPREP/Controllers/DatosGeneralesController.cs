@@ -77,8 +77,11 @@ namespace ProyectoPREP.Controllers
 		{
 			try
 			{
-				
-				formulario.DatosGenerales.Usuario = Convert.ToString(1);
+                DateTime fechaNacimiento1 = (DateTime)formulario.DatosGenerales.FechaNacimiento;
+                var edad = CalcularEdad(fechaNacimiento1);
+
+				formulario.DatosGenerales.Edad = edad;
+                formulario.DatosGenerales.Usuario = Convert.ToString(1);
 				formulario.DatosGenerales.IdDeptoDepend = 1641;
 				formulario.DatosGenerales.EnRiesgo = "Si";
 			
@@ -249,8 +252,20 @@ namespace ProyectoPREP.Controllers
 
 			status = true;
 			string fechaNacimiento = InfoPaciente.fecha_nacimiento.Date.ToString("yyyy-MM-dd");
-			result = new { status, InfoPaciente, fechaNacimiento };
+			DateTime fechaNacimiento1 = InfoPaciente.fecha_nacimiento.Date;
+			var edad = CalcularEdad(fechaNacimiento1);
+            result = new { status, InfoPaciente, fechaNacimiento,edad };
 			return Json(result);
+		}
+
+		int CalcularEdad(DateTime fechaNacimiento )
+		{
+			DateTime fechaActual = DateTime.Now;
+			if (fechaActual.Month > fechaNacimiento.Month || fechaNacimiento.Month == fechaActual.Month && fechaActual.Day > fechaNacimiento.Day )
+			{
+				return fechaActual.Year - fechaNacimiento.Year ;
+			}
+			return fechaActual.Year - fechaNacimiento.Year - 1;
 		}
 
 		Int32 ValidarExisteEnFappsSIRENP(string DocumentoIdentidad)
