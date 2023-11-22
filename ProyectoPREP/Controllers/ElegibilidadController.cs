@@ -45,12 +45,16 @@ namespace ProyectoPREP.Controllers
 			{
 				edad = 0;
 			}
+			
+			string fecha = model.FormularioPrep.DatosGenerales.FechaIngresoSai.ToString("yyyy-MM-dd");
+			
 
             ViewBag.Peso = model.FormularioPrep.DatosGenerales.Peso;
 			ViewBag.Edad = Convert.ToDecimal(edad);
 			ViewBag.Sexo = model.FormularioPrep.DatosGenerales.Sexo;
 			ViewBag.IdDatos = model.FormularioPrep.DatosGenerales.Id;
 			ViewBag.IdElegibilidad = model.Id;
+			ViewBag.FechaPrep = fecha;
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
 			return View(model);
@@ -79,10 +83,10 @@ namespace ProyectoPREP.Controllers
                     seguimiento.SeguimimientoPruebaId = 1;
                     seguimiento.Id = 0;
 
-                    db.Seguimientos.Add(seguimiento);
-                    db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
-                    db.SaveChanges();
-
+                    //db.Seguimientos.Add(seguimiento);
+                    //db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+                    //db.SaveChanges();
+					
                 }
 
                
@@ -98,6 +102,7 @@ namespace ProyectoPREP.Controllers
 		// GET: ElegibilidadController/Edit/5
 		public ActionResult Edit(int id)
 		{
+			
 			return View();
 		}
 

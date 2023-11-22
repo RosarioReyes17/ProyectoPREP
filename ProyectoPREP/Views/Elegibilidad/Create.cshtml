@@ -26,6 +26,7 @@
     <input asp-for="Usuario" name="Usuario" type="hidden" />
     <input asp-for="Estatus" name="Estatus" type="hidden" />
     <input name="IdElegibilidad" id="IdElegibilidad" value="@ViewBag.IdElegibilidad" type="hidden" />
+    <input name="FechaPrep" id="FechaPrep" type="hidden" value="@ViewBag.FechaPrep" />
 
 
     <div id="divFormPrEP" class="form-invisible">
@@ -202,12 +203,12 @@
                     <tr>
                         <td>
                             <div class="form-group col-md-6">
-                              @*   Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
+                                Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
                                 <input type="checkbox" id="chkHormonal"  name="chkHormonal" disabled>
-                                <br> *@
+                                <br>
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
-                                <input id="txtResultadoCreatinina" disabled onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" type="number" min="0" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
+                                <input id="txtResultadoCreatinina" disabled onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" step=".1" type="number" min="0" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
                                 <br>
 
                                 Fecha:
@@ -345,6 +346,20 @@
         <br />
         <br />
     </div>
+
+
+    <script>
+        var fechaPrueba = new Date(document.getElementById("FechaPrep").value);
+        
+        const minDate = fechaPrueba.toISOString().split("T")[0];
+        const maxDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() + 7))
+            .toISOString()
+            .split("T")[0];
+
+        var min = document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
+        var max = document.getElementById("txtFechaRealizacionPrueba").setAttribute('max', maxDate);
+        var fecha = fechaPrueba.toISOString().split("T")[0];
+    </script>
         
 </form>
 
