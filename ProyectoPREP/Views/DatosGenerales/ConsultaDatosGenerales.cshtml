@@ -8,55 +8,72 @@
     ProyectoPREP.Models.DbPrepContext Entidad = new ProyectoPREP.Models.DbPrepContext();
 }
 
+<link href="~/css/prepstyles.css" rel="stylesheet" />
+
 <h2>
-    Formulario de Selección Profilaxis Pre-Exposición
+    
 </h2>
 
 <br />
-<form action="/DatosGenerales/CreateCedula" method="post">
 
+
+
+<div class="container">
     
+    <div class="panel-group">
 
-    <div class="row">
 
-        <div class="col-md-2">
-            
-            <br />
-            <a asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
+        <div class="panel panel-success">
+            <div class="panel-heading">Formulario de Selección Profilaxis Pre-Exposición</div>
+            <div class="panel-body">
+                
+                <form action="/DatosGenerales/CreateCedula" method="post">
 
+                    <div class="row">
+
+                        <div class="col-md-2">
+
+                            <br />
+                            <a asp-action="CreateCedula" asp-controller="DatosGenerales" class="btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
+
+                        </div>
+                        <br />
+
+                        <div class="col-2">
+
+                            Ordenar por:
+                            <select id="EstatusSolicitud" name="EstatusSolicitud" onChange=nav(this.value) class="form-control">
+                                <option value="/#">--SELECCIONE--</option>
+                                <option value="/Elegibilidad/Create">Elegibilidad</option>
+                                <option value="#">Confirmación PCR</option>
+                                <option value="#">Pendiente a Tratamiento PreP</option>
+                                <option value="#">Prep Aprobado</option>
+                                <option value="#">Prep Rechazado</option>
+                                <option value="#">Prep Suspendida</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-4">
+
+                            Establecimiento:
+                            <select id="FiltroEstablecimiento" name="FiltroEstablecimiento" onChange=nav(this.value) class="form-control">
+                                <option value="/#">--SELECCIONE--</option>
+
+
+                            </select>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
         </div>
-        <br />
 
-        <div class="col-2">
-
-            Ordenar por:
-            <select id="EstatusSolicitud" name="EstatusSolicitud" onChange=nav(this.value) class="form-control">
-                <option value="/#">--SELECCIONE--</option>
-                <option value="/Elegibilidad/Create">Elegibilidad</option>
-                <option value="#">Confirmación PCR</option>
-                <option value="#">Pendiente a Tratamiento PreP</option>
-                <option value="#">Prep Aprobado</option>
-                <option value="#">Prep Rechazado</option>
-                <option value="#">Prep Suspendida</option>
-
-            </select>
-        </div>
-
-        <div class="col-4">
-
-            Establecimiento:
-            <select id="FiltroEstablecimiento" name="FiltroEstablecimiento" onChange=nav(this.value) class="form-control">
-                <option value="/#">--SELECCIONE--</option>
-
-
-            </select>
-        </div>
-
+        
     </div>
-
-</form>
-
-
+</div>
 
 
 <div style="display: none;" id="tablaContainer" class="container">
@@ -151,6 +168,14 @@
                         "previous": "Anterior"
                     }
                 },
+
+                drawCallback: function () {
+                    // Remover el fondo de color de todas las filas
+                    $('#miTabla').find('li').css('background-color', '');
+
+                    // Agregar el fondo de color solo a la fila activa
+                    $('#miTabla').find('li.active').css('background-color', '#5bc0de');
+                },
             });
 
      
@@ -158,8 +183,12 @@
 
         });
 
+
         function nav(value) {
             if (value != "") { location.href = value }
         }
+
+        
     </script>
+
 }
