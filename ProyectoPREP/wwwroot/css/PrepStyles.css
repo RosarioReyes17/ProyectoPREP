@@ -11,3 +11,9 @@
 
 }
 
+.page-item.active .page-link, .page-item.active .dataTable-pagination a, .dataTable-pagination .page-item.active a, .dataTable-pagination li.active .page-link, .dataTable-pagination li.active a {
+    z-index: 3;
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #5bc0de;
+}
