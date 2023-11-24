@@ -25,6 +25,7 @@ namespace ProyectoPREP.Controllers
 
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.Id == id);
 			elegibilidad.Estatus = 6;
+			elegibilidad.SeronegativoVih = "No";
 			db.Entry(elegibilidad).State = EntityState.Modified;
 			db.SaveChanges();
 
@@ -55,6 +56,7 @@ namespace ProyectoPREP.Controllers
 			ViewBag.IdDatos = model.FormularioPrep.DatosGenerales.Id;
 			ViewBag.IdElegibilidad = model.Id;
 			ViewBag.FechaPrep = fecha;
+			ViewBag.Sexo = model.FormularioPrep.DatosGenerales.Sexo;
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
 			return View(model);

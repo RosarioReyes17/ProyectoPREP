@@ -27,6 +27,7 @@
     <input asp-for="Estatus" name="Estatus" type="hidden" />
     <input name="IdElegibilidad" id="IdElegibilidad" value="@ViewBag.IdElegibilidad" type="hidden" />
     <input name="FechaPrep" id="FechaPrep" type="hidden" value="@ViewBag.FechaPrep" />
+    <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
 
 
     <div id="divFormPrEP" class="form-invisible">
@@ -271,7 +272,7 @@
                                 <input id="rdsifilis1" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
                                 <br />
                                 <input id="rdsifilis2" onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo"> Reactivo
-                                <input id="txtfechasifilis1" required disabled name="SifilisFecha" class="form-control col-sm-2 date" type="date" style="display:initial;" placeholder="Fecha">
+                                <input id="txtfechasifilis1" required name="SifilisFecha" class="form-control col-sm-2 date" type="date" style="display:initial;" placeholder="Fecha">
                             </div>
                         </td>
                         <td>
@@ -284,7 +285,7 @@
                                 <input id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo"> Negativo
                                 <input id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo"> Positivo
 
-                                <input id="txtfechaHBsAg1" required disabled name="HbsAgFecha" class="form-control col-sm-5  date" type="date" style="display:initial;" placeholder="Fecha">
+                                <input id="txtfechaHBsAg1" required name="HbsAgFecha" class="form-control col-sm-5  date" type="date" style="display:initial;" placeholder="Fecha">
                             </div>
                         </td>
 
@@ -295,7 +296,7 @@
                                 <br>
                                 <input id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo"> Negativo
                                 <input id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo"> Positivo
-                                <input id="txtfechaHepatitis" required disabled name="HepatitisCFecha" class="form-control col-sm-8 date" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                                <input id="txtfechaHepatitis" required name="HepatitisCFecha" class="form-control col-sm-8 date" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
                             </div>
                         </td>
                         <td>
@@ -400,13 +401,22 @@
             var KG = 2.205;
             var Edad = @ViewBag.Edad;
             var Peso = @ViewBag.Peso;
+            var sexo = document.getElementById("sexo").value;
             var PesoKG = Peso/KG;
 
             var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
             // Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
             // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
-            var Resultado = ((140 - 37) * PesoKG) / (72 * valorCreatinina);
-            document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+            if (sexo == "F") {
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+
+            }
+            if (sexo == "M") {
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+
+            }
         }
 
 
