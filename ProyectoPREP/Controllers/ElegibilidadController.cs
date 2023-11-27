@@ -57,6 +57,7 @@ namespace ProyectoPREP.Controllers
 			ViewBag.IdElegibilidad = model.Id;
 			ViewBag.FechaPrep = fecha;
 			ViewBag.Sexo = model.FormularioPrep.DatosGenerales.Sexo;
+			ViewBag.Genero = model.FormularioPrep.DatosGenerales.Genero;
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
 			return View(model);
@@ -73,7 +74,29 @@ namespace ProyectoPREP.Controllers
 
                 var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
 
-				using (DbPrepContext db = new DbPrepContext())
+				if (elegibilidad.ResultadoCargaViralPcr != null && elegibilidad.CargaViralPcr == "Si")
+				{
+                    int id = elegi.Id;
+
+                    elegibilidad.Id = id;
+                    elegibilidad.Usuario = Convert.ToString(1);
+                    elegibilidad.Estatus = 2;
+
+
+                    seguimiento.ElegibilidadPrepId = id;
+                    seguimiento.SeguimimientoPruebaId = 1;
+                    seguimiento.Id = 0;
+
+                    //db.Seguimientos.Add(seguimiento);
+                    //db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+                    //db.SaveChanges();
+                    return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+
+                }
+
+
+
+                using (DbPrepContext db = new DbPrepContext())
 				{
                     int id = elegi.Id;
 
@@ -102,10 +125,65 @@ namespace ProyectoPREP.Controllers
         }
 
 		// GET: ElegibilidadController/Edit/5
-		public ActionResult Edit(int id)
+
+
+		public JsonResult PCRDetectado(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+		{
+
+            var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
+
+            var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
+
+            using (DbPrepContext db = new DbPrepContext())
+            {
+				var estatus = true;
+				//int id = elegi.Id;
+
+				elegi.SeronegativoVih = elegibilidad.SeronegativoVih;
+				elegi.FechaPruebaVih = elegibilidad.FechaPruebaVih;
+				elegi.FechaEntregaVih = elegibilidad.FechaEntregaVih;
+				elegi.ResultadoPruebaVih = elegibilidad.ResultadoPruebaVih;
+				elegi.RiesgoInfeccionVih = elegibilidad.RiesgoInfeccionVih;
+				elegi.SignosSintomas = elegibilidad.SignosSintomas;
+
+				elegi.Linfadenopatias = elegibilidad.Linfadenopatias;
+				elegi.FiebreDesconocida = elegibilidad.FiebreDesconocida;
+				elegi.DiarreaProlongada = elegibilidad.DiarreaProlongada;
+				elegi.ErupcionesPiel = elegibilidad.ErupcionesPiel;
+				elegi.InfeccionesRecurrentes = elegibilidad.InfeccionesRecurrentes;
+				elegi.HepatoEsplenomegalia = elegibilidad.HepatoEsplenomegalia;
+
+				elegi.CargaViralPcr = elegibilidad.CargaViralPcr;
+				elegi.FechaVisitaPcr = elegibilidad.FechaVisitaPcr;
+				elegi.FechaPruebaPcr = elegibilidad.FechaPruebaPcr;
+				elegi.ResultadoCargaViralPcr = elegibilidad.ResultadoCargaViralPcr;
+
+
+                //elegibilidad.Id = id;
+                //elegibilidad.Usuario = Convert.ToString(1);
+                //elegibilidad.Estatus = 6;
+
+                //seguimiento.ElegibilidadPrepId = elegi.Id;
+                //seguimiento.SeguimimientoPruebaId = 1;
+                //seguimiento.Id = 0;
+
+				//db.Seguimientos.Add(seguimiento);
+				//db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
+				//db.SaveChanges();
+
+				var result = new
+				{
+					estatus = true
+				}; 
+				return Json( result);
+
+            }
+
+        }
+        public ActionResult Edit(int id)
 		{
 			
-			return View();
+			return View();		
 		}
 
 		// POST: ElegibilidadController/Edit/5

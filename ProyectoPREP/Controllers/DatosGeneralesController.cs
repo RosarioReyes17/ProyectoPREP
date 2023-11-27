@@ -93,6 +93,7 @@ namespace ProyectoPREP.Controllers
 				else
 				{
 					formulario.DatosGenerales.TipoDocumento = "SN";
+					formulario.DatosGenerales.Documento = "SN";
 
 				}
 

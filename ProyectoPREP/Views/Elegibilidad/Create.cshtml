@@ -21,13 +21,14 @@
 </div>
 
 <form asp-controller="Elegibilidad" asp-action="Create" method="post">
-    <input name="IdDatos" value="@ViewBag.IdDatos" type="hidden" />
+    <input name="IdDatos" id="IdDatos" value="@ViewBag.IdDatos" type="hidden" />
     <input asp-for="FormularioPrepId" name="FormularioPrepId" type="hidden" />
     <input asp-for="Usuario" name="Usuario" type="hidden" />
     <input asp-for="Estatus" name="Estatus" type="hidden" />
     <input name="IdElegibilidad" id="IdElegibilidad" value="@ViewBag.IdElegibilidad" type="hidden" />
     <input name="FechaPrep" id="FechaPrep" type="hidden" value="@ViewBag.FechaPrep" />
     <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
+    <input name="" id="genero" type="hidden" value="@ViewBag.Genero" />
 
 
     <div id="divFormPrEP" class="form-invisible">
@@ -62,7 +63,7 @@
 
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaRealizacionPrueba" onchange="diferenciaFecha();" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH" type="date" required disabled>
+                                <input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH " type="date" required disabled>
                             </div>
                         </td>
 
@@ -71,7 +72,7 @@
                             <br>
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaEntregaResultados"  asp-for="FechaEntregaVih" name="FechaEntregaVih" class="form-control pruebaVIH" type="date" required disabled />
+                                <input id="txtFechaEntregaResultados" onkeydown="return false" asp-for="FechaEntregaVih" name="FechaEntregaVih" class="form-control pruebaVIH " type="date" required disabled />
                             </div>
                         </td>
 
@@ -166,7 +167,7 @@
 
                             <div class="form-group col-md-8">
                                 Fecha Visita PCR:
-                                <input type="date" required class="form-control pruebaPCR" id="txtFechaVisitaPCR" asp-for="FechaVisitaPcr" name="FechaVisitaPcr" disabled>
+                                <input type="date" required onkeydown="return false" class="form-control pruebaPCR" id="txtFechaVisitaPCR" asp-for="FechaVisitaPcr" name="FechaVisitaPcr" disabled>
                             </div>
                         </td>
 
@@ -176,15 +177,15 @@
 
                             <div class="form-group col-md-8">
                                 Fecha Prueba PCR:
-                                <input type="date" required class="form-control pruebaPCR" id="txtFechaPruebaPCR" asp-for="FechaPruebaPcr" name="FechaPruebaPcr" disabled>
+                                <input type="date" required onkeydown="return false" class="form-control pruebaPCR" id="txtFechaPruebaPCR" asp-for="FechaPruebaPcr" name="FechaPruebaPcr" disabled>
                             </div>
                         </td>
                         <td id="tdPCR1">
                             Resultado Prueba PCR:
-                            <select id="ddlResutaldoPruebaPCR" name="ResultadoCargaViralPcr" asp-for="ResultadoCargaViralPcr" class="form-control pruebaPCR" required disabled>
+                            <select id="ddlResutaldoPruebaPCR" onchange="pcrDetectado()" name="ResultadoCargaViralPcr" asp-for="ResultadoCargaViralPcr" class="form-control pruebaPCR" required disabled>
                                 <option value="">--Seleccione--</option>
-                                <option>Detectado</option>
-                                <option>No Detectado</option>
+                                <option value="Detectado">Detectado</option>
+                                <option value="No Detectado">No Detectado</option>
                             </select>
                         </td>
                     </tr>
@@ -204,9 +205,12 @@
                     <tr>
                         <td>
                             <div class="form-group col-md-6">
-                                Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
-                                <input type="checkbox" id="chkHormonal"  name="chkHormonal" disabled>
+                                    <label  style="color:red">Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
+                                        <input  type="checkbox" id="chkHormonal" name="chkHormonal" value="true" disabled>
+
+                                    </label>
                                 <br>
+                                
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
                                 <input id="txtResultadoCreatinina" disabled onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" step=".1" type="number" min="0" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
@@ -214,7 +218,7 @@
 
                                 Fecha:
                                 <br>
-                                <input id="txtFechaResultadoCreatinina" disabled required asp-for="FechaResultadoCreatinina" name="FechaResultadoCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+                                <input id="txtFechaResultadoCreatinina" onkeydown="return false" disabled required asp-for="FechaResultadoCreatinina" name="FechaResultadoCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
                                 <br>
                                 Resultado:
                                 <br>
@@ -268,11 +272,13 @@
 
                             <div class="form-group col-md-6">
                                 Sifilis(VDRL) Realizada:
-                                <br>
+                                <br/>
+                                <br />
+
                                 <input id="rdsifilis1" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
                                 <br />
                                 <input id="rdsifilis2" onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo"> Reactivo
-                                <input id="txtfechasifilis1" required name="SifilisFecha" class="form-control col-sm-2 date" type="date" style="display:initial;" placeholder="Fecha">
+                                <input id="txtfechasifilis1" required name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;" placeholder="Fecha">
                             </div>
                         </td>
                         <td>
@@ -280,12 +286,13 @@
 
                             <div class="form-group col-md-8">
                                 HBsAg Realizada:
-                                <br>
+                                <br/>
 
                                 <input id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo"> Negativo
+                                <br />
                                 <input id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo"> Positivo
 
-                                <input id="txtfechaHBsAg1" required name="HbsAgFecha" class="form-control col-sm-5  date" type="date" style="display:initial;" placeholder="Fecha">
+                                <input id="txtfechaHBsAg1" required onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;" placeholder="Fecha">
                             </div>
                         </td>
 
@@ -293,10 +300,12 @@
 
                             <div class="form-group col-md-8">
                                 Hepatitis C Realizada:
-                                <br>
+                                <br/>
                                 <input id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo"> Negativo
+                                <br />
+
                                 <input id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo"> Positivo
-                                <input id="txtfechaHepatitis" required name="HepatitisCFecha" class="form-control col-sm-8 date" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                                <input id="txtfechaHepatitis" onkeydown="return false" required name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
                             </div>
                         </td>
                         <td>
@@ -350,6 +359,14 @@
 
 
     <script>
+
+        
+        var genero = document.getElementById("genero").value;
+        if (genero == "3") {
+            $("#chkHormonal").removeAttr("disabled");
+
+        }
+
         var fechaPrueba = new Date(document.getElementById("FechaPrep").value);
         
         const minDate = fechaPrueba.toISOString().split("T")[0];
@@ -360,6 +377,9 @@
         var min = document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
         var max = document.getElementById("txtFechaRealizacionPrueba").setAttribute('max', maxDate);
         var fecha = fechaPrueba.toISOString().split("T")[0];
+
+       
+
     </script>
         
 </form>
@@ -371,13 +391,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="color:red">Advertencia</h5>
+                <h5 class="modal-title" style="color:red; margin-left: 90px;">
+                    Advertencia
+                </h5>
                 <button type="button" onclick="cerrarModal();" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p id="cuerpoModal"></p>
+                <p id="cuerpoModal" style="text-align:center"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="cerrarModal();" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -397,28 +419,108 @@
         const cerrarModal = () => {
             $('#myModal').modal('hide');
         }
+
+       
+        function obtenerValor(name) {
+            // Seleccionar el radio button marcado
+            var radios = document.getElementsByName(name);
+            var valorSeleccionado = '';
+
+            // Iterar sobre los radio buttons para encontrar el marcado
+            radios.forEach(function (radio) {
+                if (radio.checked) {
+                    // Obtener el valor del radio button seleccionado
+                    valorSeleccionado = radio.value;
+                }
+            });
+            return valorSeleccionado;
+        }
+
+        const pcrDetectado = () => {
+            var IdDatos = document.getElementById("IdDatos").value;
+
+            var SeronegativoVih = obtenerValor("SeronegativoVih");
+            var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
+            var FechaEntregaVih = document.getElementById("txtFechaEntregaResultados").value;
+            var ResultadoPruebaVih = obtenerValor("ResultadoPruebaVih");
+            var RiesgoInfeccionVih = obtenerValor("RiesgoInfeccionVih");
+            var SignosSintomas = obtenerValor("SignosSintomas");
+            var Linfadenopatias = document.getElementById("check1").value;
+            var FiebreDesconocida = document.getElementById("check2").value;
+            var DiarreaProlongada = document.getElementById("check3").value;
+            var ErupcionesPiel = document.getElementById("check4").value;
+            var InfeccionesRecurrentes = document.getElementById("check5").value;
+            var HepatoEsplenomegalia = document.getElementById("check6").value;
+            var CargaViralPcr = obtenerValor("CargaViralPcr");
+            var FechaVisitaPcr = document.getElementById("txtFechaVisitaPCR").value;
+            var FechaPruebaPCR = document.getElementById("txtFechaPruebaPCR").value;
+            var ResultadoCargaViralPcr = document.getElementById("ddlResutaldoPruebaPCR").value;
+
+            if (ResultadoCargaViralPcr == "Detectado") {
+                var confirmar = confirm("¿Esta seguro de este resultado?");
+
+                // $("#cuerpoModal").empty();
+                // document.getElementById("cuerpoModal").innerHTML = "El ciudadano debe ser referido al programa nacional VIH. El formulario se da por terminado y rechaza la solicitud";
+                // $('#myModal').modal('show');
+                // setTimeout(paginaPrincipal, 5000);
+                
+                if(confirmar == true){
+
+                    $.post("@Url.Action("PCRDetectado","Elegibilidad")", {
+                        IdDatos: IdDatos
+                        ,SeronegativoVih: SeronegativoVih
+                        , FechaPruebaVih: FechaPruebaVih, FechaEntregaVih: FechaEntregaVih, ResultadoPruebaVih: ResultadoPruebaVih
+                        , RiesgoInfeccionVih: RiesgoInfeccionVih, SignosSintomas: SignosSintomas, Linfadenopatias: Linfadenopatias
+                        , FiebreDesconocida: FiebreDesconocida, DiarreaProlongada: DiarreaProlongada, ErupcionesPiel: ErupcionesPiel
+                        , InfeccionesRecurrentes: InfeccionesRecurrentes, HepatoEsplenomegalia: HepatoEsplenomegalia
+                        , CargaViralPcr: CargaViralPcr, FechaVisitaPcr: FechaVisitaPcr, FechaPruebaPCR: FechaPruebaPCR
+                        , ResultadoCargaViralPcr: ResultadoCargaViralPcr,
+                    }, function (modelos) {
+
+                        paginaPrincipal();
+                    })
+                }else{
+                    document.getElementById("ddlResutaldoPruebaPCR").value = "";
+                }
+
+            }
+        }
+
         const calcularCreatinina = (e) => {
             var KG = 2.205;
             var Edad = @ViewBag.Edad;
             var Peso = @ViewBag.Peso;
             var sexo = document.getElementById("sexo").value;
+            var genero = document.getElementById("genero").value;
+            var chkHormonal = document.getElementById("chkHormonal").checked;
             var PesoKG = Peso/KG;
 
             var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
             // Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
             // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
             if (sexo == "F") {
+
                 var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
 
             }
             if (sexo == "M") {
-                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
-                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+
+                if (genero == "3" && chkHormonal == true) {
+
+                    var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                    document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+
+                }
+                else {
+                    
+                    var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                    document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+
+                }
 
             }
         }
-
 
         var habilitarInputSifilis = (e) => {
             var valor = e;
@@ -437,27 +539,24 @@
             var valor = e;
             if (valor == "Positivo") {
 
-                $("#txtfechaHBsAg1").removeAttr("disabled");
+                $("#cuerpoModal").empty();
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio medico espacializado";
+                $('#myModal').modal('show');
 
             }
-            if (valor == "Negativo") {
-                $("#txtfechaHBsAg1").attr("disabled", false);
-
-            }
+         
         }
-
 
         var habilitarInputHepatitis = (e) => {
             var valor = e;
             if (valor == "Positivo") {
 
-                $("#txtfechaHepatitis").removeAttr("disabled");
+                $("#cuerpoModal").empty();
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio medico espacializado";
+                $('#myModal').modal('show');
 
             }
-            if (valor == "Negativo") {
-                $("#txtfechaHepatitis").attr("disabled", false);
-
-            }
+         
         }
 
         var habilitarInputsindrómico = (e) => {
@@ -489,6 +588,7 @@
             }
 
         }
+        
         const VIHPositivo = () => {
             $("#MunicipioResidencia").empty();
             var IdElegibilidad = document.getElementById("IdElegibilidad").value;
@@ -498,12 +598,14 @@
 
             });
         }
+       
         const paginaPrincipal = () => {
             var local = window.location.host;
             console.log(local);
             var origin = "/DatosGenerales/ConsultaDatosGenerales";
             window.location.href = "https://" + local + origin;
         }
+       
         var resultadoVIH = (e) => {
             var valor = e;
 
@@ -560,7 +662,6 @@
                 $(".segundaParte").attr("disabled", false);
             }
         }
-
 
         var diferenciaFecha = () => {
             var fechaPrueba = new Date(document.getElementById("txtFechaRealizacionPrueba").value);
