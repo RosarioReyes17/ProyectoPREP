@@ -8,15 +8,14 @@
     ProyectoPREP.Models.DbPrepContext Entidad = new ProyectoPREP.Models.DbPrepContext();
 }
 
-<link href="~/css/prepstyles.css" rel="stylesheet" />
+@* <link href="~/css/prepstyles.css" rel="stylesheet" />
+ *@
 
-<h2>
-    
-</h2>
-
-<br />
-
-
+<style>
+    body {
+        zoom: 1.1; 
+    }
+</style>
 
 <div class="container">
     
@@ -170,10 +169,10 @@
                 },
 
                 drawCallback: function () {
-                    // Remover el fondo de color de todas las filas
+                    
                     $('#miTabla').find('li').css('background-color', '');
 
-                    // Agregar el fondo de color solo a la fila activa
+                    
                     $('#miTabla').find('li.active').css('background-color', '#5bc0de');
                 },
             });

@@ -82,7 +82,7 @@
                             <div class="radio radio-info">
                                 <input id="rdVIH1" required class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo" disabled>
                                 <label for="rdVIH1">
-                                    Negativo.
+                                    Negativo
                                 </label>
                             </div>
 
@@ -498,26 +498,9 @@
             var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
             // Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
             // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
-            if (sexo == "F") {
-
-                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
-                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
-
-            }
-            if (sexo == "M") {
-
-                if (genero == "3" && chkHormonal == true) {
-
-                    var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
-                    document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
-
-                }
-                else {
-                    
-                    var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
-                    document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
-
-                }
+            var Resultado = ((140 - 37) * PesoKG) / (72 * valorCreatinina);
+            document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+        }
 
             }
         }
