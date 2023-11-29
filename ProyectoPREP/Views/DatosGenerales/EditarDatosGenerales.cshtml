@@ -14,6 +14,8 @@
 		@Html.HiddenFor(d => d.DatosGenerales.TipoDocumento)
 		@Html.HiddenFor(d => d.DatosGenerales.EnRiesgo)
 		<input type="hidden" value="@ViewBag.IdFormulario" name="IdFormulario" />
+		<input type="hidden" value="@ViewBag.tipoDocumento" name="TipoDocumento" />
+		<input type="hidden" value="@ViewBag.documento" name="Documento" />
 		@Html.HiddenFor(d => d.DatosGeneralesId)
 		@Html.HiddenFor(d => d.DatosGenerales.Id)
 		@Html.HiddenFor(d => d.Usuario)
@@ -50,7 +52,7 @@
 						</td>
 
 						<td>
-							3. ¿Tiene cedula o pasaporte?(*):
+							3. ¿Posee de Identificacion?:
 							<input class="form-control" asp-for="DatosGenerales.TieneDocumentos" readonly onchange="habilitarInput();" id="ddlDocumentoOpcion" name="DatosGenerales.TieneDocumentos" required/>
 							<span asp-validation-for="DatosGenerales.TieneDocumentos" style="color:red;margin-left:30px"></span>
 
@@ -58,7 +60,7 @@
 
 						</td>
 						<td>
-							4.Numero de cedula o pasaporte(*):
+							4.Identificacion:
 							<input asp-for="DatosGenerales.Documento" id="txtDocumento" readonly name="DatosGenerales.Documento" class="form-control" required>
 							<span asp-validation-for="DatosGenerales.Documento" style="color:red;margin-left:30px"></span>
 
@@ -231,7 +233,7 @@
 							<span asp-validation-for="DatosGenerales.Descendiente" style="color:red;margin-left:30px"></span>
 
 						</td>
-						<td id="tdNacionalidadMadre">
+						<td style="display:none" id="tdNacionalidadMadre">
 							8. Especificar Descendencia(*):
 							<select asp-for="DatosGenerales.NacionalidadMadre" class="form-control" required disabled id="ddlNacionalidadMadre" name="DatosGenerales.NacionalidadMadre">
 								<option value="">--Seleccione--</option>
@@ -436,7 +438,7 @@
 						</td>
 
 						<td>
-							12. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
+							12. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
 							<span asp-validation-for="DatosGenerales.Telefono" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -499,7 +501,7 @@
 						</td>
 
 					</tr>
-					<tr id="trContacto">
+					<tr style="display:none" id="trContacto">
 						<td>
 							20. Nombre de contacto(*):
 							<input asp-for="DatosGenerales.NombreContacto" disabled id="txtNombreContacto" name="DatosGenerales.NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto.">
@@ -509,7 +511,7 @@
 
 						<td>
 							21. Teléfono de Contacto(*):
-							<input asp-for="DatosGenerales.TelefonoContacto" disabled id="txtTelefonoContacto" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto.">
+							<input asp-for="DatosGenerales.TelefonoContacto" disabled id="txtTelefonoContacto" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto.">
 							<span asp-validation-for="DatosGenerales.TelefonoContacto" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -548,7 +550,7 @@
 							<span asp-validation-for="DatosGenerales.Ars" style="color:red;margin-left:30px"></span>
 
 						</td>
-						<td id="tdARS">
+						<td style="display:none" id="tdARS">
 							24. Nombre de ARS(*):
 							<select asp-for="DatosGenerales.NombreArs" disabled required class="form-control" id="txtNombreARS" name="DatosGenerales.NombreArs">
 								<option value="">--Seleccione--</option>
@@ -586,7 +588,7 @@
 							<span asp-validation-for="DatosGenerales.NombreArs" style="color:red;margin-left:30px"></span>
 
 						</td>
-						<td colspan="2" id="tdRegimen">
+						<td style="display:none" colspan="2" id="tdRegimen">
 							25. Régimen(*):
 							<select asp-for="DatosGenerales.Regimen" disabled required class="form-control" id="ddlRegimen" name="DatosGenerales.Regimen">
 								<option value="">--Seleccione--</option>
@@ -761,6 +763,8 @@
 			$("#txtNombreContacto").removeAttr("disabled");
 			$("#txtTelefonoContacto").removeAttr("disabled");
 			$("#ddlParentesco").removeAttr("disabled");
+			document.getElementById("trContacto").style.display = "";
+
 		}
 
 		//deshabilitar  inputs de ARS
@@ -773,6 +777,10 @@
 			document.getElementById("ddlARS").value = "SI";
 			$("#txtNombreARS").removeAttr("disabled");
 			$("#ddlRegimen").removeAttr("disabled");
+			document.getElementById("tdARS").style.display = "";
+			document.getElementById("tdRegimen").style.display = "";
+
+
 		}
 
 		//deshabilitar  inputs de DESCENDIENTE
@@ -784,6 +792,8 @@
 		else {
 			document.getElementById("ddlDecendiente").value = "SI"
 			$("#ddlNacionalidadMadre").removeAttr("disabled");
+			document.getElementById("tdNacionalidadMadre").style.display = "";
+
 		}
 		
 	
@@ -796,6 +806,25 @@
 
 	<script type="text/javascript">
 
+
+		function ValidarCelular(a, id) {
+
+			var datos = a;
+			let resultado = datos;
+
+			if (resultado.length == 3) {
+				resultado = datos + "-";
+			}
+
+			if (resultado.length == 7) {
+				resultado = datos + "-";
+			}
+
+			if (resultado.length <= 11) {
+				document.getElementById(id).value = resultado;
+			}
+
+		}
 
 		const llenarMunicipio = () => {
 			$("#MunicipioResidencia").empty();
@@ -832,8 +861,12 @@
 			if (descendiente == "SI") {
 
 				$("#ddlNacionalidadMadre").removeAttr("disabled");
+				document.getElementById("tdNacionalidadMadre").style.display = "";
+
 			} else {
 				$("#ddlNacionalidadMadre").attr("disabled", true);
+				document.getElementById("tdNacionalidadMadre").style.display = "none";
+
 			}
 
 			if (ddlDocumentoOpcion == "SI") {
@@ -849,10 +882,14 @@
 				$("#txtNombreContacto").removeAttr("disabled");
 				$("#txtTelefonoContacto").removeAttr("disabled");
 				$("#ddlParentesco").removeAttr("disabled");
+				document.getElementById("trContacto").style.display = "";
+
 			} else {
 				$("#txtNombreContacto").attr("disabled", true);
 				$("#txtTelefonoContacto").attr("disabled", true);
 				$("#ddlParentesco").attr("disabled", true);
+				document.getElementById("trContacto").style.display = "none";
+
 			}
 
 
@@ -860,9 +897,15 @@
 
 				$("#txtNombreARS").removeAttr("disabled");
 				$("#ddlRegimen").removeAttr("disabled");
+				document.getElementById("tdARS").style.display = "";
+				document.getElementById("tdRegimen").style.display = "";
+
 			} else {
 				$("#txtNombreARS").attr("disabled", true);
 				$("#ddlRegimen").attr("disabled", true);
+				document.getElementById("tdARS").style.display = "none";
+				document.getElementById("tdRegimen").style.display = "none";
+
 			}
 
 
@@ -872,6 +915,3 @@
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
 }
-@* <span style="margin-left:30px;color:red;" asp-validation-for="Kilataje" class="text-danger"></span>
-<br />
- *@

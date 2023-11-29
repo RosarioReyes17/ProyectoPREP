@@ -67,14 +67,14 @@
 					<tr>
 						<td>
 							1. Nombres(*):
-							<input asp-for="DatosGenerales.Nombres" id="txtNombre" name="DatosGenerales.Nombres" class="form-control">
+							<input asp-for="DatosGenerales.Nombres" id="txtNombre" placeholder="Introduzca su Nombre" name="DatosGenerales.Nombres" class="form-control">
 							<span asp-validation-for="DatosGenerales.Nombres" style="color:red;margin-left:30px"></span>
 
 						</td>
 
 						<td>
 							2. Apellidos(*):
-							<input asp-for="DatosGenerales.Apellidos" id="txtApellido" name="DatosGenerales.Apellidos" class="form-control" require>
+							<input asp-for="DatosGenerales.Apellidos" placeholder="Introduzca su Apellido" id="txtApellido" name="DatosGenerales.Apellidos" class="form-control" require>
 							<span asp-validation-for="DatosGenerales.Apellidos" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -466,7 +466,7 @@
 						</td>
 
 						<td>
-							10. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value);" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
+							10. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
 							<span asp-validation-for="DatosGenerales.Telefono" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -539,7 +539,7 @@
 
 						<td>
 							Teléfono de Contacto:
-							<input asp-for="DatosGenerales.TelefonoContacto" disabled id="txtTelefonoContacto" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto.">
+							<input asp-for="DatosGenerales.TelefonoContacto" disabled id="txtTelefonoContacto" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto.">
 							<span asp-validation-for="DatosGenerales.TelefonoContacto" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -777,27 +777,24 @@
 
 @section scripts{
 	<script type="text/javascript">
-	
-		function ValidarCelular(a) {
-			if (true) {
 
-				if (true) {
-					var datos = a;
-					let resultado = datos;
+		function ValidarCelular(a, id) {
 
-					if (resultado.length == 3) {
-						resultado = datos + "-";
-					}
+			var datos = a;
+			let resultado = datos;
 
-					if (resultado.length == 7) {
-						resultado = datos + "-";
-					}
-
-					if (resultado.length <= 11) {
-						document.getElementById("txtTelefono").value = resultado;
-					}
-				}
+			if (resultado.length == 3) {
+				resultado = datos + "-";
 			}
+
+			if (resultado.length == 7) {
+				resultado = datos + "-";
+			}
+
+			if (resultado.length <= 11) {
+				document.getElementById(id).value = resultado;
+			}
+
 		}
 
 		function ValidarCedulaPasaporte(a) {

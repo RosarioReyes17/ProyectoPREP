@@ -65,19 +65,19 @@
 					<tr>
 						<td>
 							1. Nombres(*):
-							<input asp-for="DatosGenerales.Nombres" id="txtNombre" name="DatosGenerales.Nombres" class="form-control">
+							<input asp-for="DatosGenerales.Nombres" id="txtNombre" name="DatosGenerales.Nombres" placeholder="Introduzca su Nombre" class="form-control">
 							<span asp-validation-for="DatosGenerales.Nombres" style="color:red;margin-left:30px"></span>
 
 						</td>
 
 						<td>
 							2. Apellidos(*):
-							<input asp-for="DatosGenerales.Apellidos" id="txtApellido" name="DatosGenerales.Apellidos" class="form-control" require>
+							<input asp-for="DatosGenerales.Apellidos" id="txtApellido" placeholder="Introduzca su Apellido" name="DatosGenerales.Apellidos" class="form-control" require>
 							<span asp-validation-for="DatosGenerales.Apellidos" style="color:red;margin-left:30px"></span>
 
 						</td>
 
-						<td>
+					@* 	<td>
 							3. ¿Tiene Identificacion?(*):
 							<select class="form-control" asp-for="DatosGenerales.TieneDocumentos" onchange="habilitarInput();" id="ddlDocumentoOpcion" name="DatosGenerales.TieneDocumentos" required>
 								<option value="">--Seleccione--</option>
@@ -88,7 +88,8 @@
 
 
 
-						</td>
+						</td> *@
+
 						<td style="display:none" id="identificacion">
 							Identificacion:
 							<input  asp-for="DatosGenerales.Documento" id="txtDocumento" minlength="9" maxlength="9" disabled name="DatosGenerales.Documento" class="form-control" required>
@@ -468,7 +469,7 @@
 						</td>
 
 						<td>
-							10. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value);" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
+							10. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value,this.id);" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
 							<span asp-validation-for="DatosGenerales.Telefono" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -541,7 +542,7 @@
 
 						<td>
 							Teléfono de Contacto:
-							<input asp-for="DatosGenerales.TelefonoContacto" disabled id="txtTelefonoContacto" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto.">
+							<input asp-for="DatosGenerales.TelefonoContacto" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" disabled id="txtTelefonoContacto" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto.">
 							<span asp-validation-for="DatosGenerales.TelefonoContacto" style="color:red;margin-left:30px"></span>
 
 						</td>
@@ -755,26 +756,23 @@
 
 @section scripts{
 	<script type="text/javascript">
-		function ValidarCelular(a) {
-			if (true) {
+		function ValidarCelular(a,id) {
 
-				if (true) {
-					var datos = a;
-					let resultado = datos;
+			var datos = a;
+			let resultado = datos;
 
-					if (resultado.length == 3) {
-						resultado = datos + "-";
-					}
-
-					if (resultado.length == 7) {
-						resultado = datos + "-";
-					}
-
-					if (resultado.length <= 11) {
-						document.getElementById("txtTelefono").value = resultado;
-					}
-				}
+			if (resultado.length == 3) {
+				resultado = datos + "-";
 			}
+
+			if (resultado.length == 7) {
+				resultado = datos + "-";
+			}
+
+			if (resultado.length <= 11) {
+				document.getElementById(id).value = resultado;
+			}
+				
 		}
 	
 		const buscarEnPadron = () => {
@@ -858,7 +856,7 @@
 			var descendiente = document.getElementById("ddlDecendiente").value;
 			var ddlContactoConfianza = document.getElementById("ddlContactoConfianza").value;
 			var ddlARS = document.getElementById("ddlARS").value;
-			var ddlDocumentoOpcion = document.getElementById("ddlDocumentoOpcion").value;
+			//var ddlDocumentoOpcion = document.getElementById("ddlDocumentoOpcion").value;
 
 			if (descendiente == "SI") {
 
@@ -870,17 +868,17 @@
 
 			}
 
-			if (ddlDocumentoOpcion == "Si") {
-				$("#txtDocumento").removeAttr("disabled");
-				document.getElementById("identificacion").style.display = "";
+			// if (ddlDocumentoOpcion == "Si") {
+			// 	$("#txtDocumento").removeAttr("disabled");
+			// 	document.getElementById("identificacion").style.display = "";
 
 
-			}else{
-				$("#txtDocumento").attr("disabled", true);
-				document.getElementById("identificacion").style.display = "none";
+			// }else{
+			// 	$("#txtDocumento").attr("disabled", true);
+			// 	document.getElementById("identificacion").style.display = "none";
 
 
-			}
+			// }
 
 			if (ddlContactoConfianza == "SI") {
 

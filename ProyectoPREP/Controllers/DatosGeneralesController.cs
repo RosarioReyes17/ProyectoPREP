@@ -28,7 +28,7 @@ namespace ProyectoPREP.Controllers
         }
 
 
-        public ActionResult ConsultaDatosGenerales()
+        public ActionResult DatosGeneralesPorElegibilidad()
         {
             //int pageSize = 25; // Número de elementos por página
             //int pageNumber = (page ?? 1); // Número de página actual
@@ -38,19 +38,98 @@ namespace ProyectoPREP.Controllers
             ////IPagedList<DatosGenerale> pagedData = data.ToPagedList(pageNumber, pageSize);
 
 
-			var lista = new List<DatosGeneralesNacionalidad>();
-			string sql = "DatosGeneralesNacionalidad";
+			var lista = new List<DatosGenerales>();
+			string sql = "DatosGeneralesPorElegibilidad";
 
 
 			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
 			{
-				lista = connection.Query<DatosGeneralesNacionalidad>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+				lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
 			
 			}
 
 			return View(lista);
         }
 
+        public ActionResult DatosGeneralesPorPCR()
+        {
+
+            var lista = new List<DatosGenerales>();
+            string sql = "DatosGeneralesPorPCR";
+
+
+            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            {
+                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            }
+
+            return View(lista);
+        }
+
+        public ActionResult DatosGeneralesPorTratamiento()
+        {
+
+            var lista = new List<DatosGenerales>();
+            string sql = "DatosGeneralesPorTratamiento";
+
+
+            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            {
+                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            }
+
+            return View(lista);
+        }
+
+        public ActionResult DatosGeneralesPorAprobado()
+        {
+
+            var lista = new List<DatosGenerales>();
+            string sql = "DatosGeneralesPorAprobado";
+
+
+            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            {
+                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            }
+
+            return View(lista);
+        }
+
+        public ActionResult DatosGeneralesPorRechazado()
+        {
+
+            var lista = new List<DatosGenerales>();
+            string sql = "DatosGeneralesPorRechazado";
+
+
+            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            {
+                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            }
+
+            return View(lista);
+        }
+
+        public ActionResult DatosGeneralesPorSuspendido()
+        {
+
+            var lista = new List<DatosGenerales>();
+            string sql = "DatosGeneralesPorSuspendido";
+
+
+            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            {
+                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            }
+
+            return View(lista);
+        }
 
         // GET: DatosGeneralesController/Create
         public ActionResult CreateCedula()
@@ -84,18 +163,10 @@ namespace ProyectoPREP.Controllers
                 formulario.DatosGenerales.Usuario = Convert.ToString(1);
 				formulario.DatosGenerales.IdDeptoDepend = 1641;
 				formulario.DatosGenerales.EnRiesgo = "Si";
-			
-				if (formulario.DatosGenerales.TieneDocumentos == "Si")
-				{
-					formulario.DatosGenerales.TipoDocumento = "P";
 
-				}
-				else
-				{
-					formulario.DatosGenerales.TipoDocumento = "SN";
-					formulario.DatosGenerales.Documento = "SN";
+				formulario.DatosGenerales.TieneDocumentos = "No";
+				formulario.DatosGenerales.Documento = "SN";
 
-				}
 
 				db.DatosGenerales.Add(formulario.DatosGenerales);
 
@@ -155,9 +226,6 @@ namespace ProyectoPREP.Controllers
 				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales"); //Revisar aqui
 			}
         }
-
-
-
 
 
 
@@ -341,6 +409,8 @@ namespace ProyectoPREP.Controllers
 				ViewBag.IdMunicipios = model1.DatosGenerales.MunicipioResidencia;
 				ViewBag.IdProvincia = model1.DatosGenerales.ProvinciaResidencia;
 				ViewBag.IdFormulario = model1.Id;
+				ViewBag.tipoDocumento = model1.DatosGenerales.TipoDocumento;
+				ViewBag.documento = model1.DatosGenerales.Documento;
 				
 				return View(model1);
 			}

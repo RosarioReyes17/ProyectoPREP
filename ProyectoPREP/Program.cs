@@ -38,7 +38,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=DatosGenerales}/{action=ConsultaDatosGenerales}/{id?}");
+    pattern: "{controller=DatosGenerales}/{action=DatosGeneralesPorElegibilidad}/{id?}");
 
 app.Run();
 
