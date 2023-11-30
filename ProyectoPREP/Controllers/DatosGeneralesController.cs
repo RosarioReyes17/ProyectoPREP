@@ -69,16 +69,14 @@ namespace ProyectoPREP.Controllers
 
         public ActionResult DatosGeneralesPorTratamiento()
         {
-
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorTratamiento";
-
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
                 lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
-
             }
+
 
             return View(lista);
         }

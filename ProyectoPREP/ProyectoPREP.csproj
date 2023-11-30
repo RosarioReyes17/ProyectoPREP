@@ -310,6 +310,7 @@
 
   <ItemGroup>
     <Folder Include="Proc\" />
+    <Folder Include="Views\PendienteTratamiento\" />
   </ItemGroup>
 
 </Project>

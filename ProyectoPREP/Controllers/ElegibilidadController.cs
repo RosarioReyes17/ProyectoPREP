@@ -34,7 +34,7 @@ namespace ProyectoPREP.Controllers
         }
 
 
-        public ActionResult Create(int id)
+        public ActionResult FormularioElegibilidad(int id)
 		{
 			var formulario = db.FormularioPreps.Where(p => p.DatosGeneralesId == id).FirstOrDefault();
 			var model = new ElegibilidadPrep();
@@ -65,7 +65,7 @@ namespace ProyectoPREP.Controllers
 
 		// POST: ElegibilidadController/Create
 		[HttpPost]
-		public ActionResult Create(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+		public ActionResult FormularioElegibilidad(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
 		{
 			try
 			{
