@@ -180,12 +180,12 @@ namespace ProyectoPREP.Controllers
 				db.FormularioPreps.Add(formulario);
 				db.SaveChanges();
 
-				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
 
 			}
 			catch	
 			{
-				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales"); //Revisar aqui
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales"); //Revisar aqui
 			}
 		}
 		// POST: DatosGeneralesController/Create
@@ -216,12 +216,12 @@ namespace ProyectoPREP.Controllers
 				db.SaveChanges();
 
 
-				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
 
 			}
             catch
             {
-				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales"); //Revisar aqui
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales"); //Revisar aqui
 			}
         }
 
@@ -435,7 +435,7 @@ namespace ProyectoPREP.Controllers
 				db.Entry(formulario).State = EntityState.Modified;
 				db.Entry(formulario.DatosGenerales).State = EntityState.Modified;
 				db.SaveChanges();
-				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
 
 
 			}

@@ -76,21 +76,26 @@ namespace ProyectoPREP.Controllers
 
 				if (elegibilidad.ResultadoCargaViralPcr != null && elegibilidad.CargaViralPcr == "Si")
 				{
-                    int id = elegi.Id;
+					using (DbPrepContext db = new DbPrepContext())
+					{
 
-                    elegibilidad.Id = id;
-                    elegibilidad.Usuario = Convert.ToString(1);
-                    elegibilidad.Estatus = 2;
+						int id = elegi.Id;
+
+						elegibilidad.Id = id;
+						elegibilidad.Usuario = Convert.ToString(1);
+						elegibilidad.Estatus = 3;
 
 
-                    seguimiento.ElegibilidadPrepId = id;
-                    seguimiento.SeguimimientoPruebaId = 1;
-                    seguimiento.Id = 0;
+						seguimiento.ElegibilidadPrepId = id;
+						seguimiento.SeguimimientoPruebaId = 1;
+						seguimiento.Id = 0;
 
-                    //db.Seguimientos.Add(seguimiento);
-                    //db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
-                    //db.SaveChanges();
-                    return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+						db.Seguimientos.Add(seguimiento);
+						db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+						db.SaveChanges();
+					}
+					
+					return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
 
                 }
 
@@ -108,14 +113,14 @@ namespace ProyectoPREP.Controllers
                     seguimiento.SeguimimientoPruebaId = 1;
                     seguimiento.Id = 0;
 
-                    //db.Seguimientos.Add(seguimiento);
-                    //db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
-                    //db.SaveChanges();
-					
-                }
+					db.Seguimientos.Add(seguimiento);
+					db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+					db.SaveChanges();
+
+				}
 
                
-				return RedirectToAction("ConsultaDatosGenerales", "DatosGenerales");
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
             }
             catch (Exception ex)
             {
@@ -159,26 +164,25 @@ namespace ProyectoPREP.Controllers
 				elegi.ResultadoCargaViralPcr = elegibilidad.ResultadoCargaViralPcr;
 
 
-                //elegibilidad.Id = id;
-                //elegibilidad.Usuario = Convert.ToString(1);
-                //elegibilidad.Estatus = 6;
+				//elegibilidad.Id = id;
+				elegi.Usuario = Convert.ToString(1);
+				elegi.Estatus = 2;
 
-                //seguimiento.ElegibilidadPrepId = elegi.Id;
-                //seguimiento.SeguimimientoPruebaId = 1;
-                //seguimiento.Id = 0;
+				//seguimiento.ElegibilidadPrepId = elegi.Id;
+				//seguimiento.SeguimimientoPruebaId = 1;
+				//seguimiento.Id = 0;
 
 				//db.Seguimientos.Add(seguimiento);
-				//db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
-				//db.SaveChanges();
-
-				var result = new
-				{
-					estatus = true
-				}; 
-				return Json( result);
+				db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
+				db.SaveChanges();
 
             }
 
+            var result = new
+            {
+                estatus = true
+            };
+            return Json(result);
         }
         public ActionResult Edit(int id)
 		{

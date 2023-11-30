@@ -20,7 +20,7 @@
     <br>
 </div>
 
-<form asp-controller="Elegibilidad" asp-action="Create" method="post">
+<form asp-controller="Elegibilidad" asp-action="FormularioElegibilidad" method="post">
     <input name="IdDatos" id="IdDatos" value="@ViewBag.IdDatos" type="hidden" />
     <input asp-for="FormularioPrepId" name="FormularioPrepId" type="hidden" />
     <input asp-for="Usuario" name="Usuario" type="hidden" />
@@ -584,7 +584,7 @@
         const paginaPrincipal = () => {
             var local = window.location.host;
             console.log(local);
-            var origin = "/DatosGenerales/ConsultaDatosGenerales";
+            var origin = "/DatosGenerales/DatosGeneralesPorElegibilidad";
             window.location.href = "https://" + local + origin;
         }
        
