@@ -190,7 +190,7 @@
                         </td>
                     </tr>
                     <tr id="trNota">
-                        <td colspan="4">*NOTA: Si usted no tiene los datos para confirmar puede guardar el formulario en este punto y continuar cuando tenga la información</td>
+                        <td colspan="4"><label style="color:red">*NOTA: Si usted no tiene los datos para confirmar puede guardar el formulario en este punto y continuar cuando tenga la información</label></td>
                     </tr>
                 </tbody>
             </table>
@@ -222,29 +222,37 @@
                                 <br>
                                 Resultado:
                                 <br>
-                                <input id="ResultadoCreatinina" disabled readonly asp-for="ResultadoCreatinina" name="ResultadoCreatinina" class="form-control segundaParte" />
+                                <input id="ResultadoCreatinina"  disabled readonly asp-for="ResultadoCreatinina" name="ResultadoCreatinina" class="form-control segundaParte" />
                             </div>
                         </td>
-                        <td colspan="2">
-
+                         <td colspan="2">
+                            
 
                             Rango valores de Creatinina
                             <br>
-                            <input id="chkCreatinina2" name="creatinina" class="styled" type="radio" value="61-70 ml/min" disabled /> 61-70 ml/min
+                            <ul>
+                                <li> 61-70 ml/min</li>
+                                <li>71-80 ml/min</li>
+                                <li>81-90 ml/min</li>
+                                <li>91-100 ml/min</li>
+                                <li>&gt;100 ml/min</li>
+                            </ul>
+
+@*                             <input id="chkCreatinina2" name="creatinina" class="styled" type="radio" value="61-70 ml/min" disabled /> 61-70 ml/min
                             <input id="chkCreatinina3" name="creatinina" class="styled" type="radio" value="71-80 ml/min" disabled /> 71-80 ml/min
                             <br>
                             <input id="chkCreatinina4" name="creatinina" class="styled" type="radio" value="81-90 ml/min" disabled /> 81-90 ml/min
                             <input id="chkCreatinina5" name="creatinina" class="styled" type="radio" value="91-100 ml/min" disabled /> 91-100 ml/min
                             <br>
                             <input id="chkCreatinina6" name="creatinina" class="styled" type="radio" value=">100 ml/min" disabled /> &gt;100 ml/min
-                            <br>
-                            <span style="font-size:0.7em;">
+ *@                            <br>
+                            <span style="font-size:1em;">
                                 - Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
                                 - Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
                                 - Utilizar la fórmula de mujeres en mujeres biológicas y Trans que <br>tengan más de 6 meses en terapia de reemplazo hormonal.
                                 - Metodología Cockcroft-Gault Convencional
-                            </span>
-                        </td>
+                        </span>
+                        </td> 
                         <td>
                             Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
                             <div class="radio radio-info">
@@ -266,63 +274,100 @@
 
                     </tr>
                     <tr>
-                        <td>
+                      
+                        <td class="col-md-3">
 
 
-
-                            <div class="form-group col-md-6">
+                            <div class="form-group radio">
                                 Sifilis(VDRL) Realizada:
                                 <br/>
                                 <br />
 
-                                <input id="rdsifilis1" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
+                                <div style="margin-left: 24px;">
+                                    <input id="rdsifilis1" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+                                    <label for="rdsifilis1">No Reactivo</label>
+
+                                    
+                                </div>
+                                <div style="margin-left: 24px;">
+                                    <input id="rdsifilis2" onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+                                    <label for="rdsifilis2">Reactivo</label>
+                                </div>
                                 <br />
-                                <input id="rdsifilis2" onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo"> Reactivo
-                                <input id="txtfechasifilis1" required name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;" placeholder="Fecha">
+                                <input id="txtfechasifilis1" required name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
                             </div>
                         </td>
-                        <td>
+                        <td class="col-md-3">
 
 
-                            <div class="form-group col-md-8">
+                            <div class="form-group radio ">
                                 HBsAg Realizada:
                                 <br/>
+                                <br/>
 
-                                <input id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo"> Negativo
-                                <br />
-                                <input id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo"> Positivo
+                                <div style="margin-left: 24px;">
+                                    <input id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+                                    <label for="rdHBsAg1">Negativo</label>
+                                </div>
 
-                                <input id="txtfechaHBsAg1" required onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;" placeholder="Fecha">
+                                <div style ="margin-left: 24px;">
+                                    <input id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
+                                    <label for="rdHBsAg2">Positivo</label>
+                                </div>
+                               <br/>
+                                <input id="txtfechaHBsAg1" required onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
                             </div>
                         </td>
 
-                        <td>
+                        <td class="col-md-3">
 
-                            <div class="form-group col-md-8">
+                            <div class="form-group radio">
                                 Hepatitis C Realizada:
                                 <br/>
-                                <input id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo"> Negativo
-                                <br />
+                                <br/>
+                                <div style="margin-left:24px">
+                                    <input id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
+                                    <label for="rdHepatitis1">Negativo</label>
+                                </div>
 
-                                <input id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo"> Positivo
-                                <input id="txtfechaHepatitis" onkeydown="return false" required name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                                <div style="margin-left:24px">
+                                    <input id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
+                                    <label for="rdHepatitis2">Positivo</label>
+                                </div>
+                                <br />
+                                <input id="txtfechaHepatitis" onkeydown="return false" required name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
                             </div>
                         </td>
-                        <td>
-                            ITS sindrómico
-                            <br>
+                        <td class="col-md-3">
 
-                            <input id="ITDSindromico2" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si"> Si
-                            <input id="ITDSindromico1" onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No"> No
-                            <br>
-                            <input name="SecrecionUretral" class="sindromico" type="checkbox" value="true" disabled /> Secrecion Uretral
-                            <br>
-                            <input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" disabled /> Secrecion Vaginal
-                            <br>
-                            <input name="UlceraGenital" class="sindromico" type="checkbox" value="true" disabled /> Ulcera genital
-                            <br>
-                            <input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" disabled /> Verrugas genitales
-                            <br>
+                            <div class="radio form-group">
+                                ITS sindrómico:
+                                <br />
+                                <br />
+
+                                <div style="margin-left: 24px;">
+
+                                    <input id="ITDSindromico2" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
+                                    <label for="ITDSindromico2">Si</label>
+                                </div>
+
+                                <div style="margin-left: 24px;">
+                                    <input id="ITDSindromico1" onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+                                    <label for="ITDSindromico1">No</label>
+                                </div>
+                                
+                                <br>
+                                <input name="SecrecionUretral" class="sindromico" type="checkbox" value="true" disabled /> Secrecion Uretral
+                                <br>
+                                <input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" disabled /> Secrecion Vaginal
+                                <br>
+                                <input name="UlceraGenital" class="sindromico" type="checkbox" value="true" disabled /> Ulcera genital
+                                <br>
+                                <input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" disabled /> Verrugas genitales
+
+                            </div>
+
+                            
 
                         </td>
                     </tr>
@@ -360,6 +405,7 @@
 
     <script>
 
+      
         
         var genero = document.getElementById("genero").value;
         if (genero == "3") {
@@ -414,12 +460,65 @@
 
 	<script type="text/javascript">
 
-       //        Se necesita contar con una prueba de VIH realizada menor de una semana.
 
         const cerrarModal = () => {
             $('#myModal').modal('hide');
         }
 
+        const creatininaMenor60 = () => {
+
+            var IdDatos = document.getElementById("IdDatos").value;
+
+            var SeronegativoVih = obtenerValor("SeronegativoVih");
+            var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
+            var FechaEntregaVih = document.getElementById("txtFechaEntregaResultados").value;
+            var ResultadoPruebaVih = obtenerValor("ResultadoPruebaVih");
+            var RiesgoInfeccionVih = obtenerValor("RiesgoInfeccionVih");
+            var SignosSintomas = obtenerValor("SignosSintomas");
+            var Linfadenopatias = document.getElementById("check1").value;
+            var FiebreDesconocida = document.getElementById("check2").value;
+            var DiarreaProlongada = document.getElementById("check3").value;
+            var ErupcionesPiel = document.getElementById("check4").value;
+            var InfeccionesRecurrentes = document.getElementById("check5").value;
+            var HepatoEsplenomegalia = document.getElementById("check6").value;
+            var CargaViralPcr = obtenerValor("CargaViralPcr");
+            var chkHormonal = document.getElementById("chkHormonal").value;
+            var FechaResultadoCreatinina = document.getElementById("txtFechaResultadoCreatinina").value;
+            var ResultadoCreatinina = document.getElementById("ResultadoCreatinina").value;
+            var AclaramientoCreatinina = obtenerValor("AclaramientoCreatinina");
+
+            $.post("@Url.Action("CreatininaMenor60","Elegibilidad")", {
+                IdDatos: IdDatos
+                , SeronegativoVih: SeronegativoVih
+                , FechaPruebaVih: FechaPruebaVih, FechaEntregaVih: FechaEntregaVih, ResultadoPruebaVih: ResultadoPruebaVih
+                , RiesgoInfeccionVih: RiesgoInfeccionVih, SignosSintomas: SignosSintomas, Linfadenopatias: Linfadenopatias
+                , FiebreDesconocida: FiebreDesconocida, DiarreaProlongada: DiarreaProlongada, ErupcionesPiel: ErupcionesPiel
+                , InfeccionesRecurrentes: InfeccionesRecurrentes, HepatoEsplenomegalia: HepatoEsplenomegalia
+                , CargaViralPcr: CargaViralPcr, chkHormonal: chkHormonal, FechaResultadoCreatinina: FechaResultadoCreatinina
+                , ResultadoCreatinina: ResultadoCreatinina, AclaramientoCreatinina: AclaramientoCreatinina
+            }, function (modelos) {
+
+                paginaPrincipal();
+            })
+        }
+
+        const menorCreatina = () => {
+            var creatina = document.getElementById("ResultadoCreatinina").value;
+
+            if (creatina < 60) {
+                var confir = confirm("tiene un aclaramiento menor a 60, se rechaza la solicitud. ¿Estas seguro de este resultado?");
+
+                if(confir == true){
+                    creatininaMenor60();
+                }else{
+                    document.getElementById("txtResultadoCreatinina").value = "";
+                    document.getElementById("ResultadoCreatinina").value = "";
+                }
+
+            } else {
+                document.getElementById("chkaclaramiento2").checked = true;
+            }
+        }
        
         function obtenerValor(name) {
             // Seleccionar el radio button marcado
@@ -456,6 +555,7 @@
             var FechaPruebaPCR = document.getElementById("txtFechaPruebaPCR").value;
             var ResultadoCargaViralPcr = document.getElementById("ddlResutaldoPruebaPCR").value;
 
+
             if (ResultadoCargaViralPcr == "Detectado") {
                 var confirmar = confirm("¿Esta seguro de este resultado?");
 
@@ -474,7 +574,7 @@
                         , FiebreDesconocida: FiebreDesconocida, DiarreaProlongada: DiarreaProlongada, ErupcionesPiel: ErupcionesPiel
                         , InfeccionesRecurrentes: InfeccionesRecurrentes, HepatoEsplenomegalia: HepatoEsplenomegalia
                         , CargaViralPcr: CargaViralPcr, FechaVisitaPcr: FechaVisitaPcr, FechaPruebaPCR: FechaPruebaPCR
-                        , ResultadoCargaViralPcr: ResultadoCargaViralPcr,
+                        , ResultadoCargaViralPcr: ResultadoCargaViralPcr
                     }, function (modelos) {
 
                         paginaPrincipal();
@@ -500,9 +600,8 @@
             // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
             var Resultado = ((140 - 37) * PesoKG) / (72 * valorCreatinina);
             document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3)
+            setTimeout(menorCreatina, 1000)
         }
-
-
 
         var habilitarInputSifilis = (e) => {
             var valor = e;
@@ -567,6 +666,8 @@
                 $("#cuerpoModal").empty();
                 document.getElementById("cuerpoModal").innerHTML = "Se necesita contar con una prueba de VIH realizada menor de una semana.";
                 $('#myModal').modal('show');
+                document.getElementById("chkSeronegativo2").checked = null;
+
             }
 
         }

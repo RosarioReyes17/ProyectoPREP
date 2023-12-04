@@ -168,11 +168,7 @@ namespace ProyectoPREP.Controllers
 				elegi.Usuario = Convert.ToString(1);
 				elegi.Estatus = 2;
 
-				//seguimiento.ElegibilidadPrepId = elegi.Id;
-				//seguimiento.SeguimimientoPruebaId = 1;
-				//seguimiento.Id = 0;
-
-				//db.Seguimientos.Add(seguimiento);
+				
 				db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
 				db.SaveChanges();
 
@@ -184,6 +180,57 @@ namespace ProyectoPREP.Controllers
             };
             return Json(result);
         }
+
+        public JsonResult CreatininaMenor60(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+        {
+
+            var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
+
+            var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
+
+            using (DbPrepContext db = new DbPrepContext())
+            {
+                var estatus = true;
+                //int id = elegi.Id;
+
+                elegi.SeronegativoVih = elegibilidad.SeronegativoVih;
+                elegi.FechaPruebaVih = elegibilidad.FechaPruebaVih;
+                elegi.FechaEntregaVih = elegibilidad.FechaEntregaVih;
+                elegi.ResultadoPruebaVih = elegibilidad.ResultadoPruebaVih;
+                elegi.RiesgoInfeccionVih = elegibilidad.RiesgoInfeccionVih;
+                elegi.SignosSintomas = elegibilidad.SignosSintomas;
+
+                elegi.Linfadenopatias = elegibilidad.Linfadenopatias;
+                elegi.FiebreDesconocida = elegibilidad.FiebreDesconocida;
+                elegi.DiarreaProlongada = elegibilidad.DiarreaProlongada;
+                elegi.ErupcionesPiel = elegibilidad.ErupcionesPiel;
+                elegi.InfeccionesRecurrentes = elegibilidad.InfeccionesRecurrentes;
+                elegi.HepatoEsplenomegalia = elegibilidad.HepatoEsplenomegalia;
+
+                elegi.CargaViralPcr = elegibilidad.CargaViralPcr;
+
+                //elegi.FechaVisitaPcr = elegibilidad.FechaVisitaPcr;
+                //elegi.FechaPruebaPcr = elegibilidad.FechaPruebaPcr;
+                //elegi.ResultadoCargaViralPcr = elegibilidad.ResultadoCargaViralPcr;
+
+
+                //elegibilidad.Id = id;
+                elegi.Usuario = Convert.ToString(1);
+                elegi.Estatus = 2;
+
+
+                //db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
+                //db.SaveChanges();
+
+            }
+
+            var result = new
+            {
+                estatus = true
+            };
+            return Json(result);
+        }
+
         public ActionResult Edit(int id)
 		{
 			
