@@ -19,13 +19,16 @@ namespace ProyectoPREP.Controllers
 			return View();
 		}
 
-        public JsonResult VIHPositivo(int id)
+        public JsonResult VIHPositivo(int id, DateTime FechaPruebaVih,DateTime FechaEntregaVih)
 		{
             bool status = true;
 
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.Id == id);
 			elegibilidad.Estatus = 6;
 			elegibilidad.SeronegativoVih = "No";
+			elegibilidad.FechaPruebaVih = FechaPruebaVih;
+			elegibilidad.FechaEntregaVih = FechaEntregaVih;
+			elegibilidad.ResultadoPruebaVih = "Positivo";
 			db.Entry(elegibilidad).State = EntityState.Modified;
 			db.SaveChanges();
 
@@ -161,7 +164,7 @@ namespace ProyectoPREP.Controllers
 				elegi.CargaViralPcr = elegibilidad.CargaViralPcr;
 				elegi.FechaVisitaPcr = elegibilidad.FechaVisitaPcr;
 				elegi.FechaPruebaPcr = elegibilidad.FechaPruebaPcr;
-				elegi.ResultadoCargaViralPcr = elegibilidad.ResultadoCargaViralPcr;
+				elegi.ResultadoCargaViralPcr = "Detectado";
 
 
 				//elegibilidad.Id = id;
@@ -219,8 +222,8 @@ namespace ProyectoPREP.Controllers
                 elegi.Estatus = 2;
 
 
-                //db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
-                //db.SaveChanges();
+                db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
+                db.SaveChanges();
 
             }
 
@@ -231,46 +234,8 @@ namespace ProyectoPREP.Controllers
             return Json(result);
         }
 
-        public ActionResult Edit(int id)
-		{
-			
-			return View();		
-		}
-
-		// POST: ElegibilidadController/Edit/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}
-
-		// GET: ElegibilidadController/Delete/5
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
-		// POST: ElegibilidadController/Delete/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}
+      
+		
+		
 	}
 }
