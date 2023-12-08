@@ -1,0 +1,170 @@
+﻿
+@model TratamientoPrep
+
+
+<h2>
+    Información del Paciente
+</h2>
+
+<form asp-controller="Tratamiento" asp-action="InicioTratamiento" method="post">
+    <div id="divTratamientoPrep">
+        <div class="tituloDiv">Inicio del Tratamiento de la PrEP</div>
+
+        <div>
+
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>ID Prep: @ViewBag.idDatos </strong>
+                            <input type="hidden" name="idDatos" value="@ViewBag.idDatos" />
+                            <input type="hidden" name="fechaPrep" id="fechaPrep" value="@ViewBag.fechaPrep" />
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Nombres: </strong>
+                                @ViewBag.nombre
+                        </td>
+                        <td><strong>Apellidos: </strong>@ViewBag.apellido</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documento de Identidad: </strong>@ViewBag.documento</td>
+                    </tr>
+                </tbody>
+            
+            </table>
+
+        </div>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+
+                        <div class="form-group col-md-7">
+                            <strong>Fecha Inicio de la PrEP:</strong>
+                            <input required id="txtFechainicioPrep" name="FechaInicio" asp-for="FechaInicio" onkeydown="return false" class="form-control center" type="date" placeholder="Fecha" autocomplete="error">
+                        </div>
+
+                    </td>
+                    <td>
+                        <strong>PrEP(ARV) Prescrita:</strong>
+                        <br>
+                        <input id="td1" name="PrepArvTdfFtc" value="true" class="styled" type="checkbox"> TDF/FTC <br>
+                        <input id="td2" name="PrepArvTdf3tc" class="styled" value="true" type="checkbox"> TDF/3TC <br>
+                        <input id="td3" name="PrepArvTafFtc" class="styled" value="true" type="checkbox" > TAF/FTC
+                    </td>
+                    <td>
+                    
+                        <strong>Meses de prescripción</strong>
+                    
+                        <select id="Meses_prescripcion" required name="MesesPrescripcion" asp-for="MesesPrescripcion" class="form-control" autocomplete="error">
+                            <option value="">--Seleccione--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </td>
+                    <td>
+
+
+                        <div class="form-group col-md-7">
+                            <strong>Fecha Próximo seguimiento:</strong>
+                            <input id="FechaSeguimiento" name="FechaSeguimiento" onkeydown="return false"  class="form-control center" type="date" required autocomplete="error">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td colspan="4">
+                        Observaciones:<br>
+                        <input type="text" required id="Observaciones" name="Observaciones" asp-for="Observaciones" class="form-control" autocomplete="error">
+                    </td>
+                </tr>
+
+            </tbody>
+        
+        </table>
+    </div>
+    <br>
+
+    <button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="error"><i class="glyphicon glyphicon-saved"></i>Procesar Tratamiento</button>
+    <a onclick="rechazarTratamiento();" id="btnRechazar" name="btnRechazar" class="btn btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i>Rechazar Tratamiento</a>
+    <a asp-action="DatosGeneralesPorElegibilidad" asp-controller="DatosGenerales" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+  
+
+
+    <div class="modal" id="rechazar" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color:red; margin-left: 90px;">
+                        Advertencia
+                    </h5>
+                    <button type="button" onclick="cerrarModalRechazar();" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="cuerpoModalvih" style="text-align:center">Observaciones</p>
+                    <input name="Observaciones" id="ObservacionesModal" style="text-align:center;height:60px" class="form-control" placeholder="Motivos del rechazo" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="rechazarPaciente();" class="btn btn-primary">Aceptar</button>
+                    <button type="button" onclick="cerrarModalRechazar();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+@section scripts{
+    <script type="text/javascript">
+
+        const cerrarModalRechazar = () => {
+
+            $('#rechazar').modal('hide');
+        }
+        
+
+
+        const rechazarTratamiento = () => {
+            
+            $('#rechazar').modal('show');
+
+        }
+
+        const paginaPrincipal = () => {
+            var local = window.location.host;
+            console.log(local);
+            var origin = "/DatosGenerales/DatosGeneralesPorTratamiento";
+            window.location.href = "https://" + local + origin;
+        }
+
+
+        const rechazarPaciente = () => {
+            var idDatos = @ViewBag.idDatos;
+            var ObservacionesModal = document.getElementById("ObservacionesModal").value;
+
+
+            $.post("@Url.Action("rechazarPaciente","Tratamiento")", {
+                idDatos: idDatos, ObservacionesModal: ObservacionesModal
+            }, function (modelos) {
+                //setTimeout(paginaPrincipal, 1000);
+
+                paginaPrincipal();
+            })
+        }
+
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+}
