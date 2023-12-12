@@ -69,25 +69,37 @@
     </div>
 </div>
 
+<style>
+    .thCenter {
+        text-align: center;
+    }
+
+    #idCenter {
+        text-align: center;
+    }
+</style>
+
 
 <div style="display: none;" id="tablaContainer">
     <br>
+
     <table id="miTabla" class="table display" data-role="table" width="100%">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Sexo</th>
-                <th>Documento</th>
-                <th>Nacionalidad</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
+                <th id="idCenter">ID</th>
+                <th id="idCenter">Nombres</th>
+                <th id="idCenter">Apellidos</th>
+                <th id="idCenter">Sexo</th>
+                <th id="idCenter">Documento</th>
+                <th id="idCenter">Nacionalidad</th>
+                <th id="idCenter">Fecha Registro</th>
+                <th id="idCenter">Estatus</th>
+                <th id="idCenter">Acciones</th>
 
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model)    
             {
                 <tr>
                     <td>@item.Id</td>
@@ -98,8 +110,14 @@
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
                     <td>
-                        <a title="Editar" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a class="btn btnElegibilidad " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
+                        <a title="Llenar formulario del tratamiento del paciente" class="btn btn-info" href="~/Tratamiento/InicioTratamiento/@item.Id"><i class="glyphicon glyphicon-link"></i> Pendiente a Tratamiento Prep</a>
+                    </td>
+                    <td>
+                        <a title="Editar" class="btn btn-info " href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                      @*   <a class="btn btnElegibilidad " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a> *@
+
+                        <a title="Tranferir paciente" class="btn btn-info " href="~/#"><i class="glyphicon glyphicon-transfer"></i></a>
+
                     </td>
 
                 </tr>
