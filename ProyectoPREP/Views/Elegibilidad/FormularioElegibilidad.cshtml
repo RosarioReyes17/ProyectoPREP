@@ -132,17 +132,17 @@
                             </div>
                         </td>
                         <td colspan="2">
-                            <input type="checkbox" id="check1" value="" name="Linfadenopatias" disabled class="chSignos" /> Linfadenopatias cervicales e inguinales
+                            <input type="checkbox" id="check1" value="true" name="Linfadenopatias" disabled class="chSignos" /> Linfadenopatias cervicales e inguinales
                             <br>
-                            <input type="checkbox" id="check2" value="" name="FiebreDesconocida" disabled class="chSignos" /> Fiebre de origen desconocido
+                            <input type="checkbox" id="check2" value="true" name="FiebreDesconocida" disabled class="chSignos" /> Fiebre de origen desconocido
                             <br>
-                            <input type="checkbox" id="check3" value="" name="DiarreaProlongada" disabled class="chSignos" /> Diarrea prolongada de origen desconocido
+                            <input type="checkbox" id="check3" value="true" name="DiarreaProlongada" disabled class="chSignos" /> Diarrea prolongada de origen desconocido
                             <br>
-                            <input type="checkbox" id="check4" value="" name="ErupcionesPiel" disabled class="chSignos" /> Erupciones en la piel
+                            <input type="checkbox" id="check4" value="true" name="ErupcionesPiel" disabled class="chSignos" /> Erupciones en la piel
                             <br>
-                            <input type="checkbox" id="check5" value="" name="InfeccionesRecurrentes" disabled class="chSignos" /> Infecciones Recurrentes
+                            <input type="checkbox" id="check5" value="true" name="InfeccionesRecurrentes" disabled class="chSignos" /> Infecciones Recurrentes
                             <br>
-                            <input type="checkbox" id="check6" value="" name="HepatoEsplenomegalia" disabled class="chSignos" /> Hepato/esplenomegalia
+                            <input type="checkbox" id="check6" value="true" name="HepatoEsplenomegalia" disabled class="chSignos" /> Hepato/esplenomegalia
                             <br>
                         </td>
                     </tr>
@@ -167,22 +167,21 @@
 
                             <div class="form-group col-md-8">
                                 Fecha Visita PCR:
-                                <input type="date" required onkeydown="return false" class="form-control pruebaPCR" id="txtFechaVisitaPCR" asp-for="FechaVisitaPcr" name="FechaVisitaPcr" disabled>
+                                <input type="date" onkeydown="return false" class="form-control pruebaPCR" id="txtFechaVisitaPCR" asp-for="FechaVisitaPcr" name="FechaVisitaPcr" disabled>
                             </div>
                         </td>
-
 
 
                         <td id="tdPCR2">
 
                             <div class="form-group col-md-8">
                                 Fecha Prueba PCR:
-                                <input type="date" required onkeydown="return false" class="form-control pruebaPCR" id="txtFechaPruebaPCR" asp-for="FechaPruebaPcr" name="FechaPruebaPcr" disabled>
+                                <input type="date" onkeydown="return false" class="form-control pruebaPCR" id="txtFechaPruebaPCR" asp-for="FechaPruebaPcr" name="FechaPruebaPcr" disabled>
                             </div>
                         </td>
                         <td id="tdPCR1">
                             Resultado Prueba PCR:
-                            <select id="ddlResutaldoPruebaPCR" onchange="detectado()" name="ResultadoCargaViralPcr" asp-for="ResultadoCargaViralPcr" class="form-control pruebaPCR" required disabled>
+                            <select id="ddlResutaldoPruebaPCR" onchange="detectado()" name="ResultadoCargaViralPcr" asp-for="ResultadoCargaViralPcr" class="form-control pruebaPCR" disabled>
                                 <option value="">--Seleccione--</option>
                                 <option value="Detectado">Detectado</option>
                                 <option value="No Detectado">No Detectado</option>
@@ -213,7 +212,7 @@
                                 
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
-                                <input id="txtResultadoCreatinina" disabled onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" step=".1" type="number" min="0" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
+                                <input id="txtResultadoCreatinina" required disabled onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" step=".1" type="number" min="0" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
                                 <br>
 
                                 Fecha:
@@ -629,6 +628,18 @@
                 $('#pcr').modal('show');
 
             }
+            
+            if(ResultadoCargaViralPcr == "No Detectado"){
+                document.getElementById("divPrEPTratamiento").style.display = "block";
+                $(".segundaParte").attr("disabled", false);
+            }
+
+            if (ResultadoCargaViralPcr == "") {
+                document.getElementById("divPrEPTratamiento").style.display = "none";
+                $(".segundaParte").attr("disabled", true);
+
+            }
+
 
 
         }
@@ -827,6 +838,7 @@
             if(valor == "Si"){
                 $(".pruebaPCR").removeAttr("disabled");
                 document.getElementById("divPrEPTratamiento").style.display = "none";
+                document.getElementById("ddlResutaldoPruebaPCR").value = "";
                 $(".segundaParte").attr("disabled", true);
 
 
@@ -835,6 +847,7 @@
                 $(".pruebaPCR").attr("disabled", true);
 
                 document.getElementById("divPrEPTratamiento").style.display = "block";
+                document.getElementById("ddlResutaldoPruebaPCR").value = "";
                 $(".segundaParte").attr("disabled", false);
             }
         }

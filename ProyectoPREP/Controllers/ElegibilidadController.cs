@@ -59,7 +59,12 @@ namespace ProyectoPREP.Controllers
 			ViewBag.Genero = model.FormularioPrep.DatosGenerales.Genero;
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
-			return View();
+			//if (model.Estatus == 2)
+			//{
+   //             return View(model);
+
+   //         }
+            return View();
 		}
 
 		// POST: ElegibilidadController/Create
@@ -73,7 +78,7 @@ namespace ProyectoPREP.Controllers
 
                 var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
 
-				if (elegibilidad.ResultadoCargaViralPcr != null && elegibilidad.CargaViralPcr == "Si")
+				if (elegibilidad.ResultadoCargaViralPcr == null && elegibilidad.CargaViralPcr == "Si" && elegibilidad.ResultadoCreatinina == null)
 				{
 					using (DbPrepContext db = new DbPrepContext())
 					{
@@ -82,12 +87,12 @@ namespace ProyectoPREP.Controllers
 
 						elegibilidad.Id = id;
 						elegibilidad.Usuario = Convert.ToString(1);
-						elegibilidad.Estatus = 3;
+						elegibilidad.Estatus = 2;
 
 
-						seguimiento.ElegibilidadPrepId = id;
-						seguimiento.SeguimimientoPruebaId = 1;
-						seguimiento.Id = 0;
+						//seguimiento.ElegibilidadPrepId = id;
+						//seguimiento.SeguimimientoPruebaId = 1;
+						//seguimiento.Id = 0;
 
 						db.Seguimientos.Add(seguimiento);
 						db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
