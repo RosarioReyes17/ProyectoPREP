@@ -1,0 +1,154 @@
+﻿
+@model FormularioPrep
+
+    
+    <h3>Reintegro Profilaxis Pre-Exposición</h3>
+
+    <div divinfo="">
+        <h5>
+            Información del Formulario
+        </h5>
+        <strong>ID PREP:</strong><span> @ViewBag.idDatos </span><br>
+        <strong>Paciente PREP:</strong><span id="spPacienteNombre" name="spEsatus"> @ViewBag.nombre </span><br>
+
+        NOTA: <span id="Msg" style="font-weight:bold;font-style:italic;color:cornflowerblue;">Sea inicializado el formulario con los datos de la PrEP suspendida del paciente.</span>
+    </div>
+
+    <form action="/RechazadoSuspendido/Reintegrar" method="post">
+
+        @Html.HiddenFor(x=>x.Usuario)
+        @Html.HiddenFor(x=>x.Secuencia)
+
+        <input type="hidden" name="idFormulario" value="@ViewBag.idFormulario" />
+        <input type="hidden" name="idDatos" value="@ViewBag.idDatos" />
+
+
+        <div id="divValidarUsuario" class="form-visible">
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>Tipo de Identificación:</strong>
+                            <input id="TipoIdentificacion" value="@ViewBag.tipo" name="TipoIdentificacion" class="form-control" required readonly />
+
+                        </td>
+                        <td>
+                            <strong>Identificación:</strong>
+                            <input type="text" id="Identificacion" value="@ViewBag.documento" name="Documento" class="form-control ui-autocomplete-input" require readonly>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+
+                            <div class="form-group col-md-4">
+                                <strong>Fecha de reintegro:</strong><br>
+                                <input id="txtFechaReintegro" name="txtFechaReintegro" class="form-control" type="date" required>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="divFormPrEP" class="form-invisible">
+            <div id="divElegibilidadPre">
+                <h3>Elegibilidad para PrEP</h3>
+                <div class="tituloDiv">Riesgos(En los ultimos 6 Meses)</div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                1. ¿Ha tenido relaciones sexuales con?(*)
+                                <select class="form-control" id="ddlSexoCon" asp-for="TienesRelacionesCon" name="TienesRelacionesCon" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Solamente con hombres">Solamente con hombres</option>
+                                    <option value="Solamente con mujeres">Solamente con mujeres</option>
+                                    <option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
+                                    <option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
+                                    <option value="Con Persona Trans">Con Persona Trans</option>
+                                    <option value="No responde">No responde</option>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                2. ¿Ha utilizado alguna droga ilícita?(*)
+                                <select class="form-control" id="ddlDrogaIlicita" asp-for="DrogasIlicitas" name="DrogasIlicitas" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Si(Endovenosas)">Si(Endovenosas)</option>
+                                    <option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
+                                    <option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
+                                    <option value="No">No</option>
+                                    <option value="No responde">No responde</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                3. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
+                                <select class="form-control" id="ddlIntercambiadoSexo" asp-for="SexoPorBienes" name="SexoPorBienes" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                    <option value="No responde">No responde</option>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                4. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
+                                <select class="form-control" id="ddlIntercambiadoSexo2" asp-for="SexoPorBienesPareja" name="SexoPorBienesPareja" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                    <option value="No sabe">No sabe</option>
+                                    <option value="No responde">No responde</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                5. ¿Ha tenido relaciones sexuales sin condón?(*)
+                                <select class="form-control" id="ddlSexoSinProteccion" asp-for="SexoSinProteccion" name="SexoSinProteccion" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                    <option value="No responde">No responde</option>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                6. ¿Ha tenido 2 o más parejas sexuales?(*)
+                                <select class="form-control" id="ddlCantParejas" asp-for="CantParejasSexuales" name="CantParejasSexuales" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                    <option value="No responde">No responde</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td colspan="3">
+                                7. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
+                                <select class="form-control" id="ddlSexoVIHPositivo" asp-for="SexoConVihpositivo" name="SexoConVihpositivo" required>
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Si">Si</option>
+                                    <option value="No">No</option>
+                                    <option value="No sabe">No sabe</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="divBotones">
+            <button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="off" require="true"><i class="glyphicon glyphicon-saved"></i>Reintegrar Paciente</button>
+            <a onclick="history.back()" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+        </div>
+           
+    </form> 
+
+
+

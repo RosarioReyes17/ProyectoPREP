@@ -22,10 +22,7 @@ namespace ProyectoPREP.Controllers
             this.db = _db;
         }
         // GET: DatosGeneralesController
-        public ActionResult Index()
-        {
-            return View();
-        }
+      
 
 
         public ActionResult DatosGeneralesPorElegibilidad()

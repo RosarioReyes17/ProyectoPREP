@@ -14,11 +14,7 @@ namespace ProyectoPREP.Controllers
             this.db = _db;
         }
         // GET: ElegibilidadController
-        public ActionResult Index()
-		{
-			return View();
-		}
-
+    
         public JsonResult VIHPositivo(int id, DateTime FechaPruebaVih,DateTime FechaEntregaVih)
 		{
             bool status = true;
@@ -63,7 +59,7 @@ namespace ProyectoPREP.Controllers
 			ViewBag.Genero = model.FormularioPrep.DatosGenerales.Genero;
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
-			return View(model);
+			return View();
 		}
 
 		// POST: ElegibilidadController/Create
@@ -169,7 +165,7 @@ namespace ProyectoPREP.Controllers
 
 				//elegibilidad.Id = id;
 				elegi.Usuario = Convert.ToString(1);
-				elegi.Estatus = 2;
+				elegi.Estatus = 6;
 
 				
 				db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;
