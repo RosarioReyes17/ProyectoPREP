@@ -65,6 +65,21 @@ namespace ProyectoPREP.Controllers
 
         }
 
+
+        public ActionResult Suspender(int id)
+        {
+
+            var datos = db.DatosGenerales.Include(x => x.FormularioPreps).FirstOrDefault(x => x.Id == id);
+            var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == id);
+
+            ViewBag.idDatos = datos.Id;
+            ViewBag.idFormulario = formulario.Id;
+            ViewBag.nombre = datos.Nombres + " " + datos.Apellidos;
+            ViewBag.documento = datos.Documento;
+            ViewBag.tipo = datos.TipoDocumento;
+            return View();
+        }
+
         // GET: Rechazado/Details/5
         public ActionResult Details(int id)
         {

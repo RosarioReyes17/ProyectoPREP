@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<h2>
+    Información del Paciente
+</h2>
+
+<div class="tituloDiv">Inicio del Tratamiento de la PrEP</div>
+
+<div>
+
+    <table>
+        <tbody><tr>
+            <td>
+                <strong>ID Prep: @ViewBag.idDatos </strong>
+                        
+            </td>
+        </tr>
+        <tr>
+            <td>
+                    <strong>
+                        Nombres: @ViewBag.nombre
+                    </strong>
+            </td>
+        </tr>
+        <tr>
+                <td><strong>Documento de Identidad: @ViewBag.documento </strong></td>
+        </tr>
+    </tbody></table>
+
+</div>
+
+<form asp-controller="RechazadoSuspendido" asp-action="Suspender" method="post">
+    <div id="divTratamientoPrep">
+    <table class="table">
+        <tbody>
+            <tr>
+             
+                <td colspan="2">
+                    <strong>PrEP Suspendida:</strong>
+                    <br>
+                    <input id="txtPrepSuspendida" required name="txtPrepSuspendida" class="form-control col-4 date center" type="date" placeholder="Fecha" autocomplete="error">
+                </td>
+                <td colspan="2">
+                    <strong>  Motivo de la Interrupción:</strong>
+                    <br>
+                    <input id="motivo1" name="motivo" class="styled" type="radio" value="Ya no esta expuesto a riesgo significativo" autocomplete="error"> Ya no esta expuesto a riesgo significativo<br>
+                    <input id="motivo2" name="motivo" class="styled" type="radio" value="Efectos secundarios" autocomplete="error"> Efectos secundarios <br>
+                    <input id="motivo3" name="motivo" class="styled" type="radio" value="Desición del paciente" autocomplete="error"> Decisión del paciente <br>
+                    <input id="motivo4" name="motivo" class="styled" type="radio" value="Otros:" autocomplete="error"> Otros: <br>
+                    <input id="motivo5" name="motivo5" type="text" placeholder="Especificar" class="form-control" autocomplete="error">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <strong>Estado del VIH al momento de la Interrupción:</strong>
+                    <br>
+                    <input id="chkEstadoVIH1" name="chkEstadoVIH" class="styled" type="radio" value="Negativo" autocomplete="error"> Negativo <br>
+                    <input id="chkEstadoVIH2" name="chkEstadoVIH" class="styled" type="radio" value="Positivo" autocomplete="error"> Positivo <br>
+                    <input id="chkEstadoVIH3" name="chkEstadoVIH" class="styled" type="radio" value="Desconocido" autocomplete="error"> Desconocido
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    Observaciones:<br>
+                    <input type="text" id="Observaciones" name="Observaciones" class="form-control" autocomplete="error">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <br>
+    <button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" onclick="return confirm('Estas seguro de Suspender el Tratamiento?');" autocomplete="error"><i class="glyphicon glyphicon-saved"></i>Suspensión Tratamiento</button>
+    <a href="/" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+    <div style="color:cornflowerblue">
+        <div class="validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+        
+    </div>
+    <div id="divRechazo" style="display:none;">
+        <h5>Motivo de Rechazo de la PrEP</h5>
+        <br>
+        Motivo Rechazo: <br><textarea type="text" id="MotivoRechazo" name="MotivoRechazo" style="height: 40%;width: 100%;" autocomplete="error"></textarea>
+        <br>
+    </div>
+    <div id="divMensaje" style="color:red;">
+
+    </div>
+</form>
