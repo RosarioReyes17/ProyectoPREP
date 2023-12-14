@@ -6,9 +6,8 @@
 
 .btn-primary {
     color: #fff;
-    background-color: #005476;
+    background-color: #337ab7;
     border-color: #2e6da4;
-
 }
 
 .page-item.active .page-link, .page-item.active .dataTable-pagination a, .dataTable-pagination .page-item.active a, .dataTable-pagination li.active .page-link, .dataTable-pagination li.active a {
@@ -24,3 +23,33 @@
     background-color: #5bc0de;
     border-color: #46b8da;
 }
+
+
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+
+.btn-danger {
+    color: #fff; 
+     background-color: #c9302c; 
+     border-color: #ac2925; 
+}
+
+/*td a {
+    display: inline-block;
+    margin-right: 35px; 
+}
+
+#miTabla {
+    width: 100%;
+}*/

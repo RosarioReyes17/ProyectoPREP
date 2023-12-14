@@ -83,6 +83,7 @@
                 <th>Documento</th>
                 <th>Nacionalidad</th>
                 <th>Fecha</th>
+                <th>Estatus</th>
                 <th>Acciones</th>
 
             </tr>
@@ -99,8 +100,13 @@
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
                     <td>
+                        <a class="btn btn-info" href="~/Elegibilidad/FormularioElegibilidad/@item.Id"><i class="glyphicon glyphicon-link"></i> Confirmación PCR</a>
+                    </td>
+
+                    <td>
                         <a title="Editar" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a class="btn btnElegibilidad " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
+                        <a title="Transferir paciente" class="btn btnElegibilidad" href="~/#"><i class="glyphicon glyphicon-transfer"></i></a>
+
                     </td>
 
                 </tr>

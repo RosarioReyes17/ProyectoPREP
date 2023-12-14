@@ -13,6 +13,7 @@
 
 
 
+
 <div>
 
     <div class="panel-group">
@@ -99,8 +100,13 @@
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
                     <td>
-                        <a title="Editar" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a class="btn btnElegibilidad " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
+                        <a title="Modificar la ficha inicial" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a title="Transferir paciente" class="btn btnElegibilidad" href="~/#"><i class="glyphicon glyphicon-transfer"></i></a>
+                        <a title="Nuevo Seguimiento" class="btn btn-primary" href="~/#"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                        <a title="Ver Seguimientos" class="btn btn-success" href="~/#"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a title="Suspensión Prep" class="btn btn-danger" href="~/#"><i class="glyphicon glyphicon-stop"></i></a>
+
+                    
                     </td>
 
                 </tr>
@@ -133,13 +139,12 @@
 
             var table = $('#miTabla').DataTable({
 
-
-
                 columnDefs: [{
                     targets: -1,
                     className: 'right'
                 }],
                 "paging": true,
+                "responsive": true,
                 "pageLength": 10,
                 "searching": true,
 
