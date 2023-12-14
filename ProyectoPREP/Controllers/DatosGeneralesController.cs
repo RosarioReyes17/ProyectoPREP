@@ -135,6 +135,41 @@ namespace ProyectoPREP.Controllers
             ViewBag.Municipio = db.VwMunicipios.ToList();
             return View();
         }
+       
+		public ActionResult CreateCedula(FormularioPrep formulario)
+        {
+            try
+            {
+				
+				formulario.DatosGenerales.Usuario = Convert.ToString(1);
+				formulario.DatosGenerales.IdDeptoDepend = 1641;
+				formulario.DatosGenerales.TieneDocumentos = "Si";
+				formulario.DatosGenerales.TipoDocumento = "C";
+				formulario.DatosGenerales.EnRiesgo = "Si";
+
+				db.DatosGenerales.Add(formulario.DatosGenerales);
+
+				formulario.Usuario = Convert.ToString(1);
+				formulario.Secuencia = 0;
+				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
+
+				var elegibilidad = new ElegibilidadPrep();
+				elegibilidad.Estatus = 1;
+				elegibilidad.Usuario = Convert.ToString(1);
+				formulario.ElegibilidadPreps.Add(elegibilidad);
+
+				db.FormularioPreps.Add(formulario);
+				db.SaveChanges();
+
+
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
+
+			}
+            catch
+            {
+				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales"); //Revisar aqui
+			}
+        }
 
 		public ActionResult CreateSinDocumento()
 		{
@@ -187,40 +222,6 @@ namespace ProyectoPREP.Controllers
 		}
 		// POST: DatosGeneralesController/Create
 		[HttpPost]
-        public ActionResult CreateCedula(FormularioPrep formulario)
-        {
-            try
-            {
-				
-				formulario.DatosGenerales.Usuario = Convert.ToString(1);
-				formulario.DatosGenerales.IdDeptoDepend = 1641;
-				formulario.DatosGenerales.TieneDocumentos = "Si";
-				formulario.DatosGenerales.TipoDocumento = "C";
-				formulario.DatosGenerales.EnRiesgo = "Si";
-
-				db.DatosGenerales.Add(formulario.DatosGenerales);
-
-				formulario.Usuario = Convert.ToString(1);
-				formulario.Secuencia = 0;
-				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
-
-				var elegibilidad = new ElegibilidadPrep();
-				elegibilidad.Estatus = 1;
-				elegibilidad.Usuario = Convert.ToString(1);
-				formulario.ElegibilidadPreps.Add(elegibilidad);
-
-				db.FormularioPreps.Add(formulario);
-				db.SaveChanges();
-
-
-				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
-
-			}
-            catch
-            {
-				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales"); //Revisar aqui
-			}
-        }
 
 
 

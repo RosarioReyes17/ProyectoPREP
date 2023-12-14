@@ -80,6 +80,30 @@ namespace ProyectoPREP.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public ActionResult Suspender(int idDatos, TratamientoPrep tratamiento)
+        {
+
+            var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
+            var elegi = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
+            var trata = db.TratamientoPreps.FirstOrDefault(x => x.ElegibilidadPrepId == elegi.Id);
+
+
+            elegi.Estatus = 7;
+            
+            trata.PrepSuspendida = tratamiento.PrepSuspendida;
+            trata.MotivosInterrupcionPrep = tratamiento.MotivosInterrupcionPrep;
+            trata.EstadoVihAlInterrumpir = tratamiento.EstadoVihAlInterrumpir;
+            trata.Observaciones = tratamiento.Observaciones;
+
+            db.Entry(trata).State = EntityState.Modified;
+            db.Entry(elegi).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("DatosGeneralesPorAprobado", "DatosGenerales");
+        }
+
         // GET: Rechazado/Details/5
         public ActionResult Details(int id)
         {
