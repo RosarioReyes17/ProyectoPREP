@@ -99,8 +99,9 @@
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
                     <td>
-                        <a title="Editar" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a class="btn btnElegibilidad " href="~/Elegibilidad/Create/@item.Id">Elegibilidad</a>
+                        <a title="Reintegrar paciente" class="btn btn-default" href="~/RechazadoSuspendido/Reintegrar/@item.Id"><i class="glyphicon glyphicon-new-window"></i></a>
+                        <a title="Transferir paciente" class="btn btnElegibilidad" href="~/#"><i class="glyphicon glyphicon-transfer"></i></a>
+
                     </td>
 
                 </tr>
