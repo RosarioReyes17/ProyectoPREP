@@ -72,8 +72,8 @@
 </div>
 
 
-@* <div style="display: none;" id="tablaContainer">
- *@    <br>
+<div style="display: none;" id="tablaContainer">
+
     <table id="miTabla" class="table">
         <thead>
             <tr>
@@ -99,24 +99,32 @@
                     <td>@item.Documento</td>
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
-                    <td>
-                       
-                        <a title="Modificar la ficha inicial" class="btn" href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+
+                    <td width="20%">
+
+
+                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+
+
                         <a title="Transferir paciente" class="btn btnElegibilidad" href="~/#"><i class="glyphicon glyphicon-transfer"></i></a>
+
                         <a title="Nuevo Seguimiento" class="btn btn-primary" href="~/#"><i class="glyphicon glyphicon-plus-sign"></i></a>
+
+
                         <a title="Ver Seguimientos" class="btn btn-success" href="~/#"><i class="glyphicon glyphicon-eye-open"></i></a>
-                        <a title="Suspensión Prep" class="btn btn-danger" href="~/#"><i class="glyphicon glyphicon-stop"></i></a>
 
 
-                    
+                        <a title="Suspensión Prep" class="btn btn-danger" href="~/RechazadoSuspendido/Suspender/@item.Id"><i class="glyphicon glyphicon-stop"></i></a>
+
+
                     </td>
 
                 </tr>
             }
         </tbody>
     </table>
-@*     </div>
- *@
+</div>
+
 
 @section scripts{
     <script type="text/javascript">
@@ -157,6 +165,7 @@
                 drawCallback: function () {
 
                     $('#miTabla').find('li').css('background-color', '');
+
 
 
                     $('#miTabla').find('li.active').css('background-color', '#5bc0de');

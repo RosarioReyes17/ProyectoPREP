@@ -31,9 +31,14 @@
 					</td>
 					<td colspan="2">
 						<br>
-						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #5cb85c; color:white; display:block;" autocomplete="error" require="true">
+						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
+						
+						<button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
+							<i class="fa-solid fa-backward"></i> Volver atrás
+						</button>
 					</td>
 
+					
 				</tr>
 				<tr id="trLoading" style="display:none;">
 					<td colspan="4" style="text-align:center;">
@@ -834,7 +839,7 @@
 				document.getElementById("divElegibilidadPre").style = 'display:none';
 
 				$("#cuerpoModal").empty();
-				document.getElementById("cuerpoModal").innerHTML = "Seleccione una opcion";
+				document.getElementById("cuerpoModal").innerHTML = "Seleccione una opción";
 				$('#myModal').modal('show');
 				return;
 			}
@@ -842,7 +847,7 @@
 			if (Identificacion == ""){
 
 				$("#cuerpoModal").empty();
-				document.getElementById("cuerpoModal").innerHTML = "Debe agregar su cedula";
+				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar la cédula a validar.";
 				$('#myModal').modal('show');
 
 				return;

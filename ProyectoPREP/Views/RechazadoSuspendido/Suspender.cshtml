@@ -12,19 +12,18 @@
     <table>
         <tbody><tr>
             <td>
-                <strong>ID Prep: @ViewBag.idDatos </strong>
-                        
-            </td>
+                    <strong>ID Prep: </strong>@ViewBag.idDatos
+
+                </td>
         </tr>
         <tr>
             <td>
-                    <strong>
-                        Nombres: @ViewBag.nombre
-                    </strong>
+                    <strong>Nombres: </strong> @ViewBag.nombre
+                    
             </td>
         </tr>
         <tr>
-                <td><strong>Documento de Identidad: @ViewBag.documento </strong></td>
+                <td><strong>Documento de Identidad: </strong> @ViewBag.documento </td>
         </tr>
     </tbody></table>
 
@@ -73,10 +72,9 @@
     </div>
     <br>
 
-    <button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary"><i class="glyphicon glyphicon-saved"></i>Suspensión Tratamiento</button>
-    <a onclick="history.back();" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
-
-
+   
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Suspensión Tratamiento</button>
+    <a onclick="history.back();" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
 
 </form>
 

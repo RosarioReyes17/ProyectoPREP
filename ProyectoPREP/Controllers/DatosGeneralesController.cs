@@ -135,8 +135,9 @@ namespace ProyectoPREP.Controllers
             ViewBag.Municipio = db.VwMunicipios.ToList();
             return View();
         }
-       
-		public ActionResult CreateCedula(FormularioPrep formulario)
+
+        [HttpPost]
+        public ActionResult CreateCedula(FormularioPrep formulario)
         {
             try
             {
@@ -220,9 +221,7 @@ namespace ProyectoPREP.Controllers
 				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales"); //Revisar aqui
 			}
 		}
-		// POST: DatosGeneralesController/Create
-		[HttpPost]
-
+		
 
 
         [HttpPost]
