@@ -126,63 +126,73 @@
 </div>
 
 
-@section scripts{
+
+@* @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-
+            // Configurar DataTables
             var table = $('#miTabla').DataTable({
-
-                columnDefs: [{
-                    targets: -1,
-                    className: 'right'
-                }],
-                "paging": true,
                 "responsive": true,
-                "pageLength": 10,
                 "searching": true,
-
-                language: {
+                "info": false,
+                "paging": false, // Desactivar paginación
+                "lengthChange": false, // Desactivar el cambio de longitud de página
+                "language": {
                     "decimal": "",
                     "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
                     "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
                     "infoFiltered": "(Filtrado de _MAX_ total entradas)",
                     "infoPostFix": "",
                     "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
                     "loadingRecords": "Cargando...",
                     "processing": "Procesando...",
                     "search": "Buscar:",
                     "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
                 },
-
                 drawCallback: function () {
+                    // Mostrar la tabla después de que se haya inicializado DataTable
+                    $('#tablaContainer').css('display', 'block');
 
-                    $('#miTabla').find('li').css('background-color', '');
-
-
-
-                    $('#miTabla').find('li.active').css('background-color', '#5bc0de');
+                    // Ocultar todas las filas excepto la primera
+                    $('#miTabla tbody tr').not(':first').hide();
                 },
             });
 
+            var delayTimer;
 
-            $('#tablaContainer').css('display', 'block');
+            // Configurar evento de búsqueda al escribir en la barra de búsqueda
+            $('#miTabla_filter input').on('input', function () {
+                var searchTerm = this.value.toLowerCase();
+                console.log("Input event: " + searchTerm);
 
+                // Limpiar temporizador anterior
+                clearTimeout(delayTimer);
+
+                // Configurar un nuevo temporizador
+                delayTimer = setTimeout(function () {
+                    // Filtrar la tabla después del retraso
+                    table.search(searchTerm).draw();
+
+                    // Mostrar todas las filas después de la búsqueda
+                    $('#miTabla tbody tr').show();
+
+                    // Ocultar todas las filas excepto la primera después de la búsqueda
+                    $('#miTabla tbody tr').not(':first').hide();
+                }, 10); // Reducido a 100 ms
+            });
         });
-
 
         function nav(value) {
             if (value != "") { location.href = value }
         }
-
-
     </script>
+} *@
 
-}
+
+
+
+
+
+
+
+
