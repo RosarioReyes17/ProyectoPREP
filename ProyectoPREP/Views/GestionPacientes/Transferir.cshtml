@@ -1,0 +1,102 @@
+﻿
+@model GestionPaciente
+
+<h2>Transferir Paciente</h2>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID PrEP:</th>
+                <th>Nombres:</th>
+                <th>Apellidos:</th>
+                <th>Fecha Ingreso PrEP:</th>
+                <th>Procedencia</th>
+                <th>Estatus Transferencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @ViewBag.idDatos
+                </td>
+                <td>
+                    pp
+
+                </td>
+                <td>
+                    pp
+                </td>
+                <td>
+                    23/11/2023 12:00:00 a.&nbsp;m.
+                </td>
+                <td>
+                    CONSULTORIO CENTRO DE ORIENTACION E INVESTIGACION INTEGRAL COIN
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+<form action="/GestionPacientes/Transferir" method="post">
+
+    <input type="hidden" name="idDatos" value="@ViewBag.idDatos" />
+
+    <div>
+        <h4>información de Transferencia</h4>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        Tipo de Egreso:<select asp-for="Estatus" class="form-control" id="ddlTipoEgreso" name="Estatus" require>
+                            <option value="">--Seleccione--</option>
+                            <option value="2">TRANSFERIDO</option>
+                        </select>
+                    </td>
+
+                    <td>
+
+                        <div class="form-group col-md-8">
+
+                            Fecha de Egreso:<br>
+                            <input id="txtFechaEgreso" asp-for="FechaEnvio" name="FechaEnvio" class="form-control" type="date" required>
+                        </div>
+                    </td>
+                    <td>
+                        Transferido a: 
+                        <select class="form-control" id="ddlTransferido" asp-for="DeptoDependDestino" name="DeptoDependDestino" require>
+                            <option value="">--Seleccione--</option>
+                            <option value="1641">[R0] - CENTRO DE ORIENTACION E INVESTIGACION INTEGRAL COIN</option>
+                            <option value="1">[R0] - INSTITUTO AYUDA AL SORDO</option>
+                            <option value="1352">[R0] - INSTITUTO DERMATOLOGICO DOMINICANO</option>
+                            <option value="1643">[R0] - INSTITUTO DOMINICANO DE ESTUDIOS VIROLOGICO IDEV</option>
+                            <option value="1649">[R0] - SALVADOR B GAUTIER</option>
+                            <option value="1959">[R0] - SERVICIO NACIONAL DE SALUD</option>
+                            <option value="43">[R1] - JUAN PABLO PINA</option>
+                            <option value="1653">[R2] - CENTRO DE PROMOCION Y SOLIDARIDAD HUMANA</option>
+                            <option value="1676">[R2] - JOSE MARIA CABRAL Y BAEZ</option>
+                            <option value="60">[R2] - RICARDO LIMARDO</option>
+                            <option value="118">[R5] - CLINICA DE FAMILIA LA ROMANA</option>
+                            <option value="1329">[R5] - ESPERANZA Y CARIDAD</option>
+                            <option value="116">[R5] - NUESTRA SENORA DE LA ALTAGRACIA</option>
+                            <option value="1265">[R5] - VERON</option>
+                            <option value="154">[R8] - DR LUIS MORILLO KING</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div id="divBotones">
+                            <button type="submit" name="Aceptar" id="Aceptar" class="btn btn-primary" ><i class="glyphicon glyphicon-saved"></i>Aceptar</button>
+                            <a onclick="history.back();" name="Retornar" id="Retornar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Retornar</a>
+                        </div>
+                        <br>
+                       
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>

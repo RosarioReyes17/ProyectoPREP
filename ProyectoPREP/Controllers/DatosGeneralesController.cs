@@ -127,6 +127,9 @@ namespace ProyectoPREP.Controllers
         }
 
         // GET: DatosGeneralesController/Create
+
+
+
         public ActionResult CreateCedula()
         {
             var municipio = new VwMunicipio();
