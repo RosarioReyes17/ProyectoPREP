@@ -24,9 +24,10 @@ namespace ProyectoPREP.Controllers
 
             ViewBag.idDatos = datos.Id;
             ViewBag.idFormulario = formulario.Id;
-            ViewBag.nombre = datos.Nombres + " " + datos.Apellidos;
-            ViewBag.documento = datos.Documento;
-            ViewBag.tipo = datos.TipoDocumento;
+            ViewBag.nombre = datos.Nombres;
+            ViewBag.apellido = datos.Apellidos;
+            ViewBag.fecha = datos.FechaIngresoSai;
+            ViewBag.centro = datos.FechaIngresoSai;
             return View();
         }
 

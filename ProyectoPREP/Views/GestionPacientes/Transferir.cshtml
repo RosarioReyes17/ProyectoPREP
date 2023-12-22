@@ -11,7 +11,6 @@
                 <th>Apellidos:</th>
                 <th>Fecha Ingreso PrEP:</th>
                 <th>Procedencia</th>
-                <th>Estatus Transferencia</th>
             </tr>
         </thead>
         <tbody>
@@ -20,18 +19,17 @@
                     @ViewBag.idDatos
                 </td>
                 <td>
-                    pp
+                    @ViewBag.nombre
 
                 </td>
                 <td>
-                    pp
+                    @ViewBag.apellido
                 </td>
                 <td>
-                    23/11/2023 12:00:00 a.&nbsp;m.
+                    @ViewBag.fecha
                 </td>
-                <td>
-                    CONSULTORIO CENTRO DE ORIENTACION E INVESTIGACION INTEGRAL COIN
-                </td>
+                    @ViewBag.centro
+
                 <td>
                 </td>
             </tr>
