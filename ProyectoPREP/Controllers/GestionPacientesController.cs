@@ -20,14 +20,14 @@ namespace ProyectoPREP.Controllers
         {
             var datos = db.DatosGenerales.Include(x => x.FormularioPreps).FirstOrDefault(x => x.Id == id);
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == id);
-
+            var centros = db.VwUsuariosEstablecimientos.FirstOrDefault(x => x.IdDeptoDepend == datos.IdDeptoDepend);
 
             ViewBag.idDatos = datos.Id;
             ViewBag.idFormulario = formulario.Id;
             ViewBag.nombre = datos.Nombres;
             ViewBag.apellido = datos.Apellidos;
-            ViewBag.fecha = datos.FechaIngresoSai;
-            ViewBag.centro = datos.FechaIngresoSai;
+            ViewBag.fecha = datos.FechaIngresoSai.ToString().Substring(0,10);
+            ViewBag.centro = centros.NombreCentro;
             return View();
         }
 
