@@ -106,7 +106,7 @@
                         <a title="Modificar la ficha inicial" class="btn btn-info " href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
 
 
-                        <a title="Transferir paciente" class="btn btnElegibilidad" href="~/#"><i class="glyphicon glyphicon-transfer"></i></a>
+                        <a title="Transferir paciente" class="btn btnElegibilidad" href="~/GestionPacientes/Transferir/@item.Id"><i class="glyphicon glyphicon-transfer"></i></a>
 
                         <a title="Nuevo Seguimiento" class="btn btn-primary" href="~/#"><i class="glyphicon glyphicon-plus-sign"></i></a>
 
@@ -127,7 +127,7 @@
 
 
 
-@* @section scripts{
+@section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
             // Configurar DataTables
@@ -186,7 +186,7 @@
             if (value != "") { location.href = value }
         }
     </script>
-} *@
+}
 
 
 
