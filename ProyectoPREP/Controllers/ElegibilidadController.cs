@@ -88,13 +88,14 @@ namespace ProyectoPREP.Controllers
 						elegibilidad.Id = id;
 						elegibilidad.Usuario = Convert.ToString(1);
 						elegibilidad.Estatus = 2;
+                        elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
 
 
-						//seguimiento.ElegibilidadPrepId = id;
-						//seguimiento.SeguimimientoPruebaId = 1;
-						//seguimiento.Id = 0;
+                        //seguimiento.ElegibilidadPrepId = id;
+                        //seguimiento.SeguimimientoPruebaId = 1;
+                        //seguimiento.Id = 0;
 
-						db.Seguimientos.Add(seguimiento);
+                        //db.Seguimientos.Add(seguimiento);
 						db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
 						db.SaveChanges();
 					}
@@ -112,10 +113,12 @@ namespace ProyectoPREP.Controllers
                     elegibilidad.Id = id;
                     elegibilidad.Usuario = Convert.ToString(1);
                     elegibilidad.Estatus = 3;
+					elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
 
                     seguimiento.ElegibilidadPrepId = id;
                     seguimiento.SeguimimientoPruebaId = 1;
                     seguimiento.Id = 0;
+					seguimiento.Usuario = "1";
 
 					db.Seguimientos.Add(seguimiento);
 					db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;

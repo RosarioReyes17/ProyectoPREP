@@ -28,28 +28,36 @@ namespace ProyectoPREP.Controllers
         }
 
         [HttpPost]
-        public ActionResult InicioTratamiento(int idDatos, TratamientoPrep tratamiento, DateTime FechaSeguimiento)
+        public ActionResult InicioTratamiento(int idDatos, TratamientoPrep tratamiento, DateTime? FechaSeguimiento
+            ,string MesesPrescripcion, string Observaciones, DateTime? FechaInicio
+            , bool PrepArvTdfFtc, bool PrepArvTdf3tc, bool PrepArvTafFtc)
         {
 
             //var datos = db.DatosGenerales.FirstOrDefault(x => x.Id == idDatos);
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x=>x.FormularioPrepId == formulario.Id);
+            var seguimientos = db.Seguimientos.FirstOrDefault(x => x.ElegibilidadPrepId == elegibilidad.Id);
 
             tratamiento.ElegibilidadPrepId = elegibilidad.Id;
 
-            var seguimiento = new Seguimiento();
-            seguimiento.ElegibilidadPrepId = elegibilidad.Id;
-            seguimiento.FechaSeguimiento = FechaSeguimiento;
-            seguimiento.Usuario = "1";
-            seguimiento.SeguimimientoPruebaId = 1;
+            seguimientos.FechaProximoSeguimiento = FechaSeguimiento;
+            seguimientos.Usuario = "1";
+            seguimientos.SeguimimientoPruebaId = 1;
+            seguimientos.FechaSeguimiento = FechaInicio;
+            seguimientos.MesesPrescripcion = MesesPrescripcion;
+            seguimientos.Observaciones = Observaciones;
+            seguimientos.PrepArvTdfFtc = PrepArvTdfFtc;
+            seguimientos.PrepArvTdf3tc = PrepArvTdf3tc;
+            seguimientos.PrepArvTafFtc = PrepArvTafFtc;
+
 
             elegibilidad.Estatus = 4;
+            
             tratamiento.Id = 0;
 
             db.TratamientoPreps.Add(tratamiento);
-            db.Seguimientos.Add(seguimiento);
-            
             db.Entry(elegibilidad).State = EntityState.Modified;
+            db.Entry(seguimientos).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("DatosGeneralesPorTratamiento", "DatosGenerales");
@@ -80,73 +88,9 @@ namespace ProyectoPREP.Controllers
             return Json(result);
         }
 
-        // GET: TratamientoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: TratamientoController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: TratamientoController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TratamientoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: TratamientoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TratamientoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TratamientoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
+   
+      
+     
     }
 }
