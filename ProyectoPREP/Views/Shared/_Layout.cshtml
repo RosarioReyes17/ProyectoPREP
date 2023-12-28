@@ -138,7 +138,8 @@
                     $('#tablaContainer').css('display', 'block');
 
                     // Ocultar todas las filas excepto la primera
-                    $('#miTabla tbody tr').not(':first').hide();
+                    $('#miTabla tbody tr').hide();
+                    //$('#miTabla tbody tr').not(':first').hide();
                 },
             });
 
@@ -162,7 +163,7 @@
 
                     // Ocultar todas las filas excepto la primera después de la búsqueda
                     $('#miTabla tbody tr').not(':first').hide();
-                }, 10); // Reducido a 100 ms
+                }, 200); // Reducido a 100 ms
             });
         });
 
