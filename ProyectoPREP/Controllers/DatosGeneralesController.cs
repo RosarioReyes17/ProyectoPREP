@@ -433,6 +433,7 @@ namespace ProyectoPREP.Controllers
 				formulario.UsuarioModifico = Convert.ToString(1);
 
 				db.Entry(formulario).State = EntityState.Modified;
+
 				db.Entry(formulario.DatosGenerales).State = EntityState.Modified;
 				db.SaveChanges();
 				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");

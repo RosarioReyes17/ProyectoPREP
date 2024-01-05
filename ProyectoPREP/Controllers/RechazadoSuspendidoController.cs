@@ -104,73 +104,7 @@ namespace ProyectoPREP.Controllers
             return RedirectToAction("DatosGeneralesPorAprobado", "DatosGenerales");
         }
 
-        // GET: Rechazado/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Rechazado/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Rechazado/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Rechazado/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Rechazado/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Rechazado/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Rechazado/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+  
+        
     }
 }
