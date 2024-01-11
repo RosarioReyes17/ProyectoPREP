@@ -28,7 +28,7 @@ namespace ProyectoPREP.Controllers
             ViewBag.nombre = datos.Nombres;
             ViewBag.apellido = datos.Apellidos;
             ViewBag.fecha = datos.FechaIngresoSai.ToString().Substring(0,10);
-            ViewBag.centro = centros.NombreCentro;
+            ViewBag.centro = centros.NombreCentro; 
             return View();
         }
 
