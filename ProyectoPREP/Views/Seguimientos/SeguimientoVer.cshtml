@@ -1,0 +1,79 @@
+﻿
+@model List<Seguimiento>
+
+
+<h2>Seguimientos por Paciente</h2>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>
+                Nombres
+            </th>
+            <th>
+                Apellidos
+            </th>
+            <th>Sexo</th>
+            <th>Nacionalidad</th>
+        </tr>
+        <tr>
+
+
+            <td>@ViewBag.Nombre</td>
+            <td>@ViewBag.Apellido</td>
+            <td>@ViewBag.Sexo</td>
+            <td>ESPAÑOLA</td>
+        </tr>
+    </tbody>
+</table>
+
+<h5>Seguimientos</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID Seguimiento
+            </th>
+            <th>Fecha Seguimiento</th>
+            <th>Próximo Seguimiento</th>
+            <th>
+                Resultado Prueba VIH
+            </th>
+            <th>Fecha de Prueba VIH</th>
+            <th>Observaciones</th>
+            <th>
+                Acciones
+            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+       
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>@item.FechaSeguimiento</td>
+                <td>@item.FechaProximoSeguimiento</td>
+                <td>@item.ResultadoPruebaVih</td>
+                <td>@item.FechaPruebaVih</td>
+                <td>@item.Observaciones</td>
+
+
+                <td>
+                    <a class="btnSeguimiento2" href="#">Ver Seguimiento</a> |
+                    <a class="btnSeguimiento3" href="#">Editar Seguimiento</a>
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<br>
+<a id="btnRetonar" href="/"> Volver al Listado de Pacientes Registrados en PrEP</a>

@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ProyectoPREP.Models;
 
-namespace ProyectoPREP.Models;
+namespace ProyectoPREP.Proc;
 
 public partial class DatosGenerale
 {
     public int Id { get; set; }
 
-    [Required(ErrorMessage ="Este campo es requerido")]
+    [Required(ErrorMessage = "Este campo es requerido")]
     public string? Nombres { get; set; } = null!;
-	[Required(ErrorMessage = "Este campo es requerido")]
+    [Required(ErrorMessage = "Este campo es requerido")]
 
 
-	public string? Apellidos { get; set; }
+    public string? Apellidos { get; set; }
 
     public string? TieneDocumentos { get; set; }
 
@@ -58,13 +59,13 @@ public partial class DatosGenerale
 
     public string? Descendiente { get; set; }
 
-	//[Required(ErrorMessage = "Este campo es requerido")]
+    //[Required(ErrorMessage = "Este campo es requerido")]
 
-	public string? NombreContacto { get; set; }
-	//[Required(ErrorMessage = "Este campo es requerido")]
+    public string? NombreContacto { get; set; }
+    //[Required(ErrorMessage = "Este campo es requerido")]
 
 
-	public string? TelefonoContacto { get; set; }
+    public string? TelefonoContacto { get; set; }
 
     public string? Ars { get; set; }
 

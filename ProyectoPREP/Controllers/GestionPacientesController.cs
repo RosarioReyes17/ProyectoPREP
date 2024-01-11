@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
+using ProyectoPREP.Proc;
 using System.Data.SqlClient;
 
 namespace ProyectoPREP.Controllers

@@ -102,6 +102,7 @@ namespace ProyectoPREP.Controllers
             ViewBag.seguimientosPrep = segui.SeguimimientoPruebaId;
 
 
+         
             return View();
         }
 
@@ -114,6 +115,7 @@ namespace ProyectoPREP.Controllers
 
             seguimiento.ElegibilidadPrepId = elegibilidad.Id;
             seguimiento.Usuario = "1";
+
 
             var pruebaId = segui.SeguimimientoPruebaId;
 
@@ -148,7 +150,25 @@ namespace ProyectoPREP.Controllers
             return View(); 
         }
 
-        
-       
+
+        [HttpGet]
+        public ActionResult SeguimientoVer(int id)
+        {
+            var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == id);
+            var formu = db.FormularioPreps.FirstOrDefault(d => d.DatosGeneralesId == id);
+            var elegi = db.ElegibilidadPreps.FirstOrDefault(d => d.FormularioPrepId == formu.Id);
+            var segui = db.Seguimientos.Where(d => d.ElegibilidadPrepId == elegi.Id).ToList();
+            var centros = db.VwUsuariosEstablecimientos.FirstOrDefault(x => x.IdDeptoDepend == datos.IdDeptoDepend);
+
+
+            ViewBag.Nombre = datos.Nombres;
+            ViewBag.Apellido = datos.Apellidos;
+
+            ViewBag.Sexo = datos.Sexo;
+            ViewBag.nacionalidad = datos.Nacionalidad;
+            ViewBag.centro = centros.NombreCentro;
+
+            return View(segui);
+        }
     }
 }

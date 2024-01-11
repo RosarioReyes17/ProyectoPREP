@@ -1,4 +1,4 @@
-﻿namespace ProyectoPREP.Models
+﻿namespace ProyectoPREP.Proc
 {
     public class GestionPacientesAprobados
     {
