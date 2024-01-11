@@ -47,6 +47,21 @@
                             </div>
 
                         </td>
+                        <td colspan="3">
+                            <div style="justify-content:end;display:flex;margin-right:60px">
+                                <div>
+                                    <label>¿Desea realizar la prueba de Creatinina?</label>
+                                    <input onchange="mostrarCreatinina();" type="checkbox" id="vihC" /><br />
+
+                                    <label>¿Desea realizar la prueba de Sifilis?</label>
+                                    <input onchange="mostrarSifilis();" type="checkbox" id="vihS" /><br />
+
+                                    <label>¿Desea realizar la prueba de Sifilis y Hepatitis?</label>
+                                    <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" /><br />
+
+                                </div>
+                            </div>
+                        </td>
 
                     </tr>
                     <tr>
@@ -94,6 +109,7 @@
 
                         </td>
                     </tr>
+                    
                     <tr id="creatinina" style="display:none" class="form-invisible">
                         <td colspan="2">
                             <div class="form-group col-md-8">
@@ -351,10 +367,7 @@
                                 <option value="3">3</option>
                             </select>
 
-                            <select id="Meses_prescripcion2" style="width:300px;"  asp-for="MesesPrescripcion" name="MesesPrescripcion" class="form-control">
-                                <option value="">--Seleccione--</option>
-                                <option value="3">3</option>
-                            </select>
+                       
                         </td>
                         <td colspan="1">
                             <div class="form-group ">
@@ -437,12 +450,29 @@
 @section scripts{
     <script type="text/javascript">
         
-        window.onload = function () {
-            var seguimientosPrep = document.getElementById("seguimientosPrep").value;
+        var mostrarCreatinina = () => {
 
-            if(seguimientosPrep == "3"){
-                document.getElementById("creatinina").style.display = "";
+            var vihC = document.getElementById("vihC").checked;
+
+            if (vihC == true) {
                 $(".habilitarCreatinina").removeAttr("disabled");
+                document.getElementById("creatinina").style.display = "";
+
+            }
+            else {
+                document.getElementById("creatinina").style.display = "none";
+                $(".habilitarCreatinina").attr("disabled",true);
+
+            }
+        }
+
+        var mostrarSifilis = () => {
+
+            var vihS = document.getElementById("vihS").checked;
+
+            if (vihS == true) {
+                document.getElementById("vihH").checked = false;
+                mostrarHepatitis();
 
                 document.getElementById("sifilisBC").style.display = "";
                 document.getElementById("hepatitisB").style.display = "none";
@@ -453,22 +483,31 @@
                 $("#txtfechasifilis1").removeAttr("disabled");
 
             }
-            if (seguimientosPrep == "5") {
-                document.getElementById("creatinina").style.display = "";
-                document.getElementById("sifilisBC").style.display = "";
+            else{
+                document.getElementById("sifilisBC").style.display = "none";
+                document.getElementById("hepatitisB").style.display = "";
+                document.getElementById("hepatitisC").style.display = "";
 
-                $(".habilitarCreatinina").removeAttr("disabled");
+                $("#rdsifilis1").attr("disabled",true);
+                $("#rdsifilis2").attr("disabled",true);
+                $("#txtfechasifilis1").attr("disabled",true);
+
+            }
+        }
+
+        var mostrarHepatitis = () => {
+
+            var vihH = document.getElementById("vihH").checked;
+
+            if (vihH == true) {
+                document.getElementById("vihS").checked = false;
+                mostrarSifilis();
+                document.getElementById("sifilisBC").style.display = "";
                 $(".habilitarSifilisBC").removeAttr("disabled");
 
-            } 
-            
-            if (seguimientosPrep == "1") {
-                document.getElementById("Meses_prescripcion").style.display = "";
-                document.getElementById("Meses_prescripcion2").style.display = "none";
-
-                $("#Meses_prescripcion2").attr("disabled", false);
-
-                $("#Meses_prescripcion").removeAttr("disabled");
+            }else{
+                document.getElementById("sifilisBC").style.display = "none";
+                $(".habilitarSifilisBC").attr("disabled",true);
 
             }
         }
@@ -491,33 +530,21 @@
 
             var IdDatos = document.getElementById("IdDatos").value;
 
-            var SeronegativoVih = obtenerValor("SeronegativoVih");
+            var IdDatos = document.getElementById("IdDatos").value;
+            var txtFechaSeguimiento = document.getElementById("txtFechaSeguimiento").value;
+            var SignosVitalesTa = document.getElementsByName("SignosVitalesTa").value;
+            var SignosVitalesFc = document.getElementsByName("SignosVitalesFc").value;
+            var SignosVitalesFr = document.getElementsByName("SignosVitalesFr").value;
+            var Peso = document.getElementsByName("Peso").value;
+            var TallaPies = document.getElementsByName("TallaPies").value;
+            var TallaPulgadas = document.getElementsByName("TallaPulgadas").value;
             var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
-            var FechaEntregaVih = document.getElementById("txtFechaEntregaResultados").value;
-            var ResultadoPruebaVih = obtenerValor("ResultadoPruebaVih");
-            var RiesgoInfeccionVih = obtenerValor("RiesgoInfeccionVih");
-            var SignosSintomas = obtenerValor("SignosSintomas");
-            var Linfadenopatias = document.getElementById("check1").checked;
-            var FiebreDesconocida = document.getElementById("check2").checked;
-            var DiarreaProlongada = document.getElementById("check3").checked;
-            var ErupcionesPiel = document.getElementById("check4").checked;
-            var InfeccionesRecurrentes = document.getElementById("check5").checked;
-            var HepatoEsplenomegalia = document.getElementById("check6").checked;
-            var CargaViralPcr = obtenerValor("CargaViralPcr");
-            var chkHormonal = document.getElementById("chkHormonal").value;
-            var FechaResultadoCreatinina = document.getElementById("txtFechaResultadoCreatinina").value;
-            var ResultadoCreatinina = document.getElementById("ResultadoCreatinina").value;
-            var AclaramientoCreatinina = obtenerValor("AclaramientoCreatinina");
+            var ResultadoPruebaVih = document.getElementById("txtFechaEntregaResultados").value;
 
             $.post("@Url.Action("CreatininaMenor60","Elegibilidad")", {
-                IdDatos: IdDatos
-                , SeronegativoVih: SeronegativoVih
-                , FechaPruebaVih: FechaPruebaVih, FechaEntregaVih: FechaEntregaVih, ResultadoPruebaVih: ResultadoPruebaVih
-                , RiesgoInfeccionVih: RiesgoInfeccionVih, SignosSintomas: SignosSintomas, Linfadenopatias: Linfadenopatias
-                , FiebreDesconocida: FiebreDesconocida, DiarreaProlongada: DiarreaProlongada, ErupcionesPiel: ErupcionesPiel
-                , InfeccionesRecurrentes: InfeccionesRecurrentes, HepatoEsplenomegalia: HepatoEsplenomegalia
-                , CargaViralPcr: CargaViralPcr, chkHormonal: chkHormonal, FechaResultadoCreatinina: FechaResultadoCreatinina
-                , ResultadoCreatinina: ResultadoCreatinina, AclaramientoCreatinina: AclaramientoCreatinina
+                IdDatos: IdDatos, txtFechaSeguimiento: txtFechaSeguimiento, SignosVitalesTa: SignosVitalesTa,
+                SignosVitalesFc: SignosVitalesFc, SignosVitalesFr: SignosVitalesFr, Peso: Peso, TallaPies: TallaPies,
+                TallaPulgadas: TallaPulgadas, FechaPruebaVih: FechaPruebaVih, ResultadoPruebaVih: ResultadoPruebaVih
             }, function (modelos) {
                 setTimeout(paginaPrincipal, 1000);
 
@@ -566,12 +593,20 @@
 
         const VIHPositivo = () => {
             var IdDatos = document.getElementById("IdDatos").value;
+            var FechaRegistroSeguimiento = document.getElementById("txtFechaSeguimiento").value;
+            var SignosVitalesTa = document.getElementsByName("SignosVitalesTa").value;
+            var SignosVitalesFc = document.getElementsByName("SignosVitalesFc").value;
+            var SignosVitalesFr = document.getElementsByName("SignosVitalesFr").value;
+            var Peso = document.getElementsByName("Peso").value;
+            var TallaPies = document.getElementsByName("TallaPies").value;
+            var TallaPulgadas = document.getElementsByName("TallaPulgadas").value;
             var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
-            var FechaEntregaVih = document.getElementById("txtFechaEntregaResultados").value;
+            var ResultadoPruebaVih = document.getElementById("txtFechaEntregaResultados").value;
 
             $.post("@Url.Action("VIHPositivo","Elegibilidad")", {
-                id: IdDatos, FechaPruebaVih: FechaPruebaVih
-                , FechaEntregaVih: FechaEntregaVih
+                IdDatos: IdDatos, FechaRegistroSeguimiento: FechaRegistroSeguimiento, SignosVitalesTa: SignosVitalesTa,
+                SignosVitalesFc: SignosVitalesFc, SignosVitalesFr: SignosVitalesFr, Peso: Peso, TallaPies: TallaPies,
+                TallaPulgadas: TallaPulgadas, FechaPruebaVih: FechaPruebaVih, ResultadoPruebaVih: ResultadoPruebaVih
             }, function (modelos) {
                 console.log(modelos);
                 setTimeout(paginaPrincipal, 1000);

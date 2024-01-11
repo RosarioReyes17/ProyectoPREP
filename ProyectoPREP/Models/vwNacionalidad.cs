@@ -1,10 +1,13 @@
-﻿namespace ProyectoPREP.Models
-{
-    public class vwNacionalidad
-    {
-        public int ID_NACIONALIDAD { get; set; }
-        public string NACIONALIDAD { get; set; }
-        public int FILA_ID { get; set; }
+﻿using System;
+using System.Collections.Generic;
 
-    }
+namespace ProyectoPREP.Models;
+
+public partial class VwNacionalidad
+{
+    public string IdNacionalidad { get; set; } = null!;
+
+    public string Nacionalidad { get; set; } = null!;
+
+    public int FilaId { get; set; }
 }

@@ -33,31 +33,17 @@ namespace ProyectoPREP.Controllers
             , bool PrepArvTdfFtc, bool PrepArvTdf3tc, bool PrepArvTafFtc)
         {
 
-            //var datos = db.DatosGenerales.FirstOrDefault(x => x.Id == idDatos);
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x=>x.FormularioPrepId == formulario.Id);
-            var seguimientos = db.Seguimientos.FirstOrDefault(x => x.ElegibilidadPrepId == elegibilidad.Id);
 
             tratamiento.ElegibilidadPrepId = elegibilidad.Id;
 
-            seguimientos.FechaProximoSeguimiento = FechaSeguimiento;
-            seguimientos.Usuario = "1";
-            seguimientos.SeguimimientoPruebaId = 1;
-            seguimientos.FechaSeguimiento = FechaInicio;
-            seguimientos.MesesPrescripcion = MesesPrescripcion;
-            seguimientos.Observaciones = Observaciones;
-            seguimientos.PrepArvTdfFtc = PrepArvTdfFtc;
-            seguimientos.PrepArvTdf3tc = PrepArvTdf3tc;
-            seguimientos.PrepArvTafFtc = PrepArvTafFtc;
-
 
             elegibilidad.Estatus = 4;
-            
             tratamiento.Id = 0;
 
             db.TratamientoPreps.Add(tratamiento);
             db.Entry(elegibilidad).State = EntityState.Modified;
-            db.Entry(seguimientos).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("DatosGeneralesPorTratamiento", "DatosGenerales");

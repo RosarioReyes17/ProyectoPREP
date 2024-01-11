@@ -90,12 +90,7 @@ namespace ProyectoPREP.Controllers
 						elegibilidad.Estatus = 2;
                         elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
 
-
-                        //seguimiento.ElegibilidadPrepId = id;
-                        //seguimiento.SeguimimientoPruebaId = 1;
-                        //seguimiento.Id = 0;
-
-                        //db.Seguimientos.Add(seguimiento);
+                        
 						db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
 						db.SaveChanges();
 					}
@@ -115,12 +110,7 @@ namespace ProyectoPREP.Controllers
                     elegibilidad.Estatus = 3;
 					elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
 
-                    seguimiento.ElegibilidadPrepId = id;
-                    seguimiento.SeguimimientoPruebaId = 1;
-                    seguimiento.Id = 0;
-					seguimiento.Usuario = "1";
-
-					db.Seguimientos.Add(seguimiento);
+                   
 					db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
 					db.SaveChanges();
 
@@ -139,7 +129,7 @@ namespace ProyectoPREP.Controllers
 		// GET: ElegibilidadController/Edit/5
 
 
-		public JsonResult PCRDetectado(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+		public JsonResult PCRDetectado(int IdDatos, ElegibilidadPrep elegibilidad)
 		{
 
             var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
@@ -188,7 +178,7 @@ namespace ProyectoPREP.Controllers
             return Json(result);
         }
 
-        public JsonResult CreatininaMenor60(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+        public JsonResult CreatininaMenor60(int IdDatos, ElegibilidadPrep elegibilidad)
         {
 
             var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
@@ -216,9 +206,6 @@ namespace ProyectoPREP.Controllers
 
                 elegi.CargaViralPcr = elegibilidad.CargaViralPcr;
 
-                //elegi.FechaVisitaPcr = elegibilidad.FechaVisitaPcr;
-                //elegi.FechaPruebaPcr = elegibilidad.FechaPruebaPcr;
-                //elegi.ResultadoCargaViralPcr = elegibilidad.ResultadoCargaViralPcr;
 
 
                 //elegibilidad.Id = id;

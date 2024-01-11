@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ProyectoPREP.Proc;
 
 namespace ProyectoPREP.Models;
 
@@ -86,6 +85,8 @@ public partial class DbPrepContext : DbContext
 
     public virtual DbSet<VwMunicipio> VwMunicipios { get; set; }
 
+    public virtual DbSet<VwNacionalidad> VwNacionalidads { get; set; }
+
     public virtual DbSet<VwParentesco> VwParentescos { get; set; }
 
     public virtual DbSet<VwPrepFormularioPrEpTodo> VwPrepFormularioPrEpTodos { get; set; }
@@ -122,7 +123,7 @@ public partial class DbPrepContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=190.94.103.222,3342;Initial Catalog=DB_PREP;Uid=snsintranet;Pwd=Oblgg573uow4yZE8dt5L; TrustServerCertificate=True; Integrated Security=True;Trusted_Connection=false;");
+        => optionsBuilder.UseSqlServer("Data Source=190.94.103.222,3342;Initial Catalog=DB_PREP; TrustServerCertificate=True;User Id=snsintranet;Password=Oblgg573uow4yZE8dt5L");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -1104,6 +1105,25 @@ public partial class DbPrepContext : DbContext
             entity.Property(e => e.Municipio)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<VwNacionalidad>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_Nacionalidad");
+
+            entity.Property(e => e.FilaId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("FILA_ID");
+            entity.Property(e => e.IdNacionalidad)
+                .HasMaxLength(5)
+                .IsUnicode(false)
+                .HasColumnName("ID_NACIONALIDAD");
+            entity.Property(e => e.Nacionalidad)
+                .HasMaxLength(70)
+                .IsUnicode(false)
+                .HasColumnName("NACIONALIDAD");
         });
 
         modelBuilder.Entity<VwParentesco>(entity =>
