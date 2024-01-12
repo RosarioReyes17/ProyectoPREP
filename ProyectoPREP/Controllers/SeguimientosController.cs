@@ -100,7 +100,7 @@ namespace ProyectoPREP.Controllers
             seguimiento.SeguimimientoPruebaId = 5;
             seguimiento.Usuario = "1";
 
-            elegibilidad.Estatus = 6;
+            elegibilidad.Estatus = 4;
 
 
 
