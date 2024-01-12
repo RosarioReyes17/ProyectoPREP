@@ -94,8 +94,10 @@ namespace ProyectoPREP.Controllers
         {
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == IdDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
+            DateTime fecha = DateTime.Now;
 
             seguimiento.Id = 0;
+            seguimiento.FechaSeguimiento = fecha;
             seguimiento.ElegibilidadPrepId = elegibilidad.Id;
             seguimiento.SeguimimientoPruebaId = 5;
             seguimiento.Usuario = "1";
