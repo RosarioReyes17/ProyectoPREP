@@ -134,5 +134,76 @@ namespace ProyectoPREP.Controllers
         }
 
 
+      
+        [HttpGet]
+        public ActionResult SeguimientoVerPorId(int id)
+        {
+            var segui = db.Seguimientos.Where(d => d.Id == id).FirstOrDefault();
+            var elegi = db.ElegibilidadPreps.FirstOrDefault(d => d.Id == segui.ElegibilidadPrepId);
+            var formu = db.FormularioPreps.FirstOrDefault(d => d.Id == elegi.FormularioPrepId);
+            var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == formu.DatosGeneralesId);
+            var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+
+            ViewBag.Nombre = datos.Nombres;
+            ViewBag.Apellido = datos.Apellidos;
+            ViewBag.IdDatos = datos.Id;
+
+            ViewBag.Sexo = datos.Sexo;
+            ViewBag.nacionalidad = nacionalidad.Nacionalidad;
+
+            return View(segui);
+        }
+
+
+        [HttpGet]
+
+        public ActionResult Editar(int id)
+        {
+            var segui = db.Seguimientos.Where(d => d.Id == id).FirstOrDefault();
+            var elegi = db.ElegibilidadPreps.FirstOrDefault(d => d.Id == segui.ElegibilidadPrepId);
+            var formu = db.FormularioPreps.FirstOrDefault(d => d.Id == elegi.FormularioPrepId);
+            var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == formu.DatosGeneralesId);
+            var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+
+            ViewBag.Nombre = datos.Nombres;
+            ViewBag.Apellido = datos.Apellidos;
+
+            ViewBag.Sexo = datos.Sexo;
+            ViewBag.nacionalidad = nacionalidad.Nacionalidad;
+
+            ViewBag.Peso = datos.Peso;
+            ViewBag.Edad = Convert.ToDecimal(datos.Edad);
+            ViewBag.Genero = datos.Genero;
+            ViewBag.IdDatos = datos.Id;
+
+
+
+            return View(segui);
+        }
+
+
+        [HttpPost]
+        public ActionResult SeguimientoEditar(int IdDatos, Seguimiento seguimiento)
+        {
+            var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == IdDatos);
+            var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
+            DateTime fecha = DateTime.Now;
+
+            seguimiento.FechaSeguimiento = fecha;
+            seguimiento.Usuario = "1";
+
+            elegibilidad.Estatus = 4;
+
+
+
+            db.Entry(elegibilidad).State = EntityState.Modified;
+            db.Entry(seguimiento).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("DatosGeneralesPorAprobado", "DatosGenerales");
+        }
+
     }
 }
