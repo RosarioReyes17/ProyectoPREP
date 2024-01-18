@@ -566,22 +566,28 @@
         const calcularCreatinina = () => {
             var KG = 2.205;
             var Edad = @ViewBag.Edad;
-            var Peso = @ViewBag.Peso;
+            var Peso = document.getElementById("Peso").value;
             var sexo = document.getElementById("sexo").value;
             var genero = document.getElementById("genero").value;
             //var chkHormonal = document.getElementById("chkHormonal").checked;
             var PesoKG = Peso / KG;
-
             var valorCreatinina = document.getElementById("CreatininaValor").value;
+            
+            if (Peso == "") {
+                document.getElementById("Peso").style.borderColor = "red";
+                document.getElementById("Peso").style.height = "26px";
+                return document.getElementById("Peso").focus();
+
+            }
             
             
             if (sexo =="M") {
-                var Resultado = ((140 - 37) * PesoKG) / (72 * valorCreatinina);
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }
             if (sexo =="F") {
-                var Resultado = ((140 - 37) * PesoKG * 0.85) / (72 * valorCreatinina);
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }

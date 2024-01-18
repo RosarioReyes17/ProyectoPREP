@@ -702,19 +702,19 @@
             var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
 
             if (genero == "3" && chkHormonal == true) {
-                var Resultado = ((140 - 37) * PesoKG * 0.85) / (72 * valorCreatinina);
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
                 setTimeout(menorCreatina, 1000);
 
             }
             if (sexo == "M") {
                 
-                var Resultado = ((140 - 37) * PesoKG) / (72 * valorCreatinina);
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }
             if (sexo == "F") {
-                var Resultado = ((140 - 37) * PesoKG * 0.85) / (72 * valorCreatinina);
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }

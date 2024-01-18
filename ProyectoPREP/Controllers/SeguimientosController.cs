@@ -79,7 +79,6 @@ namespace ProyectoPREP.Controllers
             ViewBag.Nombre = datos.Nombres + " " + datos.Apellidos;
             ViewBag.IdDatos = datos.Id;
 
-            ViewBag.Peso = datos.Peso;
             ViewBag.Edad = Convert.ToDecimal(datos.Edad);
             ViewBag.Sexo = datos.Sexo;
             ViewBag.Genero = datos.Genero;
@@ -173,7 +172,6 @@ namespace ProyectoPREP.Controllers
             ViewBag.Sexo = datos.Sexo;
             ViewBag.nacionalidad = nacionalidad.Nacionalidad;
 
-            ViewBag.Peso = datos.Peso;
             ViewBag.Edad = Convert.ToDecimal(datos.Edad);
             ViewBag.Genero = datos.Genero;
             ViewBag.IdDatos = datos.Id;
