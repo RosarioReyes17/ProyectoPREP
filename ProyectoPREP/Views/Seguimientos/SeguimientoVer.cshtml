@@ -2,8 +2,21 @@
 @model List<Seguimiento>
 
 
-<h2>Seguimientos por Paciente</h2>
+<div class="pull-right" style="padding:10px">
 
+    <a title="Agregar Seguimiento" class="btn btn-success" href="@Url.Action("SeguimientoPrep", "Seguimientos", new { id = ViewBag.IdDatos })">
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+</div>  
+<tr>
+
+
+    <td>IDPRUEBA: @ViewBag.IdDatos</td>
+    
+</tr>
+
+
+<h2>Seguimientos por Paciente</h2>
 <table class="table">
     <tbody>
         <tr>
@@ -70,10 +83,16 @@
                 </td>
 
             </tr>
+
+
         }
 
     </tbody>
 </table>
 
 <br>
-<a id="btnRetonar" href="/"> Volver al Listado de Pacientes Registrados en PrEP</a>
+@* <a id="btnRetonar" onclick="history.back();"> Volver al Listado de Pacientes Registrados en PrEP</a> *@
+
+<button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
+    <i class="fa-solid fa-backward"></i> Volver atrás
+</button>

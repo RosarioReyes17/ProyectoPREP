@@ -68,6 +68,7 @@ namespace ProyectoPREP.Controllers
             return Json(result);
         }
 
+        [HttpGet]
 
         public ActionResult SeguimientoPrep(int id)
         {
@@ -83,8 +84,6 @@ namespace ProyectoPREP.Controllers
             ViewBag.Sexo = datos.Sexo;
             ViewBag.Genero = datos.Genero;
 
-
-         
             return View();
         }
 
@@ -108,12 +107,12 @@ namespace ProyectoPREP.Controllers
             db.Entry(elegibilidad).State = EntityState.Modified;
             db.Seguimientos.Add(seguimiento);
             db.SaveChanges();
-
-            return RedirectToAction("DatosGeneralesPorAprobado", "DatosGenerales");
+            return RedirectToAction("SeguimientoVer", "Seguimientos", new { id = IdDatos });
+            //return RedirectToAction("SeguimientoVer", "Seguimientos", + IdDatos );
         }
 
 
-        [HttpGet]
+       
         public ActionResult SeguimientoVer(int id)
         {
             var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == id);
@@ -128,7 +127,7 @@ namespace ProyectoPREP.Controllers
 
             ViewBag.Sexo = datos.Sexo;
             ViewBag.nacionalidad = nacionalidad.Nacionalidad;
-
+            ViewBag.IdDatos = datos.Id;
             return View(segui);
         }
 
