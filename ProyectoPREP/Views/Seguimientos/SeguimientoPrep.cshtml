@@ -56,7 +56,7 @@
                             <div style="display:flex">
                                  
                                 <label style="width:26px">TA:</label>
-                                <input type="number" asp-for="SignosVitalesTa" id="SignosVitalesTa" name="SignosVitalesTa" min="0" class="form-control2"> mmHg
+                                <input type="text" asp-for="SignosVitalesTa" oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" min="0" class="form-control2"> mmHg
 
                             </div>
                             <br>
@@ -64,7 +64,7 @@
                                 
                                 <label style="width:26px">FC:</label>
 
-                                <input type="number" id="SignosVitalesFc" asp-for="SignosVitalesFc" name="SignosVitalesFc" min="0" class="form-control2"> l/min
+                                <input type="text" id="SignosVitalesFc" asp-for="SignosVitalesFc" oninput="this.value = this.value.replace(/[^0-9,/]/,'')"  name="SignosVitalesFc" min="0" class="form-control2"> l/min
 
                             </div>
                             <br>
@@ -72,7 +72,7 @@
                                 
                                 <label style="width:26px">FR:</label>
 
-                                <input type="number" id="SignosVitalesFr" asp-for="SignosVitalesFr" name="SignosVitalesFr" min="0" class="form-control2"> r/min
+                                <input type="text" id="SignosVitalesFr" oninput="this.value = this.value.replace(/[^0-9,/]/,'')"  asp-for="SignosVitalesFr" name="SignosVitalesFr" min="0" class="form-control2"> r/min
 
                             </div>
                         </td>
@@ -82,7 +82,7 @@
                             <br>
                             <label style="width:105px">Peso:</label>
 
-                            <input id="Peso" asp-for="Peso" name="Peso" type="number" min="0" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
+                            <input id="Peso" asp-for="Peso" name="Peso" type="number"  min="00" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
                             <br>
                             <label style="width:105px">Talla Pies:</label>
 

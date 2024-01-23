@@ -183,6 +183,10 @@
                 var searchTerm = this.value.toLowerCase();
                 console.log("Input event: " + searchTerm);
 
+                if (searchTerm == "") {
+                    return;
+                }
+
                 // Limpiar temporizador anterior
                 clearTimeout(delayTimer);
 

@@ -471,7 +471,7 @@
 						</td>
 
 						<td>
-							10. Teléfono(*):<input asp-for="DatosGenerales.Telefono" id="txtTelefono" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" name="DatosGenerales.Telefono" class="form-control telef" type="text" required="" placeholder="Introduzca su Teléfono." autocomplete="error" require="true">
+							10. Teléfono:<input asp-for="DatosGenerales.Telefono" id="txtTelefono" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" name="DatosGenerales.Telefono" class="form-control telef" type="text" placeholder="Introduzca su Teléfono.">
 							<span asp-validation-for="DatosGenerales.Telefono" style="color:red;margin-left:30px"></span>
 
 						</td>
