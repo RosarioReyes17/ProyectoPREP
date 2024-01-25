@@ -219,9 +219,11 @@ namespace ProyectoPREP.Controllers
 				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
 
 			}
-			catch	
+
+			catch (Exception ex)
 			{
-				return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales"); //Revisar aqui
+
+				throw new Exception(ex.Message);//Revisar aqui
 			}
 		}
 		

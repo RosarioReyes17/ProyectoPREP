@@ -36,8 +36,9 @@ public partial class FormularioPrep
     public DateTime? FechaModificacion { get; set; }
 
     public DateTime? FechaReintegro { get; set; }
+	public string ContactoConfianza { get; set; }
 
-    public virtual DatosGenerale DatosGenerales { get; set; } = null!;
+	public virtual DatosGenerale DatosGenerales { get; set; } = null!;
 
     public virtual ICollection<ElegibilidadPrep> ElegibilidadPreps { get; set; } = new List<ElegibilidadPrep>();
 }
