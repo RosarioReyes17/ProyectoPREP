@@ -40,7 +40,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
 
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand d-flex align-items-center" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">
                     <img src="~/content/img/vectores/sns-icono.svg" alt="Logo" width="40" height="40">
                 </a>
 
@@ -51,32 +51,56 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @*  <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li> *@
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                GESTIÓN DE PREP
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
+                                <a style="color:white" class="dropdown-item" asp-area="" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">CONSULTA DE PREP</a>
+                                <a style="color:white" class="dropdown-item" asp-area="" asp-controller="DatosGenerales" asp-action="CreateCedula">REGISTRO DE PREP</a>
+
+                            </div>
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Otras Vistas
+                                TRANSFERENCIA
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="OtraVista" asp-action="Accion1">Consulta de Prep</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="OtraVista" asp-action="Accion2">Registro de Prep</a>
-                                <!-- Agrega más elementos según sea necesario -->
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
+                                <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientes">RECIBIR PACIENTES</a>
+ 
                             </div>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DatosGenerales" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                SEGURIDAD
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
+                                <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LIMITAR PERMISOS</a>
+                                <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTAR ROLES</a>
+                                <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTAR SECCIONES</a>
+                                <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">ROLES USUARIOS</a>
+                                <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTADO DE VALIDACIONES</a>
+
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">Consulta</a>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                REPORTES
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
+                                <a style="color:white" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">REPORTES PACIENTES DETALLADO</a>
+
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="GestionPacientes" asp-action="RecibirPacientes">Transferencia</a>
-                        </li><li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CerrarSesion">Cerrar Sesion</a>
-                        </li>
+
+                        
                     </ul>
                 </div>
             </div>
@@ -123,6 +147,10 @@
 
             .nav-item:hover {
                 background-color: #acacac;
+            }
+
+            .dropdown-item:hover {
+                background-color: #acacac !important; /* Cambia el color de fondo al pasar el mouse */
             }
 
         </style>
