@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
@@ -16,12 +17,22 @@ builder.Services.AddDbContext<DbPrepContext>(o =>
 {
     o.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionPREP"));
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.LoginPath = "/Home/Login";
+                    option.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+                    option.AccessDeniedPath = "/Home/Login";
+
+
+                });
 
 
 var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -33,14 +44,22 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=DatosGenerales}/{action=DatosGeneralesPorElegibilidad}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Login}/{id?}");
+});
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=DatosGenerales}/{action=DatosGeneralesPorElegibilidad}/{id?}");
 
 app.Run();
+
 
 
 //services.AddControllersWithViews()

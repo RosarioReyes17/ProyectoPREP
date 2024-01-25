@@ -1,0 +1,167 @@
+﻿@{
+    Layout = null;
+}
+@using System.Security.Claims
+
+
+<body style="background-color: #005476">
+    <div class="bar-right social">
+    </div>
+    <div class="headerlogin tope">
+        <div style="margin: 0 auto; width: 600px;">
+            <div class="flex">
+                <div class="initial margin-right">
+                    <img style="width:270px" src="/Content/img/vectores/logoazul.svg">
+                </div>
+                <div>
+                    <h1 class="uppercase" style="font-size: 16px; text-align: left;">Formulario de Selección Profilaxis Pre-Exposición</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login ajaxform  wow fadeIn" autocomplete="off" style="margin: 20px auto; width: 330px;">
+
+
+
+        <style>
+            .pageCenter {
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 50%;
+                float: none;
+            }
+        </style>
+
+        <script src="/Scripts/jquery.blockUI.js"></script>
+        <script src="/Scripts/BlockUI.js"></script>
+        <script type="text/javascript">
+            jQuery(function () {
+                jQuery("#Ejecutar").click(function () {
+                    console.log('entro');
+                    LimpiarMensajes();
+
+                    var ResultadoError = 0;
+
+                    if (jQuery("#Cedula").val() == '') {
+                        GetMensajeError("Debe especificar su número de cédula."); ResultadoError = 1;
+                    }
+
+                    if (jQuery("#Clave").val() == '') {
+                        GetMensajeError("Debe especificar su número de clave."); ResultadoError = 1;
+                    }
+
+                    if (ResultadoError != 0) {
+                        return false;
+                    }
+                });
+            });
+
+            function soloNumeros(e) {
+                var key = window.Event ? e.which : e.keyCode
+                return ((key >= 48 && key <= 57) || (key == 8) || (key == 46))
+            }
+
+            function ValidarCedulaPasaporte(a) {
+                //if (soloNumeros(Event)) {
+
+                var ced = a.toString().substr(0, 3);
+
+                if (!isNaN(parseFloat(ced)) && isFinite(ced)) {
+
+                    console.log('Entro a la funcion');
+                    var datos = a;
+                    datos = datos.replace("-", "");
+                    console.log('Limpiando la variable:' + datos);
+                    let resultado = datos;
+                    if (datos.length >= 3) {
+                        resultado = datos.substr(0, 3) + "-";
+                        console.log('Llenando a Resultado:' + resultado);
+                    }
+                    if (datos.length >= 10) {
+                        resultado += datos.substr(3, 7) + "-";
+                        console.log('Llenando a Resultado:' + resultado);
+                    } else {
+                        resultado += datos.substr(3, 11);
+                        console.log('Llenando a Resultado:' + resultado);
+                    }
+                    if (datos.length >= 11) {
+                        resultado += datos.substr(10);
+                        console.log('Llenando a Resultado:' + resultado);
+                    }
+                    if (resultado.length <= 13) {
+                        document.getElementById("Cedula").value = resultado;
+                    }
+                }
+                //}
+            }
+            function LimpiarMensajes() {
+                document.getElementById("divMensaje").innerHTML = '';
+            }
+
+            function GetMensajeError(e) {
+                ListaMensajes = document.getElementById("divMensaje").innerHTML;
+                if (!ListaMensajes.includes('Campos Requeridos:')) { ListaMensajes = "Campos Requeridos: <br>"; }
+
+                if (!ListaMensajes.includes(e)) {
+                    ListaMensajes += "* " + e;
+                    ListaMensajes += "<br>";
+                }
+
+                document.getElementById("divMensaje").innerHTML = ListaMensajes;
+
+            }
+        </script>
+
+        <form asp-action="Login" asp-controller="Home" method="post">
+            <div class="padding-v text-white">
+                Utilice su nombre de usuario (cédula) y contraseña de acceder a la Intranet del SNS.
+            </div>
+            <div class="sombrabox">
+                <div class="uno">
+                    <div class="flex">
+                        <div class="initial">
+                            <i class="icon-user"></i>
+                        </div>
+                        <div>
+                            <input autocomplete="off" type="text" minlength="13" maxlength="13" data-mask="999-9999999-9" title="La cédula es requerida." placeholder="Cédula" id="Usuario" name="Usuario">
+                        </div>
+                    </div>
+                </div>
+                <div class="dos">
+                    <div class="flex">
+                        <div class="initial">
+                            <i class="icon-lock"></i>
+                        </div>
+                        <div>
+                            <input autocomplete="off" type="password" placeholder="Contraseña" id="Password" name="Password" title="El password es requerido.">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="center padding-v">
+                <input type="submit" value="Iniciar Sesion" id="Ejecutar" name="Ejecutar">
+            </div>
+            <br>
+            <div id="divMensaje" style="color: #fe7575; text-align:center; width:100%;">
+                <div class="validation-summary-valid" data-valmsg-summary="true">
+                    <ul>
+                        <li style="display:none"></li>
+                    </ul>
+                </div>
+
+            </div>
+        </form>
+
+
+        <div class="text-white center">©  2024 Servicio Nacional de Salud. Todos los Derechos Reservados.</div>
+        <div class="center">
+            <div id="loading"></div>
+            <div id="notify"></div>
+        </div>
+    </div>
+
+
+   
+
+
+</body>
