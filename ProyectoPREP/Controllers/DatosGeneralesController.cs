@@ -200,6 +200,7 @@ namespace ProyectoPREP.Controllers
 
 				formulario.DatosGenerales.TieneDocumentos = "No";
 				formulario.DatosGenerales.Documento = "SN";
+				formulario.DatosGenerales.TipoDocumento = "SN";
 
 
 				db.DatosGenerales.Add(formulario.DatosGenerales);

@@ -520,15 +520,12 @@
 						<td colspan="2">
 							17. Contacto de Confianza(*):
 
-							<select onchange="habilitarInput()" class="form-control" id="ddlContactoConfianza" name="ContactoConfianza" data-val="true" data-val-required="Este campo es obligatorio.">
+							<select onchange="habilitarInput()" class="form-control" asp-for="ContactoConfianza" required id="ddlContactoConfianza" name="ContactoConfianza" data-val="true" data-val-required="Este campo es obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
 								<option value="NO">NO</option>
 							</select>
 							<span style="color:red;margin-left:30px" asp-validation-for="ContactoConfianza"></span>
-
-
-
 
 						</td>
 

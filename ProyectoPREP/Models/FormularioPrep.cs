@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ProyectoPREP.Models;
 
@@ -36,7 +37,8 @@ public partial class FormularioPrep
     public DateTime? FechaModificacion { get; set; }
 
     public DateTime? FechaReintegro { get; set; }
-	public string ContactoConfianza { get; set; }
+
+	public string ContactoConfianza { get; }
 
 	public virtual DatosGenerale DatosGenerales { get; set; } = null!;
 
