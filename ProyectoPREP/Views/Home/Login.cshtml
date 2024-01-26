@@ -1,168 +1,154 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
+
 @using System.Security.Claims
 
 
-<body style="background-color: #005476">
-    <div class="bar-right social">
-    </div>
-    <div class="headerlogin tope">
-        <div style="margin: 0 auto; width: 600px;">
-            <div class="flex">
-                <div class="initial margin-right">
-                    <img style="width:270px" src="/Content/img/vectores/logoazul.svg">
-                </div>
-                <div>
-                    <h1 class="uppercase" style="font-size: 16px; text-align: left;">Formulario de Selección Profilaxis Pre-Exposición</h1>
-                </div>
-            </div>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Servicio Nacional de Salud</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #005476;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .headerlogin {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+            .headerlogin img {
+                width: 150px; /* Ajusta el tamaño del logo según tus necesidades */
+                margin-bottom: 10px;
+            }
+
+            .headerlogin h1 {
+                font-size: 20px;
+                color: #000000;
+                margin: 0;
+                margin-bottom:30px;
+            }
+
+        .login-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 330px;
+            text-align: left;
+            width: 488px;
+            height: 615px;
+        }
+
+            .login-form label {
+                display: block;
+                margin-bottom: 8px;
+                color: #555; /* Cambia el color del texto según tus preferencias */
+               
+            }
+
+
+
+            .login-form input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .login-form button {
+                background-color: #0056b3;
+                color: #fff;
+                border: none;
+                padding: 12px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                .login-form button:hover {
+                    background-color: #004494;
+                }
+
+        .error-message {
+            color: #fe7575;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .footer-text {
+            color: #fff;
+            text-align: center;
+            font-size: 0.875rem;
+            position: absolute;
+            bottom: 1rem;
+            width: 100%;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-form wow fadeIn" autocomplete="off">
+        <div class="headerlogin">
+            <img src="/Content/img/vectores/logoazul.svg" alt="SNS Logo">
+            <h1 class="uppercase">FORMULARIO DE SELECCIÓN PROXILAXIS <br />PREP-EXPOSICIÓN</h1>
         </div>
-    </div>
-    <div class="login ajaxform  wow fadeIn" autocomplete="off" style="margin: 20px auto; width: 330px;">
-
-
-
-        <style>
-            .pageCenter {
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 50%;
-                float: none;
-            }
-        </style>
-
-        <script src="/Scripts/jquery.blockUI.js"></script>
-        <script src="/Scripts/BlockUI.js"></script>
-        <script type="text/javascript">
-            jQuery(function () {
-                jQuery("#Ejecutar").click(function () {
-                    console.log('entro');
-                    LimpiarMensajes();
-
-                    var ResultadoError = 0;
-
-                    if (jQuery("#Cedula").val() == '') {
-                        GetMensajeError("Debe especificar su número de cédula."); ResultadoError = 1;
-                    }
-
-                    if (jQuery("#Clave").val() == '') {
-                        GetMensajeError("Debe especificar su número de clave."); ResultadoError = 1;
-                    }
-
-                    if (ResultadoError != 0) {
-                        return false;
-                    }
-                });
-            });
-
-            function soloNumeros(e) {
-                var key = window.Event ? e.which : e.keyCode
-                return ((key >= 48 && key <= 57) || (key == 8) || (key == 46))
-            }
-
-            function ValidarCedulaPasaporte(a) {
-                //if (soloNumeros(Event)) {
-
-                var ced = a.toString().substr(0, 3);
-
-                if (!isNaN(parseFloat(ced)) && isFinite(ced)) {
-
-                    console.log('Entro a la funcion');
-                    var datos = a;
-                    datos = datos.replace("-", "");
-                    console.log('Limpiando la variable:' + datos);
-                    let resultado = datos;
-                    if (datos.length >= 3) {
-                        resultado = datos.substr(0, 3) + "-";
-                        console.log('Llenando a Resultado:' + resultado);
-                    }
-                    if (datos.length >= 10) {
-                        resultado += datos.substr(3, 7) + "-";
-                        console.log('Llenando a Resultado:' + resultado);
-                    } else {
-                        resultado += datos.substr(3, 11);
-                        console.log('Llenando a Resultado:' + resultado);
-                    }
-                    if (datos.length >= 11) {
-                        resultado += datos.substr(10);
-                        console.log('Llenando a Resultado:' + resultado);
-                    }
-                    if (resultado.length <= 13) {
-                        document.getElementById("Cedula").value = resultado;
-                    }
-                }
-                //}
-            }
-            function LimpiarMensajes() {
-                document.getElementById("divMensaje").innerHTML = '';
-            }
-
-            function GetMensajeError(e) {
-                ListaMensajes = document.getElementById("divMensaje").innerHTML;
-                if (!ListaMensajes.includes('Campos Requeridos:')) { ListaMensajes = "Campos Requeridos: <br>"; }
-
-                if (!ListaMensajes.includes(e)) {
-                    ListaMensajes += "* " + e;
-                    ListaMensajes += "<br>";
-                }
-
-                document.getElementById("divMensaje").innerHTML = ListaMensajes;
-
-            }
-        </script>
-
         <form asp-action="Login" asp-controller="Home" method="post">
-            <div class="padding-v text-white">
-                Utilice su nombre de usuario (cédula) y contraseña de acceder a la Intranet del SNS.
+            <label style="color:black; margin-bottom:5%" for="Usuario">Utilice su nombre de usuario (cédula) y contraseña para acceder a la Intranet del SNS.</label>
+            <div>
+                <label for="Usuario">Cédula</label>
+                <input autocomplete="off" type="text" minlength="13" maxlength="13" data-mask="999-9999999-9" title="La cédula es requerida." placeholder="Cédula" id="Usuario" name="Usuario">
             </div>
-            <div class="sombrabox">
-                <div class="uno">
-                    <div class="flex">
-                        <div class="initial">
-                            <i class="icon-user"></i>
-                        </div>
-                        <div>
-                            <input autocomplete="off" type="text" minlength="13" maxlength="13" data-mask="999-9999999-9" title="La cédula es requerida." placeholder="Cédula" id="Usuario" name="Usuario">
-                        </div>
-                    </div>
-                </div>
-                <div class="dos">
-                    <div class="flex">
-                        <div class="initial">
-                            <i class="icon-lock"></i>
-                        </div>
-                        <div>
-                            <input autocomplete="off" type="password" placeholder="Contraseña" id="Password" name="Password" title="El password es requerido.">
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <label for="Password">Contraseña</label>
+                <input autocomplete="off" type="password" placeholder="Contraseña" id="Password" name="Password" title="El password es requerido.">
             </div>
-            <div class="center padding-v">
-                <input type="submit" value="Iniciar Sesion" id="Ejecutar" name="Ejecutar">
+            <div class="center" style="margin-top: 30px">
+                <button type="submit" class="btn" style="background-color: #005476; color: #fff;" id="Ejecutar" name="Ejecutar">Iniciar Sesión</button>
             </div>
-            <br>
-            <div id="divMensaje" style="color: #fe7575; text-align:center; width:100%;">
+            <div class="error-message" id="divMensaje">
                 <div class="validation-summary-valid" data-valmsg-summary="true">
                     <ul>
                         <li style="display:none"></li>
                     </ul>
                 </div>
-
             </div>
         </form>
 
-
-        <div class="text-white center">©  2024 Servicio Nacional de Salud. Todos los Derechos Reservados.</div>
+        <div class="text-center">
+            <div style="color:black; margin-top: 60px;">
+                &copy; @{
+                    ViewBag.Year = DateTime.Now.Year;
+                } @ViewBag.Year Servicio Nacional de Salud. Todos los Derechos Reservados.
+            </div>
+        </div>
         <div class="center">
             <div id="loading"></div>
             <div id="notify"></div>
         </div>
     </div>
 
-
-   
-
-
 </body>
-
+</html>
