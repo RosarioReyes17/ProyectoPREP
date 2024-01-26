@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
-    public class SeguimientosController : Controller
+	[Authorize(Roles = "Administrador")]
+
+	public class SeguimientosController : Controller
     {
 
         DbPrepContext db;

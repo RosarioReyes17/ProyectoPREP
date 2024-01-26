@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyectoPREP.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProyectoPREP.Controllers
 {
-    public class RechazadoSuspendidoController : Controller
+	[Authorize(Roles = "Administrador")]
+
+	public class RechazadoSuspendidoController : Controller
     {
         // GET: Rechazado
 

@@ -52,7 +52,7 @@
                         <div class="col-4">
 
                             Establecimiento:
-                            <select id="FiltroEstablecimiento" name="FiltroEstablecimiento" onChange=nav(this.value) class="form-control">
+                            <select id="FiltroEstablecimiento" asp-items="@(new SelectList(ViewBag.Establecimientos, "IdDeptoDepend", "NombreCentro"))" name="FiltroEstablecimiento" onChange=nav(,this.value) class="form-control">
                                 <option value="/#">--SELECCIONE--</option>
 
 

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
-    public class TratamientoController : Controller
+	[Authorize(Roles = "Administrador")]
+
+	public class TratamientoController : Controller
     {
         // GET: TratamientoController
         DbPrepContext db;

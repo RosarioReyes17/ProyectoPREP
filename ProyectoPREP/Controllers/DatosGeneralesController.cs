@@ -26,7 +26,7 @@ namespace ProyectoPREP.Controllers
       
 
 
-        public ActionResult DatosGeneralesPorElegibilidad()
+        public ActionResult DatosGeneralesPorElegibilidad(int id)
         {
             //int pageSize = 25; // Número de elementos por página
             //int pageNumber = (page ?? 1); // Número de página actual
@@ -45,6 +45,8 @@ namespace ProyectoPREP.Controllers
 				lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
 			
 			}
+
+			ViewBag.Establecimientos = db.VwUsuariosEstablecimientos.ToList();
 
 			return View(lista);
         }

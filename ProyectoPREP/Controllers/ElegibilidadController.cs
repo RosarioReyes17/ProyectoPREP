@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
+	[Authorize(Roles = "Administrador")]
+
 	public class ElegibilidadController : Controller
 	{
 
