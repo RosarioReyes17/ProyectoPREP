@@ -81,52 +81,54 @@ namespace ProyectoPREP.Controllers
 
             //if (ModelState.IsValid)
             //{
-                var Clave = GetMd5Hash(MD5.Create(), user.Password);
-                var IsValidUser = ValidarUsuario(user.Usuario.ToLower(), Clave);
+            var Clave = GetMd5Hash(MD5.Create(), user.Password);
+            var IsValidUser = ValidarUsuario(user.Usuario.ToLower(), Clave);
+            if (IsValidUser != null)
+            {
                 var usuarioRole = db.UsuarioRoles.Include(x=>x.Roles).Where(x=>x.IdUsuario == IsValidUser.IdUsuario).FirstOrDefault();
-                if (IsValidUser != null)
+               
+                if (IsValidUser.Activo.Trim() == "N")
                 {
-                    if (IsValidUser.Activo.Trim() == "N")
+                    ViewBag.Error = "Este usuario esta inactivo.";
+                }
+                else if (IsValidUser.PasswordExpiraFecha < DateTime.Now && IsValidUser.PasswordExpira == "S")
+                {
+                    ViewBag.Error = "La contraseña de este usuario expiro, debe dirigirse a la intranet para resetear su contraseña.";
+                }
+
+                else if (usuarioRole != null)
+                {
+
+
+                    var claims = new List<Claim>
                     {
-                        ViewBag.Error = "Este usuario esta inactivo.";
-                    }
-                    else if (IsValidUser.PasswordExpiraFecha < DateTime.Now && IsValidUser.PasswordExpira == "S")
-                    {
-                        ViewBag.Error = "La contraseña de este usuario expiro, debe dirigirse a la intranet para resetear su contraseña.";
-                    }
+                        new Claim(ClaimTypes.Name,IsValidUser.NombreApellidos),
+                        new Claim("IdUser",Convert.ToString(IsValidUser.IdUsuario)),
+                        new Claim(ClaimTypes.Role,Convert.ToString(usuarioRole.Roles.Nombre)),
+                        new Claim("Depertamento",IsValidUser.Departamento),
+                        new Claim("IdDepertamento",IsValidUser.IdDepartamento),
+                        new Claim("IdRegion",IsValidUser.ID_Region),
+                    };
 
-                    else if (usuarioRole != null)
-                    {
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
+                    return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
 
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name,IsValidUser.NombreApellidos),
-                            new Claim("IdUser",Convert.ToString(IsValidUser.IdUsuario)),
-                            new Claim(ClaimTypes.Role,Convert.ToString(usuarioRole.Roles.Nombre)),
-                            new Claim("Depertamento",IsValidUser.Departamento),
-                            new Claim("IdDepertamento",IsValidUser.IdDepartamento),
-                            new Claim("IdRegion",IsValidUser.ID_Region),
-                        };
-
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-                        return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
-
-
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Usuario no tiene permisos para acceder este recurso.";
-                    }
 
                 }
-            //else
-            //{
-            //    ViewBag.Error = "La cédula o contraseña proporcionada son incorrectos.";
-            //}
-            //}
+                else
+                {
+                    ViewBag.Error = "Usuario no tiene permisos para acceder este recurso.";
+                }
+
+            }
+            else
+            {
+                TempData["error"] = "La cédula o contraseña proporcionada son incorrectos.";
+               // ViewBag.Error = "La cédula o contraseña proporcionada son incorrectos.";
+            }
+      
             return RedirectToAction("Login", "Home");
         }
         public async Task<IActionResult> CerrarSesionAsync()

@@ -119,22 +119,18 @@
             <label style="color:black; margin-bottom:5%" for="Usuario">Utilice su nombre de usuario (cédula) y contraseña para acceder a la Intranet del SNS.</label>
             <div>
                 <label for="Usuario">Cédula</label>
-                <input autocomplete="off" type="text" minlength="13" maxlength="13" data-mask="999-9999999-9" title="La cédula es requerida." placeholder="Cédula" id="Usuario" name="Usuario">
+                <input required type="text" minlength="13" maxlength="13" data-mask="999-9999999-9" title="La cédula es requerida." placeholder="Cédula" id="Usuario" name="Usuario">
             </div>
             <div>
                 <label for="Password">Contraseña</label>
-                <input autocomplete="off" type="password" placeholder="Contraseña" id="Password" name="Password" title="El password es requerido.">
+                <input required type="password" placeholder="Contraseña" id="Password" name="Password" title="El password es requerido.">
+                <span style="color:red;margin-left:20px">@TempData["error"]</span>
             </div>
+
             <div class="center" style="margin-top: 30px">
                 <button type="submit" class="btn" style="background-color: #005476; color: #fff;" id="Ejecutar" name="Ejecutar">Iniciar Sesión</button>
             </div>
-            <div class="error-message" id="divMensaje">
-                <div class="validation-summary-valid" data-valmsg-summary="true">
-                    <ul>
-                        <li style="display:none"></li>
-                    </ul>
-                </div>
-            </div>
+           
         </form>
 
         <div class="text-center">
@@ -144,10 +140,7 @@
                 } @ViewBag.Year Servicio Nacional de Salud. Todos los Derechos Reservados.
             </div>
         </div>
-        <div class="center">
-            <div id="loading"></div>
-            <div id="notify"></div>
-        </div>
+     
     </div>
 
 </body>
