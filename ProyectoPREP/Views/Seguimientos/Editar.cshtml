@@ -58,7 +58,8 @@
                             Fecha de registro de seguimiento:
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaSeguimiento" onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
+                                <input id="txtFechaSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
+                                <span asp-validation-for="FechaRegistroSeguimiento" style="color:red;margin-left:20px"></span>
 
                             </div>
 
@@ -74,7 +75,8 @@
                             <div style="display:flex">
 
                                 <label style="width:26px">TA:</label>
-                                <input type="number" asp-for="SignosVitalesTa" id="SignosVitalesTa" name="SignosVitalesTa" min="0.1" step=".1" class="form-control2"> mmHg
+                                <input type="text" asp-for="SignosVitalesTa" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" min="0" class="form-control2"> mmHg
+                                <span asp-validation-for="SignosVitalesTa" style="color:red;margin-left:20px"></span>
 
                             </div>
                             <br>
@@ -82,7 +84,8 @@
 
                                 <label style="width:26px">FC:</label>
 
-                                <input type="number" id="SignosVitalesFc" asp-for="SignosVitalesFc" name="SignosVitalesFc" min="0.1" step=".1" class="form-control2"> l/min
+                                <input type="text" id="SignosVitalesFc" asp-for="SignosVitalesFc" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" name="SignosVitalesFc" min="0" class="form-control2"> l/min
+                                <span asp-validation-for="SignosVitalesFc" style="color:red;margin-left:20px"></span>
 
                             </div>
                             <br>
@@ -90,7 +93,8 @@
 
                                 <label style="width:26px">FR:</label>
 
-                                <input type="number" id="SignosVitalesFr" asp-for="SignosVitalesFr" name="SignosVitalesFr" min="0.1" step=".1" class="form-control2"> r/min
+                                <input type="text" id="SignosVitalesFr" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" asp-for="SignosVitalesFr" name="SignosVitalesFr" min="0" class="form-control2"> r/min
+                                <span asp-validation-for="SignosVitalesFr" style="color:red;margin-left:20px"></span>
 
                             </div>
                         </td>
@@ -100,15 +104,18 @@
                             <br>
                             <label style="width:105px">Peso:</label>
 
-                            <input id="Peso" asp-for="Peso" name="Peso" type="number" min="0.1" step=".1" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
+                            <input id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="00" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
+                            <span asp-validation-for="Peso" style="color:red;margin-left:20px"></span>
                             <br>
                             <label style="width:105px">Talla Pies:</label>
 
-                            <input id="TallaPies" asp-for="TallaPies" name="TallaPies" class="form-control2" type="number" min="0.1" step=".1" placeholder="Introduzca su Talla en Pies.">
+                            <input id="TallaPies" asp-for="TallaPies" name="TallaPies" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pies.">
+                            <span asp-validation-for="TallaPies" style="color:red;margin-left:20px"></span>
                             <br>
                             <label style="width:105px">Talla Pulgadas:</label>
 
-                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" class="form-control2" type="number" min="0.1" step=".1" placeholder="Introduzca su Talla en Pulgadas.">
+                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pulgadas.">
+                            <span asp-validation-for="TallaPulgadas" style="color:red;margin-left:20px"></span>
 
                         </td>
                     </tr>
@@ -127,7 +134,7 @@
                             <div class="form-group col-md-8">
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
-                                <input id="CreatininaValor" disabled required onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
+                                <input id="CreatininaValor" data-val="true" data-val-required="Este campo obligatorio." disabled onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
                                 <br>
                                 <br>
                                 Resultado:
@@ -166,7 +173,8 @@
                             Fecha de realización(Prueba VIH):
                             <br>
                             <div class="form-group col-md-4">
-                                <input id="txtFechaRealizacionPrueba" onkeydown="return false" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control col-3 date" type="date">
+                                <input id="txtFechaRealizacionPrueba" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control col-3 date" type="date">
+                                <span asp-validation-for="FechaPruebaVih" style="color:red;margin-left:20px"></span>
                             </div>
                         </td>
                         <td colspan="2">
@@ -187,6 +195,8 @@
                                     Positivo
                                 </label>
                             </div>
+                            <span asp-validation-for="ResultadoPruebaVih" style="color:red;margin-left:20px"></span>
+
                         </td>
                     </tr>
                     <tr>
@@ -206,19 +216,21 @@
                                     No
                                 </label>
                             </div>
+                            <span asp-validation-for="ConsultaSignosInfeccion" style="color:red;margin-left:20px"></span>
+
                         </td>
                         <td colspan="1" style="width:310px">
-                            <input type="radio" id="check1" asp-for="Linfadenopatias" name="Linfadenopatias" class="chSignos" disabled value="true"> Linfadenopatias cervicales e inguinales
+                            <input type="checkbox" id="check1" name="Linfadenopatias" class="chSignos" disabled value="true"> Linfadenopatias cervicales e inguinales
                             <br>
-                            <input type="radio" id="check2" asp-for="FiebreDesconocida" name="FiebreDesconocida" class="chSignos" disabled value="true"> Fiebre de origen desconocido
+                            <input type="checkbox" id="check2" name="FiebreDesconocida" class="chSignos" disabled value="true"> Fiebre de origen desconocido
                             <br>
-                            <input type="radio" id="check3" asp-for="DiarreaProlongada" name="DiarreaProlongada" class="chSignos" disabled value="true"> Diarrea prolongada de origen desconocido
+                            <input type="checkbox" id="check3" name="DiarreaProlongada" class="chSignos" disabled value="true"> Diarrea prolongada de origen desconocido
                             <br>
-                            <input type="radio" id="check4" asp-for="ErupcionesPiel" name="ErupcionesPiel" class="chSignos" disabled value="true"> Erupciones en la piel
+                            <input type="checkbox" id="check4" name="ErupcionesPiel" class="chSignos" disabled value="true"> Erupciones en la piel
                             <br>
-                            <input type="radio" id="check5" asp-for="InfeccionesRecurrentes" name="InfeccionesRecurrentes" class="chSignos" disabled value="true"> Infecciones Recurrentes
+                            <input type="checkbox" id="check5" name="InfeccionesRecurrentes" class="chSignos" disabled value="true"> Infecciones Recurrentes
                             <br>
-                            <input type="radio" id="check6" asp-for="HepatoEsplenomegalia" name="HepatoEsplenomegalia" class="chSignos" disabled value="true"> Hepato/esplenomegalia
+                            <input type="checkbox" id="check6" name="HepatoEsplenomegalia" class="chSignos" disabled value="true"> Hepato/esplenomegalia
                             <br>
                         </td>
                         <td colspan="1">
@@ -226,28 +238,43 @@
                                 ¿Nueva ITS Diagnosticada?
                                 <br>
 
-                                <select style="width:180px" class="form-control" id="ddlNuevaEnfermedad" asp-for="NuevaItsdiagnosticada" name="NuevaItsdiagnosticada">
+                                <select style="width:180px" class="form-control" data-val="true" data-val-required="Este campo obligatorio." id="ddlNuevaEnfermedad" asp-for="NuevaItsdiagnosticada" name="NuevaItsdiagnosticada">
                                     <option value="">--Seleccione--</option>
                                     <option value="No">No</option>
                                     <option value="Sifilis">Sifilis</option>
                                     <option value="Hepatitis B">Hepatitis B</option>
                                     <option value="Hepatitis C">Hepatitis C</option>
                                 </select>
+                                <span asp-validation-for="NuevaItsdiagnosticada" style="color:red;margin-left:20px"></span>
                             </div>
                         </td>
                         <td colspan="1" style="">
                             ITS sindrómico
-                            <input id="ITDSindromico2" class="styled" onclick="habilitarInputsindrómico(this.value);" type="radio" asp-for="ItsDiagnosticoPresuntivo" name="ItsDiagnosticoPresuntivo" value="Si" autocomplete="error">Si
-                            <input id="ITDSindromico1" class="styled" onclick="habilitarInputsindrómico(this.value);" type="radio" asp-for="ItsDiagnosticoPresuntivo" name="ItsDiagnosticoPresuntivo" value="No" autocomplete="error"> No
+
+                            <div class="radio radio-info">
+                                <input id="ITDSindromico2" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." onclick="habilitarInputsindrómico(this.value);" asp-for="ItsDiagnosticoPresuntivo" name="ItsDiagnosticoPresuntivo" class="styled" type="radio" value="Si">
+                                <label style="font-weight:400" for="ITDSindromico2">
+                                    Si
+                                </label>
+                            </div>
+
+                            <div class="radio radio-info">
+                                <input id="ITDSindromico1" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." onclick="habilitarInputsindrómico(this.value);" asp-for="ItsDiagnosticoPresuntivo" name="ItsDiagnosticoPresuntivo" class="styled" type="radio" value="No">
+                                <label style="font-weight:400" for="ITDSindromico1">
+                                    No
+                                </label>
+                            </div>
+                            <span asp-validation-for="ItsDiagnosticoPresuntivo" style="color:red;margin-left:20px"></span>
+                           
+                            
                             <br>
+                            <input id="chkITS1" name="SecrecionUretral" class="sindromico " type="checkbox" value="true" disabled> Secrecion Uretral
                             <br>
-                            <input id="chkITS1" asp-for="SecrecionUretral" name="SecrecionUretral" class="sindromico " type="radio" value="true" disabled> Secrecion Uretral
+                            <input id="chkITS2" name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" disabled> Secrecion Vaginal
                             <br>
-                            <input id="chkITS2" asp-for="SecrecionVaginal" name="SecrecionVaginal" class="sindromico" type="radio" value="true" disabled> Secrecion Vaginal
+                            <input id="chkITS3" name="UlceraGenital" class="sindromico" type="checkbox" value="true" disabled> Ulcera genital
                             <br>
-                            <input id="chkITS3" asp-for="UlceraGenital" name="UlceraGenital" class="sindromico" type="radio" value="true" disabled> Ulcera genital
-                            <br>
-                            <input id="chkITS4" asp-for="VerrugasGenitales" name="VerrugasGenitales" class="sindromico" type="radio" value="true" disabled> Verrugas genitales
+                            <input id="chkITS4" name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" disabled> Verrugas genitales
                             <br>
 
                         </td>
@@ -269,19 +296,26 @@
                             <div class="form-group">
                                 Sifilis(VDRL) Realizada:
                                 <br>
-                                <input disabled id="rdsifilis1" class="styled habilitarSifilisBC" asp-for="Sifilis" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
-                                <input disabled id="rdsifilis2" class="styled habilitarSifilisBC" asp-for="Sifilis" type="radio" name="Sifilis" value="Reactivo"> Reactivo
+                                <input disabled id="rdsifilis1" asp-for="Sifilis" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
+                                <input disabled id="rdsifilis2" asp-for="Sifilis" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="Reactivo"> Reactivo
                                 <br>
-                                <input disabled style="width:300px" id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                                <span asp-validation-for="Sifilis" style="color:red;margin-left:20px"></span>
+
+                                <input disabled style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                                <span asp-validation-for="SifilisFecha" style="color:red;margin-left:20px"></span>
+
                             </div>
                         </td>
                         <td id="hepatitisB" colspan="2">
                             HBsAg Realizada:
                             <br>
-                            <input id="rdHBsAg1" disabled class="styled habilitarSifilisBC" type="radio" asp-for="HbsAg" name="HbsAg" value="Negativo"> Negativo
-                            <input id="rdHBsAg2" disabled class="styled habilitarSifilisBC" type="radio" asp-for="HbsAg" name="HbsAg" value="Positivo"> Positivo
+                            <input id="rdHBsAg1" asp-for="HbsAg" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Negativo"> Negativo
+                            <input id="rdHBsAg2" asp-for="HbsAg" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Positivo"> Positivo
                             <br>
-                            <input style="width:300px" disabled id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <span asp-validation-for="HbsAg" style="color:red;margin-left:20px"></span>
+
+                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." disabled id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <span asp-validation-for="HbsAgFecha" style="color:red;margin-left:20px"></span>
 
 
                         </td>
@@ -291,23 +325,28 @@
 
                             Hepatitis C Realizada:
                             <br>
-                            <input id="rdHepatitis1" disabled class="styled habilitarSifilisBC" type="radio" asp-for="HepatitisC" name="HepatitisC" value="Negativo"> Negativo
-                            <input id="rdHepatitis2" disabled class="styled habilitarSifilisBC" type="radio" asp-for="HepatitisC" name="HepatitisC" value="Positivo"> Positivo
+                            <input id="rdHepatitis1" asp-for="HepatitisC" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Negativo"> Negativo
+                            <input id="rdHepatitis2" asp-for="HepatitisC" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Positivo"> Positivo
                             <br>
-                            <input style="width:300px" onkeydown="return false" disabled id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
+
+                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" disabled id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
+
                         </td>
 
                     </tr>
                     <tr>
                         <td colspan="1">
                             Adherencia al uso del medicamento, cantidad de comprimidos omitidos en la ultima semana/7dias
-                            <select class="form-control" id="ddlComprimidosOmitidos" style="width:200px" asp-for="AdherenciaCantidadComprimidos" name="AdherenciaCantidadComprimidos">
-                                <option value="-1">--Seleccione--</option>
+                            <select class="form-control" data-val="true" data-val-required="Este campo obligatorio." id="ddlComprimidosOmitidos" style="width:200px" asp-for="AdherenciaCantidadComprimidos" name="AdherenciaCantidadComprimidos">
+                                <option value="">--Seleccione--</option>
                                 <option value="Más de 2 comprimidos (No adherente)">Más de 2 comprimidos (No adherente)</option>
                                 <option value="Menos de 2 comprimidos (Poco adherente)">Menos de 2 comprimidos (Poco adherente)</option>
                                 <option value="No Sabe">No Sabe</option>
                                 <option value="Sin Falla(Adherente)">Sin Falla(Adherente)</option>
                             </select>
+                            <span asp-validation-for="AdherenciaCantidadComprimidos" style="color:red;margin-left:20px"></span>
                         </td>
                         <td colspan="2">
                             ¿Se le ha brindado asesoramiento sobre la adherencia al medicamento?
@@ -324,6 +363,8 @@
                                     No
                                 </label>
                             </div>
+                            <span asp-validation-for="AsesoramientoAdherencia" style="color:red;margin-left:20px"></span>
+
                         </td>
                         <td colspan="1">
                             ¿Se le ha brindado asesoramiento sobre la reducción de riesgos?
@@ -340,6 +381,8 @@
                                     No
                                 </label>
                             </div>
+                            <span asp-validation-for="AsesoramientoRiesgos" style="color:red;margin-left:20px"></span>
+
                         </td>
                     </tr>
                     <tr>
@@ -358,6 +401,8 @@
                                     No
                                 </label>
                             </div>
+                            <span asp-validation-for="EntregaCondones" style="color:red;margin-left:20px"></span>
+
                         </td>
 
 
@@ -382,26 +427,29 @@
                         <td colspan="2">
                             Meses de prescripción
 
-                            <select id="Meses_prescripcion" style="width:300px;" asp-for="MesesPrescripcion" name="MesesPrescripcion" class="form-control">
+                            <select id="Meses_prescripcion" data-val="true" data-val-required="Este campo obligatorio." style="width:300px;" asp-for="MesesPrescripcion" name="MesesPrescripcion" class="form-control">
                                 <option value="">--Seleccione--</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
+                            <span asp-validation-for="MesesPrescripcion" style="color:red;margin-left:20px"></span>
 
 
                         </td>
                         <td colspan="1">
                             <div class="form-group ">
                                 Fecha Proximo seguimiento:
-                                <input id="FechaProximoSeguimiento" onkeydown="return false" asp-for="FechaProximoSeguimiento" name="FechaProximoSeguimiento" class="form-control col-5 date" type="date">
+                                <input id="FechaProximoSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaProximoSeguimiento" name="FechaProximoSeguimiento" class="form-control col-5 date" type="date">
+                                <span asp-validation-for="FechaProximoSeguimiento" style="color:red;margin-left:20px"></span>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="4">
                             Observaciones:
-                            <input type="text" id="Observaciones" asp-for="Observaciones" name="Observaciones" class="form-control">
+                            <input type="text" data-val="true" data-val-required="Este campo obligatorio." id="Observaciones" asp-for="Observaciones" name="Observaciones" class="form-control">
+                            <span asp-validation-for="Observaciones" style="color:red;margin-left:20px"></span>
                         </td>
                     </tr>
                 </tbody>

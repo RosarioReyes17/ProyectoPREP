@@ -89,11 +89,15 @@ namespace ProyectoPREP.Controllers
                
                 if (IsValidUser.Activo.Trim() == "N")
                 {
-                    ViewBag.Error = "Este usuario esta inactivo.";
+                    TempData["error"] = "Este usuario esta inactivo.";
+                    return RedirectToAction("Login", "Home");
+
                 }
                 else if (IsValidUser.PasswordExpiraFecha < DateTime.Now && IsValidUser.PasswordExpira == "S")
                 {
-                    ViewBag.Error = "La contraseña de este usuario expiro, debe dirigirse a la intranet para resetear su contraseña.";
+                    TempData["error"] = "La contraseña de este usuario expiro, debe dirigirse a la intranet para resetear su contraseña.";
+                    return RedirectToAction("Login", "Home");
+
                 }
 
                 else if (usuarioRole != null)
@@ -119,16 +123,18 @@ namespace ProyectoPREP.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = "Usuario no tiene permisos para acceder este recurso.";
+                    TempData["error"] = "Usuario no tiene permisos para acceder este recurso.";
                 }
 
             }
             else
             {
                 TempData["error"] = "La cédula o contraseña proporcionada son incorrectos.";
-               // ViewBag.Error = "La cédula o contraseña proporcionada son incorrectos.";
+                return RedirectToAction("Login", "Home");
+
+                // ViewBag.Error = "La cédula o contraseña proporcionada son incorrectos.";
             }
-      
+
             return RedirectToAction("Login", "Home");
         }
         public async Task<IActionResult> CerrarSesionAsync()
