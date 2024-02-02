@@ -134,7 +134,7 @@
                             <div class="form-group col-md-8">
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
-                                <input id="CreatininaValor" data-val="true" data-val-required="Este campo obligatorio." disabled onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
+                                <input id="CreatininaValor" disabled onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
                                 <br>
                                 <br>
                                 Resultado:
@@ -220,17 +220,17 @@
 
                         </td>
                         <td colspan="1" style="width:310px">
-                            <input type="checkbox" id="check1" name="Linfadenopatias" class="chSignos" disabled value="true"> Linfadenopatias cervicales e inguinales
+                            <input type="checkbox" id="check1" checked="Linfadenopatias" value="true" disabled class="chSignos" /> Linfadenopatias cervicales e inguinales
                             <br>
-                            <input type="checkbox" id="check2" name="FiebreDesconocida" class="chSignos" disabled value="true"> Fiebre de origen desconocido
+                            <input type="checkbox" id="check2" checked="@Model.FiebreDesconocida" value="true" name="FiebreDesconocida" disabled class="chSignos" /> Fiebre de origen desconocido
                             <br>
-                            <input type="checkbox" id="check3" name="DiarreaProlongada" class="chSignos" disabled value="true"> Diarrea prolongada de origen desconocido
+                            <input type="checkbox" id="check3" checked="@Model.DiarreaProlongada" value="true" name="DiarreaProlongada" disabled class="chSignos" /> Diarrea prolongada de origen desconocido
                             <br>
-                            <input type="checkbox" id="check4" name="ErupcionesPiel" class="chSignos" disabled value="true"> Erupciones en la piel
+                            <input type="checkbox" id="check4" checked="@Model.ErupcionesPiel" value="true" name="ErupcionesPiel" disabled class="chSignos" /> Erupciones en la piel
                             <br>
-                            <input type="checkbox" id="check5" name="InfeccionesRecurrentes" class="chSignos" disabled value="true"> Infecciones Recurrentes
+                            <input type="checkbox" id="check5" checked="@Model.InfeccionesRecurrentes" value="true" name="InfeccionesRecurrentes" disabled class="chSignos" /> Infecciones Recurrentes
                             <br>
-                            <input type="checkbox" id="check6" name="HepatoEsplenomegalia" class="chSignos" disabled value="true"> Hepato/esplenomegalia
+                            <input type="checkbox" id="check6" checked="@Model.HepatoEsplenomegalia" value="true" name="HepatoEsplenomegalia" disabled class="chSignos" /> Hepato/esplenomegalia
                             <br>
                         </td>
                         <td colspan="1">
@@ -268,13 +268,13 @@
                            
                             
                             <br>
-                            <input id="chkITS1" name="SecrecionUretral" class="sindromico " type="checkbox" value="true" disabled> Secrecion Uretral
+                            <input id="chkITS1" name="SecrecionUretral" class="sindromico " type="checkbox" checked="@Model.SecrecionUretral" value="true" disabled> Secrecion Uretral
                             <br>
-                            <input id="chkITS2" name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" disabled> Secrecion Vaginal
+                            <input id="chkITS2" name="SecrecionVaginal" class="sindromico" type="checkbox" checked="@Model.SecrecionVaginal" value="true" disabled> Secrecion Vaginal
                             <br>
-                            <input id="chkITS3" name="UlceraGenital" class="sindromico" type="checkbox" value="true" disabled> Ulcera genital
+                            <input id="chkITS3" name="UlceraGenital" class="sindromico" type="checkbox" checked="@Model.UlceraGenital" value="true" disabled> Ulcera genital
                             <br>
-                            <input id="chkITS4" name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" disabled> Verrugas genitales
+                            <input id="chkITS4" name="VerrugasGenitales" class="sindromico" type="checkbox" checked="@Model.VerrugasGenitales" value="true" disabled> Verrugas genitales
                             <br>
 
                         </td>
@@ -511,9 +511,7 @@
         </div>
     </div>
 
-    <script>
-
-    </script>
+ 
 
 </form>
 

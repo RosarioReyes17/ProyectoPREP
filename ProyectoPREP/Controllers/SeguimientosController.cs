@@ -107,9 +107,9 @@ namespace ProyectoPREP.Controllers
 
 
 
-            //db.Entry(elegibilidad).State = EntityState.Modified;
-            //db.Seguimientos.Add(seguimiento);
-            //db.SaveChanges();
+            db.Entry(elegibilidad).State = EntityState.Modified;
+            db.Seguimientos.Add(seguimiento);
+            db.SaveChanges();
             return RedirectToAction("SeguimientoVer", "Seguimientos", new { id = IdDatos });
             //return RedirectToAction("SeguimientoVer", "Seguimientos", + IdDatos );
         }
@@ -198,8 +198,8 @@ namespace ProyectoPREP.Controllers
 
 
 
-            db.Entry(elegibilidad).State = EntityState.Modified;
-            db.Entry(seguimiento).State = EntityState.Modified;
+            db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+            db.Seguimientos.Entry(seguimiento).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("DatosGeneralesPorAprobado", "DatosGenerales");
