@@ -10,6 +10,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProyectoPREP.Controllers
 {
+    public static class ExtensionMethods
+    {
+        public static string GetUserId(this ClaimsPrincipal user)
+        {
+            if (!user.Identity.IsAuthenticated)
+                return null;
+
+            ClaimsPrincipal currentUser = user;
+            return currentUser.FindFirst("IdUser").Value;
+
+        }
+        public static string GetIdDepartamento(this ClaimsPrincipal user)
+        {
+            if (!user.Identity.IsAuthenticated)
+                return null;
+
+            ClaimsPrincipal currentUser = user;
+            return currentUser.FindFirst("IdDepertamento").Value;
+
+        }
+    }
+
+ 
     public class HomeController : Controller
     {
         DbPrepContext db;
@@ -86,10 +109,10 @@ namespace ProyectoPREP.Controllers
             if (IsValidUser != null)
             {
                 var usuarioRole = db.UsuarioRoles.Include(x=>x.Roles).Where(x=>x.IdUsuario == IsValidUser.IdUsuario).FirstOrDefault();
-               
-                if (IsValidUser.Activo.Trim() == "N")
+                var rolActivo = db.Roles.FirstOrDefault(x => x.Id == usuarioRole.RolesId);
+                if (IsValidUser.Activo.Trim() == "N" || rolActivo.Activo == false)
                 {
-                    TempData["error"] = "Este usuario esta inactivo.";
+                    TempData["error"] = "Este usuario o Rol esta inactivo.";
                     return RedirectToAction("Login", "Home");
 
                 }
@@ -134,7 +157,7 @@ namespace ProyectoPREP.Controllers
 
                 // ViewBag.Error = "La cédula o contraseña proporcionada son incorrectos.";
             }
-
+            TempData["error"] = "La cédula o contraseña proporcionada son incorrectos.";
             return RedirectToAction("Login", "Home");
         }
         public async Task<IActionResult> CerrarSesionAsync()

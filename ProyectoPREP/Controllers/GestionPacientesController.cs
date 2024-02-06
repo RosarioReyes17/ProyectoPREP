@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ using System.Data.SqlClient;
 
 namespace ProyectoPREP.Controllers
 {
+    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+
     public class GestionPacientesController : Controller
     {
         // GET: TransferidoController
@@ -39,6 +42,8 @@ namespace ProyectoPREP.Controllers
         {
             try
             {
+                //int idUser = Convert.ToInt32(User.GetUserId());
+
                 var Existe = db.GestionPacientes.Where(x => x.DatosGeneralesId == idDatos && x.EstatusSolicitud == "Pendiente").ToList();
                 if (Existe.Count() == 0)
                 {
@@ -47,8 +52,8 @@ namespace ProyectoPREP.Controllers
                     paciente.UsuarioEnvia = 1;
                     paciente.EstatusSolicitud = "Pendiente";
                     paciente.DatosGeneralesId = idDatos;
-                    //db.GestionPacientes.Add(paciente);
-                    //db.SaveChanges();
+                    db.GestionPacientes.Add(paciente);
+                    db.SaveChanges();
                 }
                 else
                 {

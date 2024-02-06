@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ProyectoPREP.Controllers
 {
-	[Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
-	public class RechazadoSuspendidoController : Controller
+    public class RechazadoSuspendidoController : Controller
     {
         // GET: Rechazado
 
@@ -34,6 +34,8 @@ namespace ProyectoPREP.Controllers
         [HttpPost]
         public ActionResult Reintegrar(FormularioPrep formulario, int idDatos, int idFormulario)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
+
             int? estado;
             string vista;
             var elegi = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == idFormulario);
@@ -42,10 +44,11 @@ namespace ProyectoPREP.Controllers
 
             elegi.Estatus = 1;
             elegi.FechaReintegro = formulario.FechaReintegro;
+            elegi.Usuario = Convert.ToString(idUser);
 
             formulario.Id = idFormulario;
             formulario.DatosGeneralesId = idDatos;
-            formulario.UsuarioModifico = "1";
+            formulario.UsuarioModifico = Convert.ToString(idUser);
             formulario.FechaModificacion = DateTime.Now;
 
             db.Entry(elegi).State = EntityState.Modified;
@@ -86,6 +89,7 @@ namespace ProyectoPREP.Controllers
         [HttpPost]
         public ActionResult Suspender(int idDatos, TratamientoPrep tratamiento)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
             var elegi = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
@@ -93,11 +97,13 @@ namespace ProyectoPREP.Controllers
 
 
             elegi.Estatus = 7;
+            elegi.Usuario = Convert.ToString(idUser);
             
             trata.PrepSuspendida = tratamiento.PrepSuspendida;
             trata.MotivosInterrupcionPrep = tratamiento.MotivosInterrupcionPrep;
             trata.EstadoVihAlInterrumpir = tratamiento.EstadoVihAlInterrumpir;
             trata.Observaciones = tratamiento.Observaciones;
+            
 
             db.Entry(trata).State = EntityState.Modified;
             db.Entry(elegi).State = EntityState.Modified;

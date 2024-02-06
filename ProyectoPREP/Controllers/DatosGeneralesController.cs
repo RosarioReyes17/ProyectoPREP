@@ -13,7 +13,7 @@ using X.PagedList;
 
 namespace ProyectoPREP.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
     public class DatosGeneralesController : Controller
     {
@@ -28,21 +28,16 @@ namespace ProyectoPREP.Controllers
 
         public ActionResult DatosGeneralesPorElegibilidad(int id)
         {
-            //int pageSize = 25; // Número de elementos por página
-            //int pageNumber = (page ?? 1); // Número de página actual
+            int idUser =  Convert.ToInt32(User.GetUserId());
+            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
-            ////List<DatosGenerale> data = db.DatosGenerales.ToList();
-
-            ////IPagedList<DatosGenerale> pagedData = data.ToPagedList(pageNumber, pageSize);
-
-
-			var lista = new List<DatosGenerales>();
+            var lista = new List<DatosGenerales>();
 			string sql = "DatosGeneralesPorElegibilidad";
 
 
 			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
 			{
-				lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+				lista = connection.Query<DatosGenerales>(sql,new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
 			
 			}
 
@@ -56,11 +51,12 @@ namespace ProyectoPREP.Controllers
 
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorPCR";
+            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
-                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                lista = connection.Query<DatosGenerales>(sql,new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
             }
 
@@ -71,10 +67,11 @@ namespace ProyectoPREP.Controllers
         {
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorTratamiento";
+            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
-                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
             }
 
 
@@ -86,11 +83,12 @@ namespace ProyectoPREP.Controllers
 
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorAprobado";
+            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
-                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
             }
 
@@ -102,11 +100,12 @@ namespace ProyectoPREP.Controllers
 
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorRechazado";
+            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
-                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
             }
 
@@ -118,11 +117,12 @@ namespace ProyectoPREP.Controllers
 
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorSuspendido";
+            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
-                lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
             }
 
@@ -147,22 +147,25 @@ namespace ProyectoPREP.Controllers
         {
             try
             {
-				
-				formulario.DatosGenerales.Usuario = Convert.ToString(1);
-				formulario.DatosGenerales.IdDeptoDepend = 1641;
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+
+                formulario.DatosGenerales.Usuario = Convert.ToString(idUser);
+				formulario.DatosGenerales.IdDeptoDepend = IdDeptoDepend;
 				formulario.DatosGenerales.TieneDocumentos = "Si";
 				formulario.DatosGenerales.TipoDocumento = "C";
 				formulario.DatosGenerales.EnRiesgo = "Si";
 
 				db.DatosGenerales.Add(formulario.DatosGenerales);
 
-				formulario.Usuario = Convert.ToString(1);
+				formulario.Usuario = Convert.ToString(idUser);
 				formulario.Secuencia = 0;
 				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
 
 				var elegibilidad = new ElegibilidadPrep();
 				elegibilidad.Estatus = 1;
-				elegibilidad.Usuario = Convert.ToString(1);
+				elegibilidad.Usuario = Convert.ToString(idUser);
 				formulario.ElegibilidadPreps.Add(elegibilidad);
 
 				db.FormularioPreps.Add(formulario);
@@ -193,12 +196,15 @@ namespace ProyectoPREP.Controllers
 		{
 			try
 			{
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
                 DateTime fechaNacimiento1 = (DateTime)formulario.DatosGenerales.FechaNacimiento;
                 var edad = CalcularEdad(fechaNacimiento1);
 
 				formulario.DatosGenerales.Edad = edad;
-                formulario.DatosGenerales.Usuario = Convert.ToString(1);
-				formulario.DatosGenerales.IdDeptoDepend = 1641;
+                formulario.DatosGenerales.Usuario = Convert.ToString(idUser);
+				formulario.DatosGenerales.IdDeptoDepend = IdDeptoDepend;
 				formulario.DatosGenerales.EnRiesgo = "Si";
 
 				formulario.DatosGenerales.TieneDocumentos = "No";
@@ -208,13 +214,13 @@ namespace ProyectoPREP.Controllers
 
 				db.DatosGenerales.Add(formulario.DatosGenerales);
 
-				formulario.Usuario = Convert.ToString(1);
+				formulario.Usuario = Convert.ToString(idUser);
 				formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
 				formulario.Secuencia = 0;
 
 				var elegibilidad = new ElegibilidadPrep();
 				elegibilidad.Estatus = 1;
-				elegibilidad.Usuario = Convert.ToString(1);
+				elegibilidad.Usuario = Convert.ToString(idUser);
 				formulario.ElegibilidadPreps.Add(elegibilidad);
 
 				db.FormularioPreps.Add(formulario);
@@ -397,7 +403,8 @@ namespace ProyectoPREP.Controllers
         {
 			try
 			{
-				var lista = new List<VwMunicipio>();
+
+                var lista = new List<VwMunicipio>();
 
 				FormularioPrep? model1 = new FormularioPrep();
 
@@ -432,11 +439,14 @@ namespace ProyectoPREP.Controllers
         {
             try
             {
-				formulario.Id = IdFormulario;
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+                formulario.Id = IdFormulario;
 				formulario.DatosGenerales.FechaModificacion = DateTime.Now;
-				formulario.DatosGenerales.UsuarioModifico = Convert.ToString(1);
+				formulario.DatosGenerales.UsuarioModifico = Convert.ToString(idUser);
 				formulario.FechaModificacion = DateTime.Now;
-				formulario.UsuarioModifico = Convert.ToString(1);
+				formulario.UsuarioModifico = Convert.ToString(idUser);
 
 				db.Entry(formulario).State = EntityState.Modified;
 

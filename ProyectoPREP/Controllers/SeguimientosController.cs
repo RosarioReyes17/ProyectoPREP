@@ -6,9 +6,9 @@ using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
-	[Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
-	public class SeguimientosController : Controller
+    public class SeguimientosController : Controller
     {
 
         DbPrepContext db;
@@ -21,17 +21,18 @@ namespace ProyectoPREP.Controllers
         [HttpPost]
         public JsonResult CreatininaMenor60(int IdDatos, Seguimiento seguimiento)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
 
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
 
             elegibilidad.Estatus = 6;
-
+            elegibilidad.Usuario = Convert.ToString(idUser);
             seguimiento.Id = 0;
             seguimiento.ElegibilidadPrepId = elegibilidad.Id;
             seguimiento.SeguimimientoPruebaId = 5;
-            seguimiento.Usuario = "1";
+            seguimiento.Usuario = Convert.ToString(idUser);
 
 
             db.Entry(elegibilidad).State = EntityState.Modified;
@@ -49,16 +50,17 @@ namespace ProyectoPREP.Controllers
         public JsonResult VIHPositivo(int IdDatos, Seguimiento seguimiento)
         {
             bool status = true;
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var formu = db.FormularioPreps.FirstOrDefault(X => X.DatosGeneralesId == IdDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formu.Id);
 
             elegibilidad.Estatus = 6;
-
+            elegibilidad.Usuario = Convert.ToString(idUser);
             seguimiento.Id = 0;
             seguimiento.ElegibilidadPrepId = elegibilidad.Id;
             seguimiento.SeguimimientoPruebaId = 5;
-            seguimiento.Usuario = "1";
+            seguimiento.Usuario = Convert.ToString(idUser);
 
 
             db.Entry(elegibilidad).State = EntityState.Modified;
@@ -93,6 +95,8 @@ namespace ProyectoPREP.Controllers
         [HttpPost]
         public ActionResult SeguimientoPrep(int IdDatos, Seguimiento seguimiento) 
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
+
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == IdDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
             DateTime fecha = DateTime.Now;
@@ -101,17 +105,16 @@ namespace ProyectoPREP.Controllers
             seguimiento.FechaSeguimiento = fecha;
             seguimiento.ElegibilidadPrepId = elegibilidad.Id;
             seguimiento.SeguimimientoPruebaId = 5;
-            seguimiento.Usuario = "1";
+            seguimiento.Usuario = Convert.ToString(idUser);
 
+            elegibilidad.Usuario = Convert.ToString(idUser);
             elegibilidad.Estatus = 4;
-
 
 
             db.Entry(elegibilidad).State = EntityState.Modified;
             db.Seguimientos.Add(seguimiento);
             db.SaveChanges();
             return RedirectToAction("SeguimientoVer", "Seguimientos", new { id = IdDatos });
-            //return RedirectToAction("SeguimientoVer", "Seguimientos", + IdDatos );
         }
 
 
@@ -187,15 +190,17 @@ namespace ProyectoPREP.Controllers
         [HttpPost]
         public ActionResult SeguimientoEditar(int IdDatos, Seguimiento seguimiento)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
+
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == IdDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
             DateTime fecha = DateTime.Now;
 
             seguimiento.FechaSeguimiento = fecha;
-            seguimiento.Usuario = "1";
+            seguimiento.Usuario = Convert.ToString(idUser); ;
 
             elegibilidad.Estatus = 4;
-
+            elegibilidad.Usuario = Convert.ToString(idUser);
 
 
             db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;

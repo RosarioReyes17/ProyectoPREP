@@ -5,9 +5,9 @@ using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
-	[Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
-	public class TratamientoController : Controller
+    public class TratamientoController : Controller
     {
         // GET: TratamientoController
         DbPrepContext db;
@@ -35,6 +35,7 @@ namespace ProyectoPREP.Controllers
             ,string MesesPrescripcion, string Observaciones, DateTime? FechaInicio
             , bool PrepArvTdfFtc, bool PrepArvTdf3tc, bool PrepArvTafFtc)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x=>x.FormularioPrepId == formulario.Id);
@@ -43,6 +44,7 @@ namespace ProyectoPREP.Controllers
 
 
             elegibilidad.Estatus = 4;
+            elegibilidad.Usuario = Convert.ToString(idUser);
             tratamiento.Id = 0;
 
             db.TratamientoPreps.Add(tratamiento);
@@ -56,10 +58,13 @@ namespace ProyectoPREP.Controllers
         public JsonResult rechazarPaciente(int idDatos, string ObservacionesModal)
         {
             bool estatus = true;
+            int idUser = Convert.ToInt32(User.GetUserId());
+
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x=>x.FormularioPrepId == formulario.Id);
 
             elegibilidad.Estatus = 6;
+            elegibilidad.Usuario= Convert.ToString(idUser);
 
             var tratamiento = new TratamientoPrep();
             tratamiento.Observaciones = ObservacionesModal;

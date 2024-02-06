@@ -6,9 +6,9 @@ using ProyectoPREP.Models;
 
 namespace ProyectoPREP.Controllers
 {
-	[Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
-	public class ElegibilidadController : Controller
+    public class ElegibilidadController : Controller
 	{
 
         DbPrepContext db;
@@ -20,6 +20,8 @@ namespace ProyectoPREP.Controllers
     
         public JsonResult VIHPositivo(int id, DateTime FechaPruebaVih,DateTime FechaEntregaVih)
 		{
+            int idUser = Convert.ToInt32(User.GetUserId());
+
             bool status = true;
 
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.Id == id);
@@ -28,6 +30,8 @@ namespace ProyectoPREP.Controllers
 			elegibilidad.FechaPruebaVih = FechaPruebaVih;
 			elegibilidad.FechaEntregaVih = FechaEntregaVih;
 			elegibilidad.ResultadoPruebaVih = "Positivo";
+			elegibilidad.Usuario = Convert.ToString(idUser);
+
 			db.Entry(elegibilidad).State = EntityState.Modified;
 			db.SaveChanges();
 
@@ -76,6 +80,7 @@ namespace ProyectoPREP.Controllers
 		{
 			try
 			{
+                int idUser = Convert.ToInt32(User.GetUserId());
 
                 var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
 
@@ -89,7 +94,7 @@ namespace ProyectoPREP.Controllers
 						int id = elegi.Id;
 
 						elegibilidad.Id = id;
-						elegibilidad.Usuario = Convert.ToString(1);
+						elegibilidad.Usuario = Convert.ToString(idUser);
 						elegibilidad.Estatus = 2;
                         elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
 
@@ -109,7 +114,7 @@ namespace ProyectoPREP.Controllers
                     int id = elegi.Id;
 
                     elegibilidad.Id = id;
-                    elegibilidad.Usuario = Convert.ToString(1);
+                    elegibilidad.Usuario = Convert.ToString(idUser);
                     elegibilidad.Estatus = 3;
 					elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
 
@@ -134,6 +139,7 @@ namespace ProyectoPREP.Controllers
 
 		public JsonResult PCRDetectado(int IdDatos, ElegibilidadPrep elegibilidad)
 		{
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
 
@@ -165,7 +171,7 @@ namespace ProyectoPREP.Controllers
 
 
 				//elegibilidad.Id = id;
-				elegi.Usuario = Convert.ToString(1);
+				elegi.Usuario = Convert.ToString(idUser);
 				elegi.Estatus = 6;
 
 				
@@ -183,6 +189,7 @@ namespace ProyectoPREP.Controllers
 
         public JsonResult CreatininaMenor60(int IdDatos, ElegibilidadPrep elegibilidad)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
 
@@ -212,7 +219,7 @@ namespace ProyectoPREP.Controllers
 
 
                 //elegibilidad.Id = id;
-                elegi.Usuario = Convert.ToString(1);
+                elegi.Usuario = Convert.ToString(idUser);
                 elegi.Estatus = 2;
 
 
