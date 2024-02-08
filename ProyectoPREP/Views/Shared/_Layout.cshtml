@@ -74,7 +74,17 @@
                                     TRANSFERENCIA
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
-                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientes">RECIBIR PACIENTES</a>
+
+                                    @if (User.IsInRole("Psicólogo Medicos"))
+                                    {
+                                        <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientes">RECIBIR PACIENTES</a>
+
+                                    }
+                                    @if (User.IsInRole("Administrador"))
+                                    {
+                                        <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientesAdmin">RECIBIR PACIENTES</a>
+                                        
+                                    }
 
                                 </div>
                             </li>

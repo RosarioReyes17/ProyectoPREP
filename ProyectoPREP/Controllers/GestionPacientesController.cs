@@ -96,6 +96,22 @@ namespace ProyectoPREP.Controllers
 
             return View(lista);
         }
+        [Authorize(Roles = "Administrador")]
+
+        public ActionResult RecibirPacientesAdmin()
+        {
+            var lista = new List<GestionPacientesAprobados>();
+            string sql = "[GestionPacientesAprobadosAdmin]";
+
+
+            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            {
+                lista = connection.Query<GestionPacientesAprobados>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            }
+
+            return View(lista);
+        }
 
 
         public ActionResult AceptarPacientes(int id)
