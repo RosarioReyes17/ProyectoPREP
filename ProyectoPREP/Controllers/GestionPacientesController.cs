@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using ProyectoPREP.Models;
 using ProyectoPREP.Proc;
 using System.Data.SqlClient;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ProyectoPREP.Controllers
 {
@@ -42,29 +44,39 @@ namespace ProyectoPREP.Controllers
         {
             try
             {
-                //int idUser = Convert.ToInt32(User.GetUserId());
+                var datos = db.DatosGenerales.FirstOrDefault(x => x.Id == idDatos);
 
-                var Existe = db.GestionPacientes.Where(x => x.DatosGeneralesId == idDatos && x.EstatusSolicitud == "Pendiente").ToList();
-                if (Existe.Count() == 0)
+                int idUser = Convert.ToInt32(User.GetUserId());
+                var Existe = db.GestionPacientes.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
+
+                if (Existe == null)
                 {
-                    paciente.DeptoDependOriginal = 1641;
+                    paciente.DeptoDependOriginal = datos.IdDeptoDepend;
                     paciente.FechaRecepcion = DateTime.Now;
-                    paciente.UsuarioEnvia = 1;
+                    paciente.UsuarioEnvia = idUser;
                     paciente.EstatusSolicitud = "Pendiente";
                     paciente.DatosGeneralesId = idDatos;
+
                     db.GestionPacientes.Add(paciente);
                     db.SaveChanges();
                 }
                 else
                 {
-                    return Content("Ha ocurrido un error, por favor intentarlo mas tarde.");
+                    Existe.FechaRecepcion = DateTime.Now;
+                    Existe.UsuarioEnvia = idUser;
+                    Existe.EstatusSolicitud = "Pendiente";
+                    Existe.DeptoDependOriginal = datos.IdDeptoDepend;
+                    Existe.DeptoDependDestino = paciente.DeptoDependDestino;
+                    Existe.FechaEnvio = paciente.FechaEnvio;
 
+                    db.Entry(Existe).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
                 return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
             }
             catch
             {
-                return View();
+                return Content("ha ocurrido un error");
             }
         }
 
@@ -73,11 +85,12 @@ namespace ProyectoPREP.Controllers
         {
             var lista = new List<GestionPacientesAprobados>();
             string sql = "GestionPacientesAprobados";
+            int DeptoDependDestino = Convert.ToInt32(User.GetIdDepartamento());
 
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
-                lista = connection.Query<GestionPacientesAprobados>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                lista = connection.Query<GestionPacientesAprobados>(sql,new { DeptoDependDestino }, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
             }
 
@@ -87,21 +100,29 @@ namespace ProyectoPREP.Controllers
 
         public ActionResult AceptarPacientes(int id)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var gestion = db.GestionPacientes.FirstOrDefault(x=>x.DatosGeneralesId == id);
-            gestion.UsuarioRecibe = 2;
+            var datos = db.DatosGenerales.FirstOrDefault(x => x.Id == gestion.DatosGeneralesId);
+            gestion.UsuarioRecibe = idUser;
             gestion.FechaRecepcion = DateTime.Now;
             gestion.EstatusSolicitud = "Aprobado";
+
+            datos.IdDeptoDepend = (int)gestion.DeptoDependDestino;
+
+
             db.Entry(gestion).State = EntityState.Modified;
+            db.Entry(datos).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("RecibirPacientes", "GestionPacientes");
         }
 
         public ActionResult RechazarPacientes(int id)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
 
             var gestion = db.GestionPacientes.FirstOrDefault(x => x.DatosGeneralesId == id);
-            gestion.UsuarioRecibe = 2;
+            gestion.UsuarioRecibe = idUser;
             gestion.FechaRecepcion = DateTime.Now;
             gestion.EstatusSolicitud = "Rechazado";
             db.Entry(gestion).State = EntityState.Modified;
