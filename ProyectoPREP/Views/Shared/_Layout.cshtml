@@ -123,23 +123,49 @@
                             </li>
 
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CerrarSesion">Cerrar Sesion</a>
-                            </li>
                         }
                        
 
                     </ul>
                 </div>
+                <div class="dropdown">
 
-                <div style="display:flex">
-                    <div style="display:flex;flex-direction:column;align-items: flex-end">
-                        <label class="datos">@User.Identity.Name</label>
-                        <label style="font-weight:500" class="datos">@User.FindFirst("Depertamento").Value</label>
-
+                    <div style="display: flex; align-items: center;" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div style="flex-grow: 1;">
+                            <label class="datos">@User.Identity.Name</label>
+                            <br />
+                            <label style="font-weight:500" class="datos">@User.FindFirst("Depertamento").Value</label>
+                        </div>
+                        <div class="logo">@User.Identity.Name.Substring(0,1)</div>
                     </div>
-                    <div class="logo">@User.Identity.Name.Substring(0,1)</div>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="right: 0; left: auto;">
+
+                        <div style="text-align: right;">
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CerrarSesion">CERRAR SESIÓN</a>
+                        </div>
+                    </div>
                 </div>
+
+                <script>
+
+                    document.querySelector('.dropdown-toggle').addEventListener('click', function () {
+   
+                        document.querySelector('.dropdown-menu').classList.toggle('show');
+                    });
+
+                    document.addEventListener('click', function (event) {
+                        var dropdownMenu = document.querySelector('.dropdown-menu');
+                        if (!dropdownMenu.contains(event.target)) {
+                            dropdownMenu.classList.remove('show');
+                        }
+                    });
+                </script>
+
+
+
+
+
             </div>
         </nav>
 
