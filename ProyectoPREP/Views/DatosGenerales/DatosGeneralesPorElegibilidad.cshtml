@@ -74,7 +74,7 @@
                 <th>Documento</th>
                 <th>Nacionalidad</th>
                 <th>Fecha de registro</th>
-                <th>Estatus</th>
+                <th>Estado</th>
                 <th>Acciones</th>
 
             </tr>
@@ -89,7 +89,7 @@
                     <td>@item.Sexo</td>
                     <td>@item.Documento</td>
                     <td>@item.NOMBRE_CORTO_ES</td>
-                    <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
+                    <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     <td>
                         <a class="btn btnElegibilidad " href="~/Elegibilidad/FormularioElegibilidad/@item.Id">Elegibilidad</a>
 

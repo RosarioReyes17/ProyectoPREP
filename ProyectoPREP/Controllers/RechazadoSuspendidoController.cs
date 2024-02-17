@@ -37,14 +37,16 @@ namespace ProyectoPREP.Controllers
             int idUser = Convert.ToInt32(User.GetUserId());
 
             int? estado;
-            string vista;
             var elegi = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == idFormulario);
+            var datos = db.DatosGenerales.FirstOrDefault(x => x.Id == idDatos);
 
             estado = elegi.Estatus;
 
             elegi.Estatus = 1;
             elegi.FechaReintegro = formulario.FechaReintegro;
             elegi.Usuario = Convert.ToString(idUser);
+
+            datos.FechaIngresoSai = Convert.ToDateTime(formulario.FechaReintegro);
 
             formulario.Id = idFormulario;
             formulario.DatosGeneralesId = idDatos;
@@ -53,6 +55,7 @@ namespace ProyectoPREP.Controllers
 
             db.Entry(elegi).State = EntityState.Modified;
             db.Entry(formulario).State = EntityState.Modified;
+            db.Entry(datos).State = EntityState.Modified;
             db.SaveChanges();
 
             if (estado == 6)

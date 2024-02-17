@@ -43,10 +43,13 @@ namespace ProyectoPREP.Controllers
         public ActionResult FormularioElegibilidad(int id)
 		{
 			var formulario = db.FormularioPreps.Where(p => p.DatosGeneralesId == id).FirstOrDefault();
+			//var datos = db.DatosGenerales.Where(p => p.Id == id).FirstOrDefault();
 			var model = new ElegibilidadPrep();
 			model = db.ElegibilidadPreps.Where(x=>x.FormularioPrepId == formulario.Id).
 				Include(x=>x.FormularioPrep).ThenInclude(x=>x.DatosGenerales).FirstOrDefault();
 
+
+			
 			var edad = model.FormularioPrep.DatosGenerales.Edad;
 			if (edad == null)
 			{
@@ -67,9 +70,8 @@ namespace ProyectoPREP.Controllers
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
 			//if (model.Estatus == 2)
-			//{
-   //             return View(model);
-
+   //         {
+			//	return View(model);
    //         }
             return View();
 		}

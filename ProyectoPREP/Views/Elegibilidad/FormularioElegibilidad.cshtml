@@ -413,15 +413,22 @@
         }
 
         var fechaPrueba = new Date(document.getElementById("FechaPrep").value);
-        
-        const minDate = fechaPrueba.toISOString().split("T")[0];
-        const maxDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() + 7))
+        var fechaPrueba1 = new Date(document.getElementById("FechaPrep").value);
+        //var fecha = fechaPrueba.toISOString().split("T")[0];
+
+        //const minDate = fechaPrueba.setDate(fechaPrueba.getDate() - 6).toISOString().split("T")[0];
+
+        const minDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() - 6))
             .toISOString()
             .split("T")[0];
 
-        var min = document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
-        var max = document.getElementById("txtFechaRealizacionPrueba").setAttribute('max', maxDate);
-        var fecha = fechaPrueba.toISOString().split("T")[0];
+        const maxDate = new Date(fechaPrueba1.setDate(fechaPrueba1.getDate() + 6))
+            .toISOString()
+            .split("T")[0];
+
+        
+        document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
+        document.getElementById("txtFechaRealizacionPrueba").setAttribute('max', maxDate);
 
        
 
@@ -466,7 +473,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="cuerpoModalvih" style="text-align:center">¿Esta seguro de este resultado?</p>
+                <p id="cuerpoModalvih" style="text-align:center">La persona registrada no es legible para PREP poruqe tiene un resultado VIH+.</p>
                 
             </div>
             <div class="modal-footer">
@@ -512,7 +519,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="cuerpoModalMenor" style="text-align:center">tiene un aclaramiento menor a 60, se rechaza la solicitud. ¿Estas seguro de este resultado?</p>
+                <p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
 
             </div>
             <div class="modal-footer">
@@ -871,7 +878,7 @@
         var diferenciaFecha = () => {
             var fechaPrueba = new Date(document.getElementById("txtFechaRealizacionPrueba").value);
             const minDate = fechaPrueba.toISOString().split("T")[0];
-            const maxDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() + 7))
+            const maxDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() + 6))
                 .toISOString()
                 .split("T")[0];
 

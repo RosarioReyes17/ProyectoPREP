@@ -57,7 +57,7 @@
                             <div style="display:flex">
                                  
                                 <label style="width:26px">TA:</label>
-                                <input type="text" asp-for="SignosVitalesTa" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" min="0" class="form-control2"> mmHg
+                                <input type="text" asp-for="SignosVitalesTa" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" class="form-control2"> mmHg
                                 <span asp-validation-for="SignosVitalesTa" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -66,7 +66,7 @@
                                 
                                 <label style="width:26px">FC:</label>
 
-                                <input type="text" id="SignosVitalesFc" asp-for="SignosVitalesFc" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" name="SignosVitalesFc" min="0" class="form-control2"> l/min
+                                <input type="text" id="SignosVitalesFc" asp-for="SignosVitalesFc" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" name="SignosVitalesFc" class="form-control2"> l/min
                                 <span asp-validation-for="SignosVitalesFc" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -75,7 +75,7 @@
                                 
                                 <label style="width:26px">FR:</label>
 
-                                <input type="text" id="SignosVitalesFr" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" asp-for="SignosVitalesFr" name="SignosVitalesFr" min="0" class="form-control2"> r/min
+                                <input type="text" id="SignosVitalesFr" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" asp-for="SignosVitalesFr" name="SignosVitalesFr" class="form-control2"> r/min
                                 <span asp-validation-for="SignosVitalesFr" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -85,7 +85,7 @@
                             Medidas Antropometrícas:
                             <br>
                             <label style="width:105px">Peso:</label>
-                            <input id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="00" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
+                            <input id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
                             <span asp-validation-for="Peso" style="color:red;margin-left:20px"></span>
 
                             <br>
@@ -96,7 +96,7 @@
                             <br>
                             <label style="width:105px">Talla Pulgadas:</label>
 
-                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pulgadas.">
+                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulgadas.">
                             <span asp-validation-for="TallaPulgadas" style="color:red;margin-left:20px"></span>
 
                         </td>
@@ -296,7 +296,7 @@
                             HBsAg Realizada:
                             <br>
                             <input id="rdHBsAg1" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Negativo"> Negativo
-                            <input id="rdHBsAg2" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Positivo"> Positivo
+                            <input id="rdHBsAg2" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HbsAg" onclick="habilitarInputHBsAg(this.value)" value="Positivo"> Positivo
                             <br>
                             <span asp-validation-for="HbsAg" style="color:red;margin-left:20px"></span>
 
@@ -312,7 +312,7 @@
                             Hepatitis C Realizada:
                             <br>
                             <input id="rdHepatitis1" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Negativo"> Negativo
-                            <input id="rdHepatitis2" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Positivo"> Positivo
+                            <input id="rdHepatitis2" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HepatitisC" onclick="habilitarInputHepatitis(this.value)" value="Positivo"> Positivo
                             <br>
                             <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
 
@@ -436,7 +436,7 @@
                     <tr>
                         <td colspan="4">
                             Observaciones:
-                            <input type="text" data-val="true" data-val-required="Este campo obligatorio." id="Observaciones" asp-for="Observaciones" name="Observaciones" class="form-control">
+                            <input type="text" id="Observaciones" asp-for="Observaciones" name="Observaciones" class="form-control">
                             <span asp-validation-for="Observaciones" style="color:red;margin-left:20px"></span>
 
                         </td>
@@ -444,8 +444,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div id="divMensaje" style="color:red;">
     </div>
 
     <div style="margin-block-end:40px">
@@ -467,7 +465,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p id="cuerpoModalMenor" style="text-align:center">tiene un aclaramiento menor a 60, se rechaza la solicitud. ¿Estas seguro de este resultado?</p>
+                    <p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
 
                 </div>
                 <div class="modal-footer">
@@ -490,12 +488,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p id="cuerpoModalvih" style="text-align:center">¿Esta seguro de este resultado?</p>
+                    <p id="cuerpoModalvih" style="text-align:center">La persona registrada no es legible para PREP poruqe tiene un resultado VIH+.</p>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="VIHPositivo();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
                     <button type="button" onclick="cerrarModalVIH();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color:red; margin-left: 90px;">
+                        Advertencia
+                    </h5>
+                    <button type="button" onclick="cerrarModal();" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="cuerpoModal" style="text-align:center"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="cerrarModal();" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -523,7 +542,29 @@
 
 @section scripts{
     <script type="text/javascript">
-        
+        var habilitarInputHBsAg = (e) => {
+            var valor = e;
+            if (valor == "Positivo") {
+
+                $("#cuerpoModal").empty();
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico espacializado";
+                $('#myModal').modal('show');
+
+            }
+
+        }
+
+        var habilitarInputHepatitis = (e) => {
+            var valor = e;
+            if (valor == "Positivo") {
+
+                $("#cuerpoModal").empty();
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico espacializado";
+                $('#myModal').modal('show');
+
+            }
+
+        }
         
         var mostrarCreatinina = () => {
 
@@ -598,6 +639,10 @@
         const cerrarModalVIH = () => {
 
             $('#vih').modal('hide');
+        }
+        const cerrarModal = () => {
+
+            $('#myModal').modal('hide');
         }
 
 

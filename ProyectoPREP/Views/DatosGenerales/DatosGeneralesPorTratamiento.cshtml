@@ -85,7 +85,7 @@
                 <th id="idCenter">Documento</th>
                 <th id="idCenter">Nacionalidad</th>
                 <th id="idCenter">Fecha de registro</th>
-                <th id="idCenter">Estatus</th>
+                <th id="idCenter">Estado</th>
                 <th id="idCenter">Acciones</th>
 
             </tr>
@@ -100,7 +100,7 @@
                     <td>@item.Sexo</td>
                     <td>@item.Documento</td>
                     <td>@item.NOMBRE_CORTO_ES</td>
-                    <td>@item.Fecha_Ingreso_SAI.ToString().Substring(0, 10)</td>
+                    <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     <td>
                         <a title="Llenar formulario del tratamiento del paciente" class="btn btn-info" href="~/Tratamiento/InicioTratamiento/@item.Id"><i class="glyphicon glyphicon-link"></i> Pendiente a Tratamiento Prep</a>
                     </td>

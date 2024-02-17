@@ -145,5 +145,37 @@ namespace ProyectoPREP.Controllers
             db.SaveChanges();
             return RedirectToAction("RecibirPacientes", "GestionPacientes");
         }
+
+        public ActionResult AceptarPacientesAdmin(int id)
+        {
+            int idUser = Convert.ToInt32(User.GetUserId());
+
+            var gestion = db.GestionPacientes.FirstOrDefault(x => x.DatosGeneralesId == id);
+            var datos = db.DatosGenerales.FirstOrDefault(x => x.Id == gestion.DatosGeneralesId);
+            gestion.UsuarioRecibe = idUser;
+            gestion.FechaRecepcion = DateTime.Now;
+            gestion.EstatusSolicitud = "Aprobado";
+
+            datos.IdDeptoDepend = (int)gestion.DeptoDependDestino;
+
+
+            db.Entry(gestion).State = EntityState.Modified;
+            db.Entry(datos).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("RecibirPacientesAdmin", "GestionPacientes");
+        }
+
+        public ActionResult RechazarPacientesAdmin(int id)
+        {
+            int idUser = Convert.ToInt32(User.GetUserId());
+
+            var gestion = db.GestionPacientes.FirstOrDefault(x => x.DatosGeneralesId == id);
+            gestion.UsuarioRecibe = idUser;
+            gestion.FechaRecepcion = DateTime.Now;
+            gestion.EstatusSolicitud = "Rechazado";
+            db.Entry(gestion).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("RecibirPacientesAdmin", "GestionPacientes");
+        }
     }
 }
