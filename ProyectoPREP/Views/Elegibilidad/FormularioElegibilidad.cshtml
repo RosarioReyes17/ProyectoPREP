@@ -44,13 +44,13 @@
                         <td>
                             ¿Prueba de VIH realizada?
                             <div class="radio radio-info">
-                                <input id="chkSeronegativo1" asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled" type="radio" value="Si">
+                                <input id="chkSeronegativo1" asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="Si">
                                 <label for="chkSeronegativo1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkSeronegativo2" required asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled" type="radio" value="No">
+                                <input id="chkSeronegativo2" required asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="No">
                                 <label for="chkSeronegativo2">
                                     No
                                 </label>
@@ -63,7 +63,7 @@
 
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH " type="date" required disabled>
+                                <input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date" required disabled>
                             </div>
                         </td>
 
@@ -72,7 +72,7 @@
                             <br>
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaEntregaResultados" onkeydown="return false" asp-for="FechaEntregaVih" name="FechaEntregaVih" class="form-control pruebaVIH " type="date" required disabled />
+                                <input id="txtFechaEntregaResultados" onkeydown="return false" asp-for="FechaEntregaVih" name="FechaEntregaVih" class="form-control pruebaVIH habilitarPCR " type="date" required disabled />
                             </div>
                         </td>
 
@@ -119,13 +119,13 @@
 
                             ¿Tiene Signos y síntomas?
                             <div class="radio radio-info">
-                                <input id="chkNoSignos1" required asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled" type="radio" value="Si" disabled>
+                                <input id="chkNoSignos1" required asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="Si" disabled>
                                 <label for="chkNoSignos1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkNoSignos2" asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled" type="radio" value="No" disabled/>
+                                <input id="chkNoSignos2" asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="No" disabled />
                                 <label for="chkNoSignos2">
                                     No
                                 </label>
@@ -473,7 +473,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="cuerpoModalvih" style="text-align:center">La persona registrada no es legible para PREP poruqe tiene un resultado VIH+.</p>
+                <p id="cuerpoModalvih" style="text-align:center">La persona registrada no es legible para PREP porque tiene un resultado VIH+.</p>
                 
             </div>
             <div class="modal-footer">
@@ -714,14 +714,35 @@
                 setTimeout(menorCreatina, 1000);
 
             }
-            if (sexo == "M") {
+            if (genero == "1") {
                 
                 var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }
-            if (sexo == "F") {
+
+            
+            if (genero == "2") {
                 var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+            if (genero == "3" && chkHormonal == false) {
+                
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+            }
+
+            if (sexo == "M" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+
+            if (sexo == "F" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }
@@ -748,7 +769,7 @@
             if (valor == "Positivo") {
 
                 $("#cuerpoModal").empty();
-                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico espacializado";
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico especializado";
                 $('#myModal').modal('show');
 
             }
@@ -760,7 +781,7 @@
             if (valor == "Positivo") {
 
                 $("#cuerpoModal").empty();
-                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico espacializado";
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico especializado";
                 $('#myModal').modal('show');
 
             }
@@ -889,7 +910,17 @@
 
         }
 
+        window.onload = function () {
+            var chkSeronegativo1 = document.getElementById("chkSeronegativo1").checked;
 
+            if (chkSeronegativo1 == true) {
+                document.getElementById("chkRequierePCR1").checked = null;
+                document.getElementById("chkNoSignos1").checked = null;
+
+                $(".pruebaVIH").removeAttr("disabled");
+
+            }
+        }
     
     </script>
 

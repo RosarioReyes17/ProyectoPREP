@@ -69,11 +69,11 @@ namespace ProyectoPREP.Controllers
 			ViewBag.Genero = model.FormularioPrep.DatosGenerales.Genero;
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
-			//if (model.Estatus == 2)
-   //         {
-			//	return View(model);
-   //         }
-            return View();
+			if (model.Estatus == 2)
+			{
+				return View(model);
+			}
+			return View();
 		}
 
 		// POST: ElegibilidadController/Create

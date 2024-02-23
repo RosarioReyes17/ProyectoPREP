@@ -542,12 +542,13 @@
 
 @section scripts{
     <script type="text/javascript">
+
         var habilitarInputHBsAg = (e) => {
             var valor = e;
             if (valor == "Positivo") {
 
                 $("#cuerpoModal").empty();
-                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico espacializado";
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico especializado";
                 $('#myModal').modal('show');
 
             }
@@ -559,7 +560,7 @@
             if (valor == "Positivo") {
 
                 $("#cuerpoModal").empty();
-                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico espacializado";
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico especializado";
                 $('#myModal').modal('show');
 
             }
@@ -640,6 +641,7 @@
 
             $('#vih').modal('hide');
         }
+        
         const cerrarModal = () => {
 
             $('#myModal').modal('hide');

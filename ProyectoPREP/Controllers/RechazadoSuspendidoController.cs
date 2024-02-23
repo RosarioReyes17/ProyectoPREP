@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ProyectoPREP.Controllers
 {
-    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
     public class RechazadoSuspendidoController : Controller
     {
@@ -18,6 +17,8 @@ namespace ProyectoPREP.Controllers
         {
             this.db = _db;
         }
+        [Authorize(Roles = "Administrador")]
+
         public ActionResult Reintegrar(int id)
         {
             var datos = db.DatosGenerales.Include(x=>x.FormularioPreps).FirstOrDefault(x => x.Id == id);
@@ -31,6 +32,7 @@ namespace ProyectoPREP.Controllers
             return View(formulario);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public ActionResult Reintegrar(FormularioPrep formulario, int idDatos, int idFormulario)
         {
@@ -73,6 +75,7 @@ namespace ProyectoPREP.Controllers
 
         }
 
+        [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
         public ActionResult Suspender(int id)
         {
@@ -88,6 +91,7 @@ namespace ProyectoPREP.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador,Psicólogo Medicos")]
 
         [HttpPost]
         public ActionResult Suspender(int idDatos, TratamientoPrep tratamiento)
