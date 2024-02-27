@@ -531,6 +531,13 @@
 </div>
 
 
+<input type="hidden" id="Linfade" value="@Model.Linfadenopatias" />
+<input type="hidden" id="Fiebre" value="@Model.FiebreDesconocida" />
+<input type="hidden" id="Diarrea" value="@Model.DiarreaProlongada" />
+<input type="hidden" id="Erupciones" value="@Model.ErupcionesPiel" />
+<input type="hidden" id="Infecciones" value="@Model.InfeccionesRecurrentes" />
+<input type="hidden" id="Hepato" value="@Model.HepatoEsplenomegalia" />
+
 
 @section scripts{
 
@@ -912,12 +919,36 @@
 
         window.onload = function () {
             var chkSeronegativo1 = document.getElementById("chkSeronegativo1").checked;
+            var chkNoSignos1 = document.getElementById("chkNoSignos1").checked;
+
+            var Linfade = document.getElementById("Linfade").value;
+            var Fiebre = document.getElementById("Fiebre").value;
+            var Diarrea = document.getElementById("Diarrea").value;
+            var Erupciones = document.getElementById("Erupciones").value;
+            var Infecciones = document.getElementById("Infecciones").value;
+            var Hepato = document.getElementById("Hepato").value;
+
 
             if (chkSeronegativo1 == true) {
-                document.getElementById("chkRequierePCR1").checked = null;
-                document.getElementById("chkNoSignos1").checked = null;
 
+                document.getElementById("chkRequierePCR1").checked = null;
+                
                 $(".pruebaVIH").removeAttr("disabled");
+
+                if (chkNoSignos1 == true) {
+                    $(".chSignos").removeAttr("disabled");
+
+                    document.getElementById("check1").checked = Linfade;
+                    document.getElementById("check2").checked = Fiebre;
+                    document.getElementById("check3").checked = Diarrea;
+                    document.getElementById("check4").checked = Erupciones;
+                    document.getElementById("check5").checked = Infecciones;
+                    document.getElementById("check6").checked = Hepato;
+                }
+
+
+                
+
 
             }
         }
