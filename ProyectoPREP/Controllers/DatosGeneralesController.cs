@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
 using ProyectoPREP.Padron;
 using System.Data;
+using System.Security.Claims;
 using X.PagedList;
 //using System.Data.Entity;
 //using System.Web.Mvc;
@@ -30,9 +31,21 @@ namespace ProyectoPREP.Controllers
         {
             int idUser =  Convert.ToInt32(User.GetUserId());
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
 
             var lista = new List<DatosGenerales>();
 			string sql = "DatosGeneralesPorElegibilidad";
+			string sqlAdmin = "DatosGeneralesPorElegibilidadAdmin";
+
+			if (admin == "Administrador")
+			{
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    return View(lista);
+
+                }
+            }
 
 
 			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
@@ -52,7 +65,19 @@ namespace ProyectoPREP.Controllers
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorPCR";
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+            string sqlAdmin = "DatosGeneralesPorPCRAdmin";
 
+
+            if (admin == "Administrador")
+            {
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    return View(lista);
+
+                }
+            }
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
@@ -69,6 +94,21 @@ namespace ProyectoPREP.Controllers
             string sql = "DatosGeneralesPorTratamiento";
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
+
+            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+            string sqlAdmin = "DatosGeneralesPorTratamientoAdmin";
+
+
+            if (admin == "Administrador")
+            {
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    return View(lista);
+
+                }
+            }
+
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
                 lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
@@ -84,6 +124,20 @@ namespace ProyectoPREP.Controllers
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorAprobado";
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+            string sqlAdmin = "DatosGeneralesPorAprobadoAdmin";
+
+
+            if (admin == "Administrador")
+            {
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    return View(lista);
+
+                }
+            }
 
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
@@ -103,6 +157,20 @@ namespace ProyectoPREP.Controllers
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
 
+            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+            string sqlAdmin = "DatosGeneralesPorRechazadoAdmin";
+
+
+            if (admin == "Administrador")
+            {
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    return View(lista);
+
+                }
+            }
+
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
                 lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
@@ -119,6 +187,20 @@ namespace ProyectoPREP.Controllers
             string sql = "DatosGeneralesPorSuspendido";
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 
+
+            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+            string sqlAdmin = "DatosGeneralesPorSuspendidoAdmin";
+
+
+            if (admin == "Administrador")
+            {
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    return View(lista);
+
+                }
+            }
 
             using (var connection = new SqlConnection(db.Database.GetConnectionString()))
             {
