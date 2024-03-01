@@ -158,6 +158,7 @@ namespace ProyectoPREP.Controllers
 
 
             string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+            ViewBag.rol = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
             string sqlAdmin = "DatosGeneralesPorRechazadoAdmin";
 
 

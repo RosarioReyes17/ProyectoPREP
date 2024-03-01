@@ -93,7 +93,7 @@
                     <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     @* <td>@item.Estatus.ToString()</td> *@
                     <td>
-                        <a title="Reintegrar paciente" class="btn btn-default" href="~/RechazadoSuspendido/Reintegrar/@item.Id"><i class="glyphicon glyphicon-new-window"></i></a>
+                        <a title="Reintegrar paciente" id="btnReintegrar" class="btn btn-default btnReintegrar" href="~/RechazadoSuspendido/Reintegrar/@item.Id"><i class="glyphicon glyphicon-new-window"></i></a>
 
                         <a title="Transferir paciente" class="btn btnElegibilidad" href="~/GestionPacientes/Transferir/@item.Id"><i class="glyphicon glyphicon-transfer"></i></a>
 
@@ -106,6 +106,29 @@
     </table>
 
 </div>
+
+
+<input type="hidden" id="rol" value="@ViewBag.rol" />
+
+@section scripts{
+
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var rol = document.getElementById("rol").value;
+
+            if (rol == "Administrador") {
+                //document.getElementById("btnReintegrar").style.display = "none";
+                var element = document.getElementsByClassName("btnReintegrar");
+
+                for (var i = 0; i < element.length; i++) {
+                    element[i].style.display = "none";
+                    // Puedes agregar más estilos según sea necesario
+                }
+            }
+        }
+    </script>
+}
 @* <div class="d-flex justify-content-center">
     <ul class="pagination" style="margin: 0 auto;">
         <li class="page-item @(Model.IsFirstPage ? "disabled" : "")">
