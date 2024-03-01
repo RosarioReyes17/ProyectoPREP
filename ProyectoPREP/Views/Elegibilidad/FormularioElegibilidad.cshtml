@@ -531,7 +531,7 @@
 </div>
 
 
-<input type="hidden" id="Linfade" value="@Model.Linfadenopatias" />
+<input type="hidden" id="Linfade" value="@Model.Linfadenopatias " />
 <input type="hidden" id="Fiebre" value="@Model.FiebreDesconocida" />
 <input type="hidden" id="Diarrea" value="@Model.DiarreaProlongada" />
 <input type="hidden" id="Erupciones" value="@Model.ErupcionesPiel" />
@@ -938,6 +938,8 @@
                 if (chkNoSignos1 == true) {
                     $(".chSignos").removeAttr("disabled");
 
+
+                  
                     document.getElementById("check1").checked = Linfade;
                     document.getElementById("check2").checked = Fiebre;
                     document.getElementById("check3").checked = Diarrea;
