@@ -61,8 +61,9 @@
 					<tr>
 						<td>
 							<div class="form-group col-md-8">
-								Fecha de Registro PrEP(*):  <input asp-for="DatosGenerales.FechaIngresoSai" onkeydown="return false" id="txtFechaRegistroPrep" name="DatosGenerales.FechaIngresoSai" required class="form-control" type="date">
-								<span asp-validation-for="DatosGenerales.FechaIngresoSai" style="color:red;margin-left:30px"></span>
+								Fecha de Registro PrEP(*):
+								<input onkeydown="return false" asp-for="DatosGenerales.FechaIngresoSai" id="txtFechaRegistroPrep" name="DatosGenerales.FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+								<span asp-validation-for="DatosGenerales.FechaIngresoSai" style="color:red; margin-left:20px"></span>
 
 							</div>
 						</td>
@@ -103,9 +104,8 @@
 						<td>
 							4. Fecha de Nacimiento(*):<br>
 
-							<input onkeydown="return false" asp-for="DatosGenerales.FechaNacimiento" id="txtFechaNacimiento" required name="DatosGenerales.FechaNacimiento" class="form-control col-1" type="date">
-							<span asp-validation-for="DatosGenerales.FechaNacimiento" style="color:red;margin-left:30px"></span>
-
+							<input onkeydown="return false" asp-for="DatosGenerales.FechaNacimiento" id="txtFechaNacimiento" name="DatosGenerales.FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+							<span asp-validation-for="DatosGenerales.FechaNacimiento" style="color:red; margin-left:20px"></span>
 						</td>
 						<td>
 							5. Nacionalidad(*):

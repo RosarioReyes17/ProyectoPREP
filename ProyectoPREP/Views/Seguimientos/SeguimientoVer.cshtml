@@ -8,18 +8,16 @@
         <i class="glyphicon glyphicon-plus"></i>
     </a>
 </div>  
-<tr>
 
-
-    <td>IDPRUEBA: @ViewBag.IdDatos</td>
-    
-</tr>
 
 
 <h2>Seguimientos por Paciente</h2>
 <table class="table">
     <tbody>
         <tr>
+            <th>
+                Id
+            </th>
             <th>
                 Nombres
             </th>
@@ -31,7 +29,7 @@
         </tr>
         <tr>
 
-
+            <td>@ViewBag.IdDatos</td>
             <td>@ViewBag.Nombre</td>
             <td>@ViewBag.Apellido</td>
             <td>@ViewBag.Sexo</td>

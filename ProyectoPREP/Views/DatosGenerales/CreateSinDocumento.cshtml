@@ -43,7 +43,7 @@
 	</div>
 	<div id="divFormPrEP" class="form-invisible">
 
-		<div id="divDatosGenerales" style="display: block;">
+		<div id="divDatosGenerales" style="display: block; border: 2px solid #005476; padding: 10px;">
 			<h3>Datos Generales</h3>
 			<div class="tituloDiv">Información del Paciente</div>
 			<br/>
@@ -54,9 +54,9 @@
 					<tr>
 						<td>
 							<div class="form-group col-md-8">
-								Fecha de Registro PrEP(*):  <input onkeydown="return false" asp-for="DatosGenerales.FechaIngresoSai" id="txtFechaRegistroPrep" name="DatosGenerales.FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo obligatorio.">
-								<span asp-validation-for="DatosGenerales.FechaIngresoSai" style="color:red;margin-left:20px"></span>
-
+								Fecha de Registro PrEP(*):
+								<input onkeydown="return false" asp-for="DatosGenerales.FechaIngresoSai" id="txtFechaRegistroPrep" name="DatosGenerales.FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+								<span asp-validation-for="DatosGenerales.FechaIngresoSai" style="color:red; margin-left:20px"></span>
 							</div>
 						</td>
 
@@ -99,11 +99,10 @@
 					<tr>
 						<td>
 							4. Fecha de Nacimiento(*):<br>
-
-							<input onkeydown="return false" asp-for="DatosGenerales.FechaNacimiento" id="txtFechaNacimiento" name="DatosGenerales.FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo obligatorio.">
-							<span asp-validation-for="DatosGenerales.FechaNacimiento" style="color:red;margin-left:20px"></span>
-
+							<input onkeydown="return false" asp-for="DatosGenerales.FechaNacimiento" id="txtFechaNacimiento" name="DatosGenerales.FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+							<span asp-validation-for="DatosGenerales.FechaNacimiento" style="color:red; margin-left:20px"></span>
 						</td>
+
 						<td>
 							5. Nacionalidad(*):
 							<select asp-for="DatosGenerales.Nacionalidad" class="form-control" id="ddlNacionalidad" name="DatosGenerales.Nacionalidad" data-val="true" data-val-required="Este campo obligatorio.">
@@ -630,112 +629,120 @@
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div id="divElegibilidadPre" style="display: block;">
-			<h3>Elegibilidad para PrEP</h3>
-			<div class="tituloDiv">Riesgos(En los ultimos 6 Meses)</div>
-			<table class="table">
-				<tbody>
+
+			<div id="divElegibilidadPre" style="display: block;">
+				<h3>Elegibilidad para PrEP</h3>
+				<div class="tituloDiv">Riesgos(En los ultimos 6 Meses)</div>
+				<table class="table">
+					<tbody>
 
 
 
-					<tr>
-						<td>
-							19. ¿Ha tenido relaciones sexuales con?(*)
-							<select asp-for="TienesRelacionesCon" class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Solamente con hombres">Solamente con hombres</option>
-								<option value="Solamente con mujeres">Solamente con mujeres</option>
-								<option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
-								<option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
-								<option value="Con Persona Trans">Con Persona Trans</option>
-								<option value="No responde">No responde</option>
-							</select>
-							<span asp-validation-for="TienesRelacionesCon" style="color:red;margin-left:30px"></span>
+						<tr>
+							<td>
+								19. ¿Ha tenido relaciones sexuales con?(*)
+								<select asp-for="TienesRelacionesCon" class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Solamente con hombres">Solamente con hombres</option>
+									<option value="Solamente con mujeres">Solamente con mujeres</option>
+									<option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
+									<option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
+									<option value="Con Persona Trans">Con Persona Trans</option>
+									<option value="No responde">No responde</option>
+								</select>
+								<span asp-validation-for="TienesRelacionesCon" style="color:red;margin-left:30px"></span>
 
-						</td>
-						<td colspan="2">
-							20. ¿Ha utilizado alguna droga ilícita?(*)
-							<select asp-for="DrogasIlicitas" class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Si(Endovenosas)">Si(Endovenosas)</option>
-								<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
-								<option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-							<span asp-validation-for="DrogasIlicitas" style="color:red;margin-left:30px"></span>
+							</td>
+							<td colspan="2">
+								20. ¿Ha utilizado alguna droga ilícita?(*)
+								<select asp-for="DrogasIlicitas" class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Si(Endovenosas)">Si(Endovenosas)</option>
+									<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
+									<option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+								<span asp-validation-for="DrogasIlicitas" style="color:red;margin-left:30px"></span>
 
-						</td>
-					</tr>
-					<tr>
-						<td>
-							21. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
-							<select asp-for="SexoPorBienes" class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-							<span asp-validation-for="SexoPorBienes" style="color:red;margin-left:30px"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								21. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
+								<select asp-for="SexoPorBienes" class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+								<span asp-validation-for="SexoPorBienes" style="color:red;margin-left:30px"></span>
 
-						</td>
-						<td colspan="2">
-							22. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
-							<select asp-for="SexoPorBienesPareja" class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No sabe">No sabe</option>
-								<option value="No responde">No responde</option>
-							</select>
-							<span asp-validation-for="SexoPorBienesPareja" style="color:red;margin-left:30px"></span>
+							</td>
+							<td colspan="2">
+								22. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
+								<select asp-for="SexoPorBienesPareja" class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No sabe">No sabe</option>
+									<option value="No responde">No responde</option>
+								</select>
+								<span asp-validation-for="SexoPorBienesPareja" style="color:red;margin-left:30px"></span>
 
-						</td>
-					</tr>
-					<tr>
-						<td>
-							23. ¿Ha tenido relaciones sexuales sin condón?(*)
-							<select class="form-control" asp-for="SexoSinProteccion" id="ddlSexoSinProteccion" name="SexoSinProteccion" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-							<span asp-validation-for="SexoSinProteccion" style="color:red;margin-left:30px"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								23. ¿Ha tenido relaciones sexuales sin condón?(*)
+								<select class="form-control" asp-for="SexoSinProteccion" id="ddlSexoSinProteccion" name="SexoSinProteccion" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+								<span asp-validation-for="SexoSinProteccion" style="color:red;margin-left:30px"></span>
 
-						</td>
-						<td colspan="2">
-							24. ¿Ha tenido 2 o más parejas sexuales?(*)
-							<select class="form-control" id="ddlCantParejas" asp-for="CantParejasSexuales" name="CantParejasSexuales" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No responde">No responde</option>
-							</select>
-							<span asp-validation-for="CantParejasSexuales" style="color:red;margin-left:30px"></span>
+							</td>
+							<td colspan="2">
+								24. ¿Ha tenido 2 o más parejas sexuales?(*)
+								<select class="form-control" id="ddlCantParejas" asp-for="CantParejasSexuales" name="CantParejasSexuales" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No responde">No responde</option>
+								</select>
+								<span asp-validation-for="CantParejasSexuales" style="color:red;margin-left:30px"></span>
 
-						</td>
-					</tr>
-					<tr>
+							</td>
+						</tr>
+						<tr>
 
-						<td colspan="3">
-							25. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
-							<select asp-for="SexoConVihpositivo" class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Si">Si</option>
-								<option value="No">No</option>
-								<option value="No sabe">No sabe</option>
-							</select>
-							<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:30px"></span>
+							<td colspan="3">
+								25. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
+								<select asp-for="SexoConVihpositivo" class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Si">Si</option>
+									<option value="No">No</option>
+									<option value="No sabe">No sabe</option>
+								</select>
+								<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:30px"></span>
 
-						</td>
-					</tr>
+							</td>
+						</tr>
 
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
+
+
+
+		<br />
+		<br />
+		
+		
 	<div id="divMensaje" style="color:red;"></div>
 	<div id="divBotones" style="display: block;">
 		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
