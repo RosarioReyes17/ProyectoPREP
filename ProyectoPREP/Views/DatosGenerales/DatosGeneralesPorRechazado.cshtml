@@ -117,93 +117,15 @@
 
             var rol = document.getElementById("rol").value;
 
-            if (rol == "Administrador") {
+            if (rol != "Administrador") {
                 //document.getElementById("btnReintegrar").style.display = "none";
                 var element = document.getElementsByClassName("btnReintegrar");
 
                 for (var i = 0; i < element.length; i++) {
                     element[i].style.display = "none";
-                    // Puedes agregar más estilos según sea necesario
+                    
                 }
             }
         }
     </script>
 }
-@* <div class="d-flex justify-content-center">
-    <ul class="pagination" style="margin: 0 auto;">
-        <li class="page-item @(Model.IsFirstPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = 1 })">Primera</a>
-        </li>
-        <li class="page-item @(Model.IsFirstPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = Model.PageNumber - 1 })">Anterior</a>
-        </li>
-        <li class="page-item @(Model.IsLastPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = Model.PageNumber + 1 })">Siguiente</a>
-        </li>
-        <li class="page-item @(Model.IsLastPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = Model.PageCount })">Última</a>
-        </li>
-    </ul>
-</div> *@
-
-
-@* @section scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            var table = $('#miTabla').DataTable({
-
-
-
-                columnDefs: [{
-                    targets: -1,
-                    className: 'right'
-                }],
-                "paging": true,
-                "pageLength": 10,
-                "searching": true,
-
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-
-                drawCallback: function () {
-
-                    $('#miTabla').find('li').css('background-color', '');
-
-
-                    $('#miTabla').find('li.active').css('background-color', '#5bc0de');
-                },
-            });
-
-
-            $('#tablaContainer').css('display', 'block');
-
-        });
-
-
-        function nav(value) {
-            if (value != "") { location.href = value }
-        }
-
-
-    </script>
-
-} *@

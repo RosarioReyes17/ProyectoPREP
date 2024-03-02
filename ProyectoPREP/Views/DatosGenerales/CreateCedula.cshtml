@@ -6,7 +6,7 @@
 
 
 
-<form action="CreateCedula" method="post">
+<form id="formulario" action="CreateCedula" method="post">
 	<input name="DatosGenerales.Edad" asp-for="DatosGenerales.Edad" type="hidden" id="edad" />
 	<div id="divValidarUsuario" class="form-visible">
 		<h3>Identificarse en PrEP</h3>
@@ -485,8 +485,11 @@
 
 						</td>
 						<td>
-							12. Peso(*): <br><input asp-for="DatosGenerales.Peso" id="txtPeso" name="DatosGenerales.Peso" class="form-control" type="number" min="90" max="350" placeholder="Introduzca su Peso en Lbs." required>
-							<span asp-validation-for="DatosGenerales.Peso" style="color:red;margin-left:30px"></span>
+							12. Peso(*): <br>
+							<input asp-for="DatosGenerales.Peso" id="txtPeso" name="DatosGenerales.Peso" class="form-control" type="number"
+								   min="90" max="350" placeholder="Introduzca su Peso en Lbs." data-val="true" data-val-required="Este campo es obligatorio."
+								   oninput="validateWeight(this)">
+							<span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
 						</td>
 						<td>
 							13. Talla Pie(*):<br> <input asp-for="DatosGenerales.TallaPies" id="txtTallaPies" name="DatosGenerales.TallaPies" class="form-control" type="number" min="1" placeholder="Introduzca su Talla en Pie." required>
@@ -972,6 +975,34 @@
 
 			
 		};
+
+		document.addEventListener("DOMContentLoaded", function () {
+			// Agregar un controlador de eventos al formulario
+			document.getElementById("formulario").addEventListener("submit", function (event) {
+				// Obtener el valor del campo de peso
+				var pesoInput = document.getElementById("txtPeso");
+				var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
+				var pesoMin = parseFloat(pesoInput.min);
+				var pesoMax = parseFloat(pesoInput.max);
+
+				// Verificar si el campo de peso está vacío
+				if (isNaN(peso) || pesoInput.value.trim() === "") {
+					// Mostrar mensaje de error para campo obligatorio
+					document.getElementById("pesoValidationMsg").innerText = "Este campo es obligatorio.";
+					// Evitar el envío del formulario
+					event.preventDefault();
+				} else if (peso < pesoMin || peso > pesoMax) {
+					// Mostrar mensaje de error para valor fuera del rango
+					document.getElementById("pesoValidationMsg").innerText = "El peso debe estar entre " + pesoMin + " y " + pesoMax + " libras.";
+					// Evitar el envío del formulario
+					event.preventDefault();
+				} else {
+					// Limpiar mensaje de error si el valor es válido
+					document.getElementById("pesoValidationMsg").innerText = "";
+				}
+			});
+		});
+
 	</script>
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");	
