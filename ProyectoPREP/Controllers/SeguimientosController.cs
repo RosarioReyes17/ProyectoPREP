@@ -87,6 +87,7 @@ namespace ProyectoPREP.Controllers
 
             ViewBag.Edad = Convert.ToDecimal(datos.Edad);
             ViewBag.Sexo = datos.Sexo;
+            ViewBag.Peso = datos.Peso;
             ViewBag.Genero = datos.Genero;
 
             return View();

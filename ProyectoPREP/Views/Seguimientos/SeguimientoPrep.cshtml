@@ -113,6 +113,12 @@
                     <tr id="creatinina"  class="form-invisible">
                         <td colspan="2">
                             <div class="form-group col-md-8">
+                                <label style="color:red">
+                                    Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
+                                    <input type="checkbox" id="chkHormonal" name="chkHormonal" onchange="calcularCreatininaCheck()" value="true" disabled>
+
+                                </label>
+                                <br />
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
                                 <input id="CreatininaValor"  data-val="true" data-val-required="Este campo obligatorio." disabled onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
@@ -526,6 +532,14 @@
 
 </form>
 
+<script>
+    var genero = document.getElementById("genero").value;
+    if (genero == "3") {
+        $("#chkHormonal").removeAttr("disabled");
+
+    }
+</script>
+
 <style>
     input[type=radio] {
         margin-left: 0px
@@ -685,34 +699,76 @@
         const calcularCreatinina = () => {
             var KG = 2.205;
             var Edad = @ViewBag.Edad;
-            var Peso = document.getElementById("Peso").value;
+            var Peso = @ViewBag.Peso;
             var sexo = document.getElementById("sexo").value;
             var genero = document.getElementById("genero").value;
-            //var chkHormonal = document.getElementById("chkHormonal").checked;
+            var chkHormonal = document.getElementById("chkHormonal").checked;
             var PesoKG = Peso / KG;
-            var valorCreatinina = document.getElementById("CreatininaValor").value;
-            
-            if (Peso == "") {
-                document.getElementById("Peso").style.borderColor = "red";
-                document.getElementById("Peso").style.height = "26px";
-                return document.getElementById("Peso").focus();
+
+            var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
+
+            if (genero == "3" && chkHormonal == true) {
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+                setTimeout(menorCreatina, 1000);
 
             }
-            
-            
-            if (sexo =="M") {
+            if (genero == "1") {
+
                 var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }
-            if (sexo =="F") {
+
+
+            if (genero == "2") {
                 var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+            if (genero == "3" && chkHormonal == false) {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+            }
+
+            if (sexo == "M" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+
+            if (sexo == "F" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
                 document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
 
             }
             // Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
             // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
             setTimeout(menorCreatina, 1000);
+        }
+
+        const calcularCreatininaCheck = () => {
+            var chkHormonal = document.getElementById("chkHormonal").checked;
+            var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
+            if (chkHormonal == false && valorCreatinina == "") {
+                return;
+            }
+            if (chkHormonal == false && valorCreatinina != "") {
+                calcularCreatinina();
+            }
+            if (chkHormonal == true && valorCreatinina == "") {
+                return;
+            }
+            if (chkHormonal == true && valorCreatinina != "") {
+                calcularCreatinina();
+            }
+
+
+
+
         }
 
         const VIHPositivo = () => {

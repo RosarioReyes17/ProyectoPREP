@@ -205,10 +205,10 @@
                         <td>
                             <div class="form-group col-md-6">
                                     <label  style="color:red">Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
-                                        <input  type="checkbox" id="chkHormonal" name="chkHormonal" value="true" disabled>
+                                    <input type="checkbox" id="chkHormonal" onchange="calcularCreatininaCheck()" name="chkHormonal" value="true" disabled>
 
                                     </label>
-                                <br>
+                                <br/>
                                 
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
@@ -757,6 +757,29 @@
             // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
             setTimeout(menorCreatina, 1000);
         }
+
+        const calcularCreatininaCheck = () => {
+            var chkHormonal = document.getElementById("chkHormonal").checked;
+            var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
+            if (chkHormonal == false && valorCreatinina == "") {
+                return;
+            }
+            if (chkHormonal == false && valorCreatinina != "") {
+                calcularCreatinina();
+            }
+            if (chkHormonal == true && valorCreatinina == "") {
+                return;
+            }
+            if (chkHormonal == true && valorCreatinina != "") {
+                calcularCreatinina();
+            }
+
+
+
+
+        }
+
+
 
         var habilitarInputSifilis = (e) => {
             var valor = e;
