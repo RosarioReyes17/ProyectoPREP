@@ -41,7 +41,7 @@
                             Fecha de registro de seguimiento:
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
+                                <input id="txtFechaSeguimiento" onchange="diferenciaFecha()" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
                                 <span asp-validation-for="FechaRegistroSeguimiento" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -873,13 +873,23 @@
             }
         }
 
-        // window.onload = function () {
-        //     var radioButtons = document.querySelectorAll('input[type="radio"]');
-        //     radioButtons.forEach(function (radioButton) {
-        //         radioButton.classList.add('styled-radio');
-                
-        //     });
-        // }
+
+
+        var diferenciaFecha = () => {
+            var fechaPrueba = new Date(document.getElementById("txtFechaSeguimiento").value);
+            var fechaActual = new Date();
+            
+            // const minDate = fechaPrueba.toISOString().split("T")[0];
+            var minDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() - 6)).toISOString().split("T")[0];
+            var max = new Date(fechaActual.setDate(fechaActual.getDate() - 1)).toISOString().split("T")[0];
+
+
+            document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
+            document.getElementById("txtFechaRealizacionPrueba").setAttribute('max', max);
+
+
+        }
+  
 
     </script>
 }
