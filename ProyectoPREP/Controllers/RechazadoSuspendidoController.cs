@@ -48,7 +48,7 @@ namespace ProyectoPREP.Controllers
             elegi.FechaReintegro = formulario.FechaReintegro;
             elegi.Usuario = Convert.ToString(idUser);
 
-            datos.FechaIngresoSai = Convert.ToDateTime(formulario.FechaReintegro);
+            //datos.FechaIngresoSai = Convert.ToDateTime(formulario.FechaReintegro);
 
             formulario.Id = idFormulario;
             formulario.DatosGeneralesId = idDatos;

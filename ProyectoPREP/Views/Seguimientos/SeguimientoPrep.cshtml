@@ -115,7 +115,7 @@
                             <div class="form-group col-md-8">
                                 <label style="color:red">
                                     Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
-                                    <input type="checkbox" id="chkHormonal" name="chkHormonal" onchange="calcularCreatininaCheck()" value="true" disabled>
+                                    <input type="checkbox" id="chkHormonal" name="chkHormonal" class="habilitarCreatinina" disabled onchange="calcularCreatininaCheck()" value="true">
 
                                 </label>
                                 <br />
@@ -532,13 +532,6 @@
 
 </form>
 
-<script>
-    var genero = document.getElementById("genero").value;
-    if (genero == "3") {
-        $("#chkHormonal").removeAttr("disabled");
-
-    }
-</script>
 
 <style>
     input[type=radio] {
@@ -595,6 +588,12 @@
             else {
                // document.getElementById("creatinina").style.display = "none";
                 $(".habilitarCreatinina").attr("disabled",true);
+
+            }
+
+            var genero = document.getElementById("genero").value;
+            if (genero == "1") {
+                $("#chkHormonal").attr("disabled", true);
 
             }
         }
@@ -705,7 +704,7 @@
             var chkHormonal = document.getElementById("chkHormonal").checked;
             var PesoKG = Peso / KG;
 
-            var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
+            var valorCreatinina = document.getElementById("CreatininaValor").value;
 
             if (genero == "3" && chkHormonal == true) {
                 var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
@@ -752,7 +751,7 @@
 
         const calcularCreatininaCheck = () => {
             var chkHormonal = document.getElementById("chkHormonal").checked;
-            var valorCreatinina = document.getElementById("txtResultadoCreatinina").value;
+            var valorCreatinina = document.getElementById("CreatininaValor").value;
             if (chkHormonal == false && valorCreatinina == "") {
                 return;
             }
@@ -872,7 +871,6 @@
 
             }
         }
-
 
 
         var diferenciaFecha = () => {
