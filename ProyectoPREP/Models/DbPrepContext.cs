@@ -27,6 +27,8 @@ public partial class DbPrepContext : DbContext
 
     public virtual DbSet<ElegibilidadPrep1329> ElegibilidadPrep1329s { get; set; }
 
+    public virtual DbSet<ElegibilidadPrepHistorico> ElegibilidadPrepHistoricos { get; set; }
+
     public virtual DbSet<EstatusGestionPaciente> EstatusGestionPacientes { get; set; }
 
     public virtual DbSet<EstatusSolicitud> EstatusSolicituds { get; set; }
@@ -272,6 +274,51 @@ public partial class DbPrepContext : DbContext
             entity.Property(e => e.RiesgoInfeccionVih).HasColumnName("Riesgo_Infeccion_VIH");
             entity.Property(e => e.SeronegativoVih).HasColumnName("Seronegativo_VIH");
             entity.Property(e => e.SignosSintomas).HasColumnName("Signos_Sintomas");
+        });
+
+        modelBuilder.Entity<ElegibilidadPrepHistorico>(entity =>
+        {
+            entity.HasKey(e => e.IdFila);
+
+            entity.ToTable("Elegibilidad_Prep_Historico");
+
+            entity.Property(e => e.IdFila).HasColumnName("Id_Fila");
+            entity.Property(e => e.AclaramientoCreatinina).HasColumnName("Aclaramiento_Creatinina");
+            entity.Property(e => e.CargaViralPcr).HasColumnName("CargaViralPCR");
+            entity.Property(e => e.CreatininaValor).HasColumnName("Creatinina_Valor");
+            entity.Property(e => e.FechaElegibilidad).HasColumnType("datetime");
+            entity.Property(e => e.FechaEntregaVih)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Entrega_VIH");
+            entity.Property(e => e.FechaHistorico)
+                .HasDefaultValueSql("(dateadd(hour,(-4),getdate()))")
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_historico");
+            entity.Property(e => e.FechaPruebaPcr)
+                .HasColumnType("datetime")
+                .HasColumnName("FechaPruebaPCR");
+            entity.Property(e => e.FechaPruebaVih)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Prueba_VIH");
+            entity.Property(e => e.FechaReintegro).HasColumnType("date");
+            entity.Property(e => e.FechaResultadoCreatinina)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Resultado_Creatinina");
+            entity.Property(e => e.FechaVisitaPcr)
+                .HasColumnType("datetime")
+                .HasColumnName("FechaVisitaPCR");
+            entity.Property(e => e.FormularioPrepId).HasColumnName("Formulario_Prep_Id");
+            entity.Property(e => e.IdElegibilidadPrep).HasColumnName("Id_Elegibilidad_Prep");
+            entity.Property(e => e.ResultadoCargaViralPcr).HasColumnName("ResultadoCargaViralPCR");
+            entity.Property(e => e.ResultadoCreatinina).HasColumnName("Resultado_Creatinina");
+            entity.Property(e => e.ResultadoPruebaVih).HasColumnName("Resultado_Prueba_VIH");
+            entity.Property(e => e.RiesgoInfeccionVih).HasColumnName("Riesgo_Infeccion_VIH");
+            entity.Property(e => e.SeronegativoVih).HasColumnName("Seronegativo_VIH");
+            entity.Property(e => e.SignosSintomas).HasColumnName("Signos_Sintomas");
+
+            entity.HasOne(d => d.FormularioPrep).WithMany(p => p.ElegibilidadPrepHistoricos)
+                .HasForeignKey(d => d.FormularioPrepId)
+                .HasConstraintName("FK_Formulario_PrepElegibilidad_Prep_Historico");
         });
 
         modelBuilder.Entity<EstatusGestionPaciente>(entity =>

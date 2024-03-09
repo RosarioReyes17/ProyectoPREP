@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace ProyectoPREP.Models;
 
@@ -33,14 +32,15 @@ public partial class FormularioPrep
     public string Usuario { get; set; } = null!;
 
     public string? UsuarioModifico { get; set; }
+    public string ContactoConfianza { get; }
 
     public DateTime? FechaModificacion { get; set; }
 
     public DateTime? FechaReintegro { get; set; }
 
-	public string ContactoConfianza { get; }
+    public virtual DatosGenerale DatosGenerales { get; set; } = null!;
 
-	public virtual DatosGenerale DatosGenerales { get; set; } = null!;
+    public virtual ICollection<ElegibilidadPrepHistorico> ElegibilidadPrepHistoricos { get; set; } = new List<ElegibilidadPrepHistorico>();
 
     public virtual ICollection<ElegibilidadPrep> ElegibilidadPreps { get; set; } = new List<ElegibilidadPrep>();
 }
