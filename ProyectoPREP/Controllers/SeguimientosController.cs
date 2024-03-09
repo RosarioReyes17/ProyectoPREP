@@ -129,6 +129,7 @@ namespace ProyectoPREP.Controllers
             var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
 
 
+            
             ViewBag.Nombre = datos.Nombres;
             ViewBag.Apellido = datos.Apellidos;
 
