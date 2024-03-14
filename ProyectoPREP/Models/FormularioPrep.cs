@@ -8,6 +8,7 @@ public partial class FormularioPrep
     public int Id { get; set; }
 
     public string? TienesRelacionesCon { get; set; }
+    public string ContactoConfianza { get; }
 
     public string? DrogasIlicitas { get; set; }
 
@@ -32,7 +33,6 @@ public partial class FormularioPrep
     public string Usuario { get; set; } = null!;
 
     public string? UsuarioModifico { get; set; }
-    public string ContactoConfianza { get; }
 
     public DateTime? FechaModificacion { get; set; }
 

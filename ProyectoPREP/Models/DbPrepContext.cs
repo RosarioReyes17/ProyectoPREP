@@ -204,7 +204,7 @@ public partial class DbPrepContext : DbContext
 
         modelBuilder.Entity<ElegibilidadPrep>(entity =>
         {
-            entity.ToTable("Elegibilidad_Prep");
+            entity.ToTable("Elegibilidad_Prep", tb => tb.HasTrigger("tr_Elegibilidad_Prep_AfterInsertOrUpdate"));
 
             entity.Property(e => e.AclaramientoCreatinina).HasColumnName("Aclaramiento_Creatinina");
             entity.Property(e => e.CargaViralPcr).HasColumnName("CargaViralPCR");

@@ -69,7 +69,13 @@ namespace ProyectoPREP.Controllers
 			ViewBag.Genero = model.FormularioPrep.DatosGenerales.Genero;
 			ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres +" "+ model.FormularioPrep.DatosGenerales.Apellidos;
 
-			if (model.Estatus == 2)
+
+            if (model.FechaReintegro != null)
+            {
+                return RedirectToAction("FormularioElegibilidadReintegrado", "Elegibilidad", new {id=id});
+
+            }
+            if (model.Estatus == 2)
 			{
 				return View(model);
 			}
@@ -136,10 +142,104 @@ namespace ProyectoPREP.Controllers
             }
         }
 
-		// GET: ElegibilidadController/Edit/5
+        // GET: ElegibilidadController/Edit/5
 
 
-		public JsonResult PCRDetectado(int IdDatos, ElegibilidadPrep elegibilidad)
+        public ActionResult FormularioElegibilidadReintegrado(int id)
+        {
+            var formulario = db.FormularioPreps.Where(p => p.DatosGeneralesId == id).FirstOrDefault();
+            //var datos = db.DatosGenerales.Where(p => p.Id == id).FirstOrDefault();
+            var model = new ElegibilidadPrep();
+            model = db.ElegibilidadPreps.Where(x => x.FormularioPrepId == formulario.Id).
+                Include(x => x.FormularioPrep).ThenInclude(x => x.DatosGenerales).FirstOrDefault();
+
+
+
+            var edad = model.FormularioPrep.DatosGenerales.Edad;
+            if (edad == null)
+            {
+                edad = 0;
+            }
+
+            string fecha = model.FormularioPrep.DatosGenerales.FechaIngresoSai.ToString("yyyy-MM-dd");
+
+
+            ViewBag.Peso = model.FormularioPrep.DatosGenerales.Peso;
+            ViewBag.Edad = Convert.ToDecimal(edad);
+            ViewBag.Sexo = model.FormularioPrep.DatosGenerales.Sexo;
+            ViewBag.IdDatos = model.FormularioPrep.DatosGenerales.Id;
+            ViewBag.IdElegibilidad = model.Id;
+            ViewBag.FechaPrep = fecha;
+            ViewBag.Sexo = model.FormularioPrep.DatosGenerales.Sexo;
+            ViewBag.Genero = model.FormularioPrep.DatosGenerales.Genero;
+            ViewBag.Nombre = model.FormularioPrep.DatosGenerales.Nombres + " " + model.FormularioPrep.DatosGenerales.Apellidos;
+
+          
+            return View();
+        }
+
+        // POST: ElegibilidadController/Create
+        [HttpPost]
+        public ActionResult FormularioElegibilidadReintegrado(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+        {
+            try
+            {
+                int idUser = Convert.ToInt32(User.GetUserId());
+
+                var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
+
+                var elegi = db.ElegibilidadPreps.Where(X => X.FormularioPrepId == formulario.Id).FirstOrDefault();
+
+                if (elegibilidad.ResultadoCargaViralPcr == null && elegibilidad.CargaViralPcr == "Si" && elegibilidad.ResultadoCreatinina == null)
+                {
+                    using (DbPrepContext db = new DbPrepContext())
+                    {
+
+                        int id = elegi.Id;
+
+                        elegibilidad.Id = id;
+                        elegibilidad.Usuario = Convert.ToString(idUser);
+                        elegibilidad.Estatus = 2;
+                        elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
+
+
+                        db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
+
+                }
+
+
+
+                using (DbPrepContext db = new DbPrepContext())
+                {
+                    int id = elegi.Id;
+
+                    elegibilidad.Id = id;
+                    elegibilidad.Usuario = Convert.ToString(idUser);
+                    elegibilidad.Estatus = 3;
+                    elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
+
+
+                    db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }
+
+
+                return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public JsonResult PCRDetectado(int IdDatos, ElegibilidadPrep elegibilidad)
 		{
             int idUser = Convert.ToInt32(User.GetUserId());
 
