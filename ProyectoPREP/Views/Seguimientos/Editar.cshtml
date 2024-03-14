@@ -39,7 +39,8 @@
     @Html.HiddenFor(x=>x.Usuario)
     @Html.HiddenFor(x=>x.SeguimimientoPruebaId)
     @Html.HiddenFor(x=>x.Id)
-
+    
+      
     <div id="divFormPrEP">
         <div id="divDatosGenerales">
 
@@ -58,7 +59,7 @@
                             Fecha de registro de seguimiento:
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
+                                <input readonly id="txtFechaSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
                                 <span asp-validation-for="FechaRegistroSeguimiento" style="color:red;margin-left:20px"></span>
 
                             </div>

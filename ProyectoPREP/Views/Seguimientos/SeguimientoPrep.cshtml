@@ -17,7 +17,7 @@
 
     </div>
 
-<form asp-action="SeguimientoPrep" asp-controller="Seguimientos" method="post">
+<form id="formularioSeguimiento" asp-action="SeguimientoPrep" asp-controller="Seguimientos" method="post">
     <input type="hidden" id="IdDatos" name="IdDatos" value="@ViewBag.IdDatos" />
     <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
     <input name="" id="genero" type="hidden" value="@ViewBag.Genero" />
@@ -85,8 +85,8 @@
                             Medidas Antropometrícas:
                             <br>
                             <label style="width:105px">Peso:</label>
-                            <input id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
-                            <span asp-validation-for="Peso" style="color:red;margin-left:20px"></span>
+                            <input id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" oninput="validatePeso(this)" placeholder="Introduzca su Peso."> Lbs.
+                            <span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
 
                             <br>
                             <label style="width:105px">Talla Pies:</label>
@@ -96,8 +96,10 @@
                             <br>
                             <label style="width:105px">Talla Pulgadas:</label>
 
-                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulgadas.">
-                            <span asp-validation-for="TallaPulgadas" style="color:red;margin-left:20px"></span>
+                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulgadas."
+                                   min="0" max="12" placeholder="Introduzca su Talla en Pulgadas."
+                                   oninput="tallaPulgadaValidate(this)">
+                            <span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:30px"></span>
 
                         </td>
                     </tr>
@@ -887,6 +889,65 @@
 
 
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            var formulario = document.getElementById("formularioSeguimiento");
+            if (formulario) {
+                formulario.addEventListener("submit", function (event) {
+                    // Obtener el valor del campo de talla
+                    var tallaInput = document.getElementById("TallaPulgadas");
+                    if (tallaInput) {
+                        var talla = parseFloat(tallaInput.value); // Convertir a número
+                        var tallaMin = parseFloat(tallaInput.min);
+                        var tallaMax = parseFloat(tallaInput.max);
+
+                        // Verificar si el campo de talla está vacío o no es un número
+                        if (isNaN(talla) || tallaInput.value.trim() === "") {
+                            // Mostrar mensaje de error para campo obligatorio
+                            document.getElementById("tallaPulgadaValidation").innerText = "Este campo es obligatorio.";
+                            // Evitar el envío del formulario
+                            event.preventDefault();
+                        } else if (talla < tallaMin || talla > tallaMax) {
+                            // Mostrar mensaje de error para valor fuera del rango
+                            document.getElementById("tallaPulgadaValidation").innerText = "Este número debe estar entre " + tallaMin + " y " + tallaMax + ".";
+                            // Evitar el envío del formulario
+                            event.preventDefault();
+                        } else {
+                            // Limpiar mensaje de error si el valor es válido
+                            document.getElementById("tallaPulgadaValidation").innerText = "";
+                        }
+                    }
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            document.getElementById("formularioSeguimiento").addEventListener("submit", function (event) {
+                // Obtener el valor del campo de peso
+                var pesoInput = document.getElementById("Peso");
+                var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
+                var pesoMin = parseFloat(pesoInput.min);
+                var pesoMax = parseFloat(pesoInput.max);
+
+                // Verificar si el campo de peso está vacío
+                if (isNaN(peso) || pesoInput.value.trim() === "") {
+                    // Mostrar mensaje de error para campo obligatorio
+                    document.getElementById("pesoValidationMsg").innerText = "Este campo es obligatorio.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else if (peso < pesoMin || peso > pesoMax) {
+                    // Mostrar mensaje de error para valor fuera del rango
+                    document.getElementById("pesoValidationMsg").innerText = "El peso debe estar entre " + pesoMin + " y " + pesoMax + " libras.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else {
+                    // Limpiar mensaje de error si el valor es válido
+                    document.getElementById("pesoValidationMsg").innerText = "";
+                }
+            });
+        });
   
 
     </script>

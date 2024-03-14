@@ -501,8 +501,10 @@
 							<span asp-validation-for="DatosGenerales.TallaPies" lang="es-do" style="color:red;margin-left:30px"></span>
 						</td>
 						<td>
-							14. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="number" placeholder="Introduzca su Talla en Pulgadas." data-val="true" data-val-required="Este campo obligatorio.">
-							<span asp-validation-for="DatosGenerales.TallaPulgadas" lang="es-do" style="color:red;margin-left:30px"></span>
+							14. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="number" 
+							min="0" max="12" placeholder="Introduzca su Talla en Pulgadas." 
+							oninput="tallaPulgadaValidate(this)">
+							<span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:30px"></span>
 						</td>
 					</tr>
 					<tr>
@@ -957,6 +959,39 @@
 				}
 			});
 		});
+
+		document.addEventListener("DOMContentLoaded", function () {
+			// Agregar un controlador de eventos al formulario
+			var formulario = document.getElementById("formulario");
+			if (formulario) {
+				formulario.addEventListener("submit", function (event) {
+					// Obtener el valor del campo de talla
+					var tallaInput = document.getElementById("TallaPulgadas");
+					if (tallaInput) {
+						var talla = parseFloat(tallaInput.value); // Convertir a número
+						var tallaMin = parseFloat(tallaInput.min);
+						var tallaMax = parseFloat(tallaInput.max);
+
+						// Verificar si el campo de talla está vacío o no es un número
+						if (isNaN(talla) || tallaInput.value.trim() === "") {
+							// Mostrar mensaje de error para campo obligatorio
+							document.getElementById("tallaPulgadaValidation").innerText = "Este campo es obligatorio.";
+							// Evitar el envío del formulario
+							event.preventDefault();
+						} else if (talla < tallaMin || talla > tallaMax) {
+							// Mostrar mensaje de error para valor fuera del rango
+							document.getElementById("tallaPulgadaValidation").innerText = "Este número debe estar entre " + tallaMin + " y " + tallaMax + ".";
+							// Evitar el envío del formulario
+							event.preventDefault();
+						} else {
+							// Limpiar mensaje de error si el valor es válido
+							document.getElementById("tallaPulgadaValidation").innerText = "";
+						}
+					}
+				});
+			}
+		});
+
 
 
 	</script>

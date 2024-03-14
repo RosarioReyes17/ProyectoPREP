@@ -155,6 +155,8 @@ namespace ProyectoPREP.Controllers
             ViewBag.Apellido = datos.Apellidos;
             ViewBag.IdDatos = datos.Id;
 
+            
+
             ViewBag.Sexo = datos.Sexo;
             ViewBag.nacionalidad = nacionalidad.Nacionalidad;
 
@@ -171,7 +173,9 @@ namespace ProyectoPREP.Controllers
             var formu = db.FormularioPreps.FirstOrDefault(d => d.Id == elegi.FormularioPrepId);
             var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == formu.DatosGeneralesId);
             var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+            
 
+            
 
             ViewBag.Nombre = datos.Nombres;
             ViewBag.Apellido = datos.Apellidos;
@@ -198,7 +202,7 @@ namespace ProyectoPREP.Controllers
             var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
             DateTime fecha = DateTime.Now;
 
-            seguimiento.FechaSeguimiento = fecha;
+            seguimiento.FechaRegistroSeguimiento = fecha;
             seguimiento.Usuario = Convert.ToString(idUser); ;
 
             elegibilidad.Estatus = 4;
@@ -209,8 +213,8 @@ namespace ProyectoPREP.Controllers
             db.Seguimientos.Entry(seguimiento).State = EntityState.Modified;
             db.SaveChanges();
 
-            return RedirectToAction("DatosGeneralesPorAprobado", "DatosGenerales");
-        }
+			return RedirectToAction("SeguimientoVer", "Seguimientos", new { id = IdDatos });
+		}
 
     }
 }

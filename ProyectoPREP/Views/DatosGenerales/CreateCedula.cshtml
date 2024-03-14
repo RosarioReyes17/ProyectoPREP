@@ -57,7 +57,7 @@
 			<label style="color:red">Todos los campos que tienen asteriscos(*) son obligatorios</label>
 
 
-			<div >
+			<div>
 				<table class="table">
 					<tbody>
 						<tr>
@@ -111,7 +111,7 @@
 							</td>
 							<td>
 								5. Nacionalidad(*):
-								<select asp-for="DatosGenerales.Nacionalidad" class="form-control" id="ddlNacionalidad" required name="DatosGenerales.Nacionalidad">
+								<select asp-for="DatosGenerales.Nacionalidad" class="form-control" id="ddlNacionalidad" name="DatosGenerales.Nacionalidad" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="1">DOMINICANA</option>
 									<option value="5">HAITIANA</option>
@@ -260,7 +260,7 @@
 							</td>
 							<td>
 								6. ¿Descendiente de Migrante(*)?
-								<select asp-for="DatosGenerales.Descendiente" class="form-control" required onchange="habilitarInput()" id="ddlDecendiente" name="DatosGenerales.Descendiente">
+								<select asp-for="DatosGenerales.Descendiente" class="form-control" onchange="habilitarInput()" id="ddlDecendiente" name="DatosGenerales.Descendiente" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="SI">SI</option>
 									<option value="NO">NO</option>
@@ -270,7 +270,7 @@
 							</td>
 							<td style="display:none" id="tdNacionalidadMadre">
 								Especificar Descendencia:
-								<select asp-for="DatosGenerales.NacionalidadMadre" class="form-control" required disabled id="ddlNacionalidadMadre" name="DatosGenerales.NacionalidadMadre">
+								<select asp-for="DatosGenerales.NacionalidadMadre" class="form-control"  disabled id="ddlNacionalidadMadre" name="DatosGenerales.NacionalidadMadre" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="1">DOMINICANA</option>
 									<option value="5">HAITIANA</option>
@@ -421,7 +421,7 @@
 						<tr>
 							<td>
 								7. Provincia(*):
-								<select asp-for="DatosGenerales.ProvinciaResidencia" onchange="llenarMunicipio()" required class="form-control" id="ProvinciaResidencia" name="DatosGenerales.ProvinciaResidencia">
+								<select asp-for="DatosGenerales.ProvinciaResidencia" onchange="llenarMunicipio()" class="form-control" id="ProvinciaResidencia" name="DatosGenerales.ProvinciaResidencia" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="01">DISTRITO NACIONAL</option>
 									<option value="02">AZUA</option>
@@ -461,13 +461,13 @@
 							</td>
 							<td>
 								8. Municipio(*):
-								<select asp-for="DatosGenerales.MunicipioResidencia" class="form-control" id="MunicipioResidencia" required name="DatosGenerales.MunicipioResidencia">
+								<select asp-for="DatosGenerales.MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="DatosGenerales.MunicipioResidencia" data-val="true" data-val-required="Este campo obligatorio.">
 								</select>
 								<span asp-validation-for="DatosGenerales.MunicipioResidencia" style="color:red;margin-left:30px"></span>
 
 							</td>
 							<td>
-								9. Dirección(*):<input asp-for="DatosGenerales.Direccion" id="txtDireccion" name="DatosGenerales.Direccion" class="form-control" type="text" required="" placeholder="Introduzca su Dirección.">
+								9. Dirección(*):<input asp-for="DatosGenerales.Direccion" id="txtDireccion" name="DatosGenerales.Direccion" class="form-control" type="text" placeholder="Introduzca su Dirección." data-val="true" data-val-required="Este campo obligatorio.">
 								<span asp-validation-for="DatosGenerales.Direccion" style="color:red;margin-left:30px"></span>
 
 							</td>
@@ -482,7 +482,7 @@
 						<tr>
 							<td>
 								11. Sector(*):
-								<input asp-for="DatosGenerales.Sector" id="txtSector" name="DatosGenerales.Sector" class="form-control" type="text" required="" placeholder="Introduzca su Sector." autocomplete="error" require="true">
+								<input asp-for="DatosGenerales.Sector" id="txtSector" name="DatosGenerales.Sector" class="form-control" type="text" placeholder="Introduzca su Sector." data-val="true" data-val-required="Este campo obligatorio.">
 								<span asp-validation-for="DatosGenerales.Sector" style="color:red;margin-left:30px"></span>
 
 							</td>
@@ -494,18 +494,20 @@
 								<span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
 							</td>
 							<td>
-								13. Talla Pie(*):<br> <input asp-for="DatosGenerales.TallaPies" id="txtTallaPies" name="DatosGenerales.TallaPies" class="form-control" type="number" min="1" placeholder="Introduzca su Talla en Pie." required>
+								13. Talla Pie(*):<br> <input asp-for="DatosGenerales.TallaPies" id="txtTallaPies" name="DatosGenerales.TallaPies" class="form-control" type="number" min="1" placeholder="Introduzca su Talla en Pie." data-val="true" data-val-required="Este campo obligatorio.">
 								<span asp-validation-for="DatosGenerales.TallaPies" style="color:red;margin-left:30px"></span>
 							</td>
 							<td>
-								14. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="number" placeholder="Introduzca su Talla en Pulgadas." required>
-								<span asp-validation-for="DatosGenerales.TallaPulgadas" style="color:red;margin-left:30px"></span>
+								14. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="number"
+										  min="0" max="12" placeholder="Introduzca su Talla en Pulgadas."
+										  oninput="tallaPulgadaValidate(this)">
+								<span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:30px"></span>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								15. ¿Sexo asignado al nacer?(*):
-								<select class="form-control" asp-for="DatosGenerales.Sexo" id="ddlSexo" name="DatosGenerales.Sexo" required="" autocomplete="error" require="true">
+								<select class="form-control" asp-for="DatosGenerales.Sexo" id="ddlSexo" name="DatosGenerales.Sexo" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="M">Masculino</option>
 									<option value="F">Femenino</option>
@@ -515,7 +517,7 @@
 							</td>
 							<td>
 								16. ¿Como se consideras a si mismo?(*):
-								<select class="form-control" asp-for="DatosGenerales.Genero" id="ddlGenero" name="DatosGenerales.Genero">
+								<select class="form-control" asp-for="DatosGenerales.Genero" id="ddlGenero" name="DatosGenerales.Genero" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="1">Hombre</option>
 									<option value="2">Mujer</option>
@@ -528,13 +530,12 @@
 							<td colspan="2">
 								17. Contacto de Confianza(*):
 
-								<select onchange="habilitarInput()" required class="form-control" id="ddlContactoConfianza" name="TieneContactoConfianza">
+								<select onchange="habilitarInput()" class="form-control" asp-for="ContactoConfianza" required id="ddlContactoConfianza" name="ContactoConfianza" data-val="true" data-val-required="Este campo es obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="SI">SI</option>
 									<option value="NO">NO</option>
 								</select>
-								<span style="color:red;margin-left:30px"></span>
-
+								<span style="color:red;margin-left:30px" asp-validation-for="ContactoConfianza"></span>
 
 							</td>
 
@@ -542,20 +543,21 @@
 						<tr style="display:none" id="trContacto">
 							<td>
 								Nombre de contacto:
-								<input asp-for="DatosGenerales.NombreContacto" disabled id="txtNombreContacto" name="DatosGenerales.NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto.">
+								<input asp-for="DatosGenerales.NombreContacto" disabled id="txtNombreContacto" name="DatosGenerales.NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." data-val="true" data-val-required="Este campo obligatorio.">
 								<span asp-validation-for="DatosGenerales.NombreContacto" style="color:red;margin-left:30px"></span>
 
 							</td>
 
 							<td>
 								Teléfono de Contacto:
-								<input asp-for="DatosGenerales.TelefonoContacto" disabled id="txtTelefonoContacto" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto.">
+								<input asp-for="DatosGenerales.TelefonoContacto" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" disabled id="txtTelefonoContacto" name="DatosGenerales.TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." data-val="true" data-val-required="Este campo obligatorio.">
 								<span asp-validation-for="DatosGenerales.TelefonoContacto" style="color:red;margin-left:30px"></span>
 
 							</td>
+
 							<td colspan="2">
 								Parentesco:
-								<select class="form-control" id="ddlParentesco" required disabled asp-for="DatosGenerales.Parentesco" name="DatosGenerales.Parentesco">
+								<select class="form-control" id="ddlParentesco" required disabled asp-for="DatosGenerales.Parentesco" name="DatosGenerales.Parentesco" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="1">Padre</option>
 									<option value="2">Madre</option>
@@ -580,7 +582,7 @@
 						<tr>
 							<td>
 								18. ARS(*):
-								<select asp-for="DatosGenerales.Ars" class="form-control" onchange="habilitarInput()" id="ddlARS" name="DatosGenerales.Ars" required>
+								<select asp-for="DatosGenerales.Ars" class="form-control" onchange="habilitarInput()" id="ddlARS" name="DatosGenerales.Ars" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="SI">SI</option>
 									<option value="NO">NO</option>
@@ -590,7 +592,7 @@
 							</td>
 							<td style="display:none" id="tdARS">
 								Nombre de ARS:
-								<select asp-for="DatosGenerales.NombreArs" disabled required class="form-control" id="txtNombreARS" name="DatosGenerales.NombreArs">
+								<select asp-for="DatosGenerales.NombreArs" disabled class="form-control" id="txtNombreARS" name="DatosGenerales.NombreArs" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="1">APS</option>
 									<option value="2">ASEMAP</option>
@@ -628,7 +630,7 @@
 							</td>
 							<td style="display:none" colspan="2" id="tdRegimen">
 								Régimen:
-								<select asp-for="DatosGenerales.Regimen" disabled required class="form-control" id="ddlRegimen" name="DatosGenerales.Regimen">
+								<select asp-for="DatosGenerales.Regimen" disabled class="form-control" id="ddlRegimen" name="DatosGenerales.Regimen" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="Contributivo">Contributivo</option>
 									<option value="Subsidiado">Subsidiado</option>
@@ -653,7 +655,7 @@
 					<tr>
 						<td>
 							19. ¿Ha tenido relaciones sexuales con?(*)
-							<select asp-for="TienesRelacionesCon" class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" required>
+							<select asp-for="TienesRelacionesCon" class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="Solamente con hombres">Solamente con hombres</option>
 								<option value="Solamente con mujeres">Solamente con mujeres</option>
@@ -667,7 +669,7 @@
 						</td>
 						<td colspan="2">
 							20. ¿Ha utilizado alguna droga ilícita?(*)
-							<select asp-for="DrogasIlicitas" class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" required>
+							<select asp-for="DrogasIlicitas" class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="Si(Endovenosas)">Si(Endovenosas)</option>
 								<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
@@ -682,7 +684,7 @@
 					<tr>
 						<td>
 							21. ¿Ha intercambiado sexo por bienes económicos o materiales?(*)
-							<select asp-for="SexoPorBienes" class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" required>
+							<select asp-for="SexoPorBienes" class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -693,7 +695,7 @@
 						</td>
 						<td colspan="2">
 							22. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales?(*)
-							<select asp-for="SexoPorBienesPareja" class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" required>
+							<select asp-for="SexoPorBienesPareja" class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -707,7 +709,7 @@
 					<tr>
 						<td>
 							23. ¿Ha tenido relaciones sexuales sin condón?(*)
-							<select class="form-control" asp-for="SexoSinProteccion" id="ddlSexoSinProteccion" name="SexoSinProteccion" required>
+							<select class="form-control" asp-for="SexoSinProteccion" id="ddlSexoSinProteccion" name="SexoSinProteccion" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -718,7 +720,7 @@
 						</td>
 						<td colspan="2">
 							24. ¿Ha tenido 2 o más parejas sexuales?(*)
-							<select class="form-control" id="ddlCantParejas" asp-for="CantParejasSexuales" name="CantParejasSexuales" required>
+							<select class="form-control" id="ddlCantParejas" asp-for="CantParejasSexuales" name="CantParejasSexuales" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -732,7 +734,7 @@
 
 						<td colspan="3">
 							25. ¿Ha tenido relaciones sexuales con personas VIH Positivas?(*)
-							<select asp-for="SexoConVihpositivo" class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" required>
+							<select asp-for="SexoConVihpositivo" class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="Si">Si</option>
 								<option value="No">No</option>
@@ -747,15 +749,23 @@
 			</table>
 		</div>
 	</div>
+
+
 	<br />
 	<br />
 	<div id="divBotones" style="display: none;">
 		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
 		<a href="DatosGeneralesPorElegibilidad" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
-		
+
 	</div>
+
+	<br />
+	<br />
+	<br />
+
 	
 </form>
+
 
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
@@ -981,7 +991,7 @@
 			document.getElementById("formulario").addEventListener("submit", function (event) {
 				// Obtener el valor del campo de peso
 				var pesoInput = document.getElementById("txtPeso");
-				var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
+				var peso = parseFloat(pesoInput.value); // Eliminar espacios en blanco y convertir a número
 				var pesoMin = parseFloat(pesoInput.min);
 				var pesoMax = parseFloat(pesoInput.max);
 
@@ -1001,7 +1011,43 @@
 					document.getElementById("pesoValidationMsg").innerText = "";
 				}
 			});
+
+			
 		});
+
+		document.addEventListener("DOMContentLoaded", function () {
+			// Agregar un controlador de eventos al formulario
+			var formulario = document.getElementById("formulario");
+			if (formulario) {
+				formulario.addEventListener("submit", function (event) {
+					// Obtener el valor del campo de talla
+					var tallaInput = document.getElementById("TallaPulgadas");
+					if (tallaInput) {
+						var talla = parseFloat(tallaInput.value); // Convertir a número
+						var tallaMin = parseFloat(tallaInput.min);
+						var tallaMax = parseFloat(tallaInput.max);
+
+						// Verificar si el campo de talla está vacío o no es un número
+						if (isNaN(talla) || tallaInput.value.trim() === "") {
+							// Mostrar mensaje de error para campo obligatorio
+							document.getElementById("tallaPulgadaValidation").innerText = "Este campo es obligatorio.";
+							// Evitar el envío del formulario
+							event.preventDefault();
+						} else if (talla < tallaMin || talla > tallaMax) {
+							// Mostrar mensaje de error para valor fuera del rango
+							document.getElementById("tallaPulgadaValidation").innerText = "Este número debe estar entre " + tallaMin + " y " + tallaMax + ".";
+							// Evitar el envío del formulario
+							event.preventDefault();
+						} else {
+							// Limpiar mensaje de error si el valor es válido
+							document.getElementById("tallaPulgadaValidation").innerText = "";
+						}
+					}
+				});
+			}
+		});
+
+		
 
 	</script>
 	@{
