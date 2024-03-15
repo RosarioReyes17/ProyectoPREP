@@ -96,6 +96,7 @@
                     </td>
                     <td>
                         <a title="Modificar la ficha inicial" class="btn btn-info " href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/Elegibilidad/ElegibilidadVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
                         <a title="Transferir paciente" class="btn btnElegibilidad" href="~/GestionPacientes/Transferir/@item.Id"><i class="glyphicon glyphicon-transfer"></i></a>
 
                     </td>
@@ -108,64 +109,3 @@
 </div>
 
 
-
-@* @section scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-        
-            var table = $('#miTabla').DataTable({
-
-               
-
-                columnDefs: [{
-                    targets: -1,
-                    className: 'right'
-                }],
-                "paging": true,
-                "pageLength": 10,
-                "searching": true,
-
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-
-                drawCallback: function () {
-                    
-                    $('#miTabla').find('li').css('background-color', '');
-
-                    
-                    $('#miTabla').find('li.active').css('background-color', '#5bc0de');
-                },
-            });
-
-     
-            $('#tablaContainer').css('display', 'block');
-
-        });
-
-
-        function nav(value) {
-            if (value != "") { location.href = value }
-        }
-
-        
-    </script>
-
-} *@

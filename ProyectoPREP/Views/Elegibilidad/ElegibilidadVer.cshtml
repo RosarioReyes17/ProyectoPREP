@@ -1,0 +1,86 @@
+﻿@model List<ElegibilidadPrepHistorico>
+
+
+
+<h2>Seguimientos por Paciente</h2>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombres
+            </th>
+            <th>
+                Apellidos
+            </th>
+            <th>Sexo</th>
+            <th>Nacionalidad</th>
+        </tr>
+        <tr>
+
+            <td>@ViewBag.IdDatos</td>
+            <td>@ViewBag.Nombre</td>
+            <td>@ViewBag.Apellido</td>
+            <td>@ViewBag.Sexo</td>
+            <td>@ViewBag.nacionalidad</td>
+        </tr>
+    </tbody>
+</table>
+
+<h5>Seguimientos</h5>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID Elegibilidad
+            </th>
+            <th>Fecha Elegibilidad</th>
+            <th>Fecha Historico</th>
+            <th>
+                Resultado Prueba VIH
+            </th>
+            <th>Fecha de Prueba VIH</th>
+            <th>Fecha de Reintegro</th>
+            <th>
+                Acciones
+            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.IdElegibilidadPrep
+                </td>
+                <td>@item.FechaElegibilidad</td>
+                <td>@item.FechaHistorico</td>
+                <td>@item.ResultadoPruebaVih</td>
+                <td>@item.FechaPruebaVih</td>
+                <td>@item.FechaReintegro</td>
+
+
+                <td>
+                    <a class="btnSeguimiento2" href="~/Elegibilidad/ElegibilidadVerPorId/@item.IdFila">Ver Elegibilidad</a> |
+                </td>
+
+            </tr>
+
+
+        }
+
+    </tbody>
+</table>
+
+<br>
+@* <a id="btnRetonar" onclick="history.back();"> Volver al Listado de Pacientes Registrados en PrEP</a> *@
+
+<button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
+    <i class="fa-solid fa-backward"></i> Volver atrás
+</button>

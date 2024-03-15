@@ -17,7 +17,50 @@ namespace ProyectoPREP.Controllers
             this.db = _db;
         }
         // GET: ElegibilidadController
-    
+
+
+        public ActionResult ElegibilidadVer(int id)
+        {
+            var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == id);
+            var formu = db.FormularioPreps.FirstOrDefault(d => d.DatosGeneralesId == id);
+            var elegiHistori = db.ElegibilidadPrepHistoricos.Where(d => d.FormularioPrepId == formu.Id).ToList();
+            var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+
+
+            ViewBag.Nombre = datos.Nombres;
+            ViewBag.Apellido = datos.Apellidos;
+
+            ViewBag.Sexo = datos.Sexo;
+            ViewBag.nacionalidad = nacionalidad.Nacionalidad;
+            ViewBag.IdDatos = datos.Id;
+            return View(elegiHistori);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult ElegibilidadVerPorId(int id)
+        {
+            var elegi = db.ElegibilidadPreps.FirstOrDefault(d => d.Id == id);
+            var elegiHistoco = db.ElegibilidadPrepHistoricos.FirstOrDefault(d => d.IdFila == id);
+            var formu = db.FormularioPreps.FirstOrDefault(d => d.Id == elegi.FormularioPrepId);
+            var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == formu.DatosGeneralesId);
+            var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+
+            ViewBag.Nombre = datos.Nombres;
+            ViewBag.Apellido = datos.Apellidos;
+            ViewBag.IdDatos = datos.Id;
+
+
+
+            ViewBag.Sexo = datos.Sexo;
+            ViewBag.nacionalidad = nacionalidad.Nacionalidad;
+
+            return View(elegiHistoco);
+        }
+
         public JsonResult VIHPositivo(int id, DateTime FechaPruebaVih,DateTime FechaEntregaVih)
 		{
             int idUser = Convert.ToInt32(User.GetUserId());
@@ -75,10 +118,7 @@ namespace ProyectoPREP.Controllers
                 return RedirectToAction("FormularioElegibilidadReintegrado", "Elegibilidad", new {id=id});
 
             }
-            if (model.Estatus == 2)
-			{
-				return View(model);
-			}
+            
 			return View(model);
 		}
 
