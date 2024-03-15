@@ -31,7 +31,7 @@
 
 </div>
 
-<form asp-action="SeguimientoEditar" asp-controller="Seguimientos" method="post">
+<form id="formularioEditarSeguimiento" asp-action="SeguimientoEditar" asp-controller="Seguimientos" method="post">
     <input type="hidden" id="IdDatos" name="IdDatos" value="@ViewBag.IdDatos" />
     <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
     <input name="" id="genero" type="hidden" value="@ViewBag.Genero" />
@@ -59,7 +59,7 @@
                             Fecha de registro de seguimiento:
                             <div class="form-group col-md-8">
 
-                                <input readonly id="txtFechaSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
+                                <input id="txtFechaSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaRegistroSeguimiento" name="FechaRegistroSeguimiento" class="form-control col-sm-3 date" type="date">
                                 <span asp-validation-for="FechaRegistroSeguimiento" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -76,7 +76,7 @@
                             <div style="display:flex">
 
                                 <label style="width:26px">TA:</label>
-                                <input type="text" asp-for="SignosVitalesTa" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" class="form-control2"> mmHg
+                                <input type="text" style="margin-right:5px" asp-for="SignosVitalesTa" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" class="form-control2"> mmHg
                                 <span asp-validation-for="SignosVitalesTa" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -85,7 +85,7 @@
 
                                 <label style="width:26px">FC:</label>
 
-                                <input type="text" id="SignosVitalesFc" asp-for="SignosVitalesFc" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" name="SignosVitalesFc" class="form-control2"> l/min
+                                <input type="text" style="margin-right:5px" id="SignosVitalesFc" asp-for="SignosVitalesFc" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" name="SignosVitalesFc" class="form-control2"> l/min
                                 <span asp-validation-for="SignosVitalesFc" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -94,7 +94,7 @@
 
                                 <label style="width:26px">FR:</label>
 
-                                <input type="text" id="SignosVitalesFr" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" asp-for="SignosVitalesFr" name="SignosVitalesFr"  class="form-control2"> r/min
+                                <input type="text" style="margin-right:5px" id="SignosVitalesFr" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" asp-for="SignosVitalesFr" name="SignosVitalesFr"  class="form-control2"> r/min
                                 <span asp-validation-for="SignosVitalesFr" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -103,20 +103,22 @@
                         <td colspan="2">
                             Medidas Antropometrícas:
                             <br>
-                            <label style="width:105px">Peso:</label>
+                            <label style="width:105px">Peso Lbs:</label>
 
-                            <input id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" placeholder="Introduzca su Peso."> Lbs.
-                            <span asp-validation-for="Peso" style="color:red;margin-left:20px"></span>
+                            <input id="Peso" style="width:200px" ; asp-for=" Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" oninput="validatePeso(this)" class="form-control2" placeholder="Introduzca su Peso.">
+                            <span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:20px;"></span>
+                            
+                            
                             <br>
                             <label style="width:105px">Talla Pies:</label>
-
-                            <input id="TallaPies" asp-for="TallaPies" name="TallaPies" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pies.">
+                            <input id="TallaPies" style="width:200px" ; asp-for="TallaPies" name="TallaPies" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pies.">
                             <span asp-validation-for="TallaPies" style="color:red;margin-left:20px"></span>
+                            
+                            
                             <br>
                             <label style="width:105px">Talla Pulgadas:</label>
-
-                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulgadas.">
-                            <span asp-validation-for="TallaPulgadas" style="color:red;margin-left:20px"></span>
+                            <input id="TallaPulgadas" style="width:200px" ;asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulg." min="0" max="12" oninput="tallaPulgadaValidate(this)">
+                            <span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:20px;"></span>
 
                         </td>
                     </tr>
@@ -449,7 +451,7 @@
                     <tr>
                         <td colspan="4">
                             Observaciones:
-                            <input type="text" data-val="true" data-val-required="Este campo obligatorio." id="Observaciones" asp-for="Observaciones" name="Observaciones" class="form-control">
+                            <input type="text" id="Observaciones" asp-for="Observaciones" name="Observaciones" class="form-control">
                             <span asp-validation-for="Observaciones" style="color:red;margin-left:20px"></span>
                         </td>
                     </tr>
@@ -796,6 +798,66 @@
             
             
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            var formulario = document.getElementById("formularioEditarSeguimiento");
+            if (formulario) {
+                formulario.addEventListener("submit", function (event) {
+                    // Obtener el valor del campo de talla
+                    var tallaInput = document.getElementById("TallaPulgadas");
+                    if (tallaInput) {
+                        var talla = parseFloat(tallaInput.value); // Convertir a número
+                        var tallaMin = parseFloat(tallaInput.min);
+                        var tallaMax = parseFloat(tallaInput.max);
+
+                        // Verificar si el campo de talla está vacío o no es un número
+                        if (isNaN(talla) || tallaInput.value.trim() === "") {
+                            // Mostrar mensaje de error para campo obligatorio
+                            document.getElementById("tallaPulgadaValidation").innerText = "Este campo es obligatorio.";
+                            // Evitar el envío del formulario
+                            event.preventDefault();
+                        } else if (talla < tallaMin || talla > tallaMax) {
+                            // Mostrar mensaje de error para valor fuera del rango
+                            document.getElementById("tallaPulgadaValidation").innerText = "Este número debe estar entre " + tallaMin + " y " + tallaMax + ".";
+                            // Evitar el envío del formulario
+                            event.preventDefault();
+                        } else {
+                            // Limpiar mensaje de error si el valor es válido
+                            document.getElementById("tallaPulgadaValidation").innerText = "";
+                        }
+                    }
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            document.getElementById("formularioEditarSeguimiento").addEventListener("submit", function (event) {
+                // Obtener el valor del campo de peso
+                var pesoInput = document.getElementById("Peso");
+                var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
+                var pesoMin = parseFloat(pesoInput.min);
+                var pesoMax = parseFloat(pesoInput.max);
+
+                // Verificar si el campo de peso está vacío
+                if (isNaN(peso) || pesoInput.value.trim() === "") {
+                    // Mostrar mensaje de error para campo obligatorio
+                    document.getElementById("pesoValidationMsg").innerText = "Este campo es obligatorio.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else if (peso < pesoMin || peso > pesoMax) {
+                    // Mostrar mensaje de error para valor fuera del rango
+                    document.getElementById("pesoValidationMsg").innerText = "El peso debe estar entre " + pesoMin + " y " + pesoMax + " libras.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else {
+                    // Limpiar mensaje de error si el valor es válido
+                    document.getElementById("pesoValidationMsg").innerText = "";
+                }
+            });
+        });
+
 
     </script>
 }

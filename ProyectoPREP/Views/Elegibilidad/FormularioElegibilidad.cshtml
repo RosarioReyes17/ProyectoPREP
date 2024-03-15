@@ -20,7 +20,7 @@
     <br>
 </div>
 
-<form asp-controller="Elegibilidad" asp-action="FormularioElegibilidad" method="post">
+<form asp-controller="Elegibilidad" asp-action="FormularioElegibilidad" onsubmit="registrarElegibilidad" method="post">
     <input name="IdDatos" id="IdDatos" value="@ViewBag.IdDatos" type="hidden" />
     <input asp-for="FormularioPrepId" name="FormularioPrepId" type="hidden" />
     <input asp-for="Usuario" name="Usuario" type="hidden" />
@@ -44,7 +44,7 @@
                         <td>
                             ¿Prueba de VIH realizada?
                             <div class="radio radio-info">
-                                <input id="chkSeronegativo1" asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="Si">
+                                <input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="Si">
                                 <label for="chkSeronegativo1">
                                     Si
                                 </label>
@@ -54,25 +54,31 @@
                                 <label for="chkSeronegativo2">
                                     No
                                 </label>
+
                             </div>
+                            <span asp-validation-for="SeronegativoVih" style="color:red;margin-left:20px"></span>
+
                         </td>
 
                         <td>
-                            Fecha de realización(Prueba VIH):
+                            <label for="txtFechaRealizacionPrueba">Fecha de realización (Prueba VIH):</label>
                             <br>
-
                             <div class="form-group col-md-8">
-
-                                <input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date" required disabled>
+                                <input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date" disabled>
+                                <span asp-validation-for="FechaPruebaVih" style="color:red;"></span>
                             </div>
                         </td>
+
+
+
 
                         <td>
                             Fecha de resultados(Prueba VIH):
                             <br>
                             <div class="form-group col-md-8">
 
-                                <input id="txtFechaEntregaResultados" onkeydown="return false" asp-for="FechaEntregaVih" name="FechaEntregaVih" class="form-control pruebaVIH habilitarPCR " type="date" required disabled />
+                                <input id="txtFechaEntregaResultados" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." name="FechaEntregaVih" class="form-control pruebaVIH habilitarPCR " type="date" disabled />
+                                <span asp-validation-for="FechaEntregaVih" style="color:red"></span>
                             </div>
                         </td>
 
@@ -80,19 +86,20 @@
                             <strong>Resultado de la Prueba del VIH:</strong>
                             <br>
                             <div class="radio radio-info">
-                                <input id="rdVIH1" required class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo" disabled>
+                                <input id="rdVIH1" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo" disabled>
                                 <label for="rdVIH1">
                                     Negativo
                                 </label>
                             </div>
 
                             <div class="radio radio-info">
-                                <input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo" disabled>
+                                <input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo" disabled>
                                 <label for="rdVIH2">
 
                                     Positivo
                                 </label>
                             </div>
+                            <span asp-validation-for="ResultadoPruebaVih" style="color:red;margin-left:20px"></span>
 
                         </td>
                     </tr>
@@ -100,17 +107,18 @@
                         <td colspan="4">
                             En riesgo significativo de infección por VIH
                             <div class="radio radio-info">
-                                <input id="chkRiesgoVIH1" required asp-for="RiesgoInfeccionVih" disabled name="RiesgoInfeccionVih" class="styled pruebaVIH" type="radio" value="Si">
+                                <input id="chkRiesgoVIH1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="RiesgoInfeccionVih" disabled name="RiesgoInfeccionVih" class="styled pruebaVIH" type="radio" value="Si">
                                 <label for="chkRiesgoVIH1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkRiesgoVIH2" asp-for="RiesgoInfeccionVih" disabled name="RiesgoInfeccionVih" class="styled pruebaVIH" type="radio" value="No">
+                                <input id="chkRiesgoVIH2" required asp-for="RiesgoInfeccionVih" disabled name="RiesgoInfeccionVih" class="styled pruebaVIH" type="radio" value="No">
                                 <label for="chkRiesgoVIH2">
                                     No
                                 </label>
                             </div>
+                            <span asp-validation-for="RiesgoInfeccionVih" style="color:red;margin-left:20px"></span>
                         </td>
                     </tr>
                     <tr>
@@ -119,18 +127,21 @@
 
                             ¿Tiene Signos y síntomas?
                             <div class="radio radio-info">
-                                <input id="chkNoSignos1" required asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="Si" disabled>
+                                <input id="chkNoSignos1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="Si" disabled>
                                 <label for="chkNoSignos1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkNoSignos2" asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="No" disabled />
+                                <input id="chkNoSignos2" required asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="No" disabled />
                                 <label for="chkNoSignos2">
                                     No
                                 </label>
                             </div>
+                            <span asp-validation-for="SignosSintomas" style="color:red;margin-left:20px"></span>
+
                         </td>
+
                         <td colspan="2">
                             <input type="checkbox" id="check1" value="true" name="Linfadenopatias" disabled class="chSignos" /> Linfadenopatias cervicales e inguinales
                             <br>
@@ -151,18 +162,20 @@
 
                             Se requiere CONFIRMAR CON PCR
                             <div class="radio radio-info">
-                                <input id="chkRequierePCR1" required name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled pruebaVIH" disabled type="radio" value="Si">
+                                <input id="chkRequierePCR1" data-val="true" data-val-required="Este campo es obligatorio." name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled pruebaVIH" disabled type="radio" value="Si">
                                 <label for="chkRequierePCR1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkRequierePCR2" name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled pruebaVIH" disabled type="radio" value="No">
+                                <input id="chkRequierePCR2" required name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled pruebaVIH" disabled type="radio" value="No">
                                 <label for="chkRequierePCR2">
                                     No
                                 </label>
                             </div>
+                            <span asp-validation-for="CargaViralPcr" style="color:red;margin-left:20px"></span>
                         </td>
+
                         <td id="tdPCR3">
 
                             <div class="form-group col-md-8">
@@ -212,12 +225,14 @@
                                 
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
-                                <input id="txtResultadoCreatinina" required disabled onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
+                                <input id="txtResultadoCreatinina" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
+                                <span asp-validation-for="CreatininaValor" style="color:red;"></span>
                                 <br>
 
                                 Fecha:
                                 <br>
-                                <input id="txtFechaResultadoCreatinina" onkeydown="return false" disabled required asp-for="FechaResultadoCreatinina" name="FechaResultadoCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+                                <input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." asp-for="FechaResultadoCreatinina" name="FechaResultadoCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+                                <span asp-validation-for="FechaResultadoCreatinina" style="color:red;"></span>
                                 <br>
                                 Resultado:
                                 <br>
@@ -255,18 +270,18 @@
                         <td>
                             Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
                             <div class="radio radio-info">
-                                <input id="chkaclaramiento1" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="Si" readonly>
+                                <input id="chkaclaramiento1" required asp-for="AclaramientoCreatinina" data-val="true" data-val-required="Este campo es obligatorio." name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="Si" readonly>
                                 <label for="chkaclaramiento1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkaclaramiento2" asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="No" readonly>
+                                <input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="No" readonly>
                                 <label for="chkaclaramiento2">
                                     No
                                 </label>
                             </div>
-
+                            <span asp-validation-for="AclaramientoCreatinina" style="color:red;margin-left:20px"></span>
                         </td>
 
 
@@ -283,18 +298,21 @@
                                 <br />
 
                                 <div style="margin-left: 24px;">
-                                    <input id="rdsifilis1" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+                                    <input id="rdsifilis1" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
                                     <label for="rdsifilis1">No Reactivo</label>
-
+                                    
                                     
                                 </div>
                                 <div style="margin-left: 24px;">
-                                    <input id="rdsifilis2" onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+                                    <input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
                                     <label for="rdsifilis2">Reactivo</label>
                                 </div>
+                                <span style="color:red;margin-left:20px"></span>
+
                                 <br />
                                 <input id="txtfechasifilis1" required name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
                             </div>
+                            
                         </td>
                         <td class="col-md-3">
 
@@ -394,7 +412,7 @@
             </table>
         </div>
 
-        <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Registrar Elegibilidad</button>
+        <button type="submit" id="registrarElegibilidad" class="btn btn-success"><i class="fa-solid fa-check"></i> Registrar Elegibilidad</button>
         <a onclick="history.back();" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
         <br />
         <br />
@@ -977,7 +995,33 @@
 
             }
         }
-    
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            document.getElementById("formularioSeguimiento").addEventListener("submit", function (event) {
+                // Obtener el valor del campo de peso
+                var pesoInput = document.getElementById("Peso");
+                var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
+                var pesoMin = parseFloat(pesoInput.min);
+                var pesoMax = parseFloat(pesoInput.max);
+
+                // Verificar si el campo de peso está vacío
+                if (isNaN(peso) || pesoInput.value.trim() === "") {
+                    // Mostrar mensaje de error para campo obligatorio
+                    document.getElementById("pesoValidationMsg").innerText = "Este campo es obligatorio.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else if (peso < pesoMin || peso > pesoMax) {
+                    // Mostrar mensaje de error para valor fuera del rango
+                    document.getElementById("pesoValidationMsg").innerText = "El peso debe estar entre " + pesoMin + " y " + pesoMax + " libras.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else {
+                    // Limpiar mensaje de error si el valor es válido
+                    document.getElementById("pesoValidationMsg").innerText = "";
+                }
+            });
+        });
     </script>
 
 }

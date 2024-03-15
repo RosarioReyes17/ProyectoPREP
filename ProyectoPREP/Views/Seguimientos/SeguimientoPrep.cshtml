@@ -17,6 +17,8 @@
 
     </div>
 
+
+
 <form id="formularioSeguimiento" asp-action="SeguimientoPrep" asp-controller="Seguimientos" method="post">
     <input type="hidden" id="IdDatos" name="IdDatos" value="@ViewBag.IdDatos" />
     <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
@@ -57,7 +59,7 @@
                             <div style="display:flex">
                                  
                                 <label style="width:26px">TA:</label>
-                                <input type="text" asp-for="SignosVitalesTa" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" class="form-control2"> mmHg
+                                <input type="text" asp-for="SignosVitalesTa" style="margin-right:5px" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" id="SignosVitalesTa" name="SignosVitalesTa" class="form-control2"> mmHg
                                 <span asp-validation-for="SignosVitalesTa" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -65,9 +67,8 @@
                             <div style="display:flex">
                                 
                                 <label style="width:26px">FC:</label>
-
-                                <input type="text" id="SignosVitalesFc" asp-for="SignosVitalesFc" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" name="SignosVitalesFc" class="form-control2"> l/min
-                                <span asp-validation-for="SignosVitalesFc" style="color:red;margin-left:20px"></span>
+                                <input type="text" style="margin-right:5px" id="SignosVitalesFc" asp-for="SignosVitalesFc" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" name="SignosVitalesFc" class="form-control2"> l/min
+                                <span asp-validation-for="SignosVitalesFc" style="color:red;margin-left:30px"></span>
 
                             </div>
                             <br>
@@ -75,8 +76,8 @@
                                 
                                 <label style="width:26px">FR:</label>
 
-                                <input type="text" id="SignosVitalesFr" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" asp-for="SignosVitalesFr" name="SignosVitalesFr" class="form-control2"> r/min
-                                <span asp-validation-for="SignosVitalesFr" style="color:red;margin-left:20px"></span>
+                                <input type="text" style="margin-right:5px" id="SignosVitalesFr" data-val="true" data-val-required="Este campo obligatorio." oninput="this.value = this.value.replace(/[^0-9,/]/,'')" asp-for="SignosVitalesFr" name="SignosVitalesFr" class="form-control2"> r/min
+                                <span asp-validation-for="SignosVitalesFr" style="color:red;margin-left:30px"></span>
 
                             </div>
                         </td>
@@ -84,22 +85,23 @@
                         <td colspan="2">
                             Medidas Antropometrícas:
                             <br>
-                            <label style="width:105px">Peso:</label>
-                            <input id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" oninput="validatePeso(this)" placeholder="Introduzca su Peso."> Lbs.
-                            <span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
+                            <label style="width:50px">Peso:</label>
+                            <input style="width:200px; margin-left:50px;" id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" oninput="validatePeso(this)" placeholder="Introduzca su Peso en Lbs.">
+                            <span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:20px;"></span>
 
                             <br>
-                            <label style="width:105px">Talla Pies:</label>
-                            <input id="TallaPies" asp-for="TallaPies" name="TallaPies" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pies.">
-                            <span asp-validation-for="TallaPies" style="color:red;margin-left:20px"></span>
+                            <label class="label-width">Talla Pies:</label>
+                            <input style="width:200px; margin-left:32px;" id="TallaPies" asp-for="TallaPies" name="TallaPies" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pies.">
+                            <span asp-validation-for="TallaPies" style="color:red; margin-left:20px;"></span>
 
                             <br>
-                            <label style="width:105px">Talla Pulgadas:</label>
+                            <label  class="label-width">Talla Pulgadas:</label>
+                            <input style="width:200px; margin-left:-2px" id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulg." min="0" max="12" oninput="tallaPulgadaValidate(this)">
+                            <span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:20px;"></span>
 
-                            <input id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulgadas."
-                                   min="0" max="12" placeholder="Introduzca su Talla en Pulgadas."
-                                   oninput="tallaPulgadaValidate(this)">
-                            <span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:30px"></span>
+
+
+
 
                         </td>
                     </tr>
@@ -274,17 +276,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <div>
-                                <label>¿Desea realizar la prueba de Sifilis?</label>
-                                <input onchange="mostrarSifilis();" type="checkbox" id="vihS" /><br />
-
-                                <label>¿Desea realizar la prueba de Sifilis y Hepatitis?</label>
-                                <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" /><br />
-
-                            </div>
+                        <td colspan="2">
+                            <label>¿Desea realizar la prueba de Sifilis?</label>
+                            <input onchange="mostrarSifilis();" type="checkbox" id="vihS" />
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>¿Desea realizar la prueba de Sifilis y Hepatitis?</label>
+                            <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
+                        </td>
+                    </tr>
+
+
                     <tr id="sifilisBC" >
                         <td id="sifilis" colspan="1" >
                             <div class="form-group">
