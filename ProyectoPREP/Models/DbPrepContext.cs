@@ -227,12 +227,29 @@ public partial class DbPrepContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("FechaVisitaPCR");
             entity.Property(e => e.FormularioPrepId).HasColumnName("Formulario_Prep_Id");
+            entity.Property(e => e.HbsAg).HasColumnName("HBsAg");
+            entity.Property(e => e.HbsAgFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("HBsAg_Fecha");
+            entity.Property(e => e.HepatitisC).HasColumnName("Hepatitis_C");
+            entity.Property(e => e.HepatitisCFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Hepatitis_C_Fecha");
+            entity.Property(e => e.ItsDiagnosticoPresuntivo).HasColumnName("ITS_Diagnostico_Presuntivo");
             entity.Property(e => e.ResultadoCargaViralPcr).HasColumnName("ResultadoCargaViralPCR");
             entity.Property(e => e.ResultadoCreatinina).HasColumnName("Resultado_Creatinina");
             entity.Property(e => e.ResultadoPruebaVih).HasColumnName("Resultado_Prueba_VIH");
             entity.Property(e => e.RiesgoInfeccionVih).HasColumnName("Riesgo_Infeccion_VIH");
+            entity.Property(e => e.SecrecionUretral).HasColumnName("Secrecion_uretral");
+            entity.Property(e => e.SecrecionVaginal).HasColumnName("Secrecion_vaginal");
             entity.Property(e => e.SeronegativoVih).HasColumnName("Seronegativo_VIH");
+            entity.Property(e => e.SifilisFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Sifilis_Fecha");
             entity.Property(e => e.SignosSintomas).HasColumnName("Signos_Sintomas");
+            entity.Property(e => e.UlceraGenital).HasColumnName("Ulcera_genital");
+            entity.Property(e => e.Urea).HasColumnName("UREA");
+            entity.Property(e => e.VerrugasGenitales).HasColumnName("Verrugas_genitales");
 
             entity.HasOne(d => d.FormularioPrep).WithMany(p => p.ElegibilidadPreps)
                 .HasForeignKey(d => d.FormularioPrepId)
@@ -308,13 +325,30 @@ public partial class DbPrepContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("FechaVisitaPCR");
             entity.Property(e => e.FormularioPrepId).HasColumnName("Formulario_Prep_Id");
+            entity.Property(e => e.HbsAg).HasColumnName("HBsAg");
+            entity.Property(e => e.HbsAgFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("HBsAg_Fecha");
+            entity.Property(e => e.HepatitisC).HasColumnName("Hepatitis_C");
+            entity.Property(e => e.HepatitisCFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Hepatitis_C_Fecha");
             entity.Property(e => e.IdElegibilidadPrep).HasColumnName("Id_Elegibilidad_Prep");
+            entity.Property(e => e.ItsDiagnosticoPresuntivo).HasColumnName("ITS_Diagnostico_Presuntivo");
             entity.Property(e => e.ResultadoCargaViralPcr).HasColumnName("ResultadoCargaViralPCR");
             entity.Property(e => e.ResultadoCreatinina).HasColumnName("Resultado_Creatinina");
             entity.Property(e => e.ResultadoPruebaVih).HasColumnName("Resultado_Prueba_VIH");
             entity.Property(e => e.RiesgoInfeccionVih).HasColumnName("Riesgo_Infeccion_VIH");
+            entity.Property(e => e.SecrecionUretral).HasColumnName("Secrecion_uretral");
+            entity.Property(e => e.SecrecionVaginal).HasColumnName("Secrecion_vaginal");
             entity.Property(e => e.SeronegativoVih).HasColumnName("Seronegativo_VIH");
+            entity.Property(e => e.SifilisFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Sifilis_Fecha");
             entity.Property(e => e.SignosSintomas).HasColumnName("Signos_Sintomas");
+            entity.Property(e => e.UlceraGenital).HasColumnName("Ulcera_genital");
+            entity.Property(e => e.Urea).HasColumnName("UREA");
+            entity.Property(e => e.VerrugasGenitales).HasColumnName("Verrugas_genitales");
 
             entity.HasOne(d => d.FormularioPrep).WithMany(p => p.ElegibilidadPrepHistoricos)
                 .HasForeignKey(d => d.FormularioPrepId)

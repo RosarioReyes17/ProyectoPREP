@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
+using System.Data.SqlClient;
+using System.Security.Claims;
 
 namespace ProyectoPREP.Controllers
 {
@@ -145,9 +148,10 @@ namespace ProyectoPREP.Controllers
 						elegibilidad.Usuario = Convert.ToString(idUser);
 						elegibilidad.Estatus = 2;
                         elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
-
+                        elegibilidad.FechaElegibilidad = DateTime.Now;
                         
 						db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+
 						db.SaveChanges();
 					}
 					
@@ -165,9 +169,10 @@ namespace ProyectoPREP.Controllers
                     elegibilidad.Usuario = Convert.ToString(idUser);
                     elegibilidad.Estatus = 3;
 					elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
+                    elegibilidad.FechaElegibilidad = DateTime.Now;
 
-                   
-					db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
+
+                    db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
 					db.SaveChanges();
 
 				}
@@ -241,7 +246,7 @@ namespace ProyectoPREP.Controllers
                         elegibilidad.Usuario = Convert.ToString(idUser);
                         elegibilidad.Estatus = 2;
                         elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
-
+                        elegibilidad.FechaElegibilidad= DateTime.Now;
 
                         db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
                         db.SaveChanges();
@@ -261,11 +266,13 @@ namespace ProyectoPREP.Controllers
                     elegibilidad.Usuario = Convert.ToString(idUser);
                     elegibilidad.Estatus = 3;
                     elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
+                    elegibilidad.FechaElegibilidad = DateTime.Now;
 
 
                     db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
                     db.SaveChanges();
-
+                    
+                    
                 }
 
 
@@ -357,12 +364,10 @@ namespace ProyectoPREP.Controllers
                 elegi.HepatoEsplenomegalia = elegibilidad.HepatoEsplenomegalia;
 
                 elegi.CargaViralPcr = elegibilidad.CargaViralPcr;
+                elegi.ResultadoCreatinina = elegibilidad.ResultadoCreatinina;
 
-
-
-                //elegibilidad.Id = id;
                 elegi.Usuario = Convert.ToString(idUser);
-                elegi.Estatus = 2;
+                elegi.Estatus = 6;
 
 
                 db.ElegibilidadPreps.Entry(elegi).State = EntityState.Modified;

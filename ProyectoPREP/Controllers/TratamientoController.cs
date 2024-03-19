@@ -35,23 +35,35 @@ namespace ProyectoPREP.Controllers
             ,string MesesPrescripcion, string Observaciones, DateTime? FechaInicio
             , bool PrepArvTdfFtc, bool PrepArvTdf3tc, bool PrepArvTafFtc)
         {
-            int idUser = Convert.ToInt32(User.GetUserId());
 
-            var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
-            var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x=>x.FormularioPrepId == formulario.Id);
+            try
+            {
+                int idUser = Convert.ToInt32(User.GetUserId());
 
-            tratamiento.ElegibilidadPrepId = elegibilidad.Id;
+                var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
+                var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
+
+                tratamiento.ElegibilidadPrepId = elegibilidad.Id;
 
 
-            elegibilidad.Estatus = 4;
-            elegibilidad.Usuario = Convert.ToString(idUser);
-            tratamiento.Id = 0;
+                elegibilidad.Estatus = 4;
+                elegibilidad.Usuario = Convert.ToString(idUser);
+                tratamiento.Id = 0;
 
-            db.TratamientoPreps.Add(tratamiento);
-            db.Entry(elegibilidad).State = EntityState.Modified;
-            db.SaveChanges();
+                db.TratamientoPreps.Add(tratamiento);
+                db.Entry(elegibilidad).State = EntityState.Modified;
+                db.SaveChanges();
 
-            return RedirectToAction("DatosGeneralesPorTratamiento", "DatosGenerales");
+                return RedirectToAction("DatosGeneralesPorTratamiento", "DatosGenerales");
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);//Revisar aqui
+            }
+
+
+            
         }
 
         [HttpPost]

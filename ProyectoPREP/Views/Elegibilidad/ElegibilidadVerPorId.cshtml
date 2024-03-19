@@ -278,19 +278,21 @@
                                 <br />
 
                                 <div style="margin-left: 24px;">
-                                    <input id="rdsifilis1" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+                                    <input asp-for="Sifilis" id="rdsifilis1" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
                                     <label for="rdsifilis1">No Reactivo</label>
 
 
                                 </div>
                                 <div style="margin-left: 24px;">
-                                    <input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+                                    <input asp-for="Sifilis" id="rdsifilis2" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
                                     <label for="rdsifilis2">Reactivo</label>
                                 </div>
                                 <span style="color:red;margin-left:20px"></span>
 
                                 <br />
-                                <input id="txtfechasifilis1" required disabled name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                                <input asp-for="SifilisFecha" id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." disabled name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                                <span style="color:red;margin-left:20px"></span>
+
                             </div>
 
                         </td>
@@ -303,16 +305,16 @@
                                 <br />
 
                                 <div style="margin-left: 24px;">
-                                    <input id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+                                    <input asp-for="HbsAg" id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
                                     <label for="rdHBsAg1">Negativo</label>
                                 </div>
 
                                 <div style="margin-left: 24px;">
-                                    <input id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
+                                    <input asp-for="HbsAg" id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
                                     <label for="rdHBsAg2">Positivo</label>
                                 </div>
                                 <br />
-                                <input id="txtfechaHBsAg1" disabled required onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                                <input asp-for="HbsAgFecha" id="txtfechaHBsAg1" disabled required onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
                             </div>
                         </td>
 
@@ -323,16 +325,16 @@
                                 <br />
                                 <br />
                                 <div style="margin-left:24px">
-                                    <input id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
+                                    <input asp-for="HepatitisC" id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
                                     <label for="rdHepatitis1">Negativo</label>
                                 </div>
 
                                 <div style="margin-left:24px">
-                                    <input id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
+                                    <input asp-for="HepatitisC" id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
                                     <label for="rdHepatitis2">Positivo</label>
                                 </div>
                                 <br />
-                                <input id="txtfechaHepatitis" disabled onkeydown="return false" required name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                                <input asp-for="HepatitisCFecha" id="txtfechaHepatitis" disabled onkeydown="return false" required name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
                             </div>
                         </td>
                         <td class="col-md-3">
@@ -344,23 +346,23 @@
 
                                 <div style="margin-left: 24px;">
 
-                                    <input id="ITDSindromico2" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
+                                    <input asp-for="ItsDiagnosticoPresuntivo" id="ITDSindromico2" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
                                     <label for="ITDSindromico2">Si</label>
                                 </div>
 
                                 <div style="margin-left: 24px;">
-                                    <input id="ITDSindromico1" onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+                                    <input asp-for="ItsDiagnosticoPresuntivo" id="ITDSindromico1" onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
                                     <label for="ITDSindromico1">No</label>
                                 </div>
 
                                 <br>
-                                <input name="SecrecionUretral" class="sindromico" type="radio" value="true" disabled /> Secrecion Uretral
+                                <input name="SecrecionUretral" asp-for="SecrecionUretral" class="sindromico" type="radio" value="true" disabled /> Secrecion Uretral
                                 <br>
-                                <input name="SecrecionVaginal" class="sindromico" type="radio" value="true" disabled /> Secrecion Vaginal
+                                <input name="SecrecionVaginal" asp-for="SecrecionVaginal" class="sindromico" type="radio" value="true" disabled /> Secrecion Vaginal
                                 <br>
-                                <input name="UlceraGenital" class="sindromico" type="radio" value="true" disabled /> Ulcera genital
+                                <input name="UlceraGenital" asp-for="UlceraGenital" class="sindromico" type="radio" value="true" disabled /> Ulcera genital
                                 <br>
-                                <input name="VerrugasGenitales" class="sindromico" type="radio" value="true" disabled /> Verrugas genitales
+                                <input name="VerrugasGenitales" asp-for="VerrugasGenitales" class="sindromico" type="radio" value="true" disabled /> Verrugas genitales
 
                             </div>
 
@@ -372,16 +374,16 @@
                         <td id="Hemogramap" colspan="2">
                             Hemograma:
                             <br>
-                            <input disabled required id="rdHemo1" class="styled segundaParte" type="radio" name="Hemograma" value="No Realizado"> No Realizado
-                            <input disabled id="rdHemo2" class="styled segundaParte" type="radio" name="Hemograma" value="Realizado"> Realizado
+                            <input asp-for="Hemograma" disabled required id="rdHemo1" class="styled segundaParte" type="radio" name="Hemograma" value="No Realizado"> No Realizado
+                            <input asp-for="Hemograma" disabled id="rdHemo2" class="styled segundaParte" type="radio" name="Hemograma" value="Realizado"> Realizado
                             <br>
 
                         </td>
                         <td id="UREAp" colspan="2">
                             UREA:
                             <br>
-                            <input disabled required id="rdUrea1" class="styled segundaParte" type="radio" name="Urea" value="No Realizado"> No Realizado
-                            <input disabled id="rdUrea2" class="styled segundaParte" type="radio" name="Urea" value="Realizado"> Realizado
+                            <input asp-for="Urea" disabled required id="rdUrea1" class="styled segundaParte" type="radio" name="Urea" value="No Realizado"> No Realizado
+                            <input asp-for="Urea" disabled id="rdUrea2" class="styled segundaParte" type="radio" name="Urea" value="Realizado"> Realizado
                             <br>
                         </td>
 

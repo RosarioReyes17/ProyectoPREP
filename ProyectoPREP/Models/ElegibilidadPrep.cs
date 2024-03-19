@@ -59,6 +59,32 @@ public partial class ElegibilidadPrep
 
     public DateTime? FechaReintegro { get; set; }
 
+    public string? Sifilis { get; set; }
+
+    public DateTime? SifilisFecha { get; set; }
+
+    public string? HbsAg { get; set; }
+
+    public DateTime? HbsAgFecha { get; set; }
+
+    public string? HepatitisC { get; set; }
+
+    public DateTime? HepatitisCFecha { get; set; }
+
+    public string? ItsDiagnosticoPresuntivo { get; set; }
+
+    public bool? SecrecionUretral { get; set; }
+
+    public bool? SecrecionVaginal { get; set; }
+
+    public bool? UlceraGenital { get; set; }
+
+    public bool? VerrugasGenitales { get; set; }
+
+    public string? Hemograma { get; set; }
+
+    public string? Urea { get; set; }
+
     public virtual FormularioPrep FormularioPrep { get; set; } = null!;
 
     public virtual ICollection<It> Its { get; set; } = new List<It>();

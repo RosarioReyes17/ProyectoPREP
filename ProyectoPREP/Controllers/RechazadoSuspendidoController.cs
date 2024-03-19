@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProyectoPREP.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Configuration;
 
 namespace ProyectoPREP.Controllers
 {
@@ -47,6 +48,8 @@ namespace ProyectoPREP.Controllers
             elegi.Estatus = 1;
             elegi.FechaReintegro = formulario.FechaReintegro;
             elegi.Usuario = Convert.ToString(idUser);
+            elegi.ResultadoPruebaVih = "Negativo";
+            elegi.ResultadoCreatinina = "61";
 
             //datos.FechaIngresoSai = Convert.ToDateTime(formulario.FechaReintegro);
 

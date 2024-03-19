@@ -8,9 +8,9 @@ public partial class FormularioPrep
     public int Id { get; set; }
 
     public string? TienesRelacionesCon { get; set; }
-    public string ContactoConfianza { get; }
 
     public string? DrogasIlicitas { get; set; }
+    public string ContactoConfianza { get; }
 
     public string? SexoPorBienes { get; set; }
 
