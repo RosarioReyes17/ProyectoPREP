@@ -403,6 +403,44 @@
                             <span asp-validation-for="EntregaCondones" style="color:red;margin-left:20px"></span>
 
                         </td>
+                        <td id="embarazada" style="display:none">
+                            ¿Esta actualmente embarazada?
+                            <br>
+                            <div class="radio radio-info">
+                                <input id="Embarazada1" disabled asp-for="Embarazada" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="Embarazada" class="lactante" type="radio" value="Si">
+                                <label for="Embarazada1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="Embarazada2" disabled asp-for="Embarazada" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="Embarazada" class="lactante" type="radio" value="No">
+                                <label for="Embarazada2">
+                                    No
+                                </label>
+                            </div>
+                            <span asp-validation-for="Embarazada" style="color:red;margin-left:20px"></span>
+
+                        </td>
+                        
+
+                        <td id="lactante" style="display:none">
+                            ¿Es una madre lactante?
+                            <br>
+                            <div class="radio radio-info">
+                                <input id="Lactante1" disabled asp-for="Lactante" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="Lactante" class="lactante" type="radio" value="Si">
+                                <label for="Lactante1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="Lactante2" disabled asp-for="Lactante" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="Lactante" class="lactante" type="radio" value="No">
+                                <label for="Lactante2">
+                                    No
+                                </label>
+                            </div>
+                            <span asp-validation-for="EntregaCondones" style="color:red;margin-left:20px"></span>
+
+                        </td>
 
                        
                     </tr>
@@ -557,6 +595,18 @@
 
 @section scripts{
     <script type="text/javascript">
+
+        window.onload = function (){
+            var sexo = document.getElementById("sexo").value;
+
+            if (sexo == "F") {
+                $(".lactante").removeAttr("disabled");
+                document.getElementById("embarazada").style.display = "";
+                document.getElementById("lactante").style.display = "";
+            }
+
+
+        }
 
         var habilitarInputHBsAg = (e) => {
             var valor = e;
