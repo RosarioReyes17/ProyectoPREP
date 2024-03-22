@@ -931,11 +931,12 @@
 
         var diferenciaFecha = () => {
             var fechaPrueba = new Date(document.getElementById("txtFechaSeguimiento").value);
-            var fechaActual = new Date();
+            var fechaPrueba1 = new Date(document.getElementById("txtFechaSeguimiento").value);
+            //var fechaActual = new Date();
             
             // const minDate = fechaPrueba.toISOString().split("T")[0];
             var minDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() - 6)).toISOString().split("T")[0];
-            var max = new Date(fechaActual.setDate(fechaActual.getDate() - 1)).toISOString().split("T")[0];
+            var max = new Date(fechaPrueba1.setDate(fechaPrueba1.getDate() - 0)).toISOString().split("T")[0];
 
 
             document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
