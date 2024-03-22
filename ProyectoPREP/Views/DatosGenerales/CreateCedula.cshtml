@@ -19,8 +19,9 @@
 						<select id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
 							<option value="/DatosGenerales/CreateCedula">Cédula</option>
 							<option value="/DatosGenerales/CreatePasaporte">Pasaporte</option>
-							<option value="#">NSS</option>
 							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
+							<option value="#">NSS</option>
+							
 
 						</select>
 					</td>
@@ -31,11 +32,11 @@
 					</td>
 					<td colspan="2">
 						<br>
-						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
-						
-						<button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
+						<input type="button" id="btnIdentificar" onclick="validarPasaporte()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
+						<button onclick="window.location.href = '/DatosGenerales/DatosGeneralesPorElegibilidad';" class="btn btn-danger" style="margin-left: 5px;">
 							<i class="fa-solid fa-backward"></i> Volver atrás
 						</button>
+					</td>
 					</td>
 
 					

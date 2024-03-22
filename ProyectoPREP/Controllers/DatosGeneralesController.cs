@@ -473,7 +473,95 @@ namespace ProyectoPREP.Controllers
             return Json(result);
         }
 
-        int CalcularEdad(DateTime fechaNacimiento)
+
+
+		[HttpPost]
+		public ActionResult ValidarPasaporte(string Seleccion, string Prefix)
+		{
+
+			var result = new object { };
+			bool status = false;
+			var msj = "";
+			Padron_Imp InfoPaciente = null;
+			int Resultado = 0;
+			var SolicitudPrep = db.DatosGenerales.Where(x => x.Documento == Prefix).FirstOrDefault();
+			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
+
+
+			if (SolicitudPrep != null)
+			{
+
+				msj = "El Ciudadano posee actualmente una solicitud de PrEP con el ID: " + SolicitudPrep.Id + " " + SolicitudPrep.Nombres +
+					" " + SolicitudPrep.Apellidos + " " + centros.FirstOrDefault().NombreCentro;
+
+				result = new
+				{
+					status,
+					msj
+				};
+				return Json(result);
+
+
+			}
+			else
+			{
+
+				//Validamos el porque vamos a buscar
+
+				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
+
+				if (InfoPaciente != null && InfoPaciente.valido == true)
+				{
+					try
+					{
+						Resultado = ValidarExisteEnFappsSIRENP(Prefix);
+					}
+					catch (Exception ex)
+					{
+						msj = "La Cédula consultada no ha retornado ningún valor";
+						result = new
+						{
+							status,
+							msj
+						};
+						return Json(result);
+
+					}
+				}
+				
+				if (Resultado == 1)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en FAPPS.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+
+				if (Resultado == 2)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en SIRENP con VIH Positivo.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+			}
+
+			status = true;
+			result = new { status, InfoPaciente};
+			return Json(result);
+		}
+
+
+
+		int CalcularEdad(DateTime fechaNacimiento)
         {
             DateTime fechaActual = DateTime.Now;
             if (fechaActual.Month > fechaNacimiento.Month || fechaNacimiento.Month == fechaActual.Month && fechaActual.Day > fechaNacimiento.Day)
