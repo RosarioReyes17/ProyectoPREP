@@ -213,58 +213,6 @@ namespace ProyectoPREP.Controllers
 
         // GET: DatosGeneralesController/Create
 
-
-
-        public ActionResult CreateCedula()
-        {
-            var municipio = new VwMunicipio();
-            List<VwMunicipio> lista;
-
-            ViewBag.Municipio = db.VwMunicipios.ToList();
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult CreateCedula(FormularioPrep formulario)
-        {
-            try
-            {
-                int idUser = Convert.ToInt32(User.GetUserId());
-                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
-                //DateTime fechaNacimiento1 = (DateTime)formulario.DatosGenerales.FechaNacimiento;
-                //var edad = CalcularEdad(fechaNacimiento1);
-
-                formulario.DatosGenerales.Usuario = Convert.ToString(idUser);
-                formulario.DatosGenerales.IdDeptoDepend = IdDeptoDepend;
-                formulario.DatosGenerales.TieneDocumentos = "Si";
-                formulario.DatosGenerales.TipoDocumento = "C";
-                formulario.DatosGenerales.EnRiesgo = "Si";
-
-                db.DatosGenerales.Add(formulario.DatosGenerales);
-
-                formulario.Usuario = Convert.ToString(idUser);
-                formulario.Secuencia = 0;
-                formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
-
-                var elegibilidad = new ElegibilidadPrep();
-                elegibilidad.Estatus = 1;
-                elegibilidad.Usuario = Convert.ToString(idUser);
-                formulario.ElegibilidadPreps.Add(elegibilidad);
-
-                db.FormularioPreps.Add(formulario);
-                db.SaveChanges();
-
-
-                return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);//Revisar aqui
-            }
-        }
-
         public ActionResult CreateSinDocumento()
         {
             var municipio = new VwMunicipio();
@@ -373,6 +321,60 @@ namespace ProyectoPREP.Controllers
             }
         }
 
+
+
+        public ActionResult CreateCedula()
+        {
+            var municipio = new VwMunicipio();
+            List<VwMunicipio> lista;
+
+            ViewBag.Municipio = db.VwMunicipios.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateCedula(FormularioPrep formulario)
+        {
+            try
+            {
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+                //DateTime fechaNacimiento1 = (DateTime)formulario.DatosGenerales.FechaNacimiento;
+                //var edad = CalcularEdad(fechaNacimiento1);
+
+                formulario.DatosGenerales.Usuario = Convert.ToString(idUser);
+                formulario.DatosGenerales.IdDeptoDepend = IdDeptoDepend;
+                formulario.DatosGenerales.TieneDocumentos = "Si";
+                formulario.DatosGenerales.TipoDocumento = "C";
+                formulario.DatosGenerales.EnRiesgo = "Si";
+
+                db.DatosGenerales.Add(formulario.DatosGenerales);
+
+                formulario.Usuario = Convert.ToString(idUser);
+                formulario.Secuencia = 0;
+                formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
+
+                var elegibilidad = new ElegibilidadPrep();
+                elegibilidad.Estatus = 1;
+                elegibilidad.Usuario = Convert.ToString(idUser);
+                formulario.ElegibilidadPreps.Add(elegibilidad);
+
+                db.FormularioPreps.Add(formulario);
+                db.SaveChanges();
+
+
+                return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);//Revisar aqui
+            }
+        }
+
+
+
         [HttpPost]
         public ActionResult BuscarEnPadron(string Seleccion, string Prefix)
         {
@@ -480,6 +482,8 @@ namespace ProyectoPREP.Controllers
             }
             return fechaActual.Year - fechaNacimiento.Year - 1;
         }
+
+
 
         Int32 ValidarExisteEnFappsSIRENP(string DocumentoIdentidad)
         {
