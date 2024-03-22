@@ -24,7 +24,7 @@
 						<select style="width:486.29px" id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required >
 							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
 							<option value="/DatosGenerales/CreateCedula">Cédula</option>
-							<option value="#">Pasaporte</option>
+							<option value="/DatosGenerales/CreatePasaporte">Pasaporte</option>
 							<option value="#">NSS</option>
 						</select>
 					</td>
@@ -59,10 +59,10 @@
 				<tbody>
 					<tr>
 						<td>
-							<div class="form-group col-md-8">
+							<div class="form-group col-8 ">
 								Fecha de Registro PrEP(*):
 								<input onkeydown="return false" asp-for="DatosGenerales.FechaIngresoSai" id="txtFechaRegistroPrep" name="DatosGenerales.FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
-								<span asp-validation-for="DatosGenerales.FechaIngresoSai" style="color:red; margin-left:20px"></span>
+								<span asp-validation-for="DatosGenerales.FechaIngresoSai" style="color:red; margin-left:10px"></span>
 							</div>
 						</td>
 
