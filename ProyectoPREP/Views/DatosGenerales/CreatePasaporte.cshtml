@@ -75,16 +75,13 @@
 						<tr>
 							<td>
 								1. Nombres(*):
-								<input asp-for="DatosGenerales.Nombres" id="txtNombre" placeholder="Introduzca su Nombre" name="DatosGenerales.Nombres" class="form-control">
+								<input asp-for="DatosGenerales.Nombres" id="txtNombre" name="DatosGenerales.Nombres" placeholder="Introduzca su Nombre" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="DatosGenerales.Nombres" style="color:red;margin-left:30px"></span>
-
 							</td>
-
 							<td>
 								2. Apellidos(*):
-								<input asp-for="DatosGenerales.Apellidos" placeholder="Introduzca su Apellido" id="txtApellido" name="DatosGenerales.Apellidos" class="form-control" require>
+								<input asp-for="DatosGenerales.Apellidos" id="txtApellido" name="DatosGenerales.Apellidos" placeholder="Introduzca sus Apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="DatosGenerales.Apellidos" style="color:red;margin-left:30px"></span>
-
 							</td>
 
 							<td>
@@ -539,10 +536,9 @@
 						</tr>
 						<tr style="display:none" id="trContacto">
 							<td>
-								Nombre de contacto:
-								<input asp-for="DatosGenerales.NombreContacto" disabled id="txtNombreContacto" name="DatosGenerales.NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." data-val="true" data-val-required="Este campo obligatorio.">
+								Nombre de Contacto:
+								<input asp-for="DatosGenerales.NombreContacto" id="txtNombreContacto" name="DatosGenerales.NombreContacto" placeholder="Introduzca el Nombre de Contacto" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="DatosGenerales.NombreContacto" style="color:red;margin-left:30px"></span>
-
 							</td>
 
 							<td>
@@ -998,6 +994,26 @@
 		});
 
 
+		$(document).ready(function () {
+			$('#txtNombre, #txtApellido, #txtNombreContacto').on('input', function () {
+				var inputValue = $(this).val();
+				var onlyLetters = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(inputValue);
+
+				if (!onlyLetters) {
+					// Si se introduce algún número, limpiamos el valor del campo
+					$(this).val(inputValue.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, ''));
+				}
+			});
+		});
+
+
+		$(document).ready(function () {
+			$('#txtPeso, #txtTallaPies, #TallaPulgadas').on('input', function () {
+				var inputValue = $(this).val();
+				// Reemplaza todo lo que no es un número con una cadena vacía
+				$(this).val(inputValue.replace(/[^\d]/g, ''));
+			});
+		});
 
 	</script>
 	@{

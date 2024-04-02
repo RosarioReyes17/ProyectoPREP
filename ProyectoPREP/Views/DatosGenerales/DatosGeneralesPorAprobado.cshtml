@@ -91,7 +91,7 @@
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
 
-                    <td width="20%">
+                    <td width="25%">
 
 
                         <a title="Modificar la ficha inicial" class="btn btn-info " href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -106,6 +106,9 @@
 
 
                         <a title="Suspensión Prep" class="btn btn-danger" href="~/RechazadoSuspendido/Suspender/@item.Id"><i class="glyphicon glyphicon-stop"></i></a>
+
+
+                        <a title="Ver elegibilidad" class="btn btn-info " href="~/Elegibilidad/ElegibilidadVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
 
 
                     </td>
