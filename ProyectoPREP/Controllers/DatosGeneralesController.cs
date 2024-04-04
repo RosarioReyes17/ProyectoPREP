@@ -252,6 +252,7 @@ namespace ProyectoPREP.Controllers
 
                 var elegibilidad = new ElegibilidadPrep();
                 elegibilidad.Estatus = 1;
+                elegibilidad.FechaElegibilidad = DateTime.Now;
                 elegibilidad.Usuario = Convert.ToString(idUser);
                 formulario.ElegibilidadPreps.Add(elegibilidad);
 
@@ -304,6 +305,7 @@ namespace ProyectoPREP.Controllers
 
                 var elegibilidad = new ElegibilidadPrep();
                 elegibilidad.Estatus = 1;
+                elegibilidad.FechaElegibilidad = DateTime.Now;
                 elegibilidad.Usuario = Convert.ToString(idUser);
                 formulario.ElegibilidadPreps.Add(elegibilidad);
 
@@ -319,7 +321,7 @@ namespace ProyectoPREP.Controllers
 
                 throw new Exception(ex.Message);//Revisar aqui
             }
-        }
+         }
 
 
 
@@ -356,6 +358,7 @@ namespace ProyectoPREP.Controllers
 
                 var elegibilidad = new ElegibilidadPrep();
                 elegibilidad.Estatus = 1;
+                elegibilidad.FechaElegibilidad = DateTime.Now;
                 elegibilidad.Usuario = Convert.ToString(idUser);
                 formulario.ElegibilidadPreps.Add(elegibilidad);
 

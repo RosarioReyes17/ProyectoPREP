@@ -148,7 +148,6 @@ namespace ProyectoPREP.Controllers
 						elegibilidad.Usuario = Convert.ToString(idUser);
 						elegibilidad.Estatus = 2;
                         elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
-                        elegibilidad.FechaElegibilidad = DateTime.Now;
                         
 						db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
 
@@ -246,7 +245,7 @@ namespace ProyectoPREP.Controllers
                         elegibilidad.Usuario = Convert.ToString(idUser);
                         elegibilidad.Estatus = 2;
                         elegibilidad.FormularioPrepId = elegi.FormularioPrepId;
-                        elegibilidad.FechaElegibilidad= DateTime.Now;
+                        
 
                         db.ElegibilidadPreps.Entry(elegibilidad).State = EntityState.Modified;
                         db.SaveChanges();

@@ -35,7 +35,7 @@ namespace ProyectoPREP.Controllers
 
         [Authorize(Roles = "Administrador,Psicólogo Medicos")]
         [HttpPost]
-        public ActionResult Reintegrar(FormularioPrep formulario, int idDatos, int idFormulario)
+        public ActionResult Reintegrar(FormularioPrep formulario,DateTime FechaReintegro, int idDatos, int idFormulario)
         {
             int idUser = Convert.ToInt32(User.GetUserId());
 
@@ -46,7 +46,7 @@ namespace ProyectoPREP.Controllers
             estado = elegi.Estatus;
 
             elegi.Estatus = 1;
-            elegi.FechaReintegro = formulario.FechaReintegro;
+            elegi.FechaReintegro = FechaReintegro;
             elegi.Usuario = Convert.ToString(idUser);
             elegi.ResultadoPruebaVih = "Negativo";
             elegi.ResultadoCreatinina = "61";
