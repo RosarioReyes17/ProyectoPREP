@@ -289,51 +289,60 @@
 
                     </tr>
                     <tr>
-
+                      
                         <td class="col-md-3">
 
 
                             <div class="form-group radio">
                                 Sifilis(VDRL) Realizada:
-                                <br />
+                                <br/>
                                 <br />
 
                                 <div style="margin-left: 24px;">
-                                    <input id="rdsifilis1" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+                                    <input id="rdsifilis1" asp-for="Sifilis" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
                                     <label for="rdsifilis1">No Reactivo</label>
-
-
+                                    
+                                    
                                 </div>
                                 <div style="margin-left: 24px;">
-                                    <input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+                                    <input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" asp-for="Sifilis" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
                                     <label for="rdsifilis2">Reactivo</label>
                                 </div>
-                                <span style="color:red;margin-left:20px"></span>
+                                <span asp-validation-for="Sifilis" style="color:red;"></span>
 
                                 <br />
-                                <input id="txtfechasifilis1" required name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                                <input id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                                <br />
+                                <br />
+                                <span asp-validation-for="SifilisFecha" style="color:red;"></span>
                             </div>
-
+                            
+                            
                         </td>
                         <td class="col-md-3">
 
 
                             <div class="form-group radio ">
                                 HBsAg Realizada:
-                                <br />
-                                <br />
+                                <br/>
+                                <br/>
 
                                 <div style="margin-left: 24px;">
-                                    <input id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+                                    <input id="rdHBsAg1" asp-for="HbsAg" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
                                     <label for="rdHBsAg1">Negativo</label>
                                 </div>
 
-                                <div style="margin-left: 24px;">
-                                    <input id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
+                                <div style ="margin-left: 24px;">
+                                    <input id="rdHBsAg2" asp-for="HbsAg" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
                                     <label for="rdHBsAg2">Positivo</label>
                                 </div>
+                                <span asp-validation-for="HbsAg" style="color:red;"></span>
+                               <br/>
+
+                                <input id="txtfechaHBsAg1" data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
                                 <br />
-                                <input id="txtfechaHBsAg1" required onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                                <br />
+                                <span asp-validation-for="HbsAgFecha" style="color:red;"></span>
                             </div>
                         </td>
 
@@ -341,19 +350,24 @@
 
                             <div class="form-group radio">
                                 Hepatitis C Realizada:
-                                <br />
-                                <br />
+                                <br/>
+                                <br/>
                                 <div style="margin-left:24px">
-                                    <input id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
+                                    <input id="rdHepatitis1" asp-for="HepatitisC" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
                                     <label for="rdHepatitis1">Negativo</label>
                                 </div>
 
                                 <div style="margin-left:24px">
-                                    <input id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
+                                    <input id="rdHepatitis2" asp-for="HepatitisC" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
                                     <label for="rdHepatitis2">Positivo</label>
                                 </div>
+                                <span asp-validation-for="HepatitisC" style="color:red;"></span>
+
                                 <br />
-                                <input id="txtfechaHepatitis" onkeydown="return false" required name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                                <input id="txtfechaHepatitis" onkeydown="return false" asp-for="HepatitisCFecha" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                                <br />
+                                <br />
+                                <span asp-validation-for="HepatitisCFecha" style="color:red;"></span>
                             </div>
                         </td>
                         <td class="col-md-3">
@@ -365,15 +379,17 @@
 
                                 <div style="margin-left: 24px;">
 
-                                    <input id="ITDSindromico2" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
+                                    <input id="ITDSindromico2" asp-for="ItsDiagnosticoPresuntivo" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
                                     <label for="ITDSindromico2">Si</label>
+                                    
                                 </div>
 
                                 <div style="margin-left: 24px;">
-                                    <input id="ITDSindromico1" onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+                                    <input id="ITDSindromico1" asp-for="ItsDiagnosticoPresuntivo" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
                                     <label for="ITDSindromico1">No</label>
                                 </div>
-
+                                <span asp-validation-for="ItsDiagnosticoPresuntivo" style="color:red;"></span>
+                                
                                 <br>
                                 <input name="SecrecionUretral" class="sindromico" type="checkbox" value="true" disabled /> Secrecion Uretral
                                 <br>
@@ -385,7 +401,7 @@
 
                             </div>
 
-
+                            
 
                         </td>
                     </tr>
@@ -393,17 +409,19 @@
                         <td id="Hemogramap" colspan="2">
                             Hemograma:
                             <br>
-                            <input disabled required id="rdHemo1" class="styled segundaParte" type="radio" name="Hemograma" value="No Realizado"> No Realizado
+                            <input disabled asp-for="Hemograma" data-val="true" data-val-required="Este campo es obligatorio." id="rdHemo1" class="styled segundaParte" type="radio" name="Hemograma" value="No Realizado"> No Realizado
                             <input disabled id="rdHemo2" class="styled segundaParte" type="radio" name="Hemograma" value="Realizado"> Realizado
                             <br>
-
+                            <span asp-validation-for="Hemograma" style="color:red;"></span>
+  
                         </td>
                         <td id="UREAp" colspan="2">
                             UREA:
                             <br>
-                            <input disabled required id="rdUrea1" class="styled segundaParte" type="radio" name="Urea" value="No Realizado"> No Realizado
+                            <input disabled asp-for="Urea" data-val="true" data-val-required="Este campo es obligatorio." id="rdUrea1" class="styled segundaParte" type="radio" name="Urea" value="No Realizado"> No Realizado
                             <input disabled id="rdUrea2" class="styled segundaParte" type="radio" name="Urea" value="Realizado"> Realizado
                             <br>
+                            <span asp-validation-for="Urea" style="color:red;"></span>
                         </td>
 
 
