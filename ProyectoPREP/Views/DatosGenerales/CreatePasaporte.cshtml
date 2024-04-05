@@ -788,6 +788,24 @@
 @section scripts{
 	<script type="text/javascript">
 
+		function ValidarCelular(a, id) {
+
+			var datos = a;
+			let resultado = datos;
+
+			if (resultado.length == 3) {
+				resultado = datos + "-";
+			}
+
+			if (resultado.length == 7) {
+				resultado = datos + "-";
+			}
+
+			if (resultado.length <= 11) {
+				document.getElementById(id).value = resultado;
+			}
+
+		}
 
 		const cerrarModal = () => {
 			$('#myModal').modal('hide');
