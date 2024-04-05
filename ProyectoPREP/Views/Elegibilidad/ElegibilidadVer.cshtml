@@ -60,11 +60,17 @@
                     @item.IdFila
                 </td>
                 <td>@item.FechaElegibilidad</td>
-                <td>@item.FechaHistorico</td>
+                <td>@item.FechaHistorico.ToString("dd-MM-yyyy")</td>
                 <td>@item.ResultadoPruebaVih</td>
-                <td>@item.FechaPruebaVih</td>
-                <td>@item.FechaReintegro</td>
-
+                <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
+                @if (item.FechaReintegro.HasValue)
+                {
+                    <td>@item.FechaReintegro.Value.ToString("dd-MM-yyyy")</td>
+                }
+                else
+                {
+                    <td>No Ha Sido Reintegrado</td>
+                }
 
                 <td>
                     <a class="btnSeguimiento2" href="~/Elegibilidad/ElegibilidadVerPorId/@item.IdFila">Ver Elegibilidad</a> |
