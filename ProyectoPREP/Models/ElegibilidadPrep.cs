@@ -11,7 +11,7 @@ public partial class ElegibilidadPrep
 
     public DateTime? FechaPruebaVih { get; set; }
 
-    public DateTime FechaEntregaVih { get; set; }
+    public DateTime? FechaEntregaVih { get; set; }
 
     public string? ResultadoPruebaVih { get; set; }
 
