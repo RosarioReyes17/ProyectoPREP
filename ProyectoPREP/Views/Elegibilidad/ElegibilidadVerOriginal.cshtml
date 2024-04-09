@@ -1,4 +1,4 @@
-﻿@model List<ElegibilidadPrepHistorico>
+﻿@model List<ElegibilidadPrep>
 
 
 
@@ -38,7 +38,6 @@
                 ID Historico
             </th>
             <th>Fecha Elegibilidad</th>
-            <th>Fecha Historico</th>
             <th>
                 Resultado Prueba VIH
             </th>
@@ -57,9 +56,9 @@
         {
             <tr>
                 <td>
-                    @item.IdFila
+                    @item.Id
                 </td>
-                <td>@item.FechaElegibilidad</td>
+
                 @if (item.FechaElegibilidad.HasValue)
                 {
                     <td>@item.FechaElegibilidad.Value.ToString("dd-MM-yyyy")</td>
@@ -68,17 +67,9 @@
                 {
                     <td>Sin Informacion</td>
                 }
-                <td>@item.FechaHistorico.ToString("dd-MM-yyyy")</td> 
+
                 <td>@item.ResultadoPruebaVih</td>
-               
-                @if (item.FechaPruebaVih.HasValue)
-                {
-                    <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
-                }
-                else
-                {
-                    <td>Sin Informacion</td>
-                }
+                <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
 
                 @if (item.FechaReintegro.HasValue)
                 {
@@ -90,7 +81,7 @@
                 }
 
                 <td>
-                    <a class="btnSeguimiento2" href="~/Elegibilidad/ElegibilidadVerPorId/@item.IdFila">Ver Elegibilidad</a> |
+                    <a class="btnSeguimiento2" href="~/Elegibilidad/ElegibilidadVerPorIdOriginal/@item.Id">Ver Elegibilidad</a> |
                 </td>
 
             </tr>

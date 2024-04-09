@@ -1,0 +1,426 @@
+﻿@model ProyectoPREP.Models.ElegibilidadPrep
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-title">
+    <h3>Requisitos Elegibilidad PrEP</h3>
+</div>
+
+<div divinfo="">
+    <div class="tituloDiv">
+        Información del Donante
+    </div>
+
+    <strong>ID PREP:</strong>
+    <span> @ViewBag.IdDatos</span>
+    <br>
+    <strong>Paciente PREP:</strong>
+    <span id="spPacienteNombre" name="spEsatus"> @ViewBag.Nombre </span>
+    <br>
+</div>
+
+<form asp-controller="Elegibilidad" asp-action="FormularioElegibilidad" onsubmit="registrarElegibilidad" method="post">
+
+
+    <div id="divFormPrEP" class="form-invisible">
+        <div id="divElegibilidadPre2">
+
+            <table class="table" id="tblElegibilidad">
+                <tbody>
+                    <tr>
+                        <td>
+                            ¿Prueba de VIH realizada?
+                            <div class="radio radio-info">
+                                <input id="chkSeronegativo1" disabled data-val="true" data-val-required="Este campo es obligatorio." asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="Si">
+                                <label for="chkSeronegativo1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkSeronegativo2" disabled required asp-for="SeronegativoVih" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="No">
+                                <label for="chkSeronegativo2">
+                                    No
+                                </label>
+
+                            </div>
+                            <span asp-validation-for="SeronegativoVih" style="color:red;margin-left:20px"></span>
+
+                        </td>
+
+                        <td>
+                            <label for="txtFechaRealizacionPrueba">Fecha de realización (Prueba VIH):</label>
+                            <br>
+                            <div class="form-group col-md-8">
+                                <input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date" disabled>
+                                <span asp-validation-for="FechaPruebaVih" style="color:red;"></span>
+                            </div>
+                        </td>
+
+
+
+
+                        <td>
+                            Fecha de resultados(Prueba VIH):
+                            <br>
+                            <div class="form-group col-md-8">
+
+                                <input id="txtFechaEntregaResultados" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." name="FechaEntregaVih" class="form-control pruebaVIH habilitarPCR " type="date" disabled />
+                                <span asp-validation-for="FechaEntregaVih" style="color:red"></span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <strong>Resultado de la Prueba del VIH:</strong>
+                            <br>
+                            <div class="radio radio-info">
+                                <input id="rdVIH1" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo" disabled>
+                                <label for="rdVIH1">
+                                    Negativo
+                                </label>
+                            </div>
+
+                            <div class="radio radio-info">
+                                <input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo" disabled>
+                                <label for="rdVIH2">
+
+                                    Positivo
+                                </label>
+                            </div>
+                            <span asp-validation-for="ResultadoPruebaVih" style="color:red;margin-left:20px"></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            En riesgo significativo de infección por VIH
+                            <div class="radio radio-info">
+                                <input id="chkRiesgoVIH1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="RiesgoInfeccionVih" disabled name="RiesgoInfeccionVih" class="styled pruebaVIH" type="radio" value="Si">
+                                <label for="chkRiesgoVIH1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkRiesgoVIH2" required asp-for="RiesgoInfeccionVih" disabled name="RiesgoInfeccionVih" class="styled pruebaVIH" type="radio" value="No">
+                                <label for="chkRiesgoVIH2">
+                                    No
+                                </label>
+                            </div>
+                            <span asp-validation-for="RiesgoInfeccionVih" style="color:red;margin-left:20px"></span>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td colspan="2">
+
+                            ¿Tiene Signos y síntomas?
+                            <div class="radio radio-info">
+                                <input id="chkNoSignos1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="Si" disabled>
+                                <label for="chkNoSignos1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkNoSignos2" required asp-for="SignosSintomas" name="SignosSintomas" onclick="tieneSintomas(value);" class="styled pruebaVIH" type="radio" value="No" disabled />
+                                <label for="chkNoSignos2">
+                                    No
+                                </label>
+                            </div>
+                            <span asp-validation-for="SignosSintomas" style="color:red;margin-left:20px"></span>
+
+                        </td>
+
+                        <td colspan="2">
+                            <input type="radio" id="check1" asp-for="Linfadenopatias" value="true" name="Linfadenopatias" disabled class="chSignos" /> Linfadenopatias cervicales e inguinales
+                            <br>
+                            <input type="radio" id="check2" value="true" asp-for="FiebreDesconocida" name="FiebreDesconocida" disabled class="chSignos" /> Fiebre de origen desconocido
+                            <br>
+                            <input type="radio" id="check3" value="true" asp-for="DiarreaProlongada" name="DiarreaProlongada" disabled class="chSignos" /> Diarrea prolongada de origen desconocido
+                            <br>
+                            <input type="radio" id="check4" value="true" asp-for="ErupcionesPiel" name="ErupcionesPiel" disabled class="chSignos" /> Erupciones en la piel
+                            <br>
+                            <input type="radio" id="check5" value="true" asp-for="InfeccionesRecurrentes" name="InfeccionesRecurrentes" disabled class="chSignos" /> Infecciones Recurrentes
+                            <br>
+                            <input type="radio" id="check6" value="true" asp-for="HepatoEsplenomegalia" name="HepatoEsplenomegalia" disabled class="chSignos" /> Hepato/esplenomegalia
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            Se requiere CONFIRMAR CON PCR
+                            <div class="radio radio-info">
+                                <input id="chkRequierePCR1" data-val="true" data-val-required="Este campo es obligatorio." name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled pruebaVIH" disabled type="radio" value="Si">
+                                <label for="chkRequierePCR1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkRequierePCR2" required name="CargaViralPcr" asp-for="CargaViralPcr" onclick="habilitarInputPCR(value);" class="styled pruebaVIH" disabled type="radio" value="No">
+                                <label for="chkRequierePCR2">
+                                    No
+                                </label>
+                            </div>
+                            <span asp-validation-for="CargaViralPcr" style="color:red;margin-left:20px"></span>
+                        </td>
+
+                        <td id="tdPCR3">
+
+                            <div class="form-group col-md-8">
+                                Fecha Visita PCR:
+                                <input type="date" onkeydown="return false" class="form-control pruebaPCR" id="txtFechaVisitaPCR" asp-for="FechaVisitaPcr" name="FechaVisitaPcr" disabled>
+                            </div>
+                        </td>
+
+
+                        <td id="tdPCR2">
+
+                            <div class="form-group col-md-8">
+                                Fecha Prueba PCR:
+                                <input type="date" onkeydown="return false" class="form-control pruebaPCR" id="txtFechaPruebaPCR" asp-for="FechaPruebaPcr" name="FechaPruebaPcr" disabled>
+                            </div>
+                        </td>
+                        <td id="tdPCR1">
+                            Resultado Prueba PCR:
+                            <select id="ddlResutaldoPruebaPCR" onchange="detectado()" name="ResultadoCargaViralPcr" asp-for="ResultadoCargaViralPcr" class="form-control pruebaPCR" disabled>
+                                <option value="">--Seleccione--</option>
+                                <option value="Detectado">Detectado</option>
+                                <option value="No Detectado">No Detectado</option>
+                            </select>
+                        </td>
+                    </tr>
+                 
+                </tbody>
+            </table>
+        </div>
+
+        <div id="divPrEPTratamiento">
+
+            <div class="tituloDiv"><strong>Pruebas Diagnósticas Iniciales</strong></div>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-6">
+                                <label style="color:red">
+                                    Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
+                                    <input type="checkbox" id="chkHormonal" onchange="calcularCreatininaCheck()" name="chkHormonal" value="true" disabled>
+
+                                </label>
+                                <br />
+
+                                Resultado de Creatinina(Plasmatica):
+                                <br>
+                                <input id="txtResultadoCreatinina" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="calcularCreatinina(value);" asp-for="CreatininaValor" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
+                                <span asp-validation-for="CreatininaValor" style="color:red;"></span>
+                                <br>
+
+                                Fecha:
+                                <br>
+                                <input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." asp-for="FechaResultadoCreatinina" name="FechaResultadoCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+                                <span asp-validation-for="FechaResultadoCreatinina" style="color:red;"></span>
+                                <br>
+                                Resultado:
+                                <br>
+                                <input id="ResultadoCreatinina" disabled readonly asp-for="ResultadoCreatinina" name="ResultadoCreatinina" class="form-control segundaParte" />
+                            </div>
+                        </td>
+                        <td colspan="2">
+
+
+                            Rango valores de Creatinina
+                            <br>
+                            <ul>
+                                <li> 61-70 ml/min</li>
+                                <li>71-80 ml/min</li>
+                                <li>81-90 ml/min</li>
+                                <li>91-100 ml/min</li>
+                                <li>&gt;100 ml/min</li>
+                            </ul>
+
+                            <br>
+                            <span style="font-size:1em;">
+                                - Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
+                                - Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
+                                - Utilizar la fórmula de mujeres en mujeres biológicas y Trans que <br>tengan más de 6 meses en terapia de reemplazo hormonal.
+
+                            </span>
+                        </td>
+                        <td>
+                            Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
+                            <div class="radio radio-info">
+                                <input id="chkaclaramiento1" required asp-for="AclaramientoCreatinina" data-val="true" data-val-required="Este campo es obligatorio." name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="Si" readonly>
+                                <label for="chkaclaramiento1">
+                                    Si
+                                </label>
+                            </div>
+                            <div class="radio radio-info">
+                                <input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="No" readonly>
+                                <label for="chkaclaramiento2">
+                                    No
+                                </label>
+                            </div>
+                            <span asp-validation-for="AclaramientoCreatinina" style="color:red;margin-left:20px"></span>
+                        </td>
+
+
+
+                    </tr>
+                    <tr>
+
+                        <td class="col-md-3">
+
+
+                            <div class="form-group radio">
+                                Sifilis(VDRL) Realizada:
+                                <br />
+                                <br />
+
+                                <div style="margin-left: 24px;">
+                                    <input asp-for="Sifilis" id="rdsifilis1" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+                                    <label for="rdsifilis1">No Reactivo</label>
+
+
+                                </div>
+                                <div style="margin-left: 24px;">
+                                    <input asp-for="Sifilis" id="rdsifilis2" required onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+                                    <label for="rdsifilis2">Reactivo</label>
+                                </div>
+                                <span style="color:red;margin-left:20px"></span>
+
+                                <br />
+                                <input asp-for="SifilisFecha" id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." disabled name="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                                <span style="color:red;margin-left:20px"></span>
+
+                            </div>
+
+                        </td>
+                        <td class="col-md-3">
+
+
+                            <div class="form-group radio ">
+                                HBsAg Realizada:
+                                <br />
+                                <br />
+
+                                <div style="margin-left: 24px;">
+                                    <input asp-for="HbsAg" id="rdHBsAg1" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+                                    <label for="rdHBsAg1">Negativo</label>
+                                </div>
+
+                                <div style="margin-left: 24px;">
+                                    <input asp-for="HbsAg" id="rdHBsAg2" onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
+                                    <label for="rdHBsAg2">Positivo</label>
+                                </div>
+                                <br />
+                                <input asp-for="HbsAgFecha" id="txtfechaHBsAg1" disabled required onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+                            </div>
+                        </td>
+
+                        <td class="col-md-3">
+
+                            <div class="form-group radio">
+                                Hepatitis C Realizada:
+                                <br />
+                                <br />
+                                <div style="margin-left:24px">
+                                    <input asp-for="HepatitisC" id="rdHepatitis1" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
+                                    <label for="rdHepatitis1">Negativo</label>
+                                </div>
+
+                                <div style="margin-left:24px">
+                                    <input asp-for="HepatitisC" id="rdHepatitis2" onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
+                                    <label for="rdHepatitis2">Positivo</label>
+                                </div>
+                                <br />
+                                <input asp-for="HepatitisCFecha" id="txtfechaHepatitis" disabled onkeydown="return false" required name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+                            </div>
+                        </td>
+                        <td class="col-md-3">
+
+                            <div class="radio form-group">
+                                ITS sindrómico:
+                                <br />
+                                <br />
+
+                                <div style="margin-left: 24px;">
+
+                                    <input asp-for="ItsDiagnosticoPresuntivo" id="ITDSindromico2" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
+                                    <label for="ITDSindromico2">Si</label>
+                                </div>
+
+                                <div style="margin-left: 24px;">
+                                    <input asp-for="ItsDiagnosticoPresuntivo" id="ITDSindromico1" onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+                                    <label for="ITDSindromico1">No</label>
+                                </div>
+
+                                <br>
+                                <input name="SecrecionUretral" asp-for="SecrecionUretral" class="sindromico" type="radio" value="true" disabled /> Secrecion Uretral
+                                <br>
+                                <input name="SecrecionVaginal" asp-for="SecrecionVaginal" class="sindromico" type="radio" value="true" disabled /> Secrecion Vaginal
+                                <br>
+                                <input name="UlceraGenital" asp-for="UlceraGenital" class="sindromico" type="radio" value="true" disabled /> Ulcera genital
+                                <br>
+                                <input name="VerrugasGenitales" asp-for="VerrugasGenitales" class="sindromico" type="radio" value="true" disabled /> Verrugas genitales
+
+                            </div>
+
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="Hemogramap" colspan="2">
+                            Hemograma:
+                            <br>
+                            <input asp-for="Hemograma" disabled required id="rdHemo1" class="styled segundaParte" type="radio" name="Hemograma" value="No Realizado"> No Realizado
+                            <input asp-for="Hemograma" disabled id="rdHemo2" class="styled segundaParte" type="radio" name="Hemograma" value="Realizado"> Realizado
+                            <br>
+
+                        </td>
+                        <td id="UREAp" colspan="2">
+                            UREA:
+                            <br>
+                            <input asp-for="Urea" disabled required id="rdUrea1" class="styled segundaParte" type="radio" name="Urea" value="No Realizado"> No Realizado
+                            <input asp-for="Urea" disabled id="rdUrea2" class="styled segundaParte" type="radio" name="Urea" value="Realizado"> Realizado
+                            <br>
+                        </td>
+
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+
+</form>
+
+
+
+
+@* <a id="btnRetonar" onclick="history.back();"> Volver al Listado de Pacientes Registrados en PrEP</a> *@
+
+<button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
+    <i class="fa-solid fa-backward"></i> Volver atrás
+</button>
+
+
+<br>
+<br>
+
+<br>
+
+
+
+
+
+
+
+
+

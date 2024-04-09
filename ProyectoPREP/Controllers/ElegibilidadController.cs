@@ -29,7 +29,10 @@ namespace ProyectoPREP.Controllers
             var elegiHistori = db.ElegibilidadPrepHistoricos.Where(d => d.FormularioPrepId == formu.Id).ToList();
             var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
 
-
+            if (elegiHistori == null || elegiHistori.Count == 0)
+            {
+                return RedirectToAction("ElegibilidadVerOriginal", "Elegibilidad",new {id=id});
+            }
 
             ViewBag.Nombre = datos.Nombres;
             ViewBag.Apellido = datos.Apellidos;
@@ -40,6 +43,23 @@ namespace ProyectoPREP.Controllers
             return View(elegiHistori);
         }
 
+        public ActionResult ElegibilidadVerOriginal(int id)
+        {
+            var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == id);
+            var formu = db.FormularioPreps.FirstOrDefault(d => d.DatosGeneralesId == id);
+            var elegi = db.ElegibilidadPreps.Where(d => d.FormularioPrepId == formu.Id).ToList();
+            var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+
+
+            ViewBag.Nombre = datos.Nombres;
+            ViewBag.Apellido = datos.Apellidos;
+
+            ViewBag.Sexo = datos.Sexo;
+            ViewBag.nacionalidad = nacionalidad.Nacionalidad;
+            ViewBag.IdDatos = datos.Id;
+            return View(elegi);
+        }
 
 
         [HttpGet]
@@ -62,6 +82,26 @@ namespace ProyectoPREP.Controllers
             ViewBag.nacionalidad = nacionalidad.Nacionalidad;
 
             return View(elegiHistoco);
+        }
+
+        public ActionResult ElegibilidadVerPorIdOriginal(int id)
+        {
+            var elegi = db.ElegibilidadPreps.FirstOrDefault(d => d.Id == id);
+            var formu = db.FormularioPreps.FirstOrDefault(d => d.Id == elegi.FormularioPrepId);
+            var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == formu.DatosGeneralesId);
+            var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+
+            ViewBag.Nombre = datos.Nombres;
+            ViewBag.Apellido = datos.Apellidos;
+            ViewBag.IdDatos = datos.Id;
+
+
+
+            ViewBag.Sexo = datos.Sexo;
+            ViewBag.nacionalidad = nacionalidad.Nacionalidad;
+
+            return View(elegi);
         }
 
         public JsonResult VIHPositivo(int id, DateTime FechaPruebaVih,DateTime FechaEntregaVih)

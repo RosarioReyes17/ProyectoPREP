@@ -68,8 +68,22 @@
                 <td>
                     @item.Id
                 </td>
-                <td>@item.FechaRegistroSeguimiento.Value.ToString("dd-MM-yyyy")</td>
-                <td>@item.FechaProximoSeguimiento.Value.ToString("dd-MM-yyyy")</td>
+                @if (item.FechaRegistroSeguimiento.HasValue)
+                {
+                    <td>@item.FechaRegistroSeguimiento.Value.ToString("dd-MM-yyyy")</td>
+                }
+                else
+                {
+                    <td>Sin Informacion</td>
+                }
+                @if (item.FechaProximoSeguimiento.HasValue)
+                {
+                    <td>@item.FechaProximoSeguimiento.Value.ToString("dd-MM-yyyy")</td>
+                }
+                else
+                {
+                    <td>Sin Realizar</td>
+                }
                 <td>@item.ResultadoPruebaVih</td>
                 @if (item.FechaPruebaVih.HasValue)
                 {
