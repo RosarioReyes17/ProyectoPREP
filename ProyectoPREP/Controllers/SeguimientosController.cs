@@ -94,8 +94,15 @@ namespace ProyectoPREP.Controllers
         }
 
         [HttpPost]
-        public ActionResult SeguimientoPrep(int IdDatos, Seguimiento seguimiento) 
+        public ActionResult SeguimientoPrep(int IdDatos,bool PrepArvTdf3tc,bool PrepArvTdfFtc,bool PrepArvTafFtc, Seguimiento seguimiento) 
         {
+
+            if (PrepArvTdf3tc == false && PrepArvTdfFtc == false && PrepArvTafFtc == false)
+            {
+                TempData["ARV"] = "Seleccione una de las ARV Preescrita";
+                return View();
+            }
+
             int idUser = Convert.ToInt32(User.GetUserId());
 
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == IdDatos);
@@ -194,8 +201,13 @@ namespace ProyectoPREP.Controllers
 
 
         [HttpPost]
-        public ActionResult SeguimientoEditar(int IdDatos, Seguimiento seguimiento)
+        public ActionResult SeguimientoEditar(int IdDatos, bool PrepArvTdf3tc, bool PrepArvTdfFtc, bool PrepArvTafFtc, Seguimiento seguimiento)
         {
+            if (PrepArvTdf3tc == false && PrepArvTdfFtc == false && PrepArvTafFtc == false)
+            {
+                TempData["ARV"] = "Seleccione una de las ARV Preescrita";
+                return View();
+            }
             int idUser = Convert.ToInt32(User.GetUserId());
 
             var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == IdDatos);

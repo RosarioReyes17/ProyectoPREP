@@ -167,7 +167,7 @@ namespace ProyectoPREP.Controllers
 
 		// POST: ElegibilidadController/Create
 		[HttpPost]
-		public ActionResult FormularioElegibilidad(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+		public ActionResult FormularioElegibilidad(int IdDatos, ElegibilidadPrep elegibilidad )
 		{
 			try
 			{
@@ -264,7 +264,7 @@ namespace ProyectoPREP.Controllers
 
         // POST: ElegibilidadController/Create
         [HttpPost]
-        public ActionResult FormularioElegibilidadReintegrado(int IdDatos, ElegibilidadPrep elegibilidad, Seguimiento seguimiento)
+        public ActionResult FormularioElegibilidadReintegrado(int IdDatos, ElegibilidadPrep elegibilidad)
         {
             try
             {

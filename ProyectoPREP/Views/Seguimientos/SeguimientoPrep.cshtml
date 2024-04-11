@@ -351,13 +351,13 @@
                             ¿Se le ha brindado asesoramiento sobre la adherencia al medicamento?
                             <br>
                             <div class="radio radio-info">
-                                <input id="AsesoriaMedicamento1" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoAdherencia" class="styled" type="radio" value="Si">
+                                <input id="AsesoriaMedicamento1" asp-for="AsesoramientoAdherencia" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoAdherencia" class="styled" type="radio" value="Si">
                                 <label for="AsesoriaMedicamento1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="AsesoriaMedicamento2" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoAdherencia" class="styled" type="radio" value="No">
+                                <input id="AsesoriaMedicamento2" asp-for="AsesoramientoAdherencia" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoAdherencia" class="styled" type="radio" value="No">
                                 <label for="AsesoriaMedicamento2">
                                     No
                                 </label>
@@ -369,13 +369,13 @@
                             ¿Se le ha brindado asesoramiento sobre la reducción de riesgos?
                             <br>
                             <div class="radio radio-info">
-                                <input id="AsesoriaRiegos1" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoRiesgos" class="styled" type="radio" value="Si">
+                                <input id="AsesoriaRiegos1" asp-for="AsesoramientoRiesgos" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoRiesgos" class="styled" type="radio" value="Si">
                                 <label for="AsesoriaRiegos1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="AsesoriaRiegos2" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoRiesgos" class="styled" type="radio" value="No">
+                                <input id="AsesoriaRiegos2" asp-for="AsesoramientoRiesgos" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="AsesoramientoRiesgos" class="styled" type="radio" value="No">
                                 <label for="AsesoriaRiegos2">
                                     No
                                 </label>
@@ -389,13 +389,13 @@
                             ¿Se han entregado condones?
                             <br>
                             <div class="radio radio-info">
-                                <input id="Condones1" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="EntregaCondones" class="styled" type="radio" value="Si">
+                                <input id="Condones1" asp-for="EntregaCondones" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="EntregaCondones" class="styled" type="radio" value="Si">
                                 <label for="Condones1">
                                     Si
                                 </label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="Condones2" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="EntregaCondones" class="styled" type="radio" value="No">
+                                <input id="Condones2"  asp-for="EntregaCondones"  style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." name="EntregaCondones" class="styled" type="radio" value="No">
                                 <label for="Condones2">
                                     No
                                 </label>
@@ -458,7 +458,8 @@
                             <br>
                             <input type="checkbox" onclick="ARV(this.id);" id="td3" name="PrepArvTafFtc" value="true">
                             TAF/FTC
-
+                            <br/>
+                            <span style="color:red">@TempData["ARV"]</span>
 
                         </td>
                         <td colspan="2">

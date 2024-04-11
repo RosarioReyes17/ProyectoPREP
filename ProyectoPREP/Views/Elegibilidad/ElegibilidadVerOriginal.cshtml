@@ -69,7 +69,15 @@
                 }
 
                 <td>@item.ResultadoPruebaVih</td>
-                <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
+
+                @if (item.FechaPruebaVih.HasValue)
+                {
+                    <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
+                }
+                else
+                {
+                    <td>No Ha Sido Reintegrado</td>
+                }
 
                 @if (item.FechaReintegro.HasValue)
                 {

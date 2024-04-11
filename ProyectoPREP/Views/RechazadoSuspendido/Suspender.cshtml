@@ -45,20 +45,20 @@
                 <td colspan="2">
                     <strong>  Motivo de la Interrupción:</strong>
                     <br>
-                        <input id="motivo1" onchange="motivosOtro(this.id);" name="MotivosInterrupcionPrep" class="styled" type="radio" value="Ya no esta expuesto a riesgo significativo" autocomplete="error"> Ya no esta expuesto a riesgo significativo<br>
-                        <input id="motivo2" onchange="motivosOtro(this.id);" name="MotivosInterrupcionPrep" class="styled" type="radio" value="Efectos secundarios" autocomplete="error"> Efectos secundarios <br>
-                        <input id="motivo3" onchange="motivosOtro(this.id);" name="MotivosInterrupcionPrep" class="styled" type="radio" value="Desición del paciente" autocomplete="error"> Decisión del paciente <br>
+                        <input id="motivo1" onchange="motivosOtro(this.id);" required name="MotivosInterrupcionPrep" class="styled" type="radio" value="Ya no esta expuesto a riesgo significativo" autocomplete="error"> Ya no esta expuesto a riesgo significativo<br>
+                        <input id="motivo2" onchange="motivosOtro(this.id);" required name="MotivosInterrupcionPrep" class="styled" type="radio" value="Efectos secundarios" autocomplete="error"> Efectos secundarios <br>
+                        <input id="motivo3" onchange="motivosOtro(this.id);" required name="MotivosInterrupcionPrep" class="styled" type="radio" value="Desición del paciente" autocomplete="error"> Decisión del paciente <br>
                         <input id="otro" onchange="motivosOtro(this.id);" class="styled" type="radio" autocomplete="error"> Otros: <br>
-                        <input id="otroText"  disabled asp-for="MotivosInterrupcionPrep" name="MotivosInterrupcionPrep" type="text" placeholder="Especificar" class="form-control" autocomplete="error">
+                        <input id="otroText" disabled asp-for="MotivosInterrupcionPrep" required name="MotivosInterrupcionPrep" type="text" placeholder="Especificar" class="form-control" autocomplete="error">
                 </td>
             </tr>
             <tr>
                 <td colspan="4">
                     <strong>Estado del VIH al momento de la Interrupción:</strong>
                     <br>
-                        <input id="chkEstadoVIH1" asp-for="EstadoVihAlInterrumpir" name="EstadoVihAlInterrumpir" class="styled" type="radio" value="Negativo" autocomplete="error"> Negativo <br>
-                        <input id="chkEstadoVIH2" asp-for="EstadoVihAlInterrumpir" name="EstadoVihAlInterrumpir" class="styled" type="radio" value="Positivo" autocomplete="error"> Positivo <br>
-                        <input id="chkEstadoVIH3" asp-for="EstadoVihAlInterrumpir" name="EstadoVihAlInterrumpir" class="styled" type="radio" value="Desconocido" autocomplete="error"> Desconocido
+                        <input id="chkEstadoVIH1" asp-for="EstadoVihAlInterrumpir" required name="EstadoVihAlInterrumpir" class="styled" type="radio" value="Negativo" autocomplete="error"> Negativo <br>
+                        <input id="chkEstadoVIH2" asp-for="EstadoVihAlInterrumpir" required name="EstadoVihAlInterrumpir" class="styled" type="radio" value="Positivo" autocomplete="error"> Positivo <br>
+                        <input id="chkEstadoVIH3" asp-for="EstadoVihAlInterrumpir" required name="EstadoVihAlInterrumpir" class="styled" type="radio" value="Desconocido" autocomplete="error"> Desconocido
                 </td>
             </tr>
             <tr>
@@ -90,12 +90,15 @@
 
             if (otro == true && id == "otro") {
                 document.getElementById("otroText").disabled = false;
-
+                document.getElementById("motivo1").checked = false;
+                document.getElementById("motivo2").checked = false;
+                document.getElementById("motivo3").checked = false;
 
             }
             else {
 
                 document.getElementById("otroText").disabled = true;
+                document.getElementById("otro").checked = false;
             }
         }
 

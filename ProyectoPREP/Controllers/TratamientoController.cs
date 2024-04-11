@@ -38,12 +38,19 @@ namespace ProyectoPREP.Controllers
 
             try
             {
+                if (PrepArvTafFtc == false && PrepArvTdfFtc == false && PrepArvTdf3tc == false)
+                {
+                    TempData["ARV"] = "Debe de seleccionar una ARV Prescrita.";
+                    return View();
+                }
+
                 int idUser = Convert.ToInt32(User.GetUserId());
 
                 var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == idDatos);
                 var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x => x.FormularioPrepId == formulario.Id);
 
                 tratamiento.ElegibilidadPrepId = elegibilidad.Id;
+
 
 
                 elegibilidad.Estatus = 4;
