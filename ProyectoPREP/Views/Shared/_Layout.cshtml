@@ -28,11 +28,11 @@
     <style>
         .navbar {
             background-color: #005476;
-            border-radius:0px;
+            border-radius: 0px;
         }
 
         .nav-link {
-            color: white !important; 
+            color: white !important;
         }
     </style>
 </head>
@@ -45,16 +45,16 @@
                     <img src="~/content/img/vectores/sns-icono.svg" alt="Logo" width="40" height="40">
                 </a>
 
-               
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         @*  <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li> *@
 
                         @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
@@ -84,14 +84,14 @@
                                     @if (User.IsInRole("Administrador"))
                                     {
                                         <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientesAdmin">RECIBIR PACIENTES</a>
-                                        
+
                                     }
 
                                 </div>
                             </li>
                         }
 
-                
+
                         @if (User.IsInRole("Administrador"))
                         {
                             <li class="nav-item dropdown">
@@ -124,7 +124,7 @@
 
 
                         }
-                       
+
 
                     </ul>
                 </div>
@@ -150,7 +150,7 @@
                 <script>
 
                     document.querySelector('.dropdown-toggle').addEventListener('click', function () {
-   
+
                         document.querySelector('.dropdown-menu').classList.toggle('show');
                     });
 
@@ -180,7 +180,7 @@
     <footer class="border-top footer text-muted fu uu">
 
         <style>
-            .logo{
+            .logo {
                 height: 45px;
                 width: 45px;
                 border-radius: 25px;
@@ -192,18 +192,19 @@
                 align-items: center;
                 margin-left: 10px;
             }
-            .datos{
-                color:white;
-                font-size:12px;
-                align-items:flex-end;
 
+            .datos {
+                color: white;
+                font-size: 12px;
+                align-items: flex-end;
             }
+
             .fu {
                 background-color: #005476;
             }
 
             .uu {
-                color: white !important; 
+                color: white !important;
             }
 
             footer {
@@ -211,9 +212,9 @@
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                padding: 10px; 
-                text-align: center; 
-                box-sizing: border-box; 
+                padding: 10px;
+                text-align: center;
+                box-sizing: border-box;
             }
 
             .btn-success {
@@ -223,7 +224,7 @@
             }
 
             .nav-item.dropdown > a::after {
-                content: none; 
+                content: none;
             }
 
             .nav-item:hover {
@@ -245,21 +246,9 @@
         </div>
 
     </footer>
-     
-    <script>
-        $(document).ready(function () {
-            $('.nav-item.dropdown').hover(
-                function () {
-                    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(200);
-                },
-                function () {
-                    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
-                }
-            );
-        });
-    </script>
 
-    <script type="text/javascript">
+    <script>
+
         $(document).ready(function () {
             // Configurar DataTables
             var table = $('#miTabla').DataTable({
@@ -280,14 +269,24 @@
                     "search": "Buscar:",
                     "zeroRecords": "Sin resultados encontrados",
                 },
+
+
+
                 drawCallback: function () {
                     // Mostrar la tabla después de que se haya inicializado DataTable
                     $('#tablaContainer').css('display', 'block');
 
-                    // Ocultar todas las filas excepto la primera
+                    // Mostrar solo las primeras 10 filas
                     $('#miTabla tbody tr').hide();
-                    //$('#miTabla tbody tr').not(':first').hide();
+
                 },
+
+
+            });
+
+
+            $('#tablaContainer').css({
+                'margin-block-end': '50px',
             });
 
             var delayTimer;
@@ -307,46 +306,48 @@
                 // Configurar un nuevo temporizador
                 delayTimer = setTimeout(function () {
                     // Filtrar la tabla después del retraso
-                    table.search(searchTerm).draw();
+                    var filteredRows = table.search(searchTerm).rows({ search: 'applied' }).nodes();
 
-                    // Mostrar todas las filas después de la búsqueda
-                    $('#miTabla tbody tr').show();
+                    // Mostrar solo las primeras 10 filas después de la búsqueda
+                    $(filteredRows).slice(0, 10).show();
 
-                    // Ocultar todas las filas excepto la primera después de la búsqueda
-                    $('#miTabla tbody tr').not(':first').hide();
+                    // Ocultar las filas restantes
+                    $(filteredRows).slice(10).hide();
                 }, 200); // Reducido a 100 ms
             });
         });
 
+
+
         function nav(value) {
             if (value != "") { location.href = value }
         }
-        // function nav(value,id) {
-        //     if (value != "") { location.href = value+"/"+id }
-        // }
+                // function nav(value,id) {
+                //     if (value != "") { location.href = value+"/"+id }
+                // }
     </script>
 
-@*     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     @* <script>
-        $(document).ready(function () {
-            // Configura DataTables sin mostrar la tabla
-            var table = $('#miTabla').DataTable({
-                columnDefs: [{
-                    targets: -1,
-                    className: 'right'
-                }],
-                "paging": true,
-                "pageLength": 10
-            });
+    $(document).ready(function () {
+    // Configura DataTables sin mostrar la tabla
+    var table = $('#miTabla').DataTable({
+    columnDefs: [{
+    targets: -1,
+    className: 'right'
+    }],
+    "paging": true,
+    "pageLength": 10
+    });
 
-            // Después de que DataTables se haya configurado, muestra la tabla
-            $('#tablaContainer').css('display', 'block');
+    // Después de que DataTables se haya configurado, muestra la tabla
+    $('#tablaContainer').css('display', 'block');
 
-            // Ahora, puedes ajustar la tabla según tus necesidades
-            // Por ejemplo, puedes agregar búsqueda o paginación personalizada aquí
-        });
+    // Ahora, puedes ajustar la tabla según tus necesidades
+    // Por ejemplo, puedes agregar búsqueda o paginación personalizada aquí
+    });
     </script> *@
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -358,7 +359,7 @@
 
 
     @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> 
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> *@
