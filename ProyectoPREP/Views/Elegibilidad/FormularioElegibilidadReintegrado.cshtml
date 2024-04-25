@@ -155,6 +155,8 @@
                             <br>
                             <input type="checkbox" id="check6" value="true" name="HepatoEsplenomegalia" disabled class="chSignos" /> Hepato/esplenomegalia
                             <br>
+                            <span style="color:red">@TempData["SignosSintomas"]</span>
+
                         </td>
                     </tr>
                     <tr>
@@ -398,6 +400,8 @@
                                 <input name="UlceraGenital" class="sindromico" type="checkbox" value="true" disabled /> Ulcera genital
                                 <br>
                                 <input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" disabled /> Verrugas genitales
+                                <br />
+                                <span style="color:red">@TempData["Sindromico"]</span>
 
                             </div>
 
@@ -439,8 +443,8 @@
     </div>
 
     <script>
-
-
+      
+        
 
         var genero = document.getElementById("genero").value;
         if (genero == "3") {
@@ -956,6 +960,8 @@
                 $(".segundaParte").attr("disabled", false);
             }
         }
+
+      
 
         var diferenciaFecha = () => {
             var fechaPrueba = new Date(document.getElementById("txtFechaRealizacionPrueba").value);

@@ -167,10 +167,12 @@ namespace ProyectoPREP.Controllers
 
 		// POST: ElegibilidadController/Create
 		[HttpPost]
-		public ActionResult FormularioElegibilidad(int IdDatos, ElegibilidadPrep elegibilidad )
+		public ActionResult FormularioElegibilidad(int IdDatos,ElegibilidadPrep elegibilidad )
 		{
 			try
 			{
+
+
                 int idUser = Convert.ToInt32(User.GetUserId());
 
                 var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
@@ -268,6 +270,9 @@ namespace ProyectoPREP.Controllers
         {
             try
             {
+
+              
+
                 int idUser = Convert.ToInt32(User.GetUserId());
 
                 var formulario = db.FormularioPreps.Where(X => X.DatosGeneralesId == IdDatos).FirstOrDefault();
