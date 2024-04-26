@@ -6,7 +6,7 @@
 
 
 
-<form id="formulario" action="CreateCedula" method="post">
+<form id="formulario" action="CreateNSS" method="post">
 	<input name="DatosGenerales.Edad" asp-for="DatosGenerales.Edad" type="hidden" id="edad" />
 	<div id="divValidarUsuario" class="form-visible">
 		<h3>Identificarse en PrEP</h3>
@@ -17,21 +17,23 @@
 					<td>
 						<strong>Tipo de Identificación(*):</strong>
 						<select id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
+							<option value="/DatosGenerales/CreateNSS">NSS</option>
 							<option value="/DatosGenerales/CreateCedula">Cédula</option>
 							<option value="/DatosGenerales/CreatePasaporte">Pasaporte</option>
-							<option value="/DatosGenerales/CreateNSS">NSS</option>
 							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
+							
+
 
 						</select>
 					</td>
 					<td>
 						<strong>Identificación:</strong>
-						<input type="text" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" id="Identificacion" minlength="13" maxlength="13" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required>
+						<input type="text" oninput="this.value" id="Identificacion" class="form-control ui-autocomplete-input" required>
 
 					</td>
 					<td colspan="2">
 						<br>
-						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
+						<input type="button" id="btnIdentificar" onclick="validarNSS()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
 						<button onclick="window.location.href = '/DatosGenerales/DatosGeneralesPorElegibilidad';" class="btn btn-danger" style="margin-left: 5px;">
 							<i class="fa-solid fa-backward"></i> Volver atrás
 						</button>
@@ -63,7 +65,8 @@
 							<td>
 								<div class="form-group col-8 ">
 									Fecha de Registro PrEP(*):
-									<input onkeydown="return false" asp-for="DatosGenerales.FechaIngresoSai" id="txtFechaRegistroPrep" name="DatosGenerales.FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+									<input onkeydown="return false" asp-for="DatosGenerales.FechaIngresoSai" id="txtFechaRegistroPrep" name="DatosGenerales.FechaIngresoSai" class="form-control" type="date"
+										   -val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
 									<span asp-validation-for="DatosGenerales.FechaIngresoSai" style="color:red; margin-left:10px"></span>
 								</div>
 							</td>
@@ -73,28 +76,22 @@
 						<tr>
 							<td>
 								1. Nombres(*):
-								<input asp-for="DatosGenerales.Nombres" id="txtNombre" placeholder="Introduzca su Nombre" name="DatosGenerales.Nombres" class="form-control">
+								<input asp-for="DatosGenerales.Nombres" id="txtNombre" name="DatosGenerales.Nombres" placeholder="Introduzca su Nombre" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="DatosGenerales.Nombres" style="color:red;margin-left:30px"></span>
-
 							</td>
-
 							<td>
 								2. Apellidos(*):
-								<input asp-for="DatosGenerales.Apellidos" placeholder="Introduzca su Apellido" id="txtApellido" name="DatosGenerales.Apellidos" class="form-control" require>
+								<input asp-for="DatosGenerales.Apellidos" id="txtApellido" name="DatosGenerales.Apellidos" placeholder="Introduzca sus Apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="DatosGenerales.Apellidos" style="color:red;margin-left:30px"></span>
-
 							</td>
 
 							<td>
-								3. ¿Tiene cédula?:
-								<input class="form-control" asp-for="DatosGenerales.TieneDocumentos" onchange="habilitarInput();" id="ddlDocumentoOpcion" name="DatosGenerales.TieneDocumentos" required />
+								3. ¿Tiene NSS?:
+								<input class="form-control" asp-for="DatosGenerales.TieneDocumentos" onchange="habilitarInput();" id="ddlDocumentoOpcion" name="DatosGenerales.TieneDocumentos" value="Si" readonly required />
 								<span asp-validation-for="DatosGenerales.TieneDocumentos" style="color:red;margin-left:30px"></span>
-
-
-
 							</td>
 							<td>
-								Número de cédula:
+								NSS:
 								<input asp-for="DatosGenerales.Documento" id="txtDocumento" readonly name="DatosGenerales.Documento" class="form-control" required>
 								<span asp-validation-for="DatosGenerales.Documento" style="color:red;margin-left:30px"></span>
 
@@ -540,10 +537,9 @@
 						</tr>
 						<tr style="display:none" id="trContacto">
 							<td>
-								Nombre de contacto:
-								<input asp-for="DatosGenerales.NombreContacto" disabled id="txtNombreContacto" name="DatosGenerales.NombreContacto" class="form-control" type="text" placeholder="Introduzca Nombre de Contacto." data-val="true" data-val-required="Este campo obligatorio.">
+								Nombre de Contacto:
+								<input asp-for="DatosGenerales.NombreContacto" id="txtNombreContacto" name="DatosGenerales.NombreContacto" placeholder="Introduzca el Nombre de Contacto" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="DatosGenerales.NombreContacto" style="color:red;margin-left:30px"></span>
-
 							</td>
 
 							<td>
@@ -812,33 +808,11 @@
 
 		}
 
-		function ValidarCedulaPasaporte(a) {
-			if (true) {
-
-				if (true) {
-					var datos = a;
-					let resultado = datos;
-
-					if (resultado.length == 3) {
-						resultado = datos + "-";
-					}
-
-					if (resultado.length == 11) {
-						resultado = datos + "-";
-					}
-
-					if (resultado.length <= 13) {
-						document.getElementById("Identificacion").value = resultado;
-					}
-				}
-			}
-		}
-
 		const cerrarModal = () => {
 			$('#myModal').modal('hide');
 		}
 
-		const buscarEnPadron = () => {
+		const validarNSS = () => {
 			//const Prefix = "402-1126691-7";
 			var Identificacion = document.getElementById("Identificacion").value;
 			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
@@ -857,7 +831,7 @@
 			if (Identificacion == "") {
 
 				$("#cuerpoModal").empty();
-				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar la cédula a validar.";
+				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar el NSS  a validar.";
 				$('#myModal').modal('show');
 
 				return;
@@ -865,7 +839,7 @@
 
 			document.getElementById("spinner").style.display = "block";
 
-			$.post("@Url.Action("BuscarEnPadron","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
+			$.post("@Url.Action("ValidarNSS","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
 
 				document.getElementById("spinner").style.display = "none";
 
@@ -883,20 +857,13 @@
 
 
 					var informacion = modelos.infoPaciente;
-					if (informacion.sexo == "M") {
-						document.getElementById("ddlSexo").value = ("M");
 
-					} else {
-						document.getElementById("ddlSexo").value = ("F");
 
-					}
 
-					document.getElementById("txtNombre").value = (informacion.nombres);
-					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
 					document.getElementById("txtDocumento").value = (Identificacion);
 					document.getElementById("edad").value = modelos.edad;
 
-					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento.toString();
+
 					document.getElementById("ddlDocumentoOpcion").value = "Si";
 					$("#ddlDocumentoOpcion").attr("readonly", true);
 					document.getElementById("divFormPrEP").style.border = "2px solid #005476"
@@ -1046,11 +1013,32 @@
 		});
 
 
+		$(document).ready(function () {
+			$('#txtNombre, #txtApellido, #txtNombreContacto').on('input', function () {
+				var inputValue = $(this).val();
+				var onlyLetters = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(inputValue);
+
+				if (!onlyLetters) {
+					// Si se introduce algún número, limpiamos el valor del campo
+					$(this).val(inputValue.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, ''));
+				}
+			});
+		});
+
+
+		$(document).ready(function () {
+			$('#txtPeso, #txtTallaPies, #TallaPulgadas').on('input', function () {
+				var inputValue = $(this).val();
+				// Reemplaza todo lo que no es un número con una cadena vacía
+				$(this).val(inputValue.replace(/[^\d]/g, ''));
+			});
+		});
 
 	</script>
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
 }
+
 
 

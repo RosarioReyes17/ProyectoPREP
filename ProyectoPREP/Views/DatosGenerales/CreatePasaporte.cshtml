@@ -20,7 +20,7 @@
 							<option value="/DatosGenerales/CreatePasaporte">Pasaporte</option>
 							<option value="/DatosGenerales/CreateCedula">Cédula</option>
 							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
-							<option value="#">NSS</option>
+							<option value="/DatosGenerales/CreateNSS">NSS</option>
 							
 
 						</select>
@@ -830,7 +830,7 @@
 			if (Identificacion == "") {
 
 				$("#cuerpoModal").empty();
-				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar la cédula a validar.";
+				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar el pasaporte  a validar.";
 				$('#myModal').modal('show');
 
 				return;

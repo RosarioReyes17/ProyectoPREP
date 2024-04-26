@@ -266,7 +266,7 @@ namespace ProyectoPREP.Controllers
             catch (Exception ex)
             {
 
-                throw new Exception(ex.Message);//Revisar aqui
+                throw new Exception(ex.Message);
             }
         }
 
@@ -319,10 +319,63 @@ namespace ProyectoPREP.Controllers
             catch (Exception ex)
             {
 
-                throw new Exception(ex.Message);//Revisar aqui
+                throw new Exception(ex.Message);
             }
          }
 
+
+        public ActionResult CreateNSS()
+        {
+            var municipio = new VwMunicipio();
+            List<VwMunicipio> lista;
+
+            ViewBag.Municipio = db.VwMunicipios.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateNSS(FormularioPrep formulario)
+        {
+            try
+            {
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+                DateTime fechaNacimiento1 = (DateTime)formulario.DatosGenerales.FechaNacimiento;
+                var edad = CalcularEdad(fechaNacimiento1);
+
+                formulario.DatosGenerales.Usuario = Convert.ToString(idUser);
+                formulario.DatosGenerales.IdDeptoDepend = IdDeptoDepend;
+                formulario.DatosGenerales.TieneDocumentos = "Si";
+                formulario.DatosGenerales.TipoDocumento = "NSS";
+                formulario.DatosGenerales.EnRiesgo = "Si";
+                formulario.DatosGenerales.Edad = edad;
+
+
+                db.DatosGenerales.Add(formulario.DatosGenerales);
+
+                formulario.Usuario = Convert.ToString(idUser);
+                formulario.Secuencia = 0;
+                formulario.DatosGeneralesId = formulario.DatosGenerales.Id;
+
+                var elegibilidad = new ElegibilidadPrep();
+                elegibilidad.Estatus = 1;
+                elegibilidad.FechaElegibilidad = DateTime.Now;
+                elegibilidad.Usuario = Convert.ToString(idUser);
+                formulario.ElegibilidadPreps.Add(elegibilidad);
+
+                db.FormularioPreps.Add(formulario);
+                db.SaveChanges();
+
+
+                return RedirectToAction("DatosGeneralesPorElegibilidad", "DatosGenerales");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
 
 
         public ActionResult CreateCedula()
@@ -477,6 +530,90 @@ namespace ProyectoPREP.Controllers
         }
 
 
+		[HttpPost]
+		public ActionResult ValidarNSS(string Seleccion, string Prefix)
+		{
+
+			var result = new object { };
+			bool status = false;
+			var msj = "";
+			Padron_Imp InfoPaciente = null;
+			int Resultado = 0;
+			var SolicitudPrep = db.DatosGenerales.Where(x => x.Documento == Prefix).FirstOrDefault();
+			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
+
+
+			if (SolicitudPrep != null)
+			{
+
+				msj = "El Ciudadano posee actualmente una solicitud de PrEP con el ID: " + SolicitudPrep.Id + " " + SolicitudPrep.Nombres +
+					" " + SolicitudPrep.Apellidos + " " + centros.FirstOrDefault().NombreCentro;
+
+				result = new
+				{
+					status,
+					msj
+				};
+				return Json(result);
+
+
+			}
+			else
+			{
+
+				//Validamos el porque vamos a buscar
+
+				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
+
+				if (InfoPaciente != null && InfoPaciente.valido == true)
+				{
+					try
+					{
+						Resultado = ValidarExisteEnFappsSIRENP(Prefix);
+					}
+					catch (Exception ex)
+					{
+						msj = "El NSS consultado no ha retornado ningún valor";
+						result = new
+						{
+							status,
+							msj
+						};
+						return Json(result);
+
+					}
+				}
+
+				if (Resultado == 1)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en FAPPS.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+
+				if (Resultado == 2)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en SIRENP con VIH Positivo.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+			}
+
+			status = true;
+			result = new { status, InfoPaciente };
+			return Json(result);
+		}
+
 
 		[HttpPost]
 		public ActionResult ValidarPasaporte(string Seleccion, string Prefix)
@@ -521,7 +658,7 @@ namespace ProyectoPREP.Controllers
 					}
 					catch (Exception ex)
 					{
-						msj = "La Cédula consultada no ha retornado ningún valor";
+						msj = "El pasaporte consultado no ha retornado ningún valor";
 						result = new
 						{
 							status,
