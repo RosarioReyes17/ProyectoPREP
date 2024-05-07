@@ -27,5 +27,17 @@ public partial class VwPrepPacientesTratamientosUltimo
 
     public string? MesesPrescripcion { get; set; }
 
+    public int? MesesPrescripcionDias { get; set; }
+
+    public int? MesesPrescripcionDiasVence { get; set; }
+
     public string? Observaciones { get; set; }
+
+    public int EstatusSuspendido { get; set; }
+
+    public string? EstatusDifSuspendido { get; set; }
+
+    public string? EstatusAutomatico { get; set; }
+
+    public int? DiferenciaDias { get; set; }
 }

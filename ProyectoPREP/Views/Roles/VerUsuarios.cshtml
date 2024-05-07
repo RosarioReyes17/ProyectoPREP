@@ -1,0 +1,183 @@
+﻿@model List<VwPrepGestionUsuario>
+
+
+     
+<h2>USUARIOS PREP</h2>
+
+
+<div style="display: none;" id="tablaContainer">
+
+
+    <table id="miTabla2" class="table display" data-role="table" width="100%">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombres y Apellidos
+                </th>
+
+                <th>Usuario</th>
+
+                <th>Centro</th>
+
+                <th>Rol</th>
+
+                <th>Activo</th>
+
+                <th>Acciones</th>
+
+            </tr>
+
+            
+
+
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.IdUsuario </td>
+                    <td>@item.NombreApellidos</td>
+                    <td>@item.Usuario</td>
+                    <td>@item.NombreCentro</td>
+
+
+                    @if (item.Roles == "" || item.Roles == null)
+                    {
+                        <td> N/A</td>
+                    }
+                    else
+                    {
+                        <td>@item.Roles</td>
+                    }
+
+
+                    @if (item.Activo.Substring(0, 1) == "S" || item.Activo.Substring(0, 1) == "s")
+                    {
+                        <td>SI</td> 
+                    }
+                    else
+                    {
+                        <td>NO</td>
+                    }
+
+                    <td>
+                        <a class="btnAsignarRol" href="~/Roles/AsignarRol/@item.IdUsuario">Asignar Rol</a> |
+                        <a class="btnEstadousuario" href="~/Roles/EstadoUsuario/@item.IdUsuario">Activar o Desactivar</a> 
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+
+    <button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
+        <i class="fa-solid fa-backward"></i> Volver atrás
+    </button>
+</div>
+
+
+
+
+<br>
+@* <a id="btnRetonar" onclick="history.back();"> Volver al Listado de Pacientes Registrados en PrEP</a> *@
+
+<br>
+<br>
+<label></label>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        // Configurar DataTables
+        var table = $('#miTabla2').DataTable({
+            "responsive": true,
+            "searching": true,
+            "info": false,
+            "paging": false, // Desactivar paginación
+            "lengthChange": false, // Desactivar el cambio de longitud de página
+            "language": {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+            },
+
+
+
+            drawCallback: function () {
+                // Mostrar la tabla después de que se haya inicializado DataTable
+                $('#tablaContainer').css('display', 'block');
+
+                // Mostrar solo las primeras 10 filas
+    
+
+            },
+
+
+        });
+
+
+        $('#tablaContainer').css({
+            'margin-block-end': '50px',
+        });
+
+        var delayTimer;
+
+        // Configurar evento de búsqueda al escribir en la barra de búsqueda
+        $('#miTabla_filter input').on('input', function () {
+            var searchTerm = this.value.toLowerCase();
+            console.log("Input event: " + searchTerm);
+
+            if (searchTerm == "") {
+                return;
+            }
+
+            // Limpiar temporizador anterior
+            clearTimeout(delayTimer);
+
+            // Configurar un nuevo temporizador
+            delayTimer = setTimeout(function () {
+                // Filtrar la tabla después del retraso
+                var filteredRows = table.search(searchTerm).rows({ search: 'applied' }).nodes();
+
+                // Mostrar solo las primeras 10 filas después de la búsqueda
+                $(filteredRows).slice(0, 10).show();
+
+                // Ocultar las filas restantes
+                $(filteredRows).slice(10).hide();
+            }, 200); // Reducido a 100 ms
+        });
+    });
+
+
+
+    function nav(value) {
+        if (value != "") { location.href = value }
+    }
+                    // function nav(value,id) {
+                    //     if (value != "") { location.href = value+"/"+id }
+                    // }
+</script>

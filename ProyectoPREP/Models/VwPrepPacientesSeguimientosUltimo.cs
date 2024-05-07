@@ -102,4 +102,16 @@ public partial class VwPrepPacientesSeguimientosUltimo
     public string Usuario { get; set; } = null!;
 
     public DateTime? FechaRegistroSeguimiento { get; set; }
+
+    public int? MesesPrescripcionDias { get; set; }
+
+    public int? MesesPrescripcionDiasVence { get; set; }
+
+    public int EstatusSuspendido { get; set; }
+
+    public string? EstatusDifSuspendido { get; set; }
+
+    public string? EstatusAutomatico { get; set; }
+
+    public int? DiferenciaDias { get; set; }
 }

@@ -40,6 +40,18 @@ namespace ProyectoPREP.Controllers
             
         }
 
+
+        [HttpGet]
+
+        public ActionResult VerUsuarios()
+        {
+            var datos = db.VwPrepGestionUsuarios.ToList();
+
+           
+            return View(datos);
+        }
+
+
         // GET: RolesController/Details/5
         public ActionResult Details(int id)
         {

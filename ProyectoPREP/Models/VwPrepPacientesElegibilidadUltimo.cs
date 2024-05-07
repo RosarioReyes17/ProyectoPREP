@@ -25,6 +25,8 @@ public partial class VwPrepPacientesElegibilidadUltimo
 
     public DateTime? FechaResultadoCreatinina { get; set; }
 
+    public int? EstatusId { get; set; }
+
     public string? Estatus { get; set; }
 
     public string? MotivoRechazo { get; set; }
