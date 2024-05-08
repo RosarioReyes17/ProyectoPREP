@@ -1,51 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿@model ProyectoPREP.Models.VwPrepGestionUsuario
 
 <h2>Asignar Roles a Usuario</h2>
 
-<form action="/AsignarRol/Roles" method="post">
+<form asp-controller="Roles" asp-action="AsignarRol" method="post">
+    @Html.HiddenFor(x=>x.IdUsuario)
 
-        <h4>Formulario de Asignación de Roles a Usuario</h4>
 
-        <div class="editor-label">
-            <strong>Usuario:</strong>
-        </div>
-        <div class="editor-field">
+    <h4>Formulario de Asignación de Roles a Usuario</h4>
 
-        Filtrar por Usuario: 
-        <input type="text" id="usuario" onkeyup="buscarUsuario();" name="usuariocomplete" class="form-control">
-        </div>
-        <br />
-        <div style="display:flex">
-        <label id="usuario1" class="usuario"></label>
-        <label id="usuario2" class="usuario"></label>
-        <label id="usuario3" class="usuario"></label>
-        </div>
-        <br />
+    <label>ID: @Model.IdUsuario </label><br />
+    <label>Nombre: @Model.NombreApellidos</label><br />
+    <label>Usuario: @Model.Usuario</label><br />
+    <label>Centro: @Model.NombreCentro</label><br /><br />
+ 
 
-        <div class="editor-label">
-            <strong>Rol:</strong>
-        </div>
-        <div class="editor-field">
-            <select class="form-control" id="Rol" name="Rol" required="required">
-                <option value="">Seleccione un Rol</option>
-                <option value="1">Administrador</option>
-                <option value="2">Psicólogo</option>
-                <option value="3">Medico</option>
-                <option value="5">Psicólogo Medicos</option>
-            </select>
-        </div>
+    <div class="editor-label">
+        <strong>Rol:</strong>
+    </div>
+    <div class="editor-field">
+        <select class="form-control" id="Rol" name="IdRol" required="required">
+            <option value="">Seleccione un Rol</option>
+            <option value="1">Administrador</option>
+            <option value="5">Psicólogo Medicos</option>
+        </select>
+    </div>
 
-        <br>
-        <input type="submit" value="Asignar Rol">
-        <input type="hidden" id="usuarioI1" value="" />
-        <input type="hidden" id="usuarioI2" value="" />
-        <input type="hidden" id="usuarioI3" value="" />
-
+    <br>
+    <button type="submit">Asignar Rol</button>
 </form>
 
 
@@ -66,77 +47,6 @@
 @section scripts{
 
 	<script type="text/javascript">
-
-
-        var buscarUsuario = () => {
-            var usuario = document.getElementById("usuario").value;
-
-            $.post("@Url.Action("BuscarUsuario","Roles")", {
-                usuario: usuario
-            }, function (modelos) {
-                var lista = modelos.lista;
-
-                document.getElementById("usuario1").innerText = "";
-                document.getElementById("usuario2").innerText = "";
-                document.getElementById("usuario3").innerText = "";
-
-
-
-                if (lista.length == 3) {
-                    document.getElementById("usuario1").style.display = "block";
-                    document.getElementById("usuario2").style.display = "block";
-                    document.getElementById("usuario3").style.display = "block";
-
-
-                    document.getElementById("usuario1").innerText = lista[0].nombreApellidos;
-                    document.getElementById("usuario2").innerText = lista[1].nombreApellidos;
-                    document.getElementById("usuario3").innerText = lista[2].nombreApellidos;
-
-                    $("#usuario1").attr("name", lista[0].idUsuario);
-                    $("#usuario2").attr("name", lista[1].idUsuario);
-                    $("#usuario3").attr("name", lista[2].idUsuario);
-
-                }
-
-                if (lista.length == 2) {
-                    document.getElementById("usuario1").style.display = "";
-                    document.getElementById("usuario2").style.display = "";
-                    document.getElementById("usuario3").style.display = "none";
-
-
-                    document.getElementById("usuario1").innerText = lista[0].nombreApellidos;
-                    document.getElementById("usuario2").innerText = lista[1].nombreApellidos;
-
-                    $("#usuario1").attr("name", lista[0].idUsuario);
-                    $("#usuario2").attr("name", lista[1].idUsuario);
-
-                }
-
-                if (lista.length == 1) {
-
-                    document.getElementById("usuario1").style.display = "";
-                    document.getElementById("usuario2").style.display = "none";
-                    document.getElementById("usuario3").style.display = "none";
-
-
-                    document.getElementById("usuario1").innerText = lista[0].nombreApellidos;
-
-                    $("#usuario1").attr("name", lista[0].idUsuario);
-
-                }
-
-                if (lista.length == 0) {
-                    document.getElementById("usuario1").style.display = "none";
-                    document.getElementById("usuario2").style.display = "none";
-                    document.getElementById("usuario3").style.display = "none";
-
-                }
-                    
-                
-            })
-
-        }
-
         
     </script>
 

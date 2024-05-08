@@ -13,32 +13,37 @@ namespace ProyectoPREP.Controllers
         DbPrepContext db;
         public RolesController(DbPrepContext _db)
         {
+
             this.db = _db;
         }
-        public ActionResult AsignarRol()
+
+        public ActionResult AsignarRol(int id)
         {
-            return View();
+            var datos = db.VwPrepGestionUsuarios.First(x => x.IdUsuario == id);
+
+            return View(datos);
         }
 
 
         [HttpPost]
-        public JsonResult BuscarUsuario(string usuario)
+        public ActionResult AsignarRol(int IdRol, int IdUsuario)
         {
+            var datos = db.VwPrepGestionUsuarios.First(x=>x.IdUsuario == IdUsuario);
 
-            var lista = new List<VwUsuariosIntranet>();
-            string sql = "BuscarUsuarios";
 
-            
-            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
-            {
-                lista = connection.Query<VwUsuariosIntranet>(sql, new {usuario}, commandType: System.Data.CommandType.StoredProcedure).ToList();
-                
-                var result = new { lista };
-                return Json(result);
+            var usuRol = new UsuarioRole();
+            usuRol.IdUsuario = IdUsuario;
+            usuRol.RolesId = IdRol;
+            usuRol.IdCentro = Convert.ToInt32(datos.IdDeptoDepend);
+            db.UsuarioRoles.Add(usuRol);
+            db.SaveChanges();
+            return RedirectToAction("VerUsuarios", "Roles");
 
-            }
-            
         }
+
+
+
+
 
 
         [HttpGet]
@@ -51,74 +56,5 @@ namespace ProyectoPREP.Controllers
             return View(datos);
         }
 
-
-        // GET: RolesController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: RolesController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: RolesController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: RolesController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: RolesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: RolesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: RolesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

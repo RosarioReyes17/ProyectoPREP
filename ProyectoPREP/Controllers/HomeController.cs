@@ -109,6 +109,13 @@ namespace ProyectoPREP.Controllers
             if (IsValidUser != null)
             {
                 var usuarioRole = db.UsuarioRoles.Include(x=>x.Roles).Where(x=>x.IdUsuario == IsValidUser.IdUsuario).FirstOrDefault();
+                if (usuarioRole == null)
+                {
+                    TempData["error"] = "Este usuario no tiene permiso para accerder al sistema, comuniquese con un administrador";
+                    return RedirectToAction("Login", "Home");
+
+                }
+
                 var rolActivo = db.Roles.FirstOrDefault(x => x.Id == usuarioRole.RolesId);
                 if (IsValidUser.Activo.Trim() == "N" || rolActivo.Activo == false)
                 {

@@ -804,14 +804,14 @@ public partial class DbPrepContext : DbContext
 
         modelBuilder.Entity<UsuarioRole>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("UsuarioRole");
+            entity.HasKey(e => e.IdUsuarioRole).HasName("PK__UsuarioR__38D54EDDE39EA460");
+
+            entity.ToTable("UsuarioRole");
 
             entity.Property(e => e.IdCentro).HasColumnName("ID_Centro");
             entity.Property(e => e.RolesId).HasColumnName("Roles_Id");
 
-            entity.HasOne(d => d.Roles).WithMany()
+            entity.HasOne(d => d.Roles).WithMany(p => p.UsuarioRoles)
                 .HasForeignKey(d => d.RolesId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_UsuarioRole_Role");

@@ -11,5 +11,7 @@ public partial class UsuarioRole
 
     public int? IdCentro { get; set; }
 
+    public int IdUsuarioRole { get; set; }
+
     public virtual Role Roles { get; set; } = null!;
 }
