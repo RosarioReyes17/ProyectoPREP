@@ -28,6 +28,7 @@ namespace ProyectoPREP.Controllers
         [HttpPost]
         public ActionResult AsignarRol(int IdRol, int IdUsuario)
         {
+         
             var datos = db.VwPrepGestionUsuarios.First(x=>x.IdUsuario == IdUsuario);
 
 
@@ -43,9 +44,6 @@ namespace ProyectoPREP.Controllers
 
 
 
-
-
-
         [HttpGet]
 
         public ActionResult VerUsuarios()
@@ -54,6 +52,30 @@ namespace ProyectoPREP.Controllers
 
            
             return View(datos);
+        }
+
+        public JsonResult BuscarUsuario(int IdUsuario)
+        {
+            var usuarioRol = db.UsuarioRoles.FirstOrDefault(x => x.IdUsuario == IdUsuario);
+            if (usuarioRol != null)
+            {
+                var result1 = new
+                {
+                    estatus = true,
+                    message = "Si existe el usuario"
+                };
+                return Json(result1);
+            }
+
+            var result = new
+            {
+                estatus = false,
+                message = "No existe el usuario"
+
+            };
+            return Json(result);
+
+
         }
 
     }
