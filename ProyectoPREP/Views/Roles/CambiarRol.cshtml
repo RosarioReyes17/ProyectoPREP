@@ -1,18 +1,19 @@
 ﻿@model ProyectoPREP.Models.VwPrepGestionUsuario
 
-<h2>Asignar Roles a Usuario</h2>
+<h2>Cambiar Roles a Usuario</h2>
 
-<form asp-controller="Roles" asp-action="AsignarRol" method="post">
+<form asp-controller="Roles" asp-action="CambiarRol" method="post">
     @Html.HiddenFor(x=>x.IdUsuario)
 
 
-    <h4>Formulario de Asignación de Roles a Usuario</h4>
+    <h4>Formulario de Cambiar Roles a Usuario</h4>
 
     <label>ID: @Model.IdUsuario </label><br />
     <label>Nombre: @Model.NombreApellidos</label><br />
     <label>Usuario: @Model.Usuario</label><br />
-    <label>Centro: @Model.NombreCentro</label><br /><br />
- 
+    <label>Centro: @Model.NombreCentro</label><br />
+    <label>Rol actual: @Model.Roles</label><br /><br />
+
 
     <div class="editor-label">
         <strong>Rol:</strong>
@@ -26,9 +27,8 @@
     </div>
 
     <br>
-    <button type="submit">Asignar Rol</button>
+    <button type="submit">Cambiar Rol</button>
 </form>
 
 
 
- 

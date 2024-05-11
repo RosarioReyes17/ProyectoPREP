@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,8 @@ using System.Data.SqlClient;
 
 namespace ProyectoPREP.Controllers
 {
+    [Authorize(Roles = "Administrador")]
+
     public class RolesController : Controller
     {
         // GET: RolesController
@@ -42,6 +45,51 @@ namespace ProyectoPREP.Controllers
 
         }
 
+
+        public ActionResult CambiarRol(int id)
+        {
+
+            var datos = db.VwPrepGestionUsuarios.First(x => x.IdUsuario == id);
+            return View(datos);
+        }
+
+
+        [HttpPost]
+        public ActionResult CambiarRol(int IdRol, int IdUsuario)
+        {
+
+            var datos = db.VwPrepGestionUsuarios.First(x => x.IdUsuario == IdUsuario);
+           
+            var usuRol = db.UsuarioRoles.First(x => x.IdUsuario == IdUsuario);
+
+
+            usuRol.RolesId = IdRol;
+            usuRol.IdCentro = Convert.ToInt32(datos.IdDeptoDepend);
+            db.UsuarioRoles.Entry(usuRol).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("VerUsuarios", "Roles");
+
+        }
+
+
+        public ActionResult ActivarDesactivarUsuario(int id)
+        {
+
+            var datos = db.VwPrepGestionUsuarios.First(x => x.IdUsuario == id);
+            return View(datos);
+        }
+
+        [HttpPost]
+        public ActionResult ActivarDesactivarUsuario(int IdUsuario, string Estado)
+        {
+
+            var datos = db.Usuarios.First(x => x.IdUsuario == IdUsuario);
+            datos.Activo = Estado;
+            //db.Usuarios.Entry(datos).State = EntityState.Modified;
+            //db.SaveChanges();
+
+            return View(datos);
+        }
 
 
         [HttpGet]

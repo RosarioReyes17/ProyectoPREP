@@ -1,34 +1,33 @@
 ﻿@model ProyectoPREP.Models.VwPrepGestionUsuario
 
-<h2>Asignar Roles a Usuario</h2>
+<h2>Activar o Desactivar Usuarios</h2>
 
-<form asp-controller="Roles" asp-action="AsignarRol" method="post">
+<form asp-controller="Roles" asp-action="ActivarDesactivarUsuario" method="post">
     @Html.HiddenFor(x=>x.IdUsuario)
 
 
-    <h4>Formulario de Asignación de Roles a Usuario</h4>
+    <h4>Formulario Activar o Desactivar Usuarios</h4>
 
     <label>ID: @Model.IdUsuario </label><br />
     <label>Nombre: @Model.NombreApellidos</label><br />
     <label>Usuario: @Model.Usuario</label><br />
     <label>Centro: @Model.NombreCentro</label><br /><br />
- 
+
 
     <div class="editor-label">
         <strong>Rol:</strong>
     </div>
     <div class="editor-field">
-        <select class="form-control" id="Rol" name="IdRol" required="required">
+        <select class="form-control" id="Rol" name="Estado" required="required">
             <option value="">Seleccione un Rol</option>
-            <option value="1">Administrador</option>
-            <option value="5">Psicólogo Medicos</option>
+            <option value="S">Activar Usuario</option>
+            <option value="N">Desactivar Usuario</option>
         </select>
     </div>
 
     <br>
-    <button type="submit">Asignar Rol</button>
+    <button type="submit">Guardar Cambios</button>
 </form>
 
 
 
- 
