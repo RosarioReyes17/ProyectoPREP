@@ -72,26 +72,6 @@ namespace ProyectoPREP.Controllers
         }
 
 
-        public ActionResult ActivarDesactivarUsuario(int id)
-        {
-
-            var datos = db.VwPrepGestionUsuarios.First(x => x.IdUsuario == id);
-            return View(datos);
-        }
-
-        [HttpPost]
-        public ActionResult ActivarDesactivarUsuario(int IdUsuario, string Estado)
-        {
-
-            var datos = db.Usuarios.First(x => x.IdUsuario == IdUsuario);
-            datos.Activo = Estado;
-            //db.Usuarios.Entry(datos).State = EntityState.Modified;
-            //db.SaveChanges();
-
-            return View(datos);
-        }
-
-
         [HttpGet]
 
         public ActionResult VerUsuarios()
@@ -102,28 +82,77 @@ namespace ProyectoPREP.Controllers
             return View(datos);
         }
 
-        public JsonResult BuscarUsuario(int IdUsuario)
+        public JsonResult BuscarUsuario(int IdUsuario, string link)
         {
             var usuarioRol = db.UsuarioRoles.FirstOrDefault(x => x.IdUsuario == IdUsuario);
-            if (usuarioRol != null)
+            var datos = db.VwPrepGestionUsuarios.FirstOrDefault(x => x.IdUsuario == IdUsuario);
+            var usuarios = db.VwPrepGestionUsuarios.Where(x => x.IdUsuario == IdUsuario).ToList();
+            var estadolink = false;
+
+            if (link == "asignarRol")
+            {
+                estadolink = true;
+            }
+            else
+            {
+                estadolink = false;
+            }
+
+            if (datos.Activo.Substring(0,1) == "N")
             {
                 var result1 = new
                 {
-                    estatus = true,
-                    message = "Si existe el usuario"
+                    estadolink = "",
+                    activo = "N",
+                    cantidad = 0,
+                    estatus = "",
+                    message = "Este usuario esta inactivo,por favor comuniquese con su superior."
                 };
                 return Json(result1);
             }
 
-            var result = new
+            if (usuarios.Count > 1)
             {
-                estatus = false,
-                message = "No existe el usuario"
+                var result1 = new
+                {
+                    estadolink = "",
+                    activo = "",
+                    cantidad = usuarios.Count,
+                    estatus = "",
+                    message = "Este usuario esta repetido, por favor comuniquese con su superior."
+                };
+                return Json(result1);
+            }
 
-            };
-            return Json(result);
 
 
+            if (usuarioRol != null)
+            {
+                var result1 = new
+                {
+                    estadolink = estadolink,
+                    activo = "",
+                    cantidad = 0,
+                    estatus = true,
+                    message = "Si existe el usuario con un rol"
+                };
+                return Json(result1);
+            }
+            else
+            {
+                var result = new
+                {
+                    estadolink = estadolink,
+                    activo = "",
+                    cantidad = 0,
+                    estatus = false,
+                    message = "No existe el usuario con un rol"
+
+                };
+                return Json(result);
+            }
+
+          
         }
 
     }

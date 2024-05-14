@@ -66,9 +66,8 @@
                     }
 
                     <td>
-                        <a class="btnAsignarRol" onclick="buscarUsuario(@item.IdUsuario)" style="cursor:pointer" >Asignar Rol</a> |
-                        <a class="btnEstadousuario" href="~/Roles/ActivarDesactivarUsuario/@item.IdUsuario">Activar o Desactivar</a>
-                        <a class="btnEstadousuario" href="~/Roles/CambiarRol/@item.IdUsuario">Cambiar Rol</a>
+                        <a class="btnAsignarRol" id="asignarRol" onclick="buscarUsuario(@item.IdUsuario,this.id);" style="cursor:pointer" >Asignar Rol</a> |
+                        <a class="cambiarRol" id="cambiarRol" onclick="buscarUsuario(@item.IdUsuario,this.id);" style="cursor:pointer">Cambiar Rol</a>
                     </td>
 
 
@@ -207,32 +206,70 @@
         }
 
 
-        var buscarUsuario = (id) => {
+        var buscarUsuario = (id,link) => {
             
             var IdUsuario = id;
+            var link = link;
 
             $.post("@Url.Action("BuscarUsuario","Roles")", {
-                    IdUsuario: IdUsuario
+                    IdUsuario: IdUsuario,link:link
                     }, function (modelos) {
-                if (modelos.estatus == true) {
+
+
+                if (modelos.activo == "N") {
+                    document.getElementById("cuerpoModal").innerHTML = modelos.message;
                     $('#myModal').modal('show');
+                    return;
+
+                    
+                }
+
+                if (modelos.cantidad > 1) {
+                    document.getElementById("cuerpoModal").innerHTML = modelos.message;
+                    $('#myModal').modal('show');
+                    return;
+                    
+                }
+
+                if (modelos.estatus == true && modelos.estadolink == true) {
+                    document.getElementById("cuerpoModal").innerHTML = modelos.message;
+                    $('#myModal').modal('show');
+                    return;
 
                 }
-                else {
-                    paginaPrincipal(id);
 
+                if (modelos.estatus == false && modelos.estadolink == true) {
+                    if (link == "asignarRol") {
+                        AsignarRol(id);
+                    }
+                   
                 }
+
+                if (modelos.estatus == true && modelos.estadolink == false) {
+                    if (link == "cambiarRol") {
+                        CambiarRol(id);
+                    }
+                  
+                }
+              
              
-                //paginaPrincipal();
             })
         }
 
-        const paginaPrincipal = (id) => {
+        const AsignarRol = (id) => {
             var local = window.location.host;
             console.log(local);
             var origin = "/Roles/AsignarRol/" + id;
             window.location.href = "https://" + local + origin;
         }
+        
+        const CambiarRol = (id) => {
+            var local = window.location.host;
+            console.log(local);
+            var origin = "/Roles/CambiarRol/" + id;
+            window.location.href = "https://" + local + origin;
+        }
+
     </script>
 
 }
