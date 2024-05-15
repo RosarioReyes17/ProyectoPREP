@@ -106,7 +106,7 @@ namespace ProyectoPREP.Controllers
                     activo = "N",
                     cantidad = 0,
                     estatus = "",
-                    message = "Este usuario esta inactivo,por favor comuniquese con su superior."
+                    message = "Este usuario esta inactivo, por favor comuniquese con su superior."
                 };
                 return Json(result1);
             }

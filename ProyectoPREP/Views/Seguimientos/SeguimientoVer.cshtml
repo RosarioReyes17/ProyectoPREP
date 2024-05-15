@@ -40,78 +40,88 @@
 
 <h5>Seguimientos</h5>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                ID Seguimiento
-            </th>
-            <th>Fecha Seguimiento</th>
-            <th>Próximo Seguimiento</th>
-            <th>
-                Resultado Prueba VIH
-            </th>
-            <th>Fecha de Prueba VIH</th>
-            <th>Observaciones</th>
-            <th>
-                Acciones
-            </th>
-
-
-        </tr>
-    </thead>
-    <tbody>
-       
-        @foreach (var item in Model)
-        {
+<div>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @item.Id
-                </td>
-                @if (item.FechaRegistroSeguimiento.HasValue)
-                {
-                    <td>@item.FechaRegistroSeguimiento.Value.ToString("dd-MM-yyyy")</td>
-                }
-                else
-                {
-                    <td>Sin Informacion</td>
-                }
-                @if (item.FechaProximoSeguimiento.HasValue)
-                {
-                    <td>@item.FechaProximoSeguimiento.Value.ToString("dd-MM-yyyy")</td>
-                }
-                else
-                {
-                    <td>Sin Realizar</td>
-                }
-                <td>@item.ResultadoPruebaVih</td>
-                @if (item.FechaPruebaVih.HasValue)
-                {
-                    <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
-                }
-                else
-                {
-                    <td>Sin Realizar</td>
-                }
-                <td>@item.Observaciones</td>
+                <th>
+                    ID Seguimiento
+                </th>
+                <th>Fecha Seguimiento</th>
+                <th>Próximo Seguimiento</th>
+                <th>
+                    Resultado Prueba VIH
+                </th>
+                <th>Fecha de Prueba VIH</th>
+                <th>Observaciones</th>
+                <th>
+                    Acciones
+                </th>
 
-
-                <td>
-                    <a class="btnSeguimiento2" href="~/Seguimientos/SeguimientoVerPorId/@item.Id">Ver Seguimiento</a> |
-                    <a class="btnSeguimiento3" href="~/Seguimientos/Editar/@item.Id">Editar Seguimiento</a>
-                </td>
 
             </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    @if (item.FechaRegistroSeguimiento.HasValue)
+                    {
+                        <td>@item.FechaRegistroSeguimiento.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>Sin Informacion</td>
+                    }
+                    @if (item.FechaProximoSeguimiento.HasValue)
+                    {
+                        <td>@item.FechaProximoSeguimiento.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>Sin Realizar</td>
+                    }
+                    <td>@item.ResultadoPruebaVih</td>
+                    @if (item.FechaPruebaVih.HasValue)
+                    {
+                        <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>Sin Realizar</td>
+                    }
+                    <td>@item.Observaciones</td>
 
 
-        }
+                    <td>
+                        <a class="btnSeguimiento2" href="~/Seguimientos/SeguimientoVerPorId/@item.Id">Ver Seguimiento</a> |
+                        <a class="btnSeguimiento3" href="~/Seguimientos/Editar/@item.Id">Editar Seguimiento</a>
+                    </td>
 
-    </tbody>
-</table>
+                </tr>
 
-<br>
-@* <a id="btnRetonar" onclick="history.back();"> Volver al Listado de Pacientes Registrados en PrEP</a> *@
 
-<button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
-    <i class="fa-solid fa-backward"></i> Volver atrás
-</button>
+            }
+
+        </tbody>
+      
+    </table>
+
+    <div>
+        <a asp-controller="DatosGenerales" asp-action="DatosGeneralesPorAprobado" class="btn btn-danger" style="margin-left: 5px;">
+            <i class="fa-solid fa-backward"></i> Volver atrás
+        </a>
+    </div>
+    <br />
+    <br />
+    <br />
+
+</div>
+
+
+
+
