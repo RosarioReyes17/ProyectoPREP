@@ -106,7 +106,7 @@ namespace ProyectoPREP.Controllers
                     activo = "N",
                     cantidad = 0,
                     estatus = "",
-                    message = "Este usuario esta inactivo, por favor comuniquese con su superior."
+                    message = "Este usuario está inactivo, por favor comuniquese con encargado/a de gestión de usuarios."
                 };
                 return Json(result1);
             }
@@ -119,7 +119,7 @@ namespace ProyectoPREP.Controllers
                     activo = "",
                     cantidad = usuarios.Count,
                     estatus = "",
-                    message = "Este usuario esta repetido, por favor comuniquese con su superior."
+                    message = "Este usuario está duplicado, por favor comuniquese con encargado/a de gestión de usuarios."
                 };
                 return Json(result1);
             }
@@ -134,7 +134,7 @@ namespace ProyectoPREP.Controllers
                     activo = "",
                     cantidad = 0,
                     estatus = true,
-                    message = "Si existe el usuario con un rol"
+                    message = "Ya este usuario posee un rol asignado."
                 };
                 return Json(result1);
             }
@@ -146,7 +146,7 @@ namespace ProyectoPREP.Controllers
                     activo = "",
                     cantidad = 0,
                     estatus = false,
-                    message = "No existe el usuario con un rol"
+                    message = "Este usuario no tiene un rol asignado."
 
                 };
                 return Json(result);

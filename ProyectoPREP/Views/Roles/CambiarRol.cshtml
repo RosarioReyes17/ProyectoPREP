@@ -18,7 +18,7 @@
     <div class="editor-label">
         <strong>Rol:</strong>
     </div>
-    <div class="editor-field">
+    <div class="editor-field col-5">
         <select class="form-control" id="Rol" name="IdRol" required="required">
             <option value="">Seleccione un Rol</option>
             <option value="1">Administrador</option>
@@ -27,7 +27,17 @@
     </div>
 
     <br>
-    <button type="submit">Cambiar Rol</button>
+
+
+    <div style="display: flex; align-items: center;">
+        <button type="submit" class="btn btn-success">Cambiar Rol</button>
+        <a asp-controller="Roles" asp-action="VerUsuarios" class="btn btn-danger" style="margin-left: 10px;">
+            <i class="fa-solid fa-cancel"></i> Cancelar
+        </a>
+    </div>
+
+
+
 </form>
 
 
