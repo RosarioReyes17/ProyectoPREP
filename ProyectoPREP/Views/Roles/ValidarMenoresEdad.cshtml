@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+</head>
+
+
+<body>
+
+   <h1>VALIDACIÓN PARA EL REGISTRO DE PACIENTES MENORES DE EDAD </h1>
+   <br />
+   <br />
+
+    <p>
+        <strong>NOTAS:</strong> <br />
+        - Cuando el check esté marcado el sistema va a permitir se registren pacientes menores de edad, de lo contrario no. <br />
+        - Es importante que esto se utilizará en ciertos casos especiales y que esta opción solo puede ser activada por usuarios administradores, en ese mismo orden, si la opción se marca para el registro de un paciente, una vez ese paciente es registrado inmediatamente se debe volver a desmarcar para mantener mayor control. <br />
+        - Esta opción solo será marcada cuando los usuarios lo soliciten.
+    </p>
+
+    <br />
+    <br />
+
+    <label>
+        <input type="checkbox" id="chkRestrictDate" onclick="updateRestriction()"> Permitir que se registren pacientes menores de edad
+    </label>
+
+    <br>
+    <br />
+
+    <button onclick="window.location.href = '/DatosGenerales/DatosGeneralesPorElegibilidad';" class="btn btn-danger" style="margin-left: 5px;">
+        <i class="fa-solid fa-backward"></i> Volver atrás
+    </button>
+
+    <script>
+        function updateRestriction() {
+            const checkBox = document.getElementById('chkRestrictDate');
+            localStorage.setItem('restrictDate', checkBox.checked);
+
+            // Despachar un evento de almacenamiento para actualizar la otra vista inmediatamente
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: 'restrictDate',
+                newValue: checkBox.checked.toString()
+            }));
+        }
+
+        // Inicializar el estado del checkbox basado en localStorage
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const isRestricted = localStorage.getItem('restrictDate') === 'true';
+            document.getElementById('chkRestrictDate').checked = isRestricted;
+        });
+    </script>
+</body>
+</html>

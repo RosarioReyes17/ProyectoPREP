@@ -99,6 +99,17 @@ namespace ProyectoPREP.Controllers
 
             if (PrepArvTdf3tc == false && PrepArvTdfFtc == false && PrepArvTafFtc == false)
             {
+                var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == IdDatos);
+                
+
+
+                ViewBag.Nombre = datos.Nombres + " " + datos.Apellidos;
+                ViewBag.IdDatos = datos.Id;
+
+                ViewBag.Edad = Convert.ToDecimal(datos.Edad);
+                ViewBag.Sexo = datos.Sexo;
+                ViewBag.Peso = datos.Peso;
+                ViewBag.Genero = datos.Genero;
                 TempData["ARV"] = "Seleccione una de las ARV Preescrita";
                 return View();
             }
@@ -113,7 +124,7 @@ namespace ProyectoPREP.Controllers
             seguimiento.FechaSeguimiento = fecha;
             seguimiento.ElegibilidadPrepId = elegibilidad.Id;
             seguimiento.SeguimimientoPruebaId = 5;
-            seguimiento.Usuario = Convert.ToString(idUser);
+            seguimiento.Usuario = Convert.ToString(idUser); 
 
             elegibilidad.Usuario = Convert.ToString(idUser);
             elegibilidad.Estatus = 4;
@@ -144,6 +155,7 @@ namespace ProyectoPREP.Controllers
             ViewBag.nacionalidad = nacionalidad.Nacionalidad;
             ViewBag.IdDatos = datos.Id;
             return View(segui);
+            //return RedirectToAction("SeguimientoVer", "Seguimientos", new { id = id });
         }
 
 

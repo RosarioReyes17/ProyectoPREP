@@ -20,7 +20,12 @@ namespace ProyectoPREP.Controllers
             this.db = _db;
         }
 
-        public ActionResult AsignarRol(int id)
+		public ActionResult ValidarMenoresEdad()
+		{
+            return View();
+		}
+
+		public ActionResult AsignarRol(int id)
         {
             var datos = db.VwPrepGestionUsuarios.First(x => x.IdUsuario == id);
 

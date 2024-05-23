@@ -1046,6 +1046,19 @@
 		});
 
 
+		const botonIdentificar = document.getElementById('btnIdentificar');
+
+		// Agregar un listener para el evento 'keydown' en el documento
+		document.addEventListener('keydown', function (event) {
+			// Verificar si la tecla presionada es la que queremos, por ejemplo, la tecla 'Enter'
+			if (event.key === 'Enter') {
+				// Prevenir el comportamiento predeterminado del evento
+				event.preventDefault();
+				// Simular un clic en el botón
+				botonIdentificar.click();
+			}
+		});
+
 
 	</script>
 	@{

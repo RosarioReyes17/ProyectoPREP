@@ -1,167 +1,85 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-@* 
-@using System.Security.Claims *@
-
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 <title>Login - Servicio Nacional de Salud</title>
 
-
-
-    <div class="login-form wow fadeIn" autocomplete="off">
-        <div class="headerlogin">
-            <img src="/Content/img/vectores/logoazul.svg" alt="SNS Logo">
-            <h1 class="uppercase">FORMULARIO DE SELECCIÓN PROXILAXIS <br />PREP-EXPOSICIÓN</h1>
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="login-form bg-white p-4 rounded shadow-sm wow fadeIn" autocomplete="off">
+        <div class="text-center mb-4">
+            <img src="/Content/img/vectores/logoazul.svg" alt="SNS Logo" class="mb-3" style="width: 120px;">
+            <h1 class="h4 text-uppercase">Formulario de Selección Proxilaxis Prep-Exposición</h1>
         </div>
 
         <form asp-action="Login" asp-controller="Home" method="post">
-            <label style="color:black; margin-bottom:5%" for="Usuario">Utilice su nombre de usuario (cédula) y contraseña para acceder a la Intranet del SNS.</label>
-            <div>
-                <label for="Usuario">Cédula</label>
-                <input required type="text" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" minlength="13" maxlength="13" onkeypress="ValidarCedulaPasaporte(this.value)" id="Usuario" name="Usuario">
+            <div class="mb-3 text-center">
+                <label for="Usuario" class="form-label">Utilice su nombre de usuario (cédula) y contraseña para acceder a la Intranet del SNS.</label>
+                <input required type="text" class="form-control" id="Usuario" name="Usuario" placeholder="Cédula" minlength="13" maxlength="13" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" onkeypress="ValidarCedulaPasaporte(this.value)">
             </div>
-            <div>
-                <label for="Password">Contraseña</label>
-                <input required type="password"  id="Password" name="Password" title="El password es requerido.">
-                <span style="color:red;margin-left:20px">@TempData["error"]</span>
+            <div class="mb-3">
+                <label for="Password" class="form-label">Contraseña</label>
+                <input required type="password" class="form-control" id="Password" name="Password" title="El password es requerido.">
+                <span class="text-danger" style="margin-left:20px">@TempData["error"]</span>
             </div>
-
-            <div class="center" style="margin-top: 30px">
-                <button type="submit" class="btn" style="background-color: #005476; color: #fff;" id="Ejecutar" name="Ejecutar">Iniciar Sesión</button>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary" id="Ejecutar" name="Ejecutar">Iniciar Sesión</button>
             </div>
-           
         </form>
 
-        <div class="text-center">
-            <div style="color:black; margin-top: 60px;">
-                &copy; @{
-                    ViewBag.Year = DateTime.Now.Year;
-                } @ViewBag.Year Servicio Nacional de Salud. Todos los Derechos Reservados.
-            </div>
+        <div class="text-center mt-4 text-muted">
+            &copy; @{
+                ViewBag.Year = DateTime.Now.Year;
+            } @ViewBag.Year Servicio Nacional de Salud. Todos los Derechos Reservados.
         </div>
-     
     </div>
+</div>
 
 <style>
     body {
         font-family: 'Roboto', sans-serif;
         background-color: #005476;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
         margin: 0;
     }
 
-    .headerlogin {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-        .headerlogin img {
-            width: 150px; /* Ajusta el tamaño del logo según tus necesidades */
-            margin-bottom: 10px;
-        }
-
-        .headerlogin h1 {
-            font-size: 20px;
-            color: #000000;
-            margin: 0;
-            margin-bottom: 30px;
-        }
-
     .login-form {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        width: 330px;
-        text-align: left;
-        width: 488px;
-        height: 615px;
+        max-width: 400px;
     }
 
-        .login-form label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555; /* Cambia el color del texto según tus preferencias */
-        }
-
-
-
-        .login-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .login-form button {
-            background-color: #0056b3;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-            .login-form button:hover {
-                background-color: #004494;
-            }
-
-    .error-message {
-        color: #fe7575;
-        text-align: center;
-        margin-top: 10px;
+    .form-label {
+        color: #555;
     }
 
-    .footer-text {
-        color: #fff;
-        text-align: center;
+    .btn-primary {
+        background-color: #005476;
+        border-color: #005476;
+    }
+
+        .btn-primary:hover {
+            background-color: #004494;
+            border-color: #004494;
+        }
+
+    .text-muted {
         font-size: 0.875rem;
-        position: absolute;
-        bottom: 1rem;
-        width: 100%;
     }
-
-    .center {
-        text-align: center;
-    }
-
 </style>
 
 <script>
     function ValidarCedulaPasaporte(a) {
         if (true) {
-
-            if (true) {
-                var datos = a;
-                let resultado = datos;
-
-                if (resultado.length == 3) {
-                    resultado = datos + "-";
-                }
-
-                if (resultado.length == 11) {
-                    resultado = datos + "-";
-                }
-
-                if (resultado.length <= 13) {
-                    document.getElementById("Usuario").value = resultado;
-                }
+            var datos = a;
+            let resultado = datos;
+            if (resultado.length == 3) {
+                resultado = datos + "-";
+            }
+            if (resultado.length == 11) {
+                resultado = datos + "-";
+            }
+            if (resultado.length <= 13) {
+                document.getElementById("Usuario").value = resultado;
             }
         }
     }
-
 </script>
-
-
-
-
-

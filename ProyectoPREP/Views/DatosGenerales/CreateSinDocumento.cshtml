@@ -5,7 +5,6 @@
 </div>
 
 
-
 <form id="formulario" action="/DatosGenerales/CreateSinDocumento" method="post">
 	<div id="divValidarUsuario" class="form-visible">
 		<h3>Identificarse en PrEP</h3>
@@ -1013,6 +1012,35 @@
 			});
 		});
 
+
+
+		//VALIDACION PARA RESTRINGIR QUE NO SE INGRESEN MENORES DE EDAD
+
+		function applyDateRestriction() {
+			const dateInput = document.getElementById('txtFechaNacimiento');
+			const isRestricted = localStorage.getItem('restrictDate') !== 'true';
+			const today = new Date();
+			const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+			const formattedMaxDate = maxDate.toISOString().split('T')[0];
+
+			if (isRestricted) {
+				dateInput.max = formattedMaxDate;
+			} else {
+				dateInput.max = '';
+			}
+		}
+
+		// Aplicar restricción al cargar la página
+		document.addEventListener('DOMContentLoaded', (event) => {
+			applyDateRestriction();
+		});
+
+		// Escuchar cambios en localStorage para actualizar la restricción de fecha dinámicamente
+		window.addEventListener('storage', (event) => {
+			if (event.key === 'restrictDate') {
+				applyDateRestriction();
+			}
+		});
 
 	</script>
 	@{
