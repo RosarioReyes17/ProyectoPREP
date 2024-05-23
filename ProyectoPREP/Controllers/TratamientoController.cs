@@ -41,6 +41,13 @@ namespace ProyectoPREP.Controllers
                 if (PrepArvTafFtc == false && PrepArvTdfFtc == false && PrepArvTdf3tc == false)
                 {
                     TempData["ARV"] = "Debe de seleccionar una ARV Prescrita.";
+                    var datos = db.DatosGenerales.FirstOrDefault(x => x.Id == idDatos);
+                    //var formulario = db.FormularioPreps.FirstOrDefault(x => x.DatosGeneralesId == id);
+                    //var elegibilidad = db.ElegibilidadPreps.FirstOrDefault(x=>x.FormularioPrepId == formulario.Id);
+                    ViewBag.idDatos = datos.Id;
+                    ViewBag.nombre = datos.Nombres;
+                    ViewBag.apellido = datos.Apellidos;
+                    ViewBag.documento = datos.Documento;
                     return View();
                 }
 

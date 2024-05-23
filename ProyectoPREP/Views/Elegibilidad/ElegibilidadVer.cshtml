@@ -34,19 +34,12 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                ID Historico
-            </th>
+            <th> ID Historico </th>
             <th>Fecha Elegibilidad</th>
-            <th>Fecha Historico</th>
-            <th>
-                Resultado Prueba VIH
-            </th>
+            <th> Resultado Prueba VIH</th>
             <th>Fecha de Prueba VIH</th>
             <th>Fecha de Reintegro</th>
-            <th>
-                Acciones
-            </th>
+            <th>Acciones</th>
 
 
         </tr>
@@ -59,7 +52,9 @@
                 <td>
                     @item.IdFila
                 </td>
-                <td>@item.FechaElegibilidad</td>
+               
+                
+
                 @if (item.FechaElegibilidad.HasValue)
                 {
                     <td>@item.FechaElegibilidad.Value.ToString("dd-MM-yyyy")</td>
@@ -68,7 +63,7 @@
                 {
                     <td>Sin Informacion</td>
                 }
-                <td>@item.FechaHistorico.ToString("dd-MM-yyyy")</td> 
+             
                 <td>@item.ResultadoPruebaVih</td>
                
                 @if (item.FechaPruebaVih.HasValue)

@@ -247,8 +247,12 @@ namespace ProyectoPREP.Controllers
                 edad = 0;
             }
 
-            string fecha = model.FormularioPrep.DatosGenerales.FechaIngresoSai.ToString("yyyy-MM-dd");
+            //string fecha = model.FormularioPrep.DatosGenerales.FechaIngresoSai.ToString("yyyy-MM-dd");
+            
 
+
+
+            string fecha = model.FechaReintegro.Value.ToString("yyyy-MM-dd");
 
             ViewBag.Peso = model.FormularioPrep.DatosGenerales.Peso;
             ViewBag.Edad = Convert.ToDecimal(edad);
