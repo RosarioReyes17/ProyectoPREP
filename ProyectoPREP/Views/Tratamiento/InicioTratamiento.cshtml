@@ -6,7 +6,10 @@
     Información del Paciente
 </h2>
 
+<input name="FechaPrep" id="FechaPrep" type="hidden" value="@ViewBag.Fecha" />
+
 <form asp-controller="Tratamiento" asp-action="InicioTratamiento" method="post">
+
     <div id="divTratamientoPrep">
         <div class="tituloDiv">Inicio del Tratamiento de la PrEP</div>
 
@@ -45,7 +48,7 @@
 
                         <div class="form-group col-md-7">
                             <strong>Fecha Inicio de la PrEP:</strong>
-                            <input required id="txtFechainicioPrep" name="FechaInicio" asp-for="FechaInicio" onkeydown="return false" class="form-control center" type="date" placeholder="Fecha" autocomplete="error">
+                            <input required id="txtFechainicioPrep" name="FechaInicio" asp-for="FechaInicio" onkeydown="return false" onchange="diferenciaFecha();" class="form-control center" type="date" placeholder="Fecha" autocomplete="error">
                         </div>
 
                     </td>
@@ -124,11 +127,43 @@
         </div>
     </div>
 
+    <script>
+        var fechaPrueba = new Date(document.getElementById("FechaPrep").value);
+        //var fechaPrueba1 = new Date(document.getElementById("FechaPrep").value);
+
+        const minDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() - 6))
+            .toISOString()
+            .split("T")[0];
+
+        // const maxDate = new Date(fechaPrueba1.setDate(fechaPrueba1.getDate() + 6))
+        //     .toISOString()
+        //     .split("T")[0];
+
+
+        document.getElementById("txtFechainicioPrep").setAttribute('min', minDate);
+        //document.getElementById("txtFechainicioPrep").setAttribute('max', maxDate);
+
+    </script>
+
 
 </form>
 
 @section scripts{
     <script type="text/javascript">
+
+
+        var diferenciaFecha = () => {
+            var fechaPrueba = new Date(document.getElementById("txtFechainicioPrep").value);
+            const minDate = fechaPrueba.toISOString().split("T")[0];
+            //const maxDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() + 6))
+                //.toISOString()
+                //.split("T")[0];txtFechainicioPrep
+
+            var min = document.getElementById("FechaSeguimiento").setAttribute('min', minDate);
+            //var max = document.getElementById("FechaSeguimiento").setAttribute('max', maxDate);
+
+
+        }
 
         const cerrarModalRechazar = () => {
 

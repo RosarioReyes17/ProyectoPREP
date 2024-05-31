@@ -26,6 +26,7 @@ namespace ProyectoPREP.Controllers
             ViewBag.nombre = datos.Nombres;
             ViewBag.apellido = datos.Apellidos;
             ViewBag.documento = datos.Documento;
+            ViewBag.Fecha = datos.FechaIngresoSai.ToString("yyyy-MM-dd");
             //ViewBag.fechaPrep = datos.FechaIngresoSai.ToString("yyyy-MM-dd");
             return View();
         }
