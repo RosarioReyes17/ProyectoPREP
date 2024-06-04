@@ -23,6 +23,7 @@
     <input type="hidden" id="IdDatos" name="IdDatos" value="@ViewBag.IdDatos" />
     <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
     <input name="" id="genero" type="hidden" value="@ViewBag.Genero" />
+    <input name="" id="FechaIngresoSai" type="hidden" value="@ViewBag.FechaIngresoSai" />
 
 
     <div id="divFormPrEP">
@@ -933,17 +934,37 @@
         var diferenciaFecha = () => {
             var fechaPrueba = new Date(document.getElementById("txtFechaSeguimiento").value);
             var fechaPrueba1 = new Date(document.getElementById("txtFechaSeguimiento").value);
+            var fechaIngreso = new Date(document.getElementById("FechaIngresoSai").value);
             //var fechaActual = new Date();
             
             // const minDate = fechaPrueba.toISOString().split("T")[0];
             var minDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() - 6)).toISOString().split("T")[0];
             var max = new Date(fechaPrueba1.setDate(fechaPrueba1.getDate() - 0)).toISOString().split("T")[0];
 
+            var minDateSeguimiento = new Date(fechaPrueba1.setDate(fechaPrueba1.getDate() - 0)).toISOString().split("T")[0];
+
+            var minDateIngreso = new Date(fechaIngreso.setDate(fechaIngreso.getDate() - 0)).toISOString().split("T")[0];
+
+            document.getElementById("FechaProximoSeguimiento").setAttribute('min', minDateSeguimiento);
+
+
+            document.getElementById("FechaIngresoSai").setAttribute('min', minDateIngreso);
+
 
             document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
             document.getElementById("txtFechaRealizacionPrueba").setAttribute('max', max);
 
-            document.getElementById("FechaProximoSeguimiento").setAttribute('min', minDate);
+            
+            document.getElementById("txtfechasifilis1").setAttribute('min', minDate);
+            document.getElementById("txtfechasifilis1").setAttribute('max', max);
+
+
+            document.getElementById("txtfechaHBsAg1").setAttribute('min', minDate);
+            document.getElementById("txtfechaHBsAg1").setAttribute('max', max);
+
+
+            document.getElementById("txtfechaHepatitis").setAttribute('min', minDate);
+            document.getElementById("txtfechaHepatitis").setAttribute('max', max);
 
         }
 

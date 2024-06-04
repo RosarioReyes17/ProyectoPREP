@@ -90,6 +90,9 @@ namespace ProyectoPREP.Controllers
             ViewBag.Peso = datos.Peso;
             ViewBag.Genero = datos.Genero;
 
+            //Agregado por Rosario este ViewBag
+            ViewBag.FechaIngresoSai = datos.FechaIngresoSai;
+
             return View();
         }
 
