@@ -91,7 +91,7 @@ namespace ProyectoPREP.Controllers
             ViewBag.Genero = datos.Genero;
 
             //Agregado por Rosario este ViewBag
-            ViewBag.FechaIngresoSai = datos.FechaIngresoSai;
+            ViewBag.FechaIngresoSai = datos.FechaIngresoSai.ToString("yyyy-MM-dd");
 
             return View();
         }
