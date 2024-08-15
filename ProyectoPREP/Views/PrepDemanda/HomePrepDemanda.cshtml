@@ -1,0 +1,111 @@
+﻿@model List<DatosGenerales>
+@using X.PagedList.Mvc.Core
+@using X.PagedList;
+
+@{
+    ViewBag.Title = "PREP DEMANDA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ProyectoPREP.Models.DbPrepContext Entidad = new ProyectoPREP.Models.DbPrepContext();
+}
+
+@* <link href="~/css/prepstyles.css" rel="stylesheet" />
+ *@
+
+
+
+<div>
+
+    <div class="panel-group">
+
+
+        <div class="panel panel-info">
+            <div class="panel-heading">Formulario de Selección Profilaxis Pre-Exposición <label>(PrEP Demanda)</label></div>
+            <div class="panel-body">
+
+                <form action="/DatosGenerales/CreateCedula" method="post">
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+
+                            <br />
+                            <a asp-action="ElegibilidadPrepDemanda" asp-controller="PrepDemanda" class="btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
+
+
+                        </div>
+                        <br />
+
+                        <div class="col-2">
+
+                            Ordenar por:
+                            <select id="EstatusSolicitud" name="EstatusSolicitud" onChange=nav(this.value) class="form-control">
+                                <option value="/DatosGenerales/DatosGeneralesPorElegibilidad">Elegibilidad</option>
+                                <option value="/DatosGenerales/DatosGeneralesPorPCR">Confirmación PCR</option>
+                                <option value="/DatosGenerales/DatosGeneralesPorTratamiento">Pendiente a Tratamiento PreP</option>
+                                <option value="/DatosGenerales/DatosGeneralesPorAprobado">Prep Aprobado</option>
+                                <option value="/DatosGenerales/DatosGeneralesPorRechazado">Prep Rechazado</option>
+                                <option value="/DatosGenerales/DatosGeneralesPorSuspendido">Prep Suspendida</option>
+
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div style="display: none;" id="tablaContainer">
+    <br>
+    <table id="miTabla" class="table display" data-role="table" width="100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Sexo</th>
+                <th>Documento</th>
+                <th>Nacionalidad</th>
+                <th>Fecha de registro</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+
+            </tr>
+        </thead>
+@*         <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Nombres</td>
+                    <td>@item.Apellidos</td>
+                    <td>@item.Sexo</td>
+                    <td>@item.Documento</td>
+                    <td>@item.NOMBRE_CORTO_ES</td>
+                    <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
+                    <td>
+                        <a class="btn btnElegibilidad " href="~/Elegibilidad/FormularioElegibilidad/@item.Id">Elegibilidad</a>
+
+                    </td> 
+                     <td>
+                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a title="Ver elegibilidad" class="btn btn-info " href="~/Elegibilidad/ElegibilidadVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a title="Transferir paciente" class="btn btnElegibilidad" href="~/GestionPacientes/Transferir/@item.Id"><i class="glyphicon glyphicon-transfer"></i></a>
+
+                    </td>
+
+                </tr>
+            }
+        </tbody> *@
+    </table>
+
+</div>
+
+
