@@ -55,6 +55,10 @@ public partial class DbPrepContext : DbContext
 
     public virtual DbSet<SeguimientosPrueba> SeguimientosPruebas { get; set; }
 
+    public virtual DbSet<TblPrepDemandaSeguimiento> TblPrepDemandaSeguimientos { get; set; }
+
+    public virtual DbSet<TblPrepDemandum> TblPrepDemanda { get; set; }
+
     public virtual DbSet<TratamientoPrep> TratamientoPreps { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
@@ -714,6 +718,111 @@ public partial class DbPrepContext : DbContext
             entity.Property(e => e.Vih)
                 .HasDefaultValueSql("((0))")
                 .HasColumnName("VIH");
+        });
+
+        modelBuilder.Entity<TblPrepDemandaSeguimiento>(entity =>
+        {
+            entity.HasKey(e => e.IdSeguimiento).HasName("PK__tbl_Prep__5643F60F2DAFBFC4");
+
+            entity.ToTable("tbl_Prep_Demanda_Seguimientos");
+
+            entity.Property(e => e.ConsultaSignosInfeccion).HasColumnName("Consulta_signos_infeccion");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaPruebaVih)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Prueba_VIH");
+            entity.Property(e => e.FechaSeguimiento).HasColumnType("datetime");
+            entity.Property(e => e.HbsAg).HasColumnName("HBsAg");
+            entity.Property(e => e.HbsAgFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("HBsAg_Fecha");
+            entity.Property(e => e.HepatitisC).HasColumnName("Hepatitis_C");
+            entity.Property(e => e.HepatitisCFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Hepatitis_C_Fecha");
+            entity.Property(e => e.MesesPrescripcion).HasColumnName("Meses_prescripcion");
+            entity.Property(e => e.PrepArvTafFtc).HasColumnName("Prep_ARV_TAF_FTC");
+            entity.Property(e => e.PrepArvTdf3tc).HasColumnName("Prep_ARV_TDF_3TC");
+            entity.Property(e => e.PrepArvTdfFtc).HasColumnName("Prep_ARV_TDF_FTC");
+            entity.Property(e => e.RepeticionPrepPrescrita).HasColumnName("Repeticion_Prep_Prescrita");
+            entity.Property(e => e.ResultadoPruebaVih).HasColumnName("Resultado_Prueba_VIH");
+            entity.Property(e => e.SifilisFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Sifilis_Fecha");
+            entity.Property(e => e.SignosVitalesFc).HasColumnName("SignosVitales_FC");
+            entity.Property(e => e.SignosVitalesFr).HasColumnName("SignosVitales_FR");
+            entity.Property(e => e.SignosVitalesTa).HasColumnName("SignosVItales_TA");
+            entity.Property(e => e.TallaPies).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.TallaPulgadas).HasColumnType("decimal(18, 0)");
+
+            entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.TblPrepDemandaSeguimientos)
+                .HasForeignKey(d => d.IdPaciente)
+                .HasConstraintName("FK__tbl_Prep___IdPac__39CD8610");
+        });
+
+        modelBuilder.Entity<TblPrepDemandum>(entity =>
+        {
+            entity.HasKey(e => e.IdPaciente).HasName("PK__tbl_Prep__C93DB49BA00F9892");
+
+            entity.ToTable("tbl_Prep_Demanda");
+
+            entity.Property(e => e.AclaramientoCreatinina).HasColumnName("Aclaramiento_Creatinina");
+            entity.Property(e => e.Apellidos).HasMaxLength(100);
+            entity.Property(e => e.Ars).HasColumnName("ARS");
+            entity.Property(e => e.CantParejasSexuales).HasColumnName("Cant_Parejas_Sexuales");
+            entity.Property(e => e.DrogasIlicitas).HasColumnName("Drogas_Ilicitas");
+            entity.Property(e => e.FechaCreatinina).HasColumnType("datetime");
+            entity.Property(e => e.FechaEntregaVih)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Entrega_VIH");
+            entity.Property(e => e.FechaIngresoSai)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Ingreso_SAI");
+            entity.Property(e => e.FechaInicioPrep)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Inicio_Prep");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaNacimiento)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Nacimiento");
+            entity.Property(e => e.FechaProximoSeguimiento).HasColumnType("datetime");
+            entity.Property(e => e.FechaPruebaVih)
+                .HasColumnType("datetime")
+                .HasColumnName("Fecha_Prueba_VIH");
+            entity.Property(e => e.HbsAg).HasColumnName("HBsAg");
+            entity.Property(e => e.HbsAgFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("HBsAg_Fecha");
+            entity.Property(e => e.HepatitisC).HasColumnName("Hepatitis_C");
+            entity.Property(e => e.HepatitisCFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Hepatitis_C_Fecha");
+            entity.Property(e => e.ItsDiagnosticoPresuntivo).HasColumnName("ITS_Diagnostico_Presuntivo");
+            entity.Property(e => e.MesesPrescripcion).HasColumnName("Meses_prescripcion");
+            entity.Property(e => e.NombreArs).HasColumnName("NombreARS");
+            entity.Property(e => e.Nombres).HasMaxLength(100);
+            entity.Property(e => e.Peso).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.PrepArvTafFtc).HasColumnName("Prep_ARV_TAF_FTC");
+            entity.Property(e => e.PrepArvTdf3tc).HasColumnName("Prep_ARV_TDF_3TC");
+            entity.Property(e => e.PrepArvTdfFtc).HasColumnName("Prep_ARV_TDF_FTC");
+            entity.Property(e => e.ResultadoCreatinina).HasColumnName("Resultado_Creatinina");
+            entity.Property(e => e.ResultadoPruebaVih).HasColumnName("Resultado_Prueba_VIH");
+            entity.Property(e => e.SecrecionUretral).HasColumnName("Secrecion_uretral");
+            entity.Property(e => e.SecrecionVaginal).HasColumnName("Secrecion_vaginal");
+            entity.Property(e => e.SeronegativoVih).HasColumnName("Seronegativo_VIH");
+            entity.Property(e => e.Sexo).HasMaxLength(1);
+            entity.Property(e => e.SexoConVihpositivo).HasColumnName("SexoConVIHPositivo");
+            entity.Property(e => e.SexoPorBienes).HasColumnName("Sexo_Por_Bienes");
+            entity.Property(e => e.SexoPorBienesPareja).HasColumnName("Sexo_Por_Bienes_Pareja");
+            entity.Property(e => e.SexoSinProteccion).HasColumnName("Sexo_Sin_Proteccion");
+            entity.Property(e => e.SifilisFecha)
+                .HasColumnType("datetime")
+                .HasColumnName("Sifilis_Fecha");
+            entity.Property(e => e.TieneDocumentos).HasColumnName("Tiene_documentos");
+            entity.Property(e => e.TienesRelacionesCon).HasColumnName("Tienes_Relaciones_Con");
+            entity.Property(e => e.UlceraGenital).HasColumnName("Ulcera_genital");
+            entity.Property(e => e.ValorCreatinina).HasColumnName("Valor_Creatinina");
+            entity.Property(e => e.VerrugasGenitales).HasColumnName("Verrugas_genitales");
         });
 
         modelBuilder.Entity<TratamientoPrep>(entity =>
