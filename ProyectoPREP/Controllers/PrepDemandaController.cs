@@ -10,16 +10,21 @@ using System.Security.Claims;
 namespace ProyectoPREP.Controllers
 {
     [Authorize(Roles = "Administrador,Psicólogo Medicos")]
-    public class PrepDemanda : Controller
+    public class PrepDemandaController : Controller
 	{
 		// GET: PrepDemanda
 		DbPrepContext db;
-		public PrepDemanda(DbPrepContext _db)
+		public PrepDemandaController(DbPrepContext _db)
 		{
 
 			this.db = _db;
 		}
 		public ActionResult ElegibilidadPrepDemanda()
+		{
+			return View();
+		}
+		
+		public ActionResult SeguimientoPrepDemanda()
 		{
 			return View();
 		}
