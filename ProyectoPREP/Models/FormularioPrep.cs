@@ -10,7 +10,6 @@ public partial class FormularioPrep
     public string? TienesRelacionesCon { get; set; }
 
     public string? DrogasIlicitas { get; set; }
-    public string ContactoConfianza { get; }
 
     public string? SexoPorBienes { get; set; }
 
@@ -37,6 +36,8 @@ public partial class FormularioPrep
     public DateTime? FechaModificacion { get; set; }
 
     public DateTime? FechaReintegro { get; set; }
+
+    public string? ContactoConfianza { get; set; }
 
     public virtual DatosGenerale DatosGenerales { get; set; } = null!;
 

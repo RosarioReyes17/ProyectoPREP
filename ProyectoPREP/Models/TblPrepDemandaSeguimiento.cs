@@ -71,5 +71,5 @@ public partial class TblPrepDemandaSeguimiento
 
     public DateTime? FechaModificacion { get; set; }
 
-    public virtual TblPrepDemandum? IdPacienteNavigation { get; set; }
+    public virtual TblPrepDemanda? IdPacienteNavigation { get; set; }
 }

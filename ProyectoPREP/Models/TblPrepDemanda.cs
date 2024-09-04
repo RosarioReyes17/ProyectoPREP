@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProyectoPREP.Models;
 
-public partial class TblPrepDemandum
+public partial class TblPrepDemanda
 {
     public int IdPaciente { get; set; }
 
@@ -48,6 +48,8 @@ public partial class TblPrepDemandum
     public string? NombreArs { get; set; }
 
     public string? Regimen { get; set; }
+
+    public string? ContactoConfianza { get; set; }
 
     public string? NombreContacto { get; set; }
 

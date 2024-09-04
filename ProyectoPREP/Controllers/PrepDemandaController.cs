@@ -21,7 +21,34 @@ namespace ProyectoPREP.Controllers
 		}
 		public ActionResult ElegibilidadPrepDemanda()
 		{
+
 			return View();
+		}
+
+
+		[HttpPost]
+		public ActionResult ElegibilidadPrepDemanda(TblPrepDemanda datos)
+		{
+			try
+            {
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+				datos.IdDeptoDepend = IdDeptoDepend;
+				datos.Usuario = Convert.ToString(idUser);
+                //db.TblPrepDemanda.Add(datos);
+                //db.SaveChanges();
+
+                return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+			
 		}
 		
 		public ActionResult SeguimientoPrepDemanda()

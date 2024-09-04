@@ -57,7 +57,7 @@ public partial class DbPrepContext : DbContext
 
     public virtual DbSet<TblPrepDemandaSeguimiento> TblPrepDemandaSeguimientos { get; set; }
 
-    public virtual DbSet<TblPrepDemandum> TblPrepDemanda { get; set; }
+    public virtual DbSet<TblPrepDemanda> TblPrepDemanda { get; set; }
 
     public virtual DbSet<TratamientoPrep> TratamientoPreps { get; set; }
 
@@ -722,7 +722,7 @@ public partial class DbPrepContext : DbContext
 
         modelBuilder.Entity<TblPrepDemandaSeguimiento>(entity =>
         {
-            entity.HasKey(e => e.IdSeguimiento).HasName("PK__tbl_Prep__5643F60F2DAFBFC4");
+            entity.HasKey(e => e.IdSeguimiento).HasName("PK__tbl_Prep__5643F60F4EDA367A");
 
             entity.ToTable("tbl_Prep_Demanda_Seguimientos");
 
@@ -757,12 +757,12 @@ public partial class DbPrepContext : DbContext
 
             entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.TblPrepDemandaSeguimientos)
                 .HasForeignKey(d => d.IdPaciente)
-                .HasConstraintName("FK__tbl_Prep___IdPac__39CD8610");
+                .HasConstraintName("FK__tbl_Prep___IdPac__3E923B2D");
         });
 
-        modelBuilder.Entity<TblPrepDemandum>(entity =>
+        modelBuilder.Entity<TblPrepDemanda>(entity =>
         {
-            entity.HasKey(e => e.IdPaciente).HasName("PK__tbl_Prep__C93DB49BA00F9892");
+            entity.HasKey(e => e.IdPaciente).HasName("PK__tbl_Prep__C93DB49B92DF40B7");
 
             entity.ToTable("tbl_Prep_Demanda");
 

@@ -103,7 +103,7 @@ public partial class VwPrepPacientesSeguimientosUltimo
 
     public DateTime? FechaRegistroSeguimiento { get; set; }
 
-    public int? MesesPrescripcionDias { get; set; }
+    public int MesesPrescripcionDias { get; set; }
 
     public int? MesesPrescripcionDiasVence { get; set; }
 
