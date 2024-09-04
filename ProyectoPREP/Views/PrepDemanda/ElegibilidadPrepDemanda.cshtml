@@ -8,49 +8,49 @@
 
 
 <form id="formulario" action="/PrepDemanda/ElegibilidadPrepDemanda" method="post">
-@* 	<div id="divValidarUsuario" class="form-visible">
-		<h3>Identificarse en PrEP</h3>
-		<table class="table">
-			<tbody>
-				<tr style="display:none">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
+	@* 	<div id="divValidarUsuario" class="form-visible">
+	<h3>Identificarse en PrEP</h3>
+	<table class="table">
+	<tbody>
+	<tr style="display:none">
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	</tr>
+	<tr>
 
-					<td>
-						<strong>Tipo de Identificación(*):</strong>	
-						<select style="width:486.29px" id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required>
-							<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
-							<option value="/DatosGenerales/CreateCedula">Cédula</option>
-							<option value="/DatosGenerales/CreatePasaporte">Pasaporte</option>
-							<option value="/DatosGenerales/CreateNSS">NSS</option>
-						</select>
-					</td>
-					<td style="display:none">
-						<strong>Identificación:</strong>
-						<input type="text" id="Identificacion" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required>
+	<td>
+	<strong>Tipo de Identificación(*):</strong>
+	<select style="width:486.29px" id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required>
+	<option value="/DatosGenerales/CreateSinDocumento">Sin Documentación</option>
+	<option value="/DatosGenerales/CreateCedula">Cédula</option>
+	<option value="/DatosGenerales/CreatePasaporte">Pasaporte</option>
+	<option value="/DatosGenerales/CreateNSS">NSS</option>
+	</select>
+	</td>
+	<td style="display:none">
+	<strong>Identificación:</strong>
+	<input type="text" id="Identificacion" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required>
 
-					</td>
-					<td style="display:none" colspan="2">
-						<br>
-						<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;">
-					</td>
+	</td>
+	<td style="display:none" colspan="2">
+	<br>
+	<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="display:initial; margin-bottom:0px;background-color: #2184be; color:white; display:block;">
+	</td>
 
-				</tr>
-				<tr id="trLoading" style="display:none;">
-					<td colspan="4" style="text-align:center;">
-						<img src="~/Content/images/ajax-loader.gif">
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	</tr>
+	<tr id="trLoading" style="display:none;">
+	<td colspan="4" style="text-align:center;">
+	<img src="~/Content/images/ajax-loader.gif">
+	</td>
+	</tr>
+	</tbody>
+	</table>
 	</div> *@
 	<div id="divFormPrEP" class="form-invisible">
 
-@* 		<div id="divDatosGenerales" style="display: block; border: 2px solid #005476; padding: 10px;"> *@
+		@* 		<div id="divDatosGenerales" style="display: block; border: 2px solid #005476; padding: 10px;"> *@
 		<div id="divDatosGenerales" style="display: block;">
 
 			<tr>
@@ -72,7 +72,7 @@
 
 			<table class="table">
 				<tbody>
-					
+
 					<tr>
 						<td>
 							1. Nombres (*):
@@ -103,7 +103,7 @@
 
 					<tr>
 						<td>
-							3. ¿Tiene cédula o pasaporte? (*):					
+							3. ¿Tiene cédula o pasaporte? (*):
 							<select asp-for="DatosGenerales.TieneDocumentos" class="form-control" onchange="habilitarInput()" id="ddlDocumentoOpcion" name="DatosGenerales.TieneDocumentos" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="SI">SI</option>
@@ -125,9 +125,9 @@
 							<span asp-validation-for="DatosGenerales.FechaNacimiento" style="color:red; margin-left:20px"></span>
 						</td>
 					</tr>
-					
+
 					<tr>
-						
+
 
 						<td>
 							6. Nacionalidad (*):
@@ -157,7 +157,7 @@
 								<option value="82">BELICENA</option>
 								<option value="9">BOLIVIANA</option>
 								<option value="124">BOSNIA</option>
-									<option value="10">BRASILEÑA</option>
+								<option value="10">BRASILEÑA</option>
 								<option value="79">BRITANICA</option>
 								<option value="27">BULGARA</option>
 								<option value="105">CABOVERDIANA</option>
@@ -457,7 +457,7 @@
 							<span asp-validation-for="DatosGenerales.Sector" style="color:red;margin-left:30px"></span>
 
 						</td>
-						
+
 						<td>
 							10. Provincia (*):
 							<select asp-for="DatosGenerales.ProvinciaResidencia" onchange="llenarMunicipio()" class="form-control" id="ProvinciaResidencia" name="DatosGenerales.ProvinciaResidencia" data-val="true" data-val-required="Este campo obligatorio.">
@@ -506,7 +506,7 @@
 							<span asp-validation-for="DatosGenerales.MunicipioResidencia" style="color:red;margin-left:30px"></span>
 
 						</td>
-						
+
 
 					</tr>
 					<tr>
@@ -536,17 +536,17 @@
 
 
 
-					@* 	<td>
-							13. Talla Pie(*):<br>
-							<input asp-for="DatosGenerales.TallaPies" id="txtTallaPies" name="DatosGenerales.TallaPies" class="form-control" type="text" placeholder="Introduzca su Talla en Pie." data-val="true" data-val-required="Este campo es obligatorio.">
-							<span asp-validation-for="DatosGenerales.TallaPies" lang="es-do" style="color:red;margin-left:30px"></span>
+						@* 	<td>
+						13. Talla Pie(*):<br>
+						<input asp-for="DatosGenerales.TallaPies" id="txtTallaPies" name="DatosGenerales.TallaPies" class="form-control" type="text" placeholder="Introduzca su Talla en Pie." data-val="true" data-val-required="Este campo es obligatorio.">
+						<span asp-validation-for="DatosGenerales.TallaPies" lang="es-do" style="color:red;margin-left:30px"></span>
 						</td>
 
 						<td>
-							14. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="number"
-										 min="0" max="12" placeholder="Introduzca su Talla en Pulgadas."
-										 oninput="tallaPulgadaValidate(this)">
-							<span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:30px"></span>
+						14. Talla Pulgadas(*):<br> <input asp-for="DatosGenerales.TallaPulgadas" id="TallaPulgadas" name="DatosGenerales.TallaPulgadas" class="form-control" type="number"
+						min="0" max="12" placeholder="Introduzca su Talla en Pulgadas."
+						oninput="tallaPulgadaValidate(this)">
+						<span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:30px"></span>
 						</td> *@
 					</tr>
 					<tr>
@@ -573,7 +573,7 @@
 							<span asp-validation-for="DatosGenerales.Sexo" style="color:red;margin-left:30px"></span>
 
 						</td>
-						
+
 					</tr>
 
 
@@ -695,7 +695,7 @@
 
 						</td>
 					</tr>
-					
+
 
 				</tbody>
 			</table>
@@ -877,6 +877,215 @@
 					</tbody>
 				</table>
 			</div>
+
+
+			<div id="divPrEPTratamiento">
+
+				<div class="tituloDiv"><strong>Pruebas Diagnósticas Iniciales</strong></div>
+
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>
+								<div class="form-group col-md-6">
+									<label style="color:red">
+										Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
+										<input type="checkbox" id="chkHormonal" onchange="calcularCreatininaCheck()" name="chkHormonal" value="true" disabled>
+
+									</label>
+									<br />
+
+									Resultado de Creatinina(Plasmatica):
+									<br>
+									<input id="txtResultadoCreatinina" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="calcularCreatinina(value);" asp-for="SexoConVihpositivo" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+									<br>
+
+									Fecha:
+									<br>
+									<input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="FechaResultadoCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+									<br>
+									Resultado:
+									<br>
+									<input id="ResultadoCreatinina" disabled readonly asp-for="SexoConVihpositivo" name="ResultadoCreatinina" class="form-control segundaParte" />
+								</div>
+							</td>
+							<td colspan="2">
+
+
+								Rango valores de Creatinina
+								<br>
+								<ul>
+									<li> 61-70 ml/min</li>
+									<li>71-80 ml/min</li>
+									<li>81-90 ml/min</li>
+									<li>91-100 ml/min</li>
+									<li>&gt;100 ml/min</li>
+								</ul>
+
+								@*                             <input id="chkCreatinina2" name="creatinina" class="styled" type="radio" value="61-70 ml/min" disabled /> 61-70 ml/min
+								<input id="chkCreatinina3" name="creatinina" class="styled" type="radio" value="71-80 ml/min" disabled /> 71-80 ml/min
+								<br>
+								<input id="chkCreatinina4" name="creatinina" class="styled" type="radio" value="81-90 ml/min" disabled /> 81-90 ml/min
+								<input id="chkCreatinina5" name="creatinina" class="styled" type="radio" value="91-100 ml/min" disabled /> 91-100 ml/min
+								<br>
+								<input id="chkCreatinina6" name="creatinina" class="styled" type="radio" value=">100 ml/min" disabled /> &gt;100 ml/min
+								*@                            <br>
+								<span style="font-size:1em;">
+									- Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
+									- Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
+									- Utilizar la fórmula de mujeres en mujeres biológicas y Trans que <br>tengan más de 6 meses en terapia de reemplazo hormonal.
+
+								</span>
+							</td>
+							<td>
+								Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
+								<div class="radio radio-info">
+									<input id="chkaclaramiento1" required asp-for="SexoConVihpositivo" data-val="true" data-val-required="Este campo es obligatorio." name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="Si" readonly>
+									<label for="chkaclaramiento1">
+										Si
+									</label>
+								</div>
+								<div class="radio radio-info">
+									<input id="chkaclaramiento2" required asp-for="SexoConVihpositivo" name="AclaramientoCreatinina" disabled class="styled segundaParte" type="radio" value="No" readonly>
+									<label for="chkaclaramiento2">
+										No
+									</label>
+								</div>
+								<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:20px"></span>
+							</td>
+
+
+
+						</tr>
+						<tr>
+
+							<td class="col-md-3">
+
+
+								<div class="form-group radio">
+									Sifilis(VDRL) Realizada:
+									<br />
+									<br />
+
+									<div style="margin-left: 24px;">
+										<input id="rdsifilis1" asp-for="SexoConVihpositivo" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" disabled class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+										<label for="rdsifilis1">No Reactivo</label>
+
+
+									</div>
+									<div style="margin-left: 24px;">
+										<input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" asp-for="SexoConVihpositivo" disabled class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+										<label for="rdsifilis2">Reactivo</label>
+									</div>
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+
+									<br />
+									<input id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="SexoConVihpositivo" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+									<br />
+									<br />
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+								</div>
+
+
+							</td>
+							<td class="col-md-3">
+
+
+								<div class="form-group radio ">
+									HBsAg Realizada:
+									<br />
+									<br />
+
+									<div style="margin-left: 24px;">
+										<input id="rdHBsAg1" asp-for="SexoConVihpositivo" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+										<label for="rdHBsAg1">Negativo</label>
+									</div>
+
+									<div style="margin-left: 24px;">
+										<input id="rdHBsAg2" asp-for="SexoConVihpositivo" required onclick="habilitarInputHBsAg(value);" disabled class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
+										<label for="rdHBsAg2">Positivo</label>
+									</div>
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+									<br />
+
+									<input id="txtfechaHBsAg1" data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+									<br />
+									<br />
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+								</div>
+							</td>
+
+							<td class="col-md-3">
+
+								<div class="form-group radio">
+									Hepatitis C Realizada:
+									<br />
+									<br />
+									<div style="margin-left:24px">
+										<input id="rdHepatitis1" asp-for="SexoConVihpositivo" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
+										<label for="rdHepatitis1">Negativo</label>
+									</div>
+
+									<div style="margin-left:24px">
+										<input id="rdHepatitis2" asp-for="SexoConVihpositivo" required onclick="habilitarInputHepatitis(value);" disabled class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
+										<label for="rdHepatitis2">Positivo</label>
+									</div>
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+
+									<br />
+									<input id="txtfechaHepatitis" onkeydown="return false" asp-for="SexoConVihpositivo" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+									<br />
+									<br />
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+								</div>
+							</td>
+							<td class="col-md-3">
+
+								<div class="radio form-group">
+									ITS sindrómico:
+									<br />
+									<br />
+
+									<div style="margin-left: 24px;">
+
+										<input id="ITDSindromico2" asp-for="SexoConVihpositivo" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
+										<label for="ITDSindromico2">Si</label>
+
+									</div>
+
+									<div style="margin-left: 24px;">
+										<input id="ITDSindromico1" asp-for="SexoConVihpositivo" required onclick="habilitarInputsindrómico(value);" disabled class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+										<label for="ITDSindromico1">No</label>
+									</div>
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+
+									<br>
+									<input name="SecrecionUretral" class="sindromico" type="checkbox" value="true" disabled /> Secrecion Uretral
+									<br>
+									<input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" disabled /> Secrecion Vaginal
+									<br>
+									<input name="UlceraGenital" class="sindromico" type="checkbox" value="true" disabled /> Ulcera genital
+									<br>
+									<input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" disabled /> Verrugas genitales
+									<br />
+									<span style="color:red">@TempData["Sindromico"]</span>
+
+								</div>
+
+
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+
+
+
 		</div>
 	</div>
 
