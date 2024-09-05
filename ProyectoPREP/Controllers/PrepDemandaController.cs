@@ -36,7 +36,9 @@ namespace ProyectoPREP.Controllers
 
 				datos.IdDeptoDepend = IdDeptoDepend;
 				datos.Usuario = Convert.ToString(idUser);
-                //db.TblPrepDemanda.Add(datos);
+
+				//REVISAR - LE QUITÉ EL COMENTARIO PARA VER SI LOS DATOS ESTABAN LLEGANDO
+                db.TblPrepDemanda.Add(datos);
                 //db.SaveChanges();
 
                 return RedirectToAction("HomePrepDemanda", "PrepDemanda");
