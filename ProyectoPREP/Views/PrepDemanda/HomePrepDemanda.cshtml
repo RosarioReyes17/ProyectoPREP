@@ -1,4 +1,4 @@
-﻿@model List<DatosGenerales>
+﻿@model List<TblPrepDemanda>
 @using X.PagedList.Mvc.Core
 @using X.PagedList;
 
@@ -22,40 +22,25 @@
             <div class="panel-heading">Formulario de Selección Profilaxis Pre-Exposición <label>(PrEP Demanda)</label></div>
             <div class="panel-body">
 
-                <form action="/DatosGenerales/CreateCedula" method="post">
-
-                    <div class="row">
-
-                        <div class="col-md-2">
-
-                            <br />
-                            
-                            <a asp-action="ElegibilidadPrepDemanda" asp-controller="PrepDemanda" class="btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
-                            <br />
-                            <a asp-action="SeguimientoPrepDemanda" asp-controller="PrepDemanda" class="btn btn-success"><i class="fa fa-plus"></i> Seguimiento</a>
 
 
-                        </div>
+                <div class="row">
+
+                    <div class="col-md-2">
+
                         <br />
-
-                        @* <div class="col-2">
-
-                            Ordenar por:
-                            <select id="EstatusSolicitud" name="EstatusSolicitud" onChange=nav(this.value) class="form-control">
-                                <option value="/DatosGenerales/DatosGeneralesPorElegibilidad">Elegibilidad</option>
-                                <option value="/DatosGenerales/DatosGeneralesPorPCR">Confirmación PCR</option>
-                                <option value="/DatosGenerales/DatosGeneralesPorTratamiento">Pendiente a Tratamiento PreP</option>
-                                <option value="/DatosGenerales/DatosGeneralesPorAprobado">Prep Aprobado</option>
-                                <option value="/DatosGenerales/DatosGeneralesPorRechazado">Prep Rechazado</option>
-                                <option value="/DatosGenerales/DatosGeneralesPorSuspendido">Prep Suspendida</option>
-
-                            </select>
-                        </div> *@
+                            
+                        <a asp-action="ElegibilidadPrepDemanda" asp-controller="PrepDemanda" class="btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
 
 
                     </div>
+                    <br />
 
-                </form>
+                     
+
+                </div>
+
+
 
             </div>
         </div>
@@ -80,31 +65,26 @@
 
             </tr>
         </thead>
-@*         <tbody>
+        <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Id</td>
+                    <td>@item.IdPaciente</td>
                     <td>@item.Nombres</td>
                     <td>@item.Apellidos</td>
                     <td>@item.Sexo</td>
-                    <td>@item.Documento</td>
-                    <td>@item.NOMBRE_CORTO_ES</td>
-                    <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
+                    <td>@item.Nacionalidad</td>
+                    <td>@item.FechaIngresoSai.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     <td>
-                        <a class="btn btnElegibilidad " href="~/Elegibilidad/FormularioElegibilidad/@item.Id">Elegibilidad</a>
+                        <a class="btn btnElegibilidad " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.IdPaciente">Seguimiento</a>
+                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/PrepDemanda/DemandaEditar/@item.IdPaciente"><i class="glyphicon glyphicon-pencil"></i></a>
 
                     </td> 
-                     <td>
-                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/DatosGenerales/EditarDatosGenerales/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a title="Ver elegibilidad" class="btn btn-info " href="~/Elegibilidad/ElegibilidadVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
-                        <a title="Transferir paciente" class="btn btnElegibilidad" href="~/GestionPacientes/Transferir/@item.Id"><i class="glyphicon glyphicon-transfer"></i></a>
-
-                    </td>
+                  
 
                 </tr>
             }
-        </tbody> *@
+        </tbody>
     </table>
 
 </div>

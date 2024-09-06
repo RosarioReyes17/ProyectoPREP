@@ -7,8 +7,12 @@
 </div>
 
 
-<form id="formulario" action="/PrepDemanda/ElegibilidadPrepDemanda" method="post">
-	
+<form id="formulario" action="/PrepDemanda/DemandaEditar" method="post">
+
+	@Html.HiddenFor(d => d.IdPaciente)
+	@Html.HiddenFor(d => d.Usuario)
+	@Html.HiddenFor(d => d.IdDeptoDepend)
+
 	<div id="divFormPrEP" class="form-invisible">
 
 		<div id="divDatosGenerales" style="display: block;">
@@ -766,7 +770,7 @@
 								Fecha de realización (Prueba VIH) (*):
 								<br>
 								<div class="form-group col-md-8">
-									<input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date">
+									<input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date">
 									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
 								</div>
 							</td>
@@ -820,7 +824,7 @@
 								<div class="form-group col-md-6">
 									<label style="color:red">
 										Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
-										<input type="checkbox" id="chkHormonal" onchange="calcularCreatininaCheck()" name="chkHormonal" value="true" >
+										<input type="checkbox" id="chkHormonal" onchange="calcularCreatininaCheck()" name="chkHormonal" value="true">
 
 									</label>
 									<br />
@@ -854,7 +858,7 @@
 									<li>&gt;100 ml/min</li>
 								</ul>
 
-								                        <br>
+								<br>
 								<span style="font-size:1em;">
 									- Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
 									- Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
@@ -865,13 +869,13 @@
 							<td>
 								Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
 								<div class="radio radio-info">
-									<input id="chkaclaramiento1" required asp-for="AclaramientoCreatinina" data-val="true" data-val-required="Este campo es obligatorio." name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="Si" readonly>
+									<input id="chkaclaramiento1" required asp-for="AclaramientoCreatinina" data-val="true" data-val-required="Este campo es obligatorio." name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="Si">
 									<label for="chkaclaramiento1">
 										Si
 									</label>
 								</div>
 								<div class="radio radio-info">
-									<input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="No" readonly>
+									<input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="No">
 									<label for="chkaclaramiento2">
 										No
 									</label>
@@ -905,10 +909,10 @@
 									<span asp-validation-for="Sifilis" style="color:red;"></span>
 
 									<br />
-									<input id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+									<input id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
 									<br />
 									<br />
-									<span asp-validation-for="SifilisFecha" style="color:red;"></span>
+									<span asp-validation-for="SifilisFecha"  style="color:red;"></span>
 								</div>
 
 
@@ -922,7 +926,7 @@
 									<br />
 
 									<div style="margin-left: 24px;">
-										<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);"  class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+										<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);" class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
 										<label for="rdHBsAg1">Negativo</label>
 									</div>
 
@@ -979,19 +983,19 @@
 									</div>
 
 									<div style="margin-left: 24px;">
-										<input id="ITDSindromico1" asp-for="SexoConVihpositivo" required onclick="habilitarInputsindrómico(value);"  class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+										<input id="ITDSindromico1" asp-for="SexoConVihpositivo" required onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
 										<label for="ITDSindromico1">No</label>
 									</div>
 									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
 
 									<br>
-									<input name="SecrecionUretral" class="sindromico" type="checkbox" value="true"  /> Secrecion Uretral
+									<input name="SecrecionUretral" class="sindromico" type="checkbox" value="true" /> Secrecion Uretral
 									<br>
-									<input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true"  /> Secrecion Vaginal
+									<input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" /> Secrecion Vaginal
 									<br>
-									<input name="UlceraGenital" class="sindromico" type="checkbox" value="true"  /> Ulcera genital
+									<input name="UlceraGenital" class="sindromico" type="checkbox" value="true" /> Ulcera genital
 									<br>
-									<input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true"  /> Verrugas genitales
+									<input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" /> Verrugas genitales
 									<br />
 									<span style="color:red">@TempData["Sindromico"]</span>
 
@@ -1007,11 +1011,11 @@
 			<div id="divTratamientoPrep">
 				<h3 style="background-color:#005476; color:white; font-size:22px">Tratamiento de la PrEP</h3>
 
-				
+
 				<table class="table">
 					<tbody>
 						<tr>
-							
+
 							<td>
 								<strong>PrEP(ARV) Prescrita:</strong>
 								<br>
@@ -1038,7 +1042,7 @@
 
 								<div class="form-group col-md-7">
 									<strong>Fecha Próximo seguimiento:</strong>
-									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
 								</div>
 							</td>
 						</tr>
@@ -1065,7 +1069,7 @@
 
 	<div id="divMensaje" style="color:red;"></div>
 	<div id="divBotones" style="display: block;">
-		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
+		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Editar</button>
 		<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
 		<br />
 		<br />

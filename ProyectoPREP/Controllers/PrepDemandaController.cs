@@ -39,7 +39,7 @@ namespace ProyectoPREP.Controllers
 
 				//REVISAR - LE QUITÉ EL COMENTARIO PARA VER SI LOS DATOS ESTABAN LLEGANDO
                 db.TblPrepDemanda.Add(datos);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 return RedirectToAction("HomePrepDemanda", "PrepDemanda");
 
@@ -53,18 +53,81 @@ namespace ProyectoPREP.Controllers
 			
 		}
 		
-		public ActionResult SeguimientoPrepDemanda()
+		public ActionResult SeguimientoPrepDemanda(int id)
 		{
+
+			var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
+			var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+
+			ViewBag.Nombre = datos.Nombres;
+			ViewBag.Apellido = datos.Apellidos;
+
+			ViewBag.Sexo = datos.Sexo;
+			ViewBag.nacionalidad = nacionalidad.Nacionalidad;
+			ViewBag.IdPaciente = datos.IdPaciente;
 			return View();
 		}
 
 
         public ActionResult HomePrepDemanda()
         {
-            return View();
+			int idUser = Convert.ToInt32(User.GetUserId());
+			int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+			string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+
+			var lista = new List<TblPrepDemanda>();
+			string sql = "ListaPrep_Demanda";
+			string sqlAdmin = "ListaPrep_Demanda";
+
+			if (admin == "Administrador")
+			{
+				using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+				{
+					lista = connection.Query<TblPrepDemanda>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+					return View(lista);
+
+				}
+			}
+
+
+			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+			{
+				lista = connection.Query<TblPrepDemanda>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+			}
+
+			return View(lista);
         }
 
-        public ActionResult DatosGeneralesPorElegibilidad(int id)
+
+		public ActionResult DemandaEditar(int id)
+		{
+            var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
+            var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+            return View(datos);
+		}
+
+
+		[HttpPost]
+		public ActionResult DemandaEditar(int idPaciente,TblPrepDemanda demanda)
+		{
+
+			int idUser = Convert.ToInt32(User.GetUserId());
+			int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+			demanda.FechaModificacion = DateTime.Now;
+			demanda.UsuarioModifico = Convert.ToString(idUser);
+			demanda.IdDeptoDepend = IdDeptoDepend;
+
+			db.Entry(demanda).State = EntityState.Modified;
+			db.SaveChanges();
+			return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+
+		}
+
+		public ActionResult DatosGeneralesPorElegibilidad(int id)
         {
             int idUser = Convert.ToInt32(User.GetUserId());
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
@@ -97,73 +160,12 @@ namespace ProyectoPREP.Controllers
         }
 
 
-        // GET: PrepDemanda/Details/5
-        public ActionResult Details(int id)
-		{
-			return View();
-		}
+       
 
-		// GET: PrepDemanda/Create
-		public ActionResult Create()
-		{
-			return View();
-		}
+	
 
-		// POST: PrepDemanda/Create
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Create(IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}
+	
 
-		// GET: PrepDemanda/Edit/5
-		public ActionResult Edit(int id)
-		{
-			return View();
-		}
-
-		// POST: PrepDemanda/Edit/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}
-
-		// GET: PrepDemanda/Delete/5
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
-		// POST: PrepDemanda/Delete/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}
+		
 	}
 }

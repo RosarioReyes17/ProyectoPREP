@@ -8,13 +8,11 @@
 
     <h5>Información del Paciente</h5>
     <strong>ID PREP:</strong>
-@*     <span>@ViewBag.IdDatos</span>
- *@    <span>2</span>
+    <span>@ViewBag.IdPaciente</span>
     <br>
 
     <strong>Paciente PREP:</strong>
-@*     <span id="spPacienteNombre" name="spEsatus">@ViewBag.Nombre</span>
- *@    <span id="spPacienteNombre" name="spEsatus">probando perez</span>
+    <span id="spPacienteNombre" name="spEsatus">@ViewBag.Nombre</span>
     <br>
 
 </div>
@@ -22,7 +20,7 @@
 
 
 <form id="formularioSeguimiento" asp-action="SeguimientoPrep" asp-controller="Seguimientos" method="post">
-    <input type="hidden" id="IdDatos" name="IdDatos" value="@ViewBag.IdDatos" />
+    <input type="hidden" id="IdDatos" name="IdDatos" value="@ViewBag.IdPaciente" />
     <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
     <input name="" id="genero" type="hidden" value="@ViewBag.Genero" />
     <input name="" id="FechaIngresoSai" type="hidden" value="@ViewBag.FechaIngresoSai" />
