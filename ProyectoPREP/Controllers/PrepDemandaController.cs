@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProyectoPREP.Models;
+using ProyectoPREP.Padron;
 using System.Data.SqlClient;
 using System.Security.Claims;
 
@@ -160,12 +161,158 @@ namespace ProyectoPREP.Controllers
         }
 
 
-       
 
-	
+		[HttpPost]
+		public ActionResult BuscarEnPadron(string Seleccion, string Prefix)
+		{
 
-	
+			var result = new object { };
+			bool status = false;
+			var msj = "";
+			Padron_Imp InfoPaciente = null;
+			int Resultado = 0;
+			var SolicitudPrep = db.TblPrepDemanda.Where(x => x.Documento == Prefix).FirstOrDefault();
+			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
 
-		
+
+			if (SolicitudPrep != null)
+			{
+
+				msj = "El Ciudadano posee actualmente una solicitud de PrEP con el ID: " + SolicitudPrep.IdPaciente + " " + SolicitudPrep.Nombres +
+					" " + SolicitudPrep.Apellidos + " " + centros.FirstOrDefault().NombreCentro;
+
+				result = new
+				{
+					status,
+					msj
+				};
+				return Json(result);
+
+
+			}
+			else
+			{
+
+				//Validamos el porque vamos a buscar
+
+				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
+
+				if (InfoPaciente != null && InfoPaciente.valido == true)
+				{
+					try
+					{
+						Resultado = ValidarExisteEnFappsSIRENPPrep(Prefix);
+					}
+					catch (Exception ex)
+					{
+						msj = "La Cédula consultada no ha retornado ningún valor";
+						result = new
+						{
+							status,
+							msj
+						};
+						return Json(result);
+
+					}
+				}
+				else
+				{
+					msj = "La Cédula consultada no ha retornado ningún valor, favor de confirmar su Cédula";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+
+				if (Resultado == 1)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en FAPPS.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+
+				if (Resultado == 2)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en SIRENP con VIH Positivo.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+				
+				if (Resultado == 3)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en Prep con VIH Positivo.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+			}
+
+			status = true;
+			string fechaNacimiento = InfoPaciente.fecha_nacimiento.Date.ToString("yyyy-MM-dd");
+			DateTime fechaNacimiento1 = InfoPaciente.fecha_nacimiento.Date;
+			var edad = CalcularEdadPrep(fechaNacimiento1);
+			result = new { status, InfoPaciente, fechaNacimiento, edad };
+			return Json(result);
+		}
+
+
+
+		int CalcularEdadPrep(DateTime fechaNacimiento)
+		{
+			DateTime fechaActual = DateTime.Now;
+			if (fechaActual.Month > fechaNacimiento.Month || fechaNacimiento.Month == fechaActual.Month && fechaActual.Day > fechaNacimiento.Day)
+			{
+				return fechaActual.Year - fechaNacimiento.Year;
+			}
+			return fechaActual.Year - fechaNacimiento.Year - 1;
+		}
+
+
+
+		Int32 ValidarExisteEnFappsSIRENPPrep(string DocumentoIdentidad)
+		{
+			var lista = new SP_ValidarUsuarioFapps_SirenP();
+			string sql = "SP_ValidarUsuarioFapps_SirenP_Prep";
+			Int32 Resultado = 0;
+
+
+			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+			{
+				lista = connection.Query<SP_ValidarUsuarioFapps_SirenP>(sql, new { DocumentoIdentidad }, commandType: System.Data.CommandType.StoredProcedure).FirstOrDefault();
+				if (lista == null)
+				{
+					Resultado = 0;
+				}
+				else
+				{
+					Resultado = Convert.ToInt32(lista.Resultado);
+
+				}
+			}
+
+			return Resultado;
+		}
+
+
+
+
+
 	}
 }

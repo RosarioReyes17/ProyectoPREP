@@ -1,1089 +1,1130 @@
 ﻿@model ProyectoPREP.Models.TblPrepDemanda
 
-<div>
+
+<div id="divFecha" style="display:none">
 	<h3>
-		Formulario PrEP Demanda - Ficha inicial
+		Formulario PrEP Demanda - Fecha inicial
 	</h3>
 </div>
 
 
-<form id="formulario" action="/PrepDemanda/ElegibilidadPrepDemanda" method="post">
-	
-	<div id="divFormPrEP" class="form-invisible">
-
-		<div id="divDatosGenerales" style="display: block;">
-
+<div id="divValidarUsuario" class="form-visible">
+	<h3>Identificarse en PrEP</h3>
+	<table class="table">
+		<tbody>
 			<tr>
+
 				<td>
-					<div class="form-group col-2 ">
-						Fecha de ingreso (*):
-						<input onkeydown="return false" asp-for="FechaIngresoSai" id="txtFechaRegistroPrep" name="FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
-						<span asp-validation-for="FechaIngresoSai" style="color:red; margin-left:10px"></span>
-					</div>
+					<strong>Tipo de Identificación(*):</strong>
+					<select id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
+						<option value="/PrepDemanda/CreateCedula">Cédula</option>
+						<option value="/PrepDemanda/CreatePasaporte">Pasaporte</option>
+						<option value="/PrepDemanda/CreateNSS">NSS</option>
+						<option value="/PrepDemanda/CreateSinDocumento">Sin Documentación</option>
+
+					</select>
+				</td>
+				<td>
+					<strong>Identificación:</strong>
+					<input type="text" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" id="Identificacion" minlength="13" maxlength="13" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required>
+
+				</td>
+				<td colspan="2">
+					<br>
+					<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
+					<button onclick="window.location.href = '/DatosGenerales/DatosGeneralesPorElegibilidad';" class="btn btn-danger" style="margin-left: 5px;">
+						<i class="fa-solid fa-backward"></i> Volver atrás
+					</button>
 				</td>
 
 
 			</tr>
+			<tr id="trLoading" style="display:none;">
+				<td colspan="4" style="text-align:center;">
+					<img src="/Content/images/ajax-loader.gif">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
-			<h3 style="background-color:#005476; color:white; font-size:22px">DATOS GENERALES:</h3>
+<div id="divDatosGenerales" style="display:none">
+	<form id="formulario" action="/PrepDemanda/ElegibilidadPrepDemanda" method="post">
 
-			<br />
-			<label style="font-weight:bold">Todos los campos que tienen asteriscos(*) son obligatorios</label>
+		<div id="divFormPrEP" class="form-invisible">
 
-			<table class="table">
-				<tbody>
+			<div id="divDatosGenerales" style="display: block;">
 
-					<tr>
-						<td>
-							1. Nombres (*):
-							<input asp-for="Nombres" id="txtNombre" name="Nombres" placeholder="Introduzca sus nombres" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
-							<span asp-validation-for="Nombres" style="color:red;margin-left:30px"></span>
-						</td>
-						<td>
-							2. Apellidos (*):
-							<input asp-for="Apellidos" id="txtApellido" name="Apellidos" placeholder="Introduzca sus apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
-							<span asp-validation-for="Apellidos" style="color:red;margin-left:30px"></span>
-						</td>
+				<tr>
+					<td>
+						<div class="form-group col-2 ">
+							Fecha de ingreso (*):
+							<input onkeydown="return false" asp-for="FechaIngresoSai" id="txtFechaRegistroPrep" name="FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+							<span asp-validation-for="FechaIngresoSai" style="color:red; margin-left:10px"></span>
+						</div>
+					</td>
 
-					</tr>
 
-					<tr>
-						<td>
-							3. ¿Tiene cédula o pasaporte? (*):
-							<select asp-for="TieneDocumentos" class="form-control" onchange="habilitarInput()" id="ddlDocumentoOpcion" name="TieneDocumentos" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="SI">SI</option>
-								<option value="NO">NO</option>
-							</select>
-							<span asp-validation-for="TieneDocumentos" style="color:red;margin-left:30px"></span>
-						</td>
+				</tr>
 
-						<td>
-							4. Número de cédula o pasaporte:
-							<input asp-for="Documento" id="txtDocumento" name="Documento" class="form-control" required>
-							<span asp-validation-for="Documento" style="color:red;margin-left:30px"></span>
+				<h3 style="background-color:#005476; color:white; font-size:22px">DATOS GENERALES:</h3>
 
-						</td>
+				<br />
+				<label style="font-weight:bold">Todos los campos que tienen asteriscos(*) son obligatorios</label>
 
-						<td>
-							5. Fecha de Nacimiento (*):<br>
-							<input onkeydown="return false" asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
-							<span asp-validation-for="FechaNacimiento" style="color:red; margin-left:20px"></span>
-						</td>
-					</tr>
-
-					<tr>
-
-
-						<td>
-							6. Nacionalidad (*):
-							<select asp-for="Nacionalidad" class="form-control" id="ddlNacionalidad" name="Nacionalidad" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="1">DOMINICANA</option>
-								<option value="5">HAITIANA</option>
-								<option value="18">VENEZOLANA</option>
-								<option value="29">ESPAÑOLA</option>
-								<option value="56">AFGANA</option>
-								<option value="118">AFRICANA</option>
-								<option value="113">ALBANES</option>
-								<option value="24">ALEMANA</option>
-								<option value="71">ANGOLEYA</option>
-								<option value="136">ANTIGUANA</option>
-								<option value="72">ARGELINA</option>
-								<option value="8">ARGENTINA</option>
-								<option value="139">ARMENIA</option>
-								<option value="59">AUSTRALIANA</option>
-								<option value="25">AUSTRIACA</option>
-								<option value="109">BAHAMEYA</option>
-								<option value="132">BANGLADESHI</option>
-								<option value="117">BARBADIENSE</option>
-								<option value="135">BELARUS</option>
-								<option value="95">BELARUSA</option>
-								<option value="26">BELGA</option>
-								<option value="82">BELICENA</option>
-								<option value="9">BOLIVIANA</option>
-								<option value="124">BOSNIA</option>
-								<option value="10">BRASILEÑA</option>
-								<option value="79">BRITANICA</option>
-								<option value="27">BULGARA</option>
-								<option value="105">CABOVERDIANA</option>
-								<option value="110">CAMBOYANA</option>
-								<option value="111">CAMERUNESA</option>
-								<option value="3">CANADIENSE</option>
-								<option value="101">CHECA</option>
-								<option value="11">CHILENA</option>
-								<option value="60">CHINA</option>
-								<option value="99">CHIPRIOTA</option>
-								<option value="12">COLOMBIANA</option>
-								<option value="126">CONGOLESA</option>
-								<option value="64">COREANA</option>
-								<option value="19">COSTARRICENSE</option>
-								<option value="87">CROATA</option>
-								<option value="6">CUBANA</option>
-								<option value="102">CURAZALEYA</option>
-								<option value="28">DANESA</option>
-								<option value="114">DOMINICENSE</option>
-								<option value="13">ECUATORIANA</option>
-								<option value="73">EGIPCIA</option>
-								<option value="84">ESLOVENA</option>
-								<option value="128">ESTONIA</option>
-								<option value="74">ETIOPE</option>
-								<option value="61">FILIPINA</option>
-								<option value="30">FINLANDESA</option>
-								<option value="31">FRANCESA</option>
-								<option value="141">GHANA</option>
-								<option value="137">GIORGIANA</option>
-								<option value="106">GRENADINA</option>
-								<option value="32">GRIEGA</option>
-								<option value="23">GUATEMALTECA</option>
-								<option value="120">GUINEESE</option>
-								<option value="89">GUYANESA</option>
-								<option value="33">HOLANDESA</option>
-								<option value="20">HONDUREÑA</option>
-								<option value="34">HUNGARA</option>
-								<option value="62">INDONESA</option>
-								<option value="57">INDU</option>
-								<option value="35">INGLESA</option>
-								<option value="48">IRANI</option>
-								<option value="49">IRAQUI</option>
-								<option value="36">IRLANDESA</option>
-								<option value="37">ISLANDESA</option>
-								<option value="50">ISRAELITA</option>
-								<option value="38">ITALIANA</option>
-								<option value="7">JAMAIQUINA</option>
-								<option value="63">JAPONESA</option>
-								<option value="51">JORDANA</option>
-								<option value="130">KAZAKSTAN</option>
-								<option value="129">KENYAN</option>
-								<option value="115">KIRIBATI</option>
-								<option value="52">KUWAYTI</option>
-								<option value="97">LATVIA</option>
-								<option value="86">LETONA</option>
-								<option value="53">LIBANESA</option>
-								<option value="75">LIBERIANA</option>
-								<option value="76">LIBIA</option>
-								<option value="96">LIECHTENSTEIN</option>
-								<option value="88">LUXEMBURGUESA</option>
-								<option value="123">MACEDONIA</option>
-								<option value="121">MALAGASY</option>
-								<option value="65">MALAYA</option>
-								<option value="116">MALIENSE</option>
-								<option value="94">MALTES</option>
-								<option value="108">MARFILEYA</option>
-								<option value="81">MARROQUI</option>
-								<option value="83">MAURICIANA</option>
-								<option value="134">MELDOVIANA</option>
-								<option value="4">MEXICANA</option>
-								<option value="54">MONGOLESA</option>
-								<option value="103">NEOZELANDESA</option>
-								<option value="98">NEPALESA</option>
-								<option value="21">NICARAGUENSE</option>
-								<option value="77">NIGERIANA</option>
-								<option value="2">NORTEAMERICANA</option>
-								<option value="39">NORUEGA</option>
-								<option value="58">PAKISTANI</option>
-								<option value="125">PALESTINA</option>
-								<option value="22">PANAMEÑA</option>
-								<option value="14">PARAGUAYA</option>
-								<option value="15">PERUANA</option>
-								<option value="66">POLACA</option>
-								<option value="40">PORTUGUESA</option>
-								<option value="100">RUANDESA</option>
-								<option value="41">RUMANA</option>
-								<option value="42">RUSA</option>
-								<option value="16">SALVADOREÑA</option>
-								<option value="127">SAN MARINO</option>
-								<option value="133">SANTA LUCIA</option>
-								<option value="47">SAUDI</option>
-								<option value="138">SENEGALES</option>
-								<option value="91">SIERRA LEONE</option>
-								<option value="93">SINGAPUR</option>
-								<option value="55">SIRIA</option>
-								<option value="78">SOMALI</option>
-								<option value="131">SRILANKAN</option>
-								<option value="104">ST KITTS AND NEVIS</option>
-								<option value="70">SUDAFRICANA</option>
-								<option value="43">SUECA</option>
-								<option value="44">SUIZA</option>
-								<option value="90">SURINAMESA</option>
-								<option value="67">TAILANDESA</option>
-								<option value="68">TAIWANESA</option>
-								<option value="140">TIMORENSE</option>
-								<option value="119">TOGOLESA</option>
-								<option value="92">TRINITARIA</option>
-								<option value="107">TUNECINA</option>
-								<option value="45">TURCA</option>
-								<option value="112">UCRANIA</option>
-								<option value="17">URUGUAYA</option>
-								<option value="122">UZBEKISTAN</option>
-								<option value="69">VIETNAMITA</option>
-								<option value="80">VINCENCIANA</option>
-								<option value="46">YUGOSLAVA</option>
-								<option value="85">ZAIREYA</option>
-							</select>
-							<span asp-validation-for="Nacionalidad" style="color:red;margin-left:30px"></span>
-
-						</td>
-						<td>
-							7. ¿Descendiente de migrante? (*)
-							<select asp-for="Descendiente" class="form-control" onchange="habilitarInput()" id="ddlDecendiente" name="Descendiente" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="SI">SI</option>
-								<option value="NO">NO</option>
-							</select>
-							<span asp-validation-for="Descendiente" style="color:red;margin-left:30px"></span>
-
-						</td>
-						<td style="display:none" id="tdNacionalidadMadre">
-							Especificar Descendencia:
-							<select asp-for="NacionalidadMadre" class="form-control" disabled id="ddlNacionalidadMadre" name="NacionalidadMadre" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="1">DOMINICANA</option>
-								<option value="5">HAITIANA</option>
-								<option value="18">VENEZOLANA</option>
-								<option value="29">ESPAÑOLA</option>
-								<option value="56">AFGANA</option>
-								<option value="118">AFRICANA</option>
-								<option value="113">ALBANES</option>
-								<option value="24">ALEMANA</option>
-								<option value="71">ANGOLEYA</option>
-								<option value="136">ANTIGUANA</option>
-								<option value="72">ARGELINA</option>
-								<option value="8">ARGENTINA</option>
-								<option value="139">ARMENIA</option>
-								<option value="59">AUSTRALIANA</option>
-								<option value="25">AUSTRIACA</option>
-								<option value="109">BAHAMEYA</option>
-								<option value="132">BANGLADESHI</option>
-								<option value="117">BARBADIENSE</option>
-								<option value="135">BELARUS</option>
-								<option value="95">BELARUSA</option>
-								<option value="26">BELGA</option>
-								<option value="82">BELICENA</option>
-								<option value="9">BOLIVIANA</option>
-								<option value="124">BOSNIA</option>
-								<option value="10">BRASILEÑA</option>
-								<option value="79">BRITANICA</option>
-								<option value="27">BULGARA</option>
-								<option value="105">CABOVERDIANA</option>
-								<option value="110">CAMBOYANA</option>
-								<option value="111">CAMERUNESA</option>
-								<option value="3">CANADIENSE</option>
-								<option value="101">CHECA</option>
-								<option value="11">CHILENA</option>
-								<option value="60">CHINA</option>
-								<option value="99">CHIPRIOTA</option>
-								<option value="12">COLOMBIANA</option>
-								<option value="126">CONGOLESA</option>
-								<option value="64">COREANA</option>
-								<option value="19">COSTARRICENSE</option>
-								<option value="87">CROATA</option>
-								<option value="6">CUBANA</option>
-								<option value="102">CURAZALEYA</option>
-								<option value="28">DANESA</option>
-								<option value="114">DOMINICENSE</option>
-								<option value="13">ECUATORIANA</option>
-								<option value="73">EGIPCIA</option>
-								<option value="84">ESLOVENA</option>
-								<option value="128">ESTONIA</option>
-								<option value="74">ETIOPE</option>
-								<option value="61">FILIPINA</option>
-								<option value="30">FINLANDESA</option>
-								<option value="31">FRANCESA</option>
-								<option value="141">GHANA</option>
-								<option value="137">GIORGIANA</option>
-								<option value="106">GRENADINA</option>
-								<option value="32">GRIEGA</option>
-								<option value="23">GUATEMALTECA</option>
-								<option value="120">GUINEESE</option>
-								<option value="89">GUYANESA</option>
-								<option value="33">HOLANDESA</option>
-								<option value="20">HONDUREÑA</option>
-								<option value="34">HUNGARA</option>
-								<option value="62">INDONESA</option>
-								<option value="57">INDU</option>
-								<option value="35">INGLESA</option>
-								<option value="48">IRANI</option>
-								<option value="49">IRAQUI</option>
-								<option value="36">IRLANDESA</option>
-								<option value="37">ISLANDESA</option>
-								<option value="50">ISRAELITA</option>
-								<option value="38">ITALIANA</option>
-								<option value="7">JAMAIQUINA</option>
-								<option value="63">JAPONESA</option>
-								<option value="51">JORDANA</option>
-								<option value="130">KAZAKSTAN</option>
-								<option value="129">KENYAN</option>
-								<option value="115">KIRIBATI</option>
-								<option value="52">KUWAYTI</option>
-								<option value="97">LATVIA</option>
-								<option value="86">LETONA</option>
-								<option value="53">LIBANESA</option>
-								<option value="75">LIBERIANA</option>
-								<option value="76">LIBIA</option>
-								<option value="96">LIECHTENSTEIN</option>
-								<option value="88">LUXEMBURGUESA</option>
-								<option value="123">MACEDONIA</option>
-								<option value="121">MALAGASY</option>
-								<option value="65">MALAYA</option>
-								<option value="116">MALIENSE</option>
-								<option value="94">MALTES</option>
-								<option value="108">MARFILEYA</option>
-								<option value="81">MARROQUI</option>
-								<option value="83">MAURICIANA</option>
-								<option value="134">MELDOVIANA</option>
-								<option value="4">MEXICANA</option>
-								<option value="54">MONGOLESA</option>
-								<option value="103">NEOZELANDESA</option>
-								<option value="98">NEPALESA</option>
-								<option value="21">NICARAGUENSE</option>
-								<option value="77">NIGERIANA</option>
-								<option value="2">NORTEAMERICANA</option>
-								<option value="39">NORUEGA</option>
-								<option value="58">PAKISTANI</option>
-								<option value="125">PALESTINA</option>
-								<option value="22">PANAMEÑA</option>
-								<option value="14">PARAGUAYA</option>
-								<option value="15">PERUANA</option>
-								<option value="66">POLACA</option>
-								<option value="40">PORTUGUESA</option>
-								<option value="100">RUANDESA</option>
-								<option value="41">RUMANA</option>
-								<option value="42">RUSA</option>
-								<option value="16">SALVADOREÑA</option>
-								<option value="127">SAN MARINO</option>
-								<option value="133">SANTA LUCIA</option>
-								<option value="47">SAUDI</option>
-								<option value="138">SENEGALES</option>
-								<option value="91">SIERRA LEONE</option>
-								<option value="93">SINGAPUR</option>
-								<option value="55">SIRIA</option>
-								<option value="78">SOMALI</option>
-								<option value="131">SRILANKAN</option>
-								<option value="104">ST KITTS AND NEVIS</option>
-								<option value="70">SUDAFRICANA</option>
-								<option value="43">SUECA</option>
-								<option value="44">SUIZA</option>
-								<option value="90">SURINAMESA</option>
-								<option value="67">TAILANDESA</option>
-								<option value="68">TAIWANESA</option>
-								<option value="140">TIMORENSE</option>
-								<option value="119">TOGOLESA</option>
-								<option value="92">TRINITARIA</option>
-								<option value="107">TUNECINA</option>
-								<option value="45">TURCA</option>
-								<option value="112">UCRANIA</option>
-								<option value="17">URUGUAYA</option>
-								<option value="122">UZBEKISTAN</option>
-								<option value="69">VIETNAMITA</option>
-								<option value="80">VINCENCIANA</option>
-								<option value="46">YUGOSLAVA</option>
-								<option value="85">ZAIREYA</option>
-							</select>
-							<span asp-validation-for="NacionalidadMadre" style="color:red;margin-left:30px"></span>
-
-						</td>
-					</tr>
-
-					<tr>
-
-						<td colspan="3">
-							8. Dirección actual (calle y número) (*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" placeholder="Introduzca su dirección" data-val="true" data-val-required="Este campo obligatorio.">
-							<span asp-validation-for="Direccion" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-					</tr>
-
-					<tr>
-
-						<td>
-							9. Sector (*):
-							<input asp-for="Sector" id="txtSector" name="Sector" class="form-control" type="text" placeholder="Introduzca su sector" autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
-							<span asp-validation-for="Sector" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-						<td>
-							10. Provincia (*):
-							<select asp-for="ProvinciaResidencia" onchange="llenarMunicipio()" class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="01">DISTRITO NACIONAL</option>
-								<option value="02">AZUA</option>
-								<option value="03">BAHORUCO</option>
-								<option value="04">BARAHONA</option>
-								<option value="05">DAJABON</option>
-								<option value="06">DUARTE</option>
-								<option value="07">ELIAS PIÑA</option>
-								<option value="08">EL SEIBO</option>
-								<option value="09">ESPAILLAT</option>
-								<option value="10">INDEPENDENCIA</option>
-								<option value="11">LA ALTAGRACIA</option>
-								<option value="12">LA ROMANA</option>
-								<option value="13">LA VEGA</option>
-								<option value="14">MARIA TRINIDAD SANCHEZ</option>
-								<option value="15">MONTE CRISTI</option>
-								<option value="16">PEDERNALES</option>
-								<option value="17">PERAVIA</option>
-								<option value="18">PUERTO PLATA</option>
-								<option value="19">HERMANAS MIRABAL</option>
-								<option value="20">SAMANA</option>
-								<option value="21">SAN CRISTOBAL</option>
-								<option value="22">SAN JUAN</option>
-								<option value="23">SAN PEDRO DE MACORIS</option>
-								<option value="24">SANCHEZ RAMIREZ</option>
-								<option value="25">SANTIAGO</option>
-								<option value="26">SANTIAGO RODRIGUEZ</option>
-								<option value="27">VALVERDE</option>
-								<option value="28">MONSEÑOR NOUEL</option>
-								<option value="29">MONTE PLATA</option>
-								<option value="30">HATO MAYOR</option>
-								<option value="31">SAN JOSE DE OCOA</option>
-								<option value="32">SANTO DOMINGO</option>
-							</select>
-							<span asp-validation-for="ProvinciaResidencia" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-						<td>
-							11. Municipio (*):
-							<select asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" data-val="true" data-val-required="Este campo obligatorio.">
-							</select>
-							<span asp-validation-for="MunicipioResidencia" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-
-					</tr>
-					<tr>
-						@*REVISAR LA EDAD*@
-						<td>
-							12. Edad:
-							<input asp-for="Edad" id="txtEdad" name="Edad" class="form-control" type="number" placeholder="Introduzca su edad." autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
-							<span asp-validation-for="Edad" style="color:red;margin-left:30px"></span>
-
-						</td>
-						@*REVISAR LA EDAD*@
-
-						<td>
-							13. Peso(libras) (*): <br>
-							<input asp-for="Peso" id="txtPeso" name="Peso" class="form-control" type="number"
-								   min="90" max="350" placeholder="Introduzca su Peso en Lbs." data-val="true" data-val-required="Este campo es obligatorio."
-								   oninput="validateWeight(this)">
-							<span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
-						</td>
-
-						<td>
-							14. Teléfono ceular:<input asp-for="Telefono" id="txtTelefono" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value,this.id);" name="Telefono" class="form-control telef" type="text" placeholder="Introduzca su Teléfono.">
-							<span asp-validation-for="Telefono" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-
-					</tr>
-					<tr>
-						<td>
-							15. ¿Cómo se consideras a ti mismo? (*):
-							<select class="form-control" asp-for="Genero" id="ddlGenero" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="1">Hombre</option>
-								<option value="2">Mujer</option>
-								<option value="3">Transgenero</option>
-								<option value="4">No reporta</option>
-							</select>
-							<span asp-validation-for="Genero" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-						<td>
-							16. ¿Cuál fue tu sexo asignado al nacer? (*):
-							<select class="form-control" asp-for="Sexo" id="ddlSexo" name="Sexo" required="" autocomplete="error" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="M">Masculino</option>
-								@* <option value="F">Femenino</option> *@
-							</select>
-							<span asp-validation-for="Sexo" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-					</tr>
-
-
-					<tr>
-						<td>
-							17. ARS (*):
-							<select asp-for="Ars" class="form-control" onchange="habilitarInput()" id="ddlARS" name="Ars" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="SI">SI</option>
-								<option value="NO">NO</option>
-							</select>
-							<span asp-validation-for="Ars" style="color:red;margin-left:30px"></span>
-
-						</td>
-						<td style="display:none" id="tdARS">
-							Nombre de ARS (*):
-							<select asp-for="NombreArs" disabled class="form-control" id="txtNombreARS" name="NombreArs" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="1">APS</option>
-								<option value="2">ASEMAP</option>
-								<option value="3">BMI</option>
-								<option value="4">CMD</option>
-								<option value="5">FFAA</option>
-								<option value="6">FUTURO</option>
-								<option value="7">GALENO</option>
-								<option value="8">GMA</option>
-								<option value="9">HUMANO</option>
-								<option value="10">IGMAM</option>
-								<option value="11">ISSPOL</option>
-								<option value="12">LA COLONIAL</option>
-								<option value="13">META SALUD</option>
-								<option value="14">MONUMENTAL</option>
-								<option value="15">MAPFRE SALUD (ANTES PALIC)</option>
-								<option value="16">PLAMEDIN </option>
-								<option value="17">PLAN SALUD</option>
-								<option value="18">RENACER</option>
-								<option value="19">RESERVAS</option>
-								<option value="20">SALUD SEGURA</option>
-								<option value="21">SEMMA</option>
-								<option value="22">SEMUNASED</option>
-								<option value="23">SENASA</option>
-								<option value="24">SERVICIOS DOMINICANOS DE SALUD</option>
-								<option value="25">SIMAG</option>
-								<option value="26">UASD</option>
-								<option value="27">UNIVERSAL</option>
-								<option value="28">YUNEN</option>
-								<option value="29">CONSTITUCION</option>
-								<option value="30">NO ASEGURADO</option>
-							</select>
-							<span asp-validation-for="NombreArs" style="color:red;margin-left:30px"></span>
-
-						</td>
-						<td style="display:none" colspan="2" id="tdRegimen">
-							Régimen (*):
-							<select asp-for="Regimen" disabled class="form-control" id="ddlRegimen" name="Regimen" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="Contributivo">Contributivo</option>
-								<option value="Subsidiado">Subsidiado</option>
-							</select>
-							<span asp-validation-for="Regimen" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-					</tr>
-
-					<tr>
-						<td colspan="1">
-							18. Contacto de Confianza (*):
-
-							<select onchange="habilitarInput()" class="form-control" asp-for="ContactoConfianza" required id="ddlContactoConfianza" name="ContactoConfianza" data-val="true" data-val-required="Este campo es obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="SI">SI</option>
-								<option value="NO">NO</option>
-							</select>
-							<span style="color:red;margin-left:30px" asp-validation-for="ContactoConfianza"></span>
-
-						</td>
-					</tr>
-
-
-					<tr style="display:none" id="trContacto">
-
-
-
-						<td>
-							Nombre de contacto (*):
-							<input asp-for="NombreContacto" id="txtNombreContacto" name="NombreContacto" placeholder="Introduzca el Nombre de Contacto" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
-							<span asp-validation-for="NombreContacto" style="color:red;margin-left:30px"></span>
-						</td>
-
-						<td>
-							Teléfono de contacto (*):
-							<input asp-for="TelefonoContacto" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" disabled id="txtTelefonoContacto" name="TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." data-val="true" data-val-required="Este campo obligatorio.">
-							<span asp-validation-for="TelefonoContacto" style="color:red;margin-left:30px"></span>
-
-						</td>
-
-						<td colspan="2">
-							Parentesco (*):
-							<select class="form-control" id="ddlParentesco" disabled asp-for="Parentesco" name="Parentesco" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="1">Padre</option>
-								<option value="2">Madre</option>
-								<option value="3">Tutor</option>
-								<option value="4">Abuelo</option>
-								<option value="5">Abuela</option>
-								<option value="6">Hermano</option>
-								<option value="7">Hermana</option>
-								<option value="8">Tio</option>
-								<option value="9">Tia</option>
-								<option value="10">Primo</option>
-								<option value="11">Prima</option>
-								<option value="12">Amigo</option>
-								<option value="13">Amiga</option>
-								<option value="14">Hijo</option>
-								<option value="15">Hija</option>
-							</select>
-							<span asp-validation-for="Parentesco" style="color:red;margin-left:30px"></span>
-
-						</td>
-					</tr>
-
-
-				</tbody>
-			</table>
-
-			<div id="divElegibilidadPre" style="display: block;">
-				<h3 style="background-color:#005476; color:white; font-size:22px">ELEGIBILIDAD PARA PREP (Riesgo en los últimos 6 meses)</h3>
-				<table class="table">
-					<tbody>
-
-
-
-						<tr>
-							<td>
-								19. ¿Ha tenido relaciones sexuales con? (*)
-								<select asp-for="TienesRelacionesCon" class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" data-val="true" data-val-required="Este campo obligatorio.">
-									<option value="">--Seleccione--</option>
-									<option value="Solamente con hombres">Solamente con hombres</option>
-									<option value="Solamente con mujeres">Solamente con mujeres</option>
-									<option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
-									<option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
-									<option value="Con Persona Trans">Con Persona Trans</option>
-									<option value="No responde">No responde</option>
-								</select>
-								<span asp-validation-for="TienesRelacionesCon" style="color:red;margin-left:30px"></span>
-
-							</td>
-							<td>
-								20. ¿Ha utilizado alguna droga ilícita? (*)
-								<select asp-for="DrogasIlicitas" class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" data-val="true" data-val-required="Este campo obligatorio.">
-									<option value="">--Seleccione--</option>
-									<option value="Si(Endovenosas)">Si(Endovenosas)</option>
-									<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
-									<option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
-									<option value="No">No</option>
-									<option value="No responde">No responde</option>
-								</select>
-								<span asp-validation-for="DrogasIlicitas" style="color:red;margin-left:30px"></span>
-
-							</td>
-						</tr>
-						<tr>
-							<td>
-								21. ¿Ha intercambiado sexo por bienes económicos? (*)
-								<select asp-for="SexoPorBienes" class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" data-val="true" data-val-required="Este campo obligatorio.">
-									<option value="">--Seleccione--</option>
-									<option value="Si">Si</option>
-									<option value="No">No</option>
-									<option value="No responde">No responde</option>
-								</select>
-								<span asp-validation-for="SexoPorBienes" style="color:red;margin-left:30px"></span>
-
-							</td>
-							<td>
-								22. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales? (*)
-								<select asp-for="SexoPorBienesPareja" class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" data-val="true" data-val-required="Este campo obligatorio.">
-									<option value="">--Seleccione--</option>
-									<option value="Si">Si</option>
-									<option value="No">No</option>
-									<option value="No sabe">No sabe</option>
-									<option value="No responde">No responde</option>
-								</select>
-								<span asp-validation-for="SexoPorBienesPareja" style="color:red;margin-left:30px"></span>
-
-							</td>
-						</tr>
-						<tr>
-							<td>
-								23. ¿Ha tenido relaciones sexuales sin condón? (*)
-								<select class="form-control" asp-for="SexoSinProteccion" id="ddlSexoSinProteccion" name="SexoSinProteccion" data-val="true" data-val-required="Este campo obligatorio.">
-									<option value="">--Seleccione--</option>
-									<option value="Si">Si</option>
-									<option value="No">No</option>
-									<option value="No responde">No responde</option>
-								</select>
-								<span asp-validation-for="SexoSinProteccion" style="color:red;margin-left:30px"></span>
-
-							</td>
-							<td>
-								24. ¿Ha tenido 2 o más parejas sexuales? (*)
-								<select class="form-control" id="ddlCantParejas" asp-for="CantParejasSexuales" name="CantParejasSexuales" data-val="true" data-val-required="Este campo obligatorio.">
-									<option value="">--Seleccione--</option>
-									<option value="Si">Si</option>
-									<option value="No">No</option>
-									<option value="No responde">No responde</option>
-								</select>
-								<span asp-validation-for="CantParejasSexuales" style="color:red;margin-left:30px"></span>
-
-							</td>
-						</tr>
-						<tr>
-
-							<td>
-								25. ¿Ha tenido relaciones sexuales con personas VIH Positivas? (*)
-								<select asp-for="SexoConVihpositivo" class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" data-val="true" data-val-required="Este campo obligatorio.">
-									<option value="">--Seleccione--</option>
-									<option value="Si">Si</option>
-									<option value="No">No</option>
-									<option value="No sabe">No sabe</option>
-								</select>
-								<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:30px"></span>
-
-							</td>
-						</tr>
-
-					</tbody>
-				</table>
-			</div>
-
-			<div id="divRequisitosPrep" style="display: block;">
-				<h3 style="background-color:#005476; color:white; font-size:22px">REQUISITOS PARA PREP: Se consideran elegibles todos (as) que satisfacen TODOS Y CADA UNO de los siguintes requisitos:</h3>
 				<table class="table">
 					<tbody>
 
 						<tr>
 							<td>
-								¿Prueba de VIH realizada? (*)
-								<div class="radio radio-info">
-									<input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="Si">
-									<label for="chkSeronegativo1">
-										Si
-									</label>
-								</div>
-								<div class="radio radio-info">
-									<input id="chkSeronegativo2" required asp-for="SexoConVihpositivo" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="No">
-									<label for="chkSeronegativo2">
-										No
-									</label>
+								1. Nombres (*):
+								<input asp-for="Nombres" id="txtNombre" name="Nombres" placeholder="Introduzca sus nombres" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
+								<span asp-validation-for="Nombres" style="color:red;margin-left:30px"></span>
+							</td>
+							<td>
+								2. Apellidos (*):
+								<input asp-for="Apellidos" id="txtApellido" name="Apellidos" placeholder="Introduzca sus apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
+								<span asp-validation-for="Apellidos" style="color:red;margin-left:30px"></span>
+							</td>
 
-								</div>
-								<label>Nota:</label> resultados de prueba no debe de tener más de 48 horas.
-								<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:20px"></span>
+						</tr>
+
+						<tr>
+							<td>
+								3. ¿Tiene cédula o pasaporte? (*):
+								<input class="form-control" value="SI" asp-for="TieneDocumentos" readonly onchange="habilitarInput();" id="ddlDocumentoOpcion" name="TieneDocumentos" required />
+								<span asp-validation-for="TieneDocumentos" style="color:red;margin-left:30px"></span>
+							</td>
+
+							<td>
+								4. Número de cédula o pasaporte:
+								<input asp-for="Documento" id="txtDocumento" name="Documento" class="form-control" required>
+								<span asp-validation-for="Documento" style="color:red;margin-left:30px"></span>
 
 							</td>
 
 							<td>
-								Fecha de realización (Prueba VIH) (*):
-								<br>
-								<div class="form-group col-md-8">
-									<input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date">
-									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
-								</div>
+								5. Fecha de Nacimiento (*):<br>
+								<input onkeydown="return false" asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+								<span asp-validation-for="FechaNacimiento" style="color:red; margin-left:20px"></span>
 							</td>
+						</tr>
 
-
+						<tr>
 
 
 							<td>
-								Fecha de resultados(Prueba VIH) (*):
-								<br>
-								<div class="form-group col-md-8">
+								6. Nacionalidad (*):
+								<select asp-for="Nacionalidad" class="form-control" id="ddlNacionalidad" name="Nacionalidad" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="1">DOMINICANA</option>
+									<option value="5">HAITIANA</option>
+									<option value="18">VENEZOLANA</option>
+									<option value="29">ESPAÑOLA</option>
+									<option value="56">AFGANA</option>
+									<option value="118">AFRICANA</option>
+									<option value="113">ALBANES</option>
+									<option value="24">ALEMANA</option>
+									<option value="71">ANGOLEYA</option>
+									<option value="136">ANTIGUANA</option>
+									<option value="72">ARGELINA</option>
+									<option value="8">ARGENTINA</option>
+									<option value="139">ARMENIA</option>
+									<option value="59">AUSTRALIANA</option>
+									<option value="25">AUSTRIACA</option>
+									<option value="109">BAHAMEYA</option>
+									<option value="132">BANGLADESHI</option>
+									<option value="117">BARBADIENSE</option>
+									<option value="135">BELARUS</option>
+									<option value="95">BELARUSA</option>
+									<option value="26">BELGA</option>
+									<option value="82">BELICENA</option>
+									<option value="9">BOLIVIANA</option>
+									<option value="124">BOSNIA</option>
+									<option value="10">BRASILEÑA</option>
+									<option value="79">BRITANICA</option>
+									<option value="27">BULGARA</option>
+									<option value="105">CABOVERDIANA</option>
+									<option value="110">CAMBOYANA</option>
+									<option value="111">CAMERUNESA</option>
+									<option value="3">CANADIENSE</option>
+									<option value="101">CHECA</option>
+									<option value="11">CHILENA</option>
+									<option value="60">CHINA</option>
+									<option value="99">CHIPRIOTA</option>
+									<option value="12">COLOMBIANA</option>
+									<option value="126">CONGOLESA</option>
+									<option value="64">COREANA</option>
+									<option value="19">COSTARRICENSE</option>
+									<option value="87">CROATA</option>
+									<option value="6">CUBANA</option>
+									<option value="102">CURAZALEYA</option>
+									<option value="28">DANESA</option>
+									<option value="114">DOMINICENSE</option>
+									<option value="13">ECUATORIANA</option>
+									<option value="73">EGIPCIA</option>
+									<option value="84">ESLOVENA</option>
+									<option value="128">ESTONIA</option>
+									<option value="74">ETIOPE</option>
+									<option value="61">FILIPINA</option>
+									<option value="30">FINLANDESA</option>
+									<option value="31">FRANCESA</option>
+									<option value="141">GHANA</option>
+									<option value="137">GIORGIANA</option>
+									<option value="106">GRENADINA</option>
+									<option value="32">GRIEGA</option>
+									<option value="23">GUATEMALTECA</option>
+									<option value="120">GUINEESE</option>
+									<option value="89">GUYANESA</option>
+									<option value="33">HOLANDESA</option>
+									<option value="20">HONDUREÑA</option>
+									<option value="34">HUNGARA</option>
+									<option value="62">INDONESA</option>
+									<option value="57">INDU</option>
+									<option value="35">INGLESA</option>
+									<option value="48">IRANI</option>
+									<option value="49">IRAQUI</option>
+									<option value="36">IRLANDESA</option>
+									<option value="37">ISLANDESA</option>
+									<option value="50">ISRAELITA</option>
+									<option value="38">ITALIANA</option>
+									<option value="7">JAMAIQUINA</option>
+									<option value="63">JAPONESA</option>
+									<option value="51">JORDANA</option>
+									<option value="130">KAZAKSTAN</option>
+									<option value="129">KENYAN</option>
+									<option value="115">KIRIBATI</option>
+									<option value="52">KUWAYTI</option>
+									<option value="97">LATVIA</option>
+									<option value="86">LETONA</option>
+									<option value="53">LIBANESA</option>
+									<option value="75">LIBERIANA</option>
+									<option value="76">LIBIA</option>
+									<option value="96">LIECHTENSTEIN</option>
+									<option value="88">LUXEMBURGUESA</option>
+									<option value="123">MACEDONIA</option>
+									<option value="121">MALAGASY</option>
+									<option value="65">MALAYA</option>
+									<option value="116">MALIENSE</option>
+									<option value="94">MALTES</option>
+									<option value="108">MARFILEYA</option>
+									<option value="81">MARROQUI</option>
+									<option value="83">MAURICIANA</option>
+									<option value="134">MELDOVIANA</option>
+									<option value="4">MEXICANA</option>
+									<option value="54">MONGOLESA</option>
+									<option value="103">NEOZELANDESA</option>
+									<option value="98">NEPALESA</option>
+									<option value="21">NICARAGUENSE</option>
+									<option value="77">NIGERIANA</option>
+									<option value="2">NORTEAMERICANA</option>
+									<option value="39">NORUEGA</option>
+									<option value="58">PAKISTANI</option>
+									<option value="125">PALESTINA</option>
+									<option value="22">PANAMEÑA</option>
+									<option value="14">PARAGUAYA</option>
+									<option value="15">PERUANA</option>
+									<option value="66">POLACA</option>
+									<option value="40">PORTUGUESA</option>
+									<option value="100">RUANDESA</option>
+									<option value="41">RUMANA</option>
+									<option value="42">RUSA</option>
+									<option value="16">SALVADOREÑA</option>
+									<option value="127">SAN MARINO</option>
+									<option value="133">SANTA LUCIA</option>
+									<option value="47">SAUDI</option>
+									<option value="138">SENEGALES</option>
+									<option value="91">SIERRA LEONE</option>
+									<option value="93">SINGAPUR</option>
+									<option value="55">SIRIA</option>
+									<option value="78">SOMALI</option>
+									<option value="131">SRILANKAN</option>
+									<option value="104">ST KITTS AND NEVIS</option>
+									<option value="70">SUDAFRICANA</option>
+									<option value="43">SUECA</option>
+									<option value="44">SUIZA</option>
+									<option value="90">SURINAMESA</option>
+									<option value="67">TAILANDESA</option>
+									<option value="68">TAIWANESA</option>
+									<option value="140">TIMORENSE</option>
+									<option value="119">TOGOLESA</option>
+									<option value="92">TRINITARIA</option>
+									<option value="107">TUNECINA</option>
+									<option value="45">TURCA</option>
+									<option value="112">UCRANIA</option>
+									<option value="17">URUGUAYA</option>
+									<option value="122">UZBEKISTAN</option>
+									<option value="69">VIETNAMITA</option>
+									<option value="80">VINCENCIANA</option>
+									<option value="46">YUGOSLAVA</option>
+									<option value="85">ZAIREYA</option>
+								</select>
+								<span asp-validation-for="Nacionalidad" style="color:red;margin-left:30px"></span>
 
-									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." name="FechaEntregaVih" class="form-control pruebaVIH habilitarPCR " type="date" />
-									<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
-								</div>
 							</td>
-
 							<td>
-								Resultado de la Prueba del VIH (*):
-								<br>
-								<div class="radio radio-info">
-									<input id="rdVIH1" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo">
-									<label for="rdVIH1">
-										Negativo
-									</label>
-								</div>
+								7. ¿Descendiente de migrante? (*)
+								<select asp-for="Descendiente" class="form-control" onchange="habilitarInput()" id="ddlDecendiente" name="Descendiente" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="SI">SI</option>
+									<option value="NO">NO</option>
+								</select>
+								<span asp-validation-for="Descendiente" style="color:red;margin-left:30px"></span>
 
-								<div class="radio radio-info">
-									<input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo">
-									<label for="rdVIH2">
-
-										Positivo
-									</label>
-								</div>
-								<span asp-validation-for="ResultadoPruebaVih" style="color:red;margin-left:20px"></span>
+							</td>
+							<td style="display:none" id="tdNacionalidadMadre">
+								Especificar Descendencia:
+								<select asp-for="NacionalidadMadre" class="form-control" disabled id="ddlNacionalidadMadre" name="NacionalidadMadre" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="1">DOMINICANA</option>
+									<option value="5">HAITIANA</option>
+									<option value="18">VENEZOLANA</option>
+									<option value="29">ESPAÑOLA</option>
+									<option value="56">AFGANA</option>
+									<option value="118">AFRICANA</option>
+									<option value="113">ALBANES</option>
+									<option value="24">ALEMANA</option>
+									<option value="71">ANGOLEYA</option>
+									<option value="136">ANTIGUANA</option>
+									<option value="72">ARGELINA</option>
+									<option value="8">ARGENTINA</option>
+									<option value="139">ARMENIA</option>
+									<option value="59">AUSTRALIANA</option>
+									<option value="25">AUSTRIACA</option>
+									<option value="109">BAHAMEYA</option>
+									<option value="132">BANGLADESHI</option>
+									<option value="117">BARBADIENSE</option>
+									<option value="135">BELARUS</option>
+									<option value="95">BELARUSA</option>
+									<option value="26">BELGA</option>
+									<option value="82">BELICENA</option>
+									<option value="9">BOLIVIANA</option>
+									<option value="124">BOSNIA</option>
+									<option value="10">BRASILEÑA</option>
+									<option value="79">BRITANICA</option>
+									<option value="27">BULGARA</option>
+									<option value="105">CABOVERDIANA</option>
+									<option value="110">CAMBOYANA</option>
+									<option value="111">CAMERUNESA</option>
+									<option value="3">CANADIENSE</option>
+									<option value="101">CHECA</option>
+									<option value="11">CHILENA</option>
+									<option value="60">CHINA</option>
+									<option value="99">CHIPRIOTA</option>
+									<option value="12">COLOMBIANA</option>
+									<option value="126">CONGOLESA</option>
+									<option value="64">COREANA</option>
+									<option value="19">COSTARRICENSE</option>
+									<option value="87">CROATA</option>
+									<option value="6">CUBANA</option>
+									<option value="102">CURAZALEYA</option>
+									<option value="28">DANESA</option>
+									<option value="114">DOMINICENSE</option>
+									<option value="13">ECUATORIANA</option>
+									<option value="73">EGIPCIA</option>
+									<option value="84">ESLOVENA</option>
+									<option value="128">ESTONIA</option>
+									<option value="74">ETIOPE</option>
+									<option value="61">FILIPINA</option>
+									<option value="30">FINLANDESA</option>
+									<option value="31">FRANCESA</option>
+									<option value="141">GHANA</option>
+									<option value="137">GIORGIANA</option>
+									<option value="106">GRENADINA</option>
+									<option value="32">GRIEGA</option>
+									<option value="23">GUATEMALTECA</option>
+									<option value="120">GUINEESE</option>
+									<option value="89">GUYANESA</option>
+									<option value="33">HOLANDESA</option>
+									<option value="20">HONDUREÑA</option>
+									<option value="34">HUNGARA</option>
+									<option value="62">INDONESA</option>
+									<option value="57">INDU</option>
+									<option value="35">INGLESA</option>
+									<option value="48">IRANI</option>
+									<option value="49">IRAQUI</option>
+									<option value="36">IRLANDESA</option>
+									<option value="37">ISLANDESA</option>
+									<option value="50">ISRAELITA</option>
+									<option value="38">ITALIANA</option>
+									<option value="7">JAMAIQUINA</option>
+									<option value="63">JAPONESA</option>
+									<option value="51">JORDANA</option>
+									<option value="130">KAZAKSTAN</option>
+									<option value="129">KENYAN</option>
+									<option value="115">KIRIBATI</option>
+									<option value="52">KUWAYTI</option>
+									<option value="97">LATVIA</option>
+									<option value="86">LETONA</option>
+									<option value="53">LIBANESA</option>
+									<option value="75">LIBERIANA</option>
+									<option value="76">LIBIA</option>
+									<option value="96">LIECHTENSTEIN</option>
+									<option value="88">LUXEMBURGUESA</option>
+									<option value="123">MACEDONIA</option>
+									<option value="121">MALAGASY</option>
+									<option value="65">MALAYA</option>
+									<option value="116">MALIENSE</option>
+									<option value="94">MALTES</option>
+									<option value="108">MARFILEYA</option>
+									<option value="81">MARROQUI</option>
+									<option value="83">MAURICIANA</option>
+									<option value="134">MELDOVIANA</option>
+									<option value="4">MEXICANA</option>
+									<option value="54">MONGOLESA</option>
+									<option value="103">NEOZELANDESA</option>
+									<option value="98">NEPALESA</option>
+									<option value="21">NICARAGUENSE</option>
+									<option value="77">NIGERIANA</option>
+									<option value="2">NORTEAMERICANA</option>
+									<option value="39">NORUEGA</option>
+									<option value="58">PAKISTANI</option>
+									<option value="125">PALESTINA</option>
+									<option value="22">PANAMEÑA</option>
+									<option value="14">PARAGUAYA</option>
+									<option value="15">PERUANA</option>
+									<option value="66">POLACA</option>
+									<option value="40">PORTUGUESA</option>
+									<option value="100">RUANDESA</option>
+									<option value="41">RUMANA</option>
+									<option value="42">RUSA</option>
+									<option value="16">SALVADOREÑA</option>
+									<option value="127">SAN MARINO</option>
+									<option value="133">SANTA LUCIA</option>
+									<option value="47">SAUDI</option>
+									<option value="138">SENEGALES</option>
+									<option value="91">SIERRA LEONE</option>
+									<option value="93">SINGAPUR</option>
+									<option value="55">SIRIA</option>
+									<option value="78">SOMALI</option>
+									<option value="131">SRILANKAN</option>
+									<option value="104">ST KITTS AND NEVIS</option>
+									<option value="70">SUDAFRICANA</option>
+									<option value="43">SUECA</option>
+									<option value="44">SUIZA</option>
+									<option value="90">SURINAMESA</option>
+									<option value="67">TAILANDESA</option>
+									<option value="68">TAIWANESA</option>
+									<option value="140">TIMORENSE</option>
+									<option value="119">TOGOLESA</option>
+									<option value="92">TRINITARIA</option>
+									<option value="107">TUNECINA</option>
+									<option value="45">TURCA</option>
+									<option value="112">UCRANIA</option>
+									<option value="17">URUGUAYA</option>
+									<option value="122">UZBEKISTAN</option>
+									<option value="69">VIETNAMITA</option>
+									<option value="80">VINCENCIANA</option>
+									<option value="46">YUGOSLAVA</option>
+									<option value="85">ZAIREYA</option>
+								</select>
+								<span asp-validation-for="NacionalidadMadre" style="color:red;margin-left:30px"></span>
 
 							</td>
 						</tr>
 
-					</tbody>
-				</table>
-			</div>
+						<tr>
+
+							<td colspan="3">
+								8. Dirección actual (calle y número) (*):<input asp-for="Direccion" id="txtDireccion" name="Direccion" class="form-control" type="text" placeholder="Introduzca su dirección" data-val="true" data-val-required="Este campo obligatorio.">
+								<span asp-validation-for="Direccion" style="color:red;margin-left:30px"></span>
+
+							</td>
+
+						</tr>
+
+						<tr>
+
+							<td>
+								9. Sector (*):
+								<input asp-for="Sector" id="txtSector" name="Sector" class="form-control" type="text" placeholder="Introduzca su sector" autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
+								<span asp-validation-for="Sector" style="color:red;margin-left:30px"></span>
+
+							</td>
+
+							<td>
+								10. Provincia (*):
+								<select asp-for="ProvinciaResidencia" onchange="llenarMunicipio()" class="form-control" id="ProvinciaResidencia" name="ProvinciaResidencia" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="01">DISTRITO NACIONAL</option>
+									<option value="02">AZUA</option>
+									<option value="03">BAHORUCO</option>
+									<option value="04">BARAHONA</option>
+									<option value="05">DAJABON</option>
+									<option value="06">DUARTE</option>
+									<option value="07">ELIAS PIÑA</option>
+									<option value="08">EL SEIBO</option>
+									<option value="09">ESPAILLAT</option>
+									<option value="10">INDEPENDENCIA</option>
+									<option value="11">LA ALTAGRACIA</option>
+									<option value="12">LA ROMANA</option>
+									<option value="13">LA VEGA</option>
+									<option value="14">MARIA TRINIDAD SANCHEZ</option>
+									<option value="15">MONTE CRISTI</option>
+									<option value="16">PEDERNALES</option>
+									<option value="17">PERAVIA</option>
+									<option value="18">PUERTO PLATA</option>
+									<option value="19">HERMANAS MIRABAL</option>
+									<option value="20">SAMANA</option>
+									<option value="21">SAN CRISTOBAL</option>
+									<option value="22">SAN JUAN</option>
+									<option value="23">SAN PEDRO DE MACORIS</option>
+									<option value="24">SANCHEZ RAMIREZ</option>
+									<option value="25">SANTIAGO</option>
+									<option value="26">SANTIAGO RODRIGUEZ</option>
+									<option value="27">VALVERDE</option>
+									<option value="28">MONSEÑOR NOUEL</option>
+									<option value="29">MONTE PLATA</option>
+									<option value="30">HATO MAYOR</option>
+									<option value="31">SAN JOSE DE OCOA</option>
+									<option value="32">SANTO DOMINGO</option>
+								</select>
+								<span asp-validation-for="ProvinciaResidencia" style="color:red;margin-left:30px"></span>
+
+							</td>
+
+							<td>
+								11. Municipio (*):
+								<select asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" data-val="true" data-val-required="Este campo obligatorio.">
+								</select>
+								<span asp-validation-for="MunicipioResidencia" style="color:red;margin-left:30px"></span>
+
+							</td>
 
 
-			<div id="divPrEPTratamiento">
-				<h3 style="background-color:#005476; color:white; font-size:22px">PRUEBAS DIAGNÓSTICAS INICIALES</h3>
-				<table class="table">
-					<tbody>
+						</tr>
+						<tr>
+							@*REVISAR LA EDAD*@
+							<td>
+								12. Edad:
+								<input asp-for="Edad" id="txtEdad" name="Edad" class="form-control" type="number" placeholder="Introduzca su edad." autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
+								<span asp-validation-for="Edad" style="color:red;margin-left:30px"></span>
+
+							</td>
+							@*REVISAR LA EDAD*@
+
+							<td>
+								13. Peso(libras) (*): <br>
+								<input asp-for="Peso" id="txtPeso" name="Peso" class="form-control" type="number"
+									   min="90" max="350" placeholder="Introduzca su Peso en Lbs." data-val="true" data-val-required="Este campo es obligatorio."
+									   oninput="validateWeight(this)">
+								<span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
+							</td>
+
+							<td>
+								14. Teléfono ceular:<input asp-for="Telefono" id="txtTelefono" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value,this.id);" name="Telefono" class="form-control telef" type="text" placeholder="Introduzca su Teléfono.">
+								<span asp-validation-for="Telefono" style="color:red;margin-left:30px"></span>
+
+							</td>
+
+
+						</tr>
 						<tr>
 							<td>
-								<div class="form-group col-md-6">
-									<label style="color:red">
-										Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
-										<input type="checkbox" id="chkHormonal" onchange="calcularCreatininaCheck()" name="chkHormonal" value="true" >
+								15. ¿Cómo se consideras a ti mismo? (*):
+								<select class="form-control" asp-for="Genero" id="ddlGenero" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="1">Hombre</option>
+									<option value="2">Mujer</option>
+									<option value="3">Transgenero</option>
+									<option value="4">No reporta</option>
+								</select>
+								<span asp-validation-for="Genero" style="color:red;margin-left:30px"></span>
 
-									</label>
-									<br />
-
-									Resultado de Creatinina(Plasmatica):
-									<br>
-									<input id="txtValorCreatinina" data-val="true" data-val-required="Este campo es obligatorio." onchange="calcularCreatinina(value);" asp-for="ValorCreatinina" name="ValorCreatinina" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
-									<span asp-validation-for="ValorCreatinina" style="color:red;"></span>
-									<br>
-
-									Fecha:
-									<br>
-									<input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaCreatinina" name="FechaCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
-									<span asp-validation-for="FechaCreatinina" style="color:red;"></span>
-									<br>
-									Resultado:
-									<br>
-									<input id="ResultadoCreatinina" readonly asp-for="ResultadoCreatinina" name="ResultadoCreatinina" class="form-control segundaParte" />
-								</div>
 							</td>
+
+							<td>
+								16. ¿Cuál fue tu sexo asignado al nacer? (*):
+								<select class="form-control" asp-for="Sexo" id="ddlSexo" name="Sexo" required="" autocomplete="error" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="M">Masculino</option>
+									@* <option value="F">Femenino</option> *@
+								</select>
+								<span asp-validation-for="Sexo" style="color:red;margin-left:30px"></span>
+
+							</td>
+
+						</tr>
+
+
+						<tr>
+							<td>
+								17. ARS (*):
+								<select asp-for="Ars" class="form-control" onchange="habilitarInput()" id="ddlARS" name="Ars" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="SI">SI</option>
+									<option value="NO">NO</option>
+								</select>
+								<span asp-validation-for="Ars" style="color:red;margin-left:30px"></span>
+
+							</td>
+							<td style="display:none" id="tdARS">
+								Nombre de ARS (*):
+								<select asp-for="NombreArs" disabled class="form-control" id="txtNombreARS" name="NombreArs" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="1">APS</option>
+									<option value="2">ASEMAP</option>
+									<option value="3">BMI</option>
+									<option value="4">CMD</option>
+									<option value="5">FFAA</option>
+									<option value="6">FUTURO</option>
+									<option value="7">GALENO</option>
+									<option value="8">GMA</option>
+									<option value="9">HUMANO</option>
+									<option value="10">IGMAM</option>
+									<option value="11">ISSPOL</option>
+									<option value="12">LA COLONIAL</option>
+									<option value="13">META SALUD</option>
+									<option value="14">MONUMENTAL</option>
+									<option value="15">MAPFRE SALUD (ANTES PALIC)</option>
+									<option value="16">PLAMEDIN </option>
+									<option value="17">PLAN SALUD</option>
+									<option value="18">RENACER</option>
+									<option value="19">RESERVAS</option>
+									<option value="20">SALUD SEGURA</option>
+									<option value="21">SEMMA</option>
+									<option value="22">SEMUNASED</option>
+									<option value="23">SENASA</option>
+									<option value="24">SERVICIOS DOMINICANOS DE SALUD</option>
+									<option value="25">SIMAG</option>
+									<option value="26">UASD</option>
+									<option value="27">UNIVERSAL</option>
+									<option value="28">YUNEN</option>
+									<option value="29">CONSTITUCION</option>
+									<option value="30">NO ASEGURADO</option>
+								</select>
+								<span asp-validation-for="NombreArs" style="color:red;margin-left:30px"></span>
+
+							</td>
+							<td style="display:none" colspan="2" id="tdRegimen">
+								Régimen (*):
+								<select asp-for="Regimen" disabled class="form-control" id="ddlRegimen" name="Regimen" data-val="true" data-val-required="Este campo obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="Contributivo">Contributivo</option>
+									<option value="Subsidiado">Subsidiado</option>
+								</select>
+								<span asp-validation-for="Regimen" style="color:red;margin-left:30px"></span>
+
+							</td>
+
+						</tr>
+
+						<tr>
+							<td colspan="1">
+								18. Contacto de Confianza (*):
+
+								<select onchange="habilitarInput()" class="form-control" asp-for="ContactoConfianza" required id="ddlContactoConfianza" name="ContactoConfianza" data-val="true" data-val-required="Este campo es obligatorio.">
+									<option value="">--Seleccione--</option>
+									<option value="SI">SI</option>
+									<option value="NO">NO</option>
+								</select>
+								<span style="color:red;margin-left:30px" asp-validation-for="ContactoConfianza"></span>
+
+							</td>
+						</tr>
+
+
+						<tr style="display:none" id="trContacto">
+
+
+
+							<td>
+								Nombre de contacto (*):
+								<input asp-for="NombreContacto" id="txtNombreContacto" name="NombreContacto" placeholder="Introduzca el Nombre de Contacto" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
+								<span asp-validation-for="NombreContacto" style="color:red;margin-left:30px"></span>
+							</td>
+
+							<td>
+								Teléfono de contacto (*):
+								<input asp-for="TelefonoContacto" onkeypress="ValidarCelular(this.value,this.id);" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" disabled id="txtTelefonoContacto" name="TelefonoContacto" type="text" class="form-control telef" placeholder="Introduzca Teléfono de Contacto." data-val="true" data-val-required="Este campo obligatorio.">
+								<span asp-validation-for="TelefonoContacto" style="color:red;margin-left:30px"></span>
+
+							</td>
+
 							<td colspan="2">
-
-
-								Rango valores de Creatinina
-								<br>
-								<ul>
-									<li> 61-70 ml/min</li>
-									<li>71-80 ml/min</li>
-									<li>81-90 ml/min</li>
-									<li>91-100 ml/min</li>
-									<li>&gt;100 ml/min</li>
-								</ul>
-
-								                        <br>
-								<span style="font-size:1em;">
-									- Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
-									- Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
-									- Utilizar la fórmula de mujeres en mujeres biológicas y Trans que <br>tengan más de 6 meses en terapia de reemplazo hormonal.
-
-								</span>
-							</td>
-							<td>
-								Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
-								<div class="radio radio-info">
-									<input id="chkaclaramiento1" required asp-for="AclaramientoCreatinina" data-val="true" data-val-required="Este campo es obligatorio." name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="Si" readonly>
-									<label for="chkaclaramiento1">
-										Si
-									</label>
-								</div>
-								<div class="radio radio-info">
-									<input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="No" readonly>
-									<label for="chkaclaramiento2">
-										No
-									</label>
-								</div>
-								<span asp-validation-for="AclaramientoCreatinina" style="color:red;margin-left:20px"></span>
-							</td>
-
-
-
-						</tr>
-						<tr>
-
-							<td class="col-md-3">
-
-
-								<div class="form-group radio">
-									Sifilis(VDRL) Realizada:
-									<br />
-									<br />
-
-									<div style="margin-left: 24px;">
-										<input id="rdsifilis1" asp-for="Sifilis" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
-										<label for="rdsifilis1">No Reactivo</label>
-
-
-									</div>
-									<div style="margin-left: 24px;">
-										<input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" asp-for="Sifilis" class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
-										<label for="rdsifilis2">Reactivo</label>
-									</div>
-									<span asp-validation-for="Sifilis" style="color:red;"></span>
-
-									<br />
-									<input id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
-									<br />
-									<br />
-									<span asp-validation-for="SifilisFecha" style="color:red;"></span>
-								</div>
-
-
-							</td>
-							<td class="col-md-3">
-
-
-								<div class="form-group radio ">
-									HBsAg Realizada:
-									<br />
-									<br />
-
-									<div style="margin-left: 24px;">
-										<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);"  class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
-										<label for="rdHBsAg1">Negativo</label>
-									</div>
-
-									<div style="margin-left: 24px;">
-										<input id="rdHBsAg2" asp-for="HbsAg" required onclick="habilitarInputHBsAg(value);" class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
-										<label for="rdHBsAg2">Positivo</label>
-									</div>
-									<span asp-validation-for="HbsAg" style="color:red;"></span>
-									<br />
-
-									<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
-									<br />
-									<br />
-									<span asp-validation-for="HbsAgFecha" style="color:red;"></span>
-								</div>
-							</td>
-
-							<td class="col-md-3">
-
-								<div class="form-group radio">
-									Hepatitis C Realizada:
-									<br />
-									<br />
-									<div style="margin-left:24px">
-										<input id="rdHepatitis1" asp-for="HepatitisC" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHepatitis(value);" class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
-										<label for="rdHepatitis1">Negativo</label>
-									</div>
-
-									<div style="margin-left:24px">
-										<input id="rdHepatitis2" asp-for="HepatitisC" required onclick="habilitarInputHepatitis(value);" class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
-										<label for="rdHepatitis2">Positivo</label>
-									</div>
-									<span asp-validation-for="HepatitisC" style="color:red;"></span>
-
-									<br />
-									<input id="txtfechaHepatitis" onkeydown="return false" asp-for="HepatitisCFecha" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
-									<br />
-									<br />
-									<span asp-validation-for="HepatitisCFecha" style="color:red;"></span>
-								</div>
-							</td>
-							<td class="col-md-3">
-
-								<div class="radio form-group">
-									ITS sindrómico:
-									<br />
-									<br />
-
-									<div style="margin-left: 24px;">
-
-										<input id="ITDSindromico2" asp-for="ItsDiagnosticoPresuntivo" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
-										<label for="ITDSindromico2">Si</label>
-
-									</div>
-
-									<div style="margin-left: 24px;">
-										<input id="ITDSindromico1" asp-for="SexoConVihpositivo" required onclick="habilitarInputsindrómico(value);"  class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
-										<label for="ITDSindromico1">No</label>
-									</div>
-									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
-
-									<br>
-									<input name="SecrecionUretral" class="sindromico" type="checkbox" value="true"  /> Secrecion Uretral
-									<br>
-									<input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true"  /> Secrecion Vaginal
-									<br>
-									<input name="UlceraGenital" class="sindromico" type="checkbox" value="true"  /> Ulcera genital
-									<br>
-									<input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true"  /> Verrugas genitales
-									<br />
-									<span style="color:red">@TempData["Sindromico"]</span>
-
-								</div>
-
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
-
-			<div id="divTratamientoPrep">
-				<h3 style="background-color:#005476; color:white; font-size:22px">Tratamiento de la PrEP</h3>
-
-				
-				<table class="table">
-					<tbody>
-						<tr>
-							
-							<td>
-								<strong>PrEP(ARV) Prescrita:</strong>
-								<br>
-								<input id="td1" onclick="ARV(this.id);" name="PrepArvTdfFtc" value="true" class="styled" type="checkbox"> TDF/FTC <br>
-								<input id="td2" onclick="ARV(this.id);" name="PrepArvTdf3tc" class="styled" value="true" type="checkbox"> TDF/3TC <br>
-								<input id="td3" onclick="ARV(this.id);" name="PrepArvTafFtc" class="styled" value="true" type="checkbox"> TAF/FTC <br />
-								<span style="color:red">
-									@TempData["ARV"]
-								</span>
-							</td>
-							<td>
-
-								<strong>Meses de prescripción</strong>
-
-								<select id="Meses_prescripcion" required name="MesesPrescripcion" asp-for="MesesPrescripcion" class="form-control" autocomplete="error">
+								Parentesco (*):
+								<select class="form-control" id="ddlParentesco" disabled asp-for="Parentesco" name="Parentesco" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
+									<option value="1">Padre</option>
+									<option value="2">Madre</option>
+									<option value="3">Tutor</option>
+									<option value="4">Abuelo</option>
+									<option value="5">Abuela</option>
+									<option value="6">Hermano</option>
+									<option value="7">Hermana</option>
+									<option value="8">Tio</option>
+									<option value="9">Tia</option>
+									<option value="10">Primo</option>
+									<option value="11">Prima</option>
+									<option value="12">Amigo</option>
+									<option value="13">Amiga</option>
+									<option value="14">Hijo</option>
+									<option value="15">Hija</option>
 								</select>
-							</td>
-							<td>
+								<span asp-validation-for="Parentesco" style="color:red;margin-left:30px"></span>
 
-
-								<div class="form-group col-md-7">
-									<strong>Fecha Próximo seguimiento:</strong>
-									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
-								</div>
 							</td>
 						</tr>
 
-						<tr>
-
-							<td colspan="4">
-								Observaciones:<br>
-								<input type="text" id="Observaciones" name="Observaciones" asp-for="Observaciones" class="form-control" autocomplete="error">
-							</td>
-						</tr>
 
 					</tbody>
-
 				</table>
+
+				<div id="divElegibilidadPre" style="display: block;">
+					<h3 style="background-color:#005476; color:white; font-size:22px">ELEGIBILIDAD PARA PREP (Riesgo en los últimos 6 meses)</h3>
+					<table class="table">
+						<tbody>
+
+
+
+							<tr>
+								<td>
+									19. ¿Ha tenido relaciones sexuales con? (*)
+									<select asp-for="TienesRelacionesCon" class="form-control" id="ddlSexoCon" name="TienesRelacionesCon" data-val="true" data-val-required="Este campo obligatorio.">
+										<option value="">--Seleccione--</option>
+										<option value="Solamente con hombres">Solamente con hombres</option>
+										<option value="Solamente con mujeres">Solamente con mujeres</option>
+										<option value="Con ambos, mujeres y hombres">Con ambos, mujeres y hombres</option>
+										<option value="Con Trabajador/a sexual">Con Trabajador/a sexual</option>
+										<option value="Con Persona Trans">Con Persona Trans</option>
+										<option value="No responde">No responde</option>
+									</select>
+									<span asp-validation-for="TienesRelacionesCon" style="color:red;margin-left:30px"></span>
+
+								</td>
+								<td>
+									20. ¿Ha utilizado alguna droga ilícita? (*)
+									<select asp-for="DrogasIlicitas" class="form-control" id="ddlDrogaIlicita" name="DrogasIlicitas" data-val="true" data-val-required="Este campo obligatorio.">
+										<option value="">--Seleccione--</option>
+										<option value="Si(Endovenosas)">Si(Endovenosas)</option>
+										<option value="Si(No Endovenosas)">Si(No Endovenosas)</option>
+										<option value="Si ambas(Endovenosas/No Endovenosas)">Si ambas(Endovenosas/No Endovenosas)</option>
+										<option value="No">No</option>
+										<option value="No responde">No responde</option>
+									</select>
+									<span asp-validation-for="DrogasIlicitas" style="color:red;margin-left:30px"></span>
+
+								</td>
+							</tr>
+							<tr>
+								<td>
+									21. ¿Ha intercambiado sexo por bienes económicos? (*)
+									<select asp-for="SexoPorBienes" class="form-control" id="ddlIntercambiadoSexo" name="SexoPorBienes" data-val="true" data-val-required="Este campo obligatorio.">
+										<option value="">--Seleccione--</option>
+										<option value="Si">Si</option>
+										<option value="No">No</option>
+										<option value="No responde">No responde</option>
+									</select>
+									<span asp-validation-for="SexoPorBienes" style="color:red;margin-left:30px"></span>
+
+								</td>
+								<td>
+									22. ¿Su pareja sexual ha tenido intercambio por bienes económicos o materiales? (*)
+									<select asp-for="SexoPorBienesPareja" class="form-control" id="ddlIntercambiadoSexo2" name="SexoPorBienesPareja" data-val="true" data-val-required="Este campo obligatorio.">
+										<option value="">--Seleccione--</option>
+										<option value="Si">Si</option>
+										<option value="No">No</option>
+										<option value="No sabe">No sabe</option>
+										<option value="No responde">No responde</option>
+									</select>
+									<span asp-validation-for="SexoPorBienesPareja" style="color:red;margin-left:30px"></span>
+
+								</td>
+							</tr>
+							<tr>
+								<td>
+									23. ¿Ha tenido relaciones sexuales sin condón? (*)
+									<select class="form-control" asp-for="SexoSinProteccion" id="ddlSexoSinProteccion" name="SexoSinProteccion" data-val="true" data-val-required="Este campo obligatorio.">
+										<option value="">--Seleccione--</option>
+										<option value="Si">Si</option>
+										<option value="No">No</option>
+										<option value="No responde">No responde</option>
+									</select>
+									<span asp-validation-for="SexoSinProteccion" style="color:red;margin-left:30px"></span>
+
+								</td>
+								<td>
+									24. ¿Ha tenido 2 o más parejas sexuales? (*)
+									<select class="form-control" id="ddlCantParejas" asp-for="CantParejasSexuales" name="CantParejasSexuales" data-val="true" data-val-required="Este campo obligatorio.">
+										<option value="">--Seleccione--</option>
+										<option value="Si">Si</option>
+										<option value="No">No</option>
+										<option value="No responde">No responde</option>
+									</select>
+									<span asp-validation-for="CantParejasSexuales" style="color:red;margin-left:30px"></span>
+
+								</td>
+							</tr>
+							<tr>
+
+								<td>
+									25. ¿Ha tenido relaciones sexuales con personas VIH Positivas? (*)
+									<select asp-for="SexoConVihpositivo" class="form-control" id="ddlSexoVIHPositivo" name="SexoConVihpositivo" data-val="true" data-val-required="Este campo obligatorio.">
+										<option value="">--Seleccione--</option>
+										<option value="Si">Si</option>
+										<option value="No">No</option>
+										<option value="No sabe">No sabe</option>
+									</select>
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:30px"></span>
+
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+
+				<div id="divRequisitosPrep" style="display: block;">
+					<h3 style="background-color:#005476; color:white; font-size:22px">REQUISITOS PARA PREP: Se consideran elegibles todos (as) que satisfacen TODOS Y CADA UNO de los siguintes requisitos:</h3>
+					<table class="table">
+						<tbody>
+
+							<tr>
+								<td>
+									¿Prueba de VIH realizada? (*)
+									<div class="radio radio-info">
+										<input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="Si">
+										<label for="chkSeronegativo1">
+											Si
+										</label>
+									</div>
+									<div class="radio radio-info">
+										<input id="chkSeronegativo2" required asp-for="SexoConVihpositivo" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="No">
+										<label for="chkSeronegativo2">
+											No
+										</label>
+
+									</div>
+									<label>Nota:</label> resultados de prueba no debe de tener más de 48 horas.
+									<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:20px"></span>
+
+								</td>
+
+								<td>
+									Fecha de realización (Prueba VIH) (*):
+									<br>
+									<div class="form-group col-md-8">
+										<input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date">
+										<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+									</div>
+								</td>
+
+
+
+
+								<td>
+									Fecha de resultados(Prueba VIH) (*):
+									<br>
+									<div class="form-group col-md-8">
+
+										<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." name="FechaEntregaVih" class="form-control pruebaVIH habilitarPCR " type="date" />
+										<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
+									</div>
+								</td>
+
+								<td>
+									Resultado de la Prueba del VIH (*):
+									<br>
+									<div class="radio radio-info">
+										<input id="rdVIH1" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo">
+										<label for="rdVIH1">
+											Negativo
+										</label>
+									</div>
+
+									<div class="radio radio-info">
+										<input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo">
+										<label for="rdVIH2">
+
+											Positivo
+										</label>
+									</div>
+									<span asp-validation-for="ResultadoPruebaVih" style="color:red;margin-left:20px"></span>
+
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+
+
+				<div id="divPrEPTratamiento">
+					<h3 style="background-color:#005476; color:white; font-size:22px">PRUEBAS DIAGNÓSTICAS INICIALES</h3>
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-group col-md-6">
+										<label style="color:red">
+											Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
+											<input type="checkbox" id="chkHormonal" onchange="calcularCreatininaCheck()" name="chkHormonal" value="true">
+
+										</label>
+										<br />
+
+										Resultado de Creatinina(Plasmatica):
+										<br>
+										<input id="txtValorCreatinina" data-val="true" data-val-required="Este campo es obligatorio." onchange="calcularCreatinina(value);" asp-for="ValorCreatinina" name="ValorCreatinina" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class="segundaParte form-control col-sm-2">
+										<span asp-validation-for="ValorCreatinina" style="color:red;"></span>
+										<br>
+
+										Fecha:
+										<br>
+										<input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaCreatinina" name="FechaCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+										<span asp-validation-for="FechaCreatinina" style="color:red;"></span>
+										<br>
+										Resultado:
+										<br>
+										<input id="ResultadoCreatinina" readonly asp-for="ResultadoCreatinina" name="ResultadoCreatinina" class="form-control segundaParte" />
+									</div>
+								</td>
+								<td colspan="2">
+
+
+									Rango valores de Creatinina
+									<br>
+									<ul>
+										<li> 61-70 ml/min</li>
+										<li>71-80 ml/min</li>
+										<li>81-90 ml/min</li>
+										<li>91-100 ml/min</li>
+										<li>&gt;100 ml/min</li>
+									</ul>
+
+									<br>
+									<span style="font-size:1em;">
+										- Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
+										- Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
+										- Utilizar la fórmula de mujeres en mujeres biológicas y Trans que <br>tengan más de 6 meses en terapia de reemplazo hormonal.
+
+									</span>
+								</td>
+								<td>
+									Tiene un aclaramiento de creatinina (TFGe) menor de 60ml/min
+									<div class="radio radio-info">
+										<input id="chkaclaramiento1" required asp-for="AclaramientoCreatinina" data-val="true" data-val-required="Este campo es obligatorio." name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="Si" readonly>
+										<label for="chkaclaramiento1">
+											Si
+										</label>
+									</div>
+									<div class="radio radio-info">
+										<input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="No" readonly>
+										<label for="chkaclaramiento2">
+											No
+										</label>
+									</div>
+									<span asp-validation-for="AclaramientoCreatinina" style="color:red;margin-left:20px"></span>
+								</td>
+
+
+
+							</tr>
+							<tr>
+
+								<td class="col-md-3">
+
+
+									<div class="form-group radio">
+										Sifilis(VDRL) Realizada:
+										<br />
+										<br />
+
+										<div style="margin-left: 24px;">
+											<input id="rdsifilis1" asp-for="Sifilis" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+											<label for="rdsifilis1">No Reactivo</label>
+
+
+										</div>
+										<div style="margin-left: 24px;">
+											<input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" asp-for="Sifilis" class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+											<label for="rdsifilis2">Reactivo</label>
+										</div>
+										<span asp-validation-for="Sifilis" style="color:red;"></span>
+
+										<br />
+										<input id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+										<br />
+										<br />
+										<span asp-validation-for="SifilisFecha" style="color:red;"></span>
+									</div>
+
+
+								</td>
+								<td class="col-md-3">
+
+
+									<div class="form-group radio ">
+										HBsAg Realizada:
+										<br />
+										<br />
+
+										<div style="margin-left: 24px;">
+											<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);" class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+											<label for="rdHBsAg1">Negativo</label>
+										</div>
+
+										<div style="margin-left: 24px;">
+											<input id="rdHBsAg2" asp-for="HbsAg" required onclick="habilitarInputHBsAg(value);" class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
+											<label for="rdHBsAg2">Positivo</label>
+										</div>
+										<span asp-validation-for="HbsAg" style="color:red;"></span>
+										<br />
+
+										<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+										<br />
+										<br />
+										<span asp-validation-for="HbsAgFecha" style="color:red;"></span>
+									</div>
+								</td>
+
+								<td class="col-md-3">
+
+									<div class="form-group radio">
+										Hepatitis C Realizada:
+										<br />
+										<br />
+										<div style="margin-left:24px">
+											<input id="rdHepatitis1" asp-for="HepatitisC" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHepatitis(value);" class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
+											<label for="rdHepatitis1">Negativo</label>
+										</div>
+
+										<div style="margin-left:24px">
+											<input id="rdHepatitis2" asp-for="HepatitisC" required onclick="habilitarInputHepatitis(value);" class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
+											<label for="rdHepatitis2">Positivo</label>
+										</div>
+										<span asp-validation-for="HepatitisC" style="color:red;"></span>
+
+										<br />
+										<input id="txtfechaHepatitis" onkeydown="return false" asp-for="HepatitisCFecha" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+										<br />
+										<br />
+										<span asp-validation-for="HepatitisCFecha" style="color:red;"></span>
+									</div>
+								</td>
+								<td class="col-md-3">
+
+									<div class="radio form-group">
+										ITS sindrómico:
+										<br />
+										<br />
+
+										<div style="margin-left: 24px;">
+
+											<input id="ITDSindromico2" asp-for="ItsDiagnosticoPresuntivo" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="Si">
+											<label for="ITDSindromico2">Si</label>
+
+										</div>
+
+										<div style="margin-left: 24px;">
+											<input id="ITDSindromico1" asp-for="SexoConVihpositivo" required onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+											<label for="ITDSindromico1">No</label>
+										</div>
+										<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+
+										<br>
+										<input name="SecrecionUretral" class="sindromico" type="checkbox" value="true" /> Secrecion Uretral
+										<br>
+										<input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" /> Secrecion Vaginal
+										<br>
+										<input name="UlceraGenital" class="sindromico" type="checkbox" value="true" /> Ulcera genital
+										<br>
+										<input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" /> Verrugas genitales
+										<br />
+										<span style="color:red">@TempData["Sindromico"]</span>
+
+									</div>
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+				<div id="divTratamientoPrep">
+					<h3 style="background-color:#005476; color:white; font-size:22px">Tratamiento de la PrEP</h3>
+
+
+					<table class="table">
+						<tbody>
+							<tr>
+
+								<td>
+									<strong>PrEP(ARV) Prescrita:</strong>
+									<br>
+									<input id="td1" onclick="ARV(this.id);" name="PrepArvTdfFtc" value="true" class="styled" type="checkbox"> TDF/FTC <br>
+									<input id="td2" onclick="ARV(this.id);" name="PrepArvTdf3tc" class="styled" value="true" type="checkbox"> TDF/3TC <br>
+									<input id="td3" onclick="ARV(this.id);" name="PrepArvTafFtc" class="styled" value="true" type="checkbox"> TAF/FTC <br />
+									<span style="color:red">
+										@TempData["ARV"]
+									</span>
+								</td>
+								<td>
+
+									<strong>Meses de prescripción</strong>
+
+									<select id="Meses_prescripcion" required name="MesesPrescripcion" asp-for="MesesPrescripcion" class="form-control" autocomplete="error">
+										<option value="">--Seleccione--</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+									</select>
+								</td>
+								<td>
+
+
+									<div class="form-group col-md-7">
+										<strong>Fecha Próximo seguimiento:</strong>
+										<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+									</div>
+								</td>
+							</tr>
+
+							<tr>
+
+								<td colspan="4">
+									Observaciones:<br>
+									<input type="text" id="Observaciones" name="Observaciones" asp-for="Observaciones" class="form-control" autocomplete="error">
+								</td>
+							</tr>
+
+						</tbody>
+
+					</table>
+				</div>
+
+
+
 			</div>
-
-
-
 		</div>
+
+
+
+		<div id="divMensaje" style="color:red;"></div>
+		<div id="divBotones" style="display: block;">
+			<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
+			<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
+			<br />
+			<br />
+			<label></label>
+		</div>
+		<script>
+
+
+		</script>
+
+
+	</form>
+
+</div>
+
+<div class="text-center" id="spinner" style="display:none">
+	<div class="spinner-border" role="status">
+		<span class="sr-only"></span>
 	</div>
+</div>
 
-
-
-	<div id="divMensaje" style="color:red;"></div>
-	<div id="divBotones" style="display: block;">
-		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
-		<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
-		<br />
-		<br />
-		<label></label>
-	</div>
-	<script>
-
-
-	</script>
-
-
-
-
-
-
-
-
-</form>
 
 
 @* Modal para notifcar que se registró un paciente satisfactoriamente
@@ -1130,7 +1171,27 @@
 
 		}
 
+		function ValidarCedulaPasaporte(a) {
+			if (true) {
 
+				if (true) {
+					var datos = a;
+					let resultado = datos;
+
+					if (resultado.length == 3) {
+						resultado = datos + "-";
+					}
+
+					if (resultado.length == 11) {
+						resultado = datos + "-";
+					}
+
+					if (resultado.length <= 13) {
+						document.getElementById("Identificacion").value = resultado;
+					}
+				}
+			}
+		}
 
 		document.getElementById('formulario').addEventListener('submit', function (event) {
 			event.preventDefault(); // Evita el envío del formulario
@@ -1149,32 +1210,48 @@
 
 
 		const buscarEnPadron = () => {
+			//const Prefix = "402-1126691-7";
 			var Identificacion = document.getElementById("Identificacion").value;
 			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
 
+
 			if (TipoIdentificacion == "Seleccione") {
 				document.getElementById("divDatosGenerales").style = 'display:none';
-				document.getElementById("divElegibilidadPre").style = 'display:none';
-				alert("Seleccione una opcion");
+				document.getElementById("divFecha").style = 'display:none';
 
+				$("#cuerpoModal").empty();
+				document.getElementById("cuerpoModal").innerHTML = "Seleccione una opción";
+				$('#myModal').modal('show');
 				return;
 			}
 
 			if (Identificacion == "") {
-				alert("Debe agregar su cedula");
+
+				$("#cuerpoModal").empty();
+				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar la cédula a validar.";
+				$('#myModal').modal('show');
 
 				return;
 			}
-			$.post("@Url.Action("BuscarEnPadron","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
 
+			document.getElementById("spinner").style.display = "block";
+
+			$.post("@Url.Action("BuscarEnPadron","PrepDemanda")", { Prefix: Identificacion }, function (modelos) {
+
+				document.getElementById("spinner").style.display = "none";
 
 				if (modelos.status == false) {
 					var texto = modelos.msj;
-					alert(modelos.msj)
+					$("#cuerpoModal").empty();
+					document.getElementById("cuerpoModal").innerHTML = texto;
+					$('#myModal').modal('show');
 
 				} else {
 					document.getElementById("divDatosGenerales").style = 'display:block';
 					document.getElementById("divElegibilidadPre").style = 'display:block';
+					document.getElementById("divBotones").style = 'display:block';
+					$("#Identificacion").attr("readonly", true);
+
 
 					var informacion = modelos.infoPaciente;
 					if (informacion.sexo == "M") {
@@ -1187,10 +1264,12 @@
 
 					document.getElementById("txtNombre").value = (informacion.nombres);
 					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
-					document.getElementById("txtDocumento").value = Identificacion;
-					//document.getElementById("ddlNacionalidad").options[informacion.nacionalidad].selected = true;
+					document.getElementById("txtDocumento").value = (Identificacion);
+					document.getElementById("edad").value = modelos.edad;
 
-					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento.toString();
+					document.getElementById("ddlDocumentoOpcion").value = "Si";
+					$("#ddlDocumentoOpcion").attr("readonly", true);
+					document.getElementById("divFormPrEP").style.border = "2px solid #005476"
 
 				}
 
