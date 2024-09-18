@@ -22,7 +22,7 @@ namespace ProyectoPREP.Controllers
 		}
 		public ActionResult ElegibilidadPrepDemanda()
 		{
-
+			
 			return View();
 		}
 
@@ -104,10 +104,23 @@ namespace ProyectoPREP.Controllers
 
 		public ActionResult DemandaEditar(int id)
 		{
-            var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
+
+			var lista = new List<VwMunicipio>();
+			var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
             var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
 
-            return View(datos);
+			var model1 = db.TblPrepDemanda.Where(x => x.IdPaciente == id).FirstOrDefault();
+
+			lista = (from b in db.VwMunicipios
+					 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model1.ProvinciaResidencia)
+					 select b).ToList();
+
+			ViewBag.Municipios = lista;
+			ViewBag.IdMunicipios = model1.MunicipioResidencia;
+			ViewBag.IdProvincia = model1.ProvinciaResidencia;
+			//ViewBag.tipoDocumento = model1.TipoDocumento;
+			ViewBag.documento = model1.Documento;
+			return View(datos);
 		}
 
 
@@ -121,6 +134,8 @@ namespace ProyectoPREP.Controllers
 			demanda.FechaModificacion = DateTime.Now;
 			demanda.UsuarioModifico = Convert.ToString(idUser);
 			demanda.IdDeptoDepend = IdDeptoDepend;
+
+
 
 			db.Entry(demanda).State = EntityState.Modified;
 			db.SaveChanges();

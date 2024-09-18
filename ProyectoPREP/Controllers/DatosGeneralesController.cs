@@ -781,7 +781,6 @@ namespace ProyectoPREP.Controllers
                          select b).ToList();
 
 
-
                 ViewBag.Municipios = lista;
                 ViewBag.IdMunicipios = model1.DatosGenerales.MunicipioResidencia;
                 ViewBag.IdProvincia = model1.DatosGenerales.ProvinciaResidencia;

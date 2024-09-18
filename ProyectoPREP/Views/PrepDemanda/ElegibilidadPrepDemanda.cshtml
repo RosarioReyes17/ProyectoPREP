@@ -51,6 +51,8 @@
 <div id="divDatosGenerales" style="display:none">
 	<form id="formulario" action="/PrepDemanda/ElegibilidadPrepDemanda" method="post">
 
+		<input type="hidden" id="edad" />
+
 		<div id="divFormPrEP" class="form-invisible">
 
 			<div id="divDatosGenerales" style="display: block;">
@@ -105,7 +107,7 @@
 
 							<td>
 								5. Fecha de Nacimiento (*):<br>
-								<input onkeydown="return false" asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+								<input readonly onkeydown="return false" asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
 								<span asp-validation-for="FechaNacimiento" style="color:red; margin-left:20px"></span>
 							</td>
 						</tr>
@@ -495,12 +497,12 @@
 						</tr>
 						<tr>
 							@*REVISAR LA EDAD*@
-							<td>
+						@* 	<td>
 								12. Edad:
 								<input asp-for="Edad" id="txtEdad" name="Edad" class="form-control" type="number" placeholder="Introduzca su edad." autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
 								<span asp-validation-for="Edad" style="color:red;margin-left:30px"></span>
 
-							</td>
+							</td> *@
 							@*REVISAR LA EDAD*@
 
 							<td>
@@ -512,7 +514,7 @@
 							</td>
 
 							<td>
-								14. Teléfono ceular:<input asp-for="Telefono" id="txtTelefono" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value,this.id);" name="Telefono" class="form-control telef" type="text" placeholder="Introduzca su Teléfono.">
+								14. Teléfono celular:<input asp-for="Telefono" id="txtTelefono" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" minlength="12" maxlength="12" onkeypress="ValidarCelular(this.value,this.id);" name="Telefono" class="form-control telef" type="text" placeholder="Introduzca su Teléfono.">
 								<span asp-validation-for="Telefono" style="color:red;margin-left:30px"></span>
 
 							</td>
@@ -527,7 +529,7 @@
 									<option value="1">Hombre</option>
 									<option value="2">Mujer</option>
 									<option value="3">Transgenero</option>
-									<option value="4">No reporta</option>
+									@* <option value="4">No reporta</option> *@
 								</select>
 								<span asp-validation-for="Genero" style="color:red;margin-left:30px"></span>
 
@@ -1149,6 +1151,29 @@
 	</div>
 </div>
 
+<div class="modal" id="menor" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:red; margin-left: 90px;">
+					Advertencia
+				</h5>
+				<button type="button" onclick="cerrarModalMenor();" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="paginaPrincipal();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+				<button type="button" onclick="cerrarModalMenor();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 @section scripts{
 	<script type="text/javascript">
@@ -1193,6 +1218,71 @@
 			}
 		}
 
+		const calcularCreatinina = () => {
+			var KG = 2.205;
+			var Edad = document.getElementById("edad").value;
+			var Peso = document.getElementById("txtPeso").value;
+			var sexo = document.getElementById("ddlSexo").value;
+			var genero = document.getElementById("ddlGenero").value;
+			var chkHormonal = document.getElementById("chkHormonal").checked;
+			var PesoKG = Peso / KG;
+
+			var valorCreatinina = document.getElementById("txtValorCreatinina").value;
+
+			if (genero == "3" && chkHormonal == true) {
+				var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+				setTimeout(menorCreatina, 1000);
+
+			}
+			if (genero == "1") {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+
+
+			if (genero == "2") {
+				var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+			if (genero == "3" && chkHormonal == false) {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+			}
+
+			if (sexo == "M" && genero == "4") {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+
+			if (sexo == "F" && genero == "4") {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+			// Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
+			// Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
+			setTimeout(menorCreatina, 1000);
+		}
+
+		const menorCreatina = () => {
+			var creatina = document.getElementById("ResultadoCreatinina").value;
+
+			if (creatina < 60) {
+				$('#menor').modal('show');
+
+
+			} else {
+				document.getElementById("chkaclaramiento2").checked = true;
+			}
+		}
 		document.getElementById('formulario').addEventListener('submit', function (event) {
 			event.preventDefault(); // Evita el envío del formulario
 			$('#myModal').modal('show'); // Muestra el modal
@@ -1202,12 +1292,22 @@
 			$('#myModal').modal('hide'); // Cierra el modal
 		}
 
+		function cerrarModalMenor() {
+			$('#menor').modal('hide'); // Cierra el modal
+		}
+
 		function confirmarEnvio() {
 			cerrarModal(); // Cierra el modal
 			document.getElementById('formulario').submit(); // Envía el formulario
 		}
 
 
+		const paginaPrincipal = () => {
+			var local = window.location.host;
+			console.log(local);
+			var origin = "/PrepDemanda/HomePrepDemanda";
+			window.location.href = "https://" + local + origin;
+		}
 
 		const buscarEnPadron = () => {
 			//const Prefix = "402-1126691-7";
@@ -1266,6 +1366,7 @@
 					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
 					document.getElementById("txtDocumento").value = (Identificacion);
 					document.getElementById("edad").value = modelos.edad;
+					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento;
 
 					document.getElementById("ddlDocumentoOpcion").value = "Si";
 					$("#ddlDocumentoOpcion").attr("readonly", true);

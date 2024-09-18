@@ -40,12 +40,12 @@
 					<tr>
 						<td>
 							1. Nombres (*):
-							<input asp-for="Nombres" id="txtNombre" name="Nombres" placeholder="Introduzca sus nombres" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
+							<input asp-for="Nombres" id="txtNombre" readonly name="Nombres" placeholder="Introduzca sus nombres" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 							<span asp-validation-for="Nombres" style="color:red;margin-left:30px"></span>
 						</td>
 						<td>
 							2. Apellidos (*):
-							<input asp-for="Apellidos" id="txtApellido" name="Apellidos" placeholder="Introduzca sus apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
+							<input asp-for="Apellidos" id="txtApellido" readonly name="Apellidos" placeholder="Introduzca sus apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 							<span asp-validation-for="Apellidos" style="color:red;margin-left:30px"></span>
 						</td>
 
@@ -54,24 +54,21 @@
 					<tr>
 						<td>
 							3. ¿Tiene cédula o pasaporte? (*):
-							<select asp-for="TieneDocumentos" class="form-control" onchange="habilitarInput()" id="ddlDocumentoOpcion" name="TieneDocumentos" data-val="true" data-val-required="Este campo obligatorio.">
-								<option value="">--Seleccione--</option>
-								<option value="SI">SI</option>
-								<option value="NO">NO</option>
-							</select>
-							<span asp-validation-for="TieneDocumentos" style="color:red;margin-left:30px"></span>
+							<input asp-for="TieneDocumentos" readonly class="form-control" onchange="habilitarInput()" id="ddlDocumentoOpcion" name="TieneDocumentos" data-val="true" data-val-required="Este campo obligatorio."/>
+								
+							
 						</td>
 
 						<td>
 							4. Número de cédula o pasaporte:
-							<input asp-for="Documento" id="txtDocumento" name="Documento" class="form-control" required>
+							<input asp-for="Documento"  readonly id="txtDocumento" name="Documento" class="form-control" required>
 							<span asp-validation-for="Documento" style="color:red;margin-left:30px"></span>
 
 						</td>
 
 						<td>
 							5. Fecha de Nacimiento (*):<br>
-							<input onkeydown="return false" asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+							<input onkeydown="return false" readonly asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
 							<span asp-validation-for="FechaNacimiento" style="color:red; margin-left:20px"></span>
 						</td>
 					</tr>
@@ -451,7 +448,7 @@
 
 						<td>
 							11. Municipio (*):
-							<select asp-for="MunicipioResidencia" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" data-val="true" data-val-required="Este campo obligatorio.">
+							<select asp-for="MunicipioResidencia" asp-items="@(new SelectList(ViewBag.Municipios, "IdMunicipio","Municipio"))" class="form-control" id="MunicipioResidencia" name="MunicipioResidencia" data-val="true" data-val-required="Este campo obligatorio.">
 							</select>
 							<span asp-validation-for="MunicipioResidencia" style="color:red;margin-left:30px"></span>
 
@@ -461,12 +458,12 @@
 					</tr>
 					<tr>
 						@*REVISAR LA EDAD*@
-						<td>
+						@* <td>
 							12. Edad:
 							<input asp-for="Edad" id="txtEdad" name="Edad" class="form-control" type="number" placeholder="Introduzca su edad." autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
 							<span asp-validation-for="Edad" style="color:red;margin-left:30px"></span>
 
-						</td>
+						</td> *@
 						@*REVISAR LA EDAD*@
 
 						<td>
@@ -1075,16 +1072,89 @@
 		<br />
 		<label></label>
 	</div>
+
 	<script>
+
+		const dateInput = document.getElementById('txtFechaRegistroPrep');
+		// Deshabilitar la interacción con el teclado de la fecha
+		dateInput.addEventListener('keydown', function (event) {
+			event.preventDefault();
+		});
+
+
+		const dateInput1 = document.getElementById('txtFechaNacimiento');
+		// Deshabilitar la interacción con el teclado de la fecha
+		dateInput1.addEventListener('keydown', function (event) {
+			event.preventDefault();
+		});
+
+		//ajustando los valores del select municipio
+		var IdMunicipios = @ViewBag.IdMunicipios;
+		if (parseInt(IdMunicipios) < 10) {
+			document.getElementById("MunicipioResidencia").value = "0" + @ViewBag.IdMunicipios;
+
+		} else {
+			document.getElementById("MunicipioResidencia").value = @ViewBag.IdMunicipios;
+
+		}
+
+		//ajustando los valores del select provincia
+		var idProvincia = @ViewBag.IdProvincia;
+		if (parseInt(idProvincia) < 10) {
+			document.getElementById("ProvinciaResidencia").value = "0" + @ViewBag.IdProvincia;
+
+		} else {
+			document.getElementById("ProvinciaResidencia").value = @ViewBag.IdProvincia;
+
+		}
+
+		//deshabilitar  inputs de contacto
+		var contacto = document.getElementById("txtNombreContacto").value;
+		if (contacto == "" || contacto == "NO") {
+			document.getElementById("ddlContactoConfianza").value = "NO";
+			document.getElementById("txtNombreContacto").value = "";
+		}
+		else {
+			document.getElementById("ddlContactoConfianza").value = "SI";
+			$("#txtNombreContacto").removeAttr("disabled");
+			$("#txtTelefonoContacto").removeAttr("disabled");
+			$("#ddlParentesco").removeAttr("disabled");
+			document.getElementById("trContacto").style.display = "";
+
+		}
+
+		//deshabilitar  inputs de ARS
+
+		var ddlARS = document.getElementById("ddlARS").value;
+		if (ddlARS == "" || ddlARS == "NO") {
+			document.getElementById("ddlARS").value = "NO";
+		}
+		else {
+			document.getElementById("ddlARS").value = "SI";
+			$("#txtNombreARS").removeAttr("disabled");
+			$("#ddlRegimen").removeAttr("disabled");
+			document.getElementById("tdARS").style.display = "";
+			document.getElementById("tdRegimen").style.display = "";
+
+
+		}
+
+		//deshabilitar  inputs de DESCENDIENTE
+
+		var ddlDecendiente = document.getElementById("ddlDecendiente").value;
+		if (ddlDecendiente == "" || ddlDecendiente == "NO") {
+			document.getElementById("ddlDecendiente").value = "NO";
+		}
+		else {
+			document.getElementById("ddlDecendiente").value = "SI"
+			$("#ddlNacionalidadMadre").removeAttr("disabled");
+			document.getElementById("tdNacionalidadMadre").style.display = "";
+
+		}
+
 
 
 	</script>
-
-
-
-
-
-
 
 
 </form>
@@ -1135,7 +1205,6 @@
 		}
 
 
-
 		document.getElementById('formulario').addEventListener('submit', function (event) {
 			event.preventDefault(); // Evita el envío del formulario
 			$('#myModal').modal('show'); // Muestra el modal
@@ -1152,57 +1221,6 @@
 
 
 
-		const buscarEnPadron = () => {
-			var Identificacion = document.getElementById("Identificacion").value;
-			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
-
-			if (TipoIdentificacion == "Seleccione") {
-				document.getElementById("divDatosGenerales").style = 'display:none';
-				document.getElementById("divElegibilidadPre").style = 'display:none';
-				alert("Seleccione una opcion");
-
-				return;
-			}
-
-			if (Identificacion == "") {
-				alert("Debe agregar su cedula");
-
-				return;
-			}
-			$.post("@Url.Action("BuscarEnPadron","DatosGenerales")", { Prefix: Identificacion }, function (modelos) {
-
-
-				if (modelos.status == false) {
-					var texto = modelos.msj;
-					alert(modelos.msj)
-
-				} else {
-					document.getElementById("divDatosGenerales").style = 'display:block';
-					document.getElementById("divElegibilidadPre").style = 'display:block';
-
-					var informacion = modelos.infoPaciente;
-					if (informacion.sexo == "M") {
-						document.getElementById("ddlSexo").value = ("M");
-
-					} else {
-						document.getElementById("ddlSexo").value = ("F");
-
-					}
-
-					document.getElementById("txtNombre").value = (informacion.nombres);
-					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
-					document.getElementById("txtDocumento").value = Identificacion;
-					//document.getElementById("ddlNacionalidad").options[informacion.nacionalidad].selected = true;
-
-					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento.toString();
-
-				}
-
-
-
-			});
-
-		}
 
 		const llenarMunicipio = () => {
 			$("#MunicipioResidencia").empty();
@@ -1228,6 +1246,7 @@
 		function nav(value) {
 			if (value != "") { location.href = value }
 		}
+
 		const habilitarInput = () => {
 
 			var descendiente = document.getElementById("ddlDecendiente").value;
@@ -1407,6 +1426,3 @@
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
 }
-@* <span style="margin-left:30px;color:red;" asp-validation-for="Kilataje" class="text-danger"></span>
-<br />
- *@
