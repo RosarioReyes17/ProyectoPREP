@@ -619,14 +619,14 @@ public partial class DbPrepContext : DbContext
                     r => r.HasOne<Permiso>().WithMany()
                         .HasForeignKey("PermisosId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_RolePermiso_Permiso"),
+                        .HasConstraintName("FK__RolePermi__Permi__5EFF0ABF"),
                     l => l.HasOne<Role>().WithMany()
                         .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_RolePermiso_Role"),
+                        .HasConstraintName("FK__RolePermi__Roles__5E0AE686"),
                     j =>
                     {
-                        j.HasKey("RolesId", "PermisosId");
+                        j.HasKey("RolesId", "PermisosId").HasName("PK__RolePerm__19930CC1B5993F68");
                         j.ToTable("RolePermiso");
                         j.IndexerProperty<int>("RolesId").HasColumnName("Roles_Id");
                         j.IndexerProperty<int>("PermisosId").HasColumnName("Permisos_Id");
@@ -722,7 +722,7 @@ public partial class DbPrepContext : DbContext
 
         modelBuilder.Entity<TblPrepDemandaSeguimiento>(entity =>
         {
-            entity.HasKey(e => e.IdSeguimiento).HasName("PK__tbl_Prep__5643F60F4EDA367A");
+            entity.HasKey(e => e.IdSeguimiento).HasName("PK__tbl_Prep__5643F60FB411AAFE");
 
             entity.ToTable("tbl_Prep_Demanda_Seguimientos");
 
@@ -757,12 +757,12 @@ public partial class DbPrepContext : DbContext
 
             entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.TblPrepDemandaSeguimientos)
                 .HasForeignKey(d => d.IdPaciente)
-                .HasConstraintName("FK__tbl_Prep___IdPac__3E923B2D");
+                .HasConstraintName("FK__tbl_Prep___IdPac__5B2E79DB");
         });
 
         modelBuilder.Entity<TblPrepDemanda>(entity =>
         {
-            entity.HasKey(e => e.IdPaciente).HasName("PK__tbl_Prep__C93DB49B92DF40B7");
+            entity.HasKey(e => e.IdPaciente).HasName("PK__tbl_Prep__C93DB49B50D68294");
 
             entity.ToTable("tbl_Prep_Demanda");
 
@@ -820,9 +820,17 @@ public partial class DbPrepContext : DbContext
                 .HasColumnName("Sifilis_Fecha");
             entity.Property(e => e.TieneDocumentos).HasColumnName("Tiene_documentos");
             entity.Property(e => e.TienesRelacionesCon).HasColumnName("Tienes_Relaciones_Con");
+            entity.Property(e => e.TipoDocumento)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.UlceraGenital).HasColumnName("Ulcera_genital");
             entity.Property(e => e.ValorCreatinina).HasColumnName("Valor_Creatinina");
             entity.Property(e => e.VerrugasGenitales).HasColumnName("Verrugas_genitales");
+
+            entity.HasOne(d => d.Estatus).WithMany(p => p.TblPrepDemanda)
+                .HasForeignKey(d => d.EstatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__tbl_Prep___Estat__58520D30");
         });
 
         modelBuilder.Entity<TratamientoPrep>(entity =>

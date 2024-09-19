@@ -131,5 +131,11 @@ public partial class TblPrepDemanda
 
     public DateTime? FechaModificacion { get; set; }
 
+    public string? TipoDocumento { get; set; }
+
+    public int EstatusId { get; set; }
+
+    public virtual EstatusSolicitud Estatus { get; set; } = null!;
+
     public virtual ICollection<TblPrepDemandaSeguimiento> TblPrepDemandaSeguimientos { get; set; } = new List<TblPrepDemandaSeguimiento>();
 }

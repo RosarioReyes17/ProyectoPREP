@@ -212,6 +212,18 @@ namespace ProyectoPREP.Controllers
 
 				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
 
+				if (InfoPaciente.sexo == "F")
+				{
+					msj = "Este paciente no suele ser registrado porque es de sexo Femenino";
+
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+				}
+
 				if (InfoPaciente != null && InfoPaciente.valido == true)
 				{
 					try
