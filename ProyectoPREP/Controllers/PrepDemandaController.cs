@@ -53,7 +53,48 @@ namespace ProyectoPREP.Controllers
             }
 			
 		}
-		
+
+		public ActionResult ElegibilidadSinDocumento()
+		{
+
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult ElegibilidadSinDocumento(TblPrepDemanda datos)
+		{
+			try
+			{
+				int idUser = Convert.ToInt32(User.GetUserId());
+				int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+				datos.Documento = "SN";
+				datos.TipoDocumento = "SN";
+				datos.TieneDocumentos = "NO";
+				datos.EstatusId = 1;
+
+				DateTime fechaNacimiento1 = (DateTime) datos.FechaNacimiento;
+				var edad = CalcularEdadPrep(fechaNacimiento1);
+
+				datos.Edad = edad;
+				datos.IdDeptoDepend = IdDeptoDepend;
+				datos.Usuario = Convert.ToString(idUser);
+
+				//REVISAR - LE QUITÉ EL COMENTARIO PARA VER SI LOS DATOS ESTABAN LLEGANDO
+				db.TblPrepDemanda.Add(datos);
+				db.SaveChanges();
+
+				return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+
+			}
+
+			catch (Exception ex)
+			{
+
+				throw new Exception(ex.Message);
+			}
+
+		}
+
 		public ActionResult SeguimientoPrepDemanda(int id)
 		{
 
@@ -143,39 +184,39 @@ namespace ProyectoPREP.Controllers
 
 		}
 
-		public ActionResult DatosGeneralesPorElegibilidad(int id)
-        {
-            int idUser = Convert.ToInt32(User.GetUserId());
-            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
-            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
+		/*public ActionResult DatosGeneralesPorElegibilidad(int id)
+		{
+			int idUser = Convert.ToInt32(User.GetUserId());
+			int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+			string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
 
-            var lista = new List<DatosGenerales>();
-            string sql = "DatosGeneralesPorElegibilidad";
-            //string sqlAdmin = "DatosGeneralesPorElegibilidadAdmin";
+			var lista = new List<DatosGenerales>();
+			string sql = "DatosGeneralesPorElegibilidad";
+			string sqlAdmin = "DatosGeneralesPorElegibilidadAdmin";
 
-            //if (admin == "Administrador")
-            //{
-            //    using (var connection = new SqlConnection(db.Database.GetConnectionString()))
-            //    {
-            //        lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
-            //        return View(lista);
+			if (admin == "Administrador")
+			{
+				using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+				{
+					lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+					return View(lista);
 
-            //    }
-            //}
-
-
-            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
-            {
-                lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
-
-            }
-
-            ViewBag.Establecimientos = db.VwUsuariosEstablecimientos.ToList();
-
-            return View(lista);
-        }
+				}
+			}
 
 
+			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+			{
+				lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+			}
+
+			ViewBag.Establecimientos = db.VwUsuariosEstablecimientos.ToList();
+
+			return View(lista);
+		}*/
+
+		
 
 		[HttpPost]
 		public ActionResult BuscarEnPadron(string Seleccion, string Prefix)
