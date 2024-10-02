@@ -8,7 +8,7 @@
 
     <h5>Información del Paciente</h5>
     <strong>ID PREP:</strong>
-    <span>@ViewBag.IdPaciente</span>
+    <span>@ViewBag.IdPred</span>
     <br>
 
     <strong>Paciente PREP:</strong>
@@ -19,11 +19,14 @@
 
 
 
-<form id="formularioSeguimiento" asp-action="SeguimientoPrep" asp-controller="Seguimientos" method="post">
+<form id="formularioSeguimiento" asp-action="SeguimientoPrepDemanda" asp-controller="PrepDemanda" method="post">
     <input type="hidden" id="IdDatos" name="IdDatos" value="@ViewBag.IdPaciente" />
-    <input name="" id="sexo" type="hidden" value="@ViewBag.Sexo" />
-    <input name="" id="genero" type="hidden" value="@ViewBag.Genero" />
+    <input name="" id="Sexo" type="hidden" value="@ViewBag.Sexo" />
+    <input name="" id="Edad" type="hidden" value="@ViewBag.Edad" />
+    <input name="" id="Peso" type="hidden" value="@ViewBag.Peso" />
+    <input name="" id="Genero" type="hidden" value="@ViewBag.Genero" />
     <input name="" id="FechaIngresoSai" type="hidden" value="@ViewBag.FechaIngresoSai" />
+    <input name="IdPaciente" id="IdPaciente" type="hidden" value="@ViewBag.IdPaciente" />
 
 
     <div id="divFormPrEP">
@@ -126,18 +129,18 @@
                                 <br />
                                 Resultado de Creatinina(Plasmatica):
                                 <br>
-                                <input id="CreatininaValor" data-val="true" data-val-required="Este campo obligatorio." disabled onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
+                                <input id="CreatininaValor" data-val="true" data-val-required="Este campo obligatorio." onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
 
                                 <br>
                                 <br>
                                 Resultado:
-                                <input id="ResultadoCreatinina" disabled readonly name="ResultadoCreatinina" class="form-control habilitarCreatinina" />
+                                <input id="ResultadoCreatinina" readonly name="ResultadoCreatinina" class="form-control habilitarCreatinina" />
 
                             </div>
 
                             <div class="form-group col-md-8">
                                 Fecha:
-                                <input id="txtFechaResultadoCreatinina" onkeydown="return false" disabled name="txtFechaResultadoCreatinina" class="form-control col-sm-3 habilitarCreatinina " type="date">
+                                <input id="txtFechaResultadoCreatinina" onkeydown="return false" name="txtFechaResultadoCreatinina" class="form-control col-sm-3 habilitarCreatinina " type="date">
                             </div>
                             <br>NOTA: Recuerde realizar la prueba de Creatinina cada 6 meses.
                         </td>
@@ -239,7 +242,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                  @*   <tr>
                         <td colspan="2">
                             <label>¿Desea realizar la prueba de Sifilis?</label>
                             <input onchange="mostrarSifilis();" type="checkbox" id="vihS" />
@@ -251,7 +254,7 @@
                             <label>¿Desea realizar la prueba de Sifilis y Hepatitis?</label>
                             <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
                         </td>
-                    </tr>
+                    </tr> *@
 
 
                     <tr id="sifilisBC">
@@ -259,12 +262,12 @@
                             <div class="form-group">
                                 Sifilis(VDRL) Realizada:
                                 <br>
-                                <input disabled id="rdsifilis1" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
-                                <input disabled id="rdsifilis2" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="Reactivo"> Reactivo
+                                <input  id="rdsifilis1" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
+                                <input  id="rdsifilis2" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="Reactivo"> Reactivo
                                 <br>
                                 <span asp-validation-for="Sifilis" style="color:red;margin-left:20px"></span>
 
-                                <input disabled style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                                <input  style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
                                 <span asp-validation-for="SifilisFecha" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -272,12 +275,12 @@
                         <td id="hepatitisB" colspan="2">
                             HBsAg Realizada:
                             <br>
-                            <input id="rdHBsAg1" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Negativo"> Negativo
-                            <input id="rdHBsAg2" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HbsAg" onclick="habilitarInputHBsAg(this.value)" value="Positivo"> Positivo
+                            <input id="rdHBsAg1" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Negativo"> Negativo
+                            <input id="rdHBsAg2" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HbsAg" onclick="habilitarInputHBsAg(this.value)" value="Positivo"> Positivo
                             <br>
                             <span asp-validation-for="HbsAg" style="color:red;margin-left:20px"></span>
 
-                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." disabled id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio."  id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
                             <span asp-validation-for="HbsAgFecha" style="color:red;margin-left:20px"></span>
 
 
@@ -288,12 +291,12 @@
 
                             Hepatitis C Realizada:
                             <br>
-                            <input id="rdHepatitis1" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Negativo"> Negativo
-                            <input id="rdHepatitis2" data-val="true" data-val-required="Este campo obligatorio." disabled class="styled habilitarSifilisBC" type="radio" name="HepatitisC" onclick="habilitarInputHepatitis(this.value)" value="Positivo"> Positivo
+                            <input id="rdHepatitis1" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Negativo"> Negativo
+                            <input id="rdHepatitis2" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HepatitisC" onclick="habilitarInputHepatitis(this.value)" value="Positivo"> Positivo
                             <br>
                             <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
 
-                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" disabled id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false"  id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
                             <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
 
                         </td>
@@ -422,6 +425,29 @@
 
 </form>
 
+<div class="modal" id="menor" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:red; margin-left: 90px;">
+                    Advertencia
+                </h5>
+                <button type="button" onclick="cerrarModalMenor();" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="paginaPrincipal();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+                <button type="button" onclick="cerrarModalMenor();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <style>
     input[type=radio] {
@@ -438,6 +464,121 @@
         margin-left: 0px; /* Por ejemplo, margen derecho para separarlos */
     }
 </style>
+
+
+@section scripts{
+
+	<script type="text/javascript">
+        var tieneSintomas = (e) => {
+            var valor = e;
+
+            if (valor == "Si") {
+                $(".chSignos").removeAttr("disabled");
+
+            }
+
+            if (valor == "No") {
+                $(".chSignos").attr("disabled", true);
+
+            }
+        }
+       
+        function cerrarModalMenor() {
+            $('#menor').modal('hide'); // Cierra el modal
+        }
+
+
+        const menorCreatina = () => {
+            var creatina = document.getElementById("ResultadoCreatinina").value;
+
+            if (creatina < 60) {
+                $('#menor').modal('show');
+
+
+            } else {
+                document.getElementById("chkaclaramiento2").checked = true;
+            }
+        }
+
+
+        const calcularCreatinina = () => {
+            var KG = 2.205;
+            var Edad = document.getElementById("Edad").value;
+            var Peso = document.getElementById("Peso").value;
+            var sexo = document.getElementById("Sexo").value;
+            var genero = document.getElementById("Genero").value;
+            var chkHormonal = document.getElementById("chkHormonal").checked;
+            var PesoKG = Peso / KG;
+
+            var valorCreatinina = document.getElementById("CreatininaValor").value;
+
+            if (genero == "3" && chkHormonal == true) {
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+                setTimeout(menorCreatina, 1000);
+
+            }
+            if (genero == "1") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+
+
+            if (genero == "2") {
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+            if (genero == "3" && chkHormonal == false) {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+            }
+
+            if (sexo == "M" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+
+            if (sexo == "F" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+            // Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
+            // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
+            setTimeout(menorCreatina, 1000);
+        }
+
+        var ARV = (e) => {
+            var td1 = document.getElementById("td1").checked;
+            var td2 = document.getElementById("td2").checked;
+            var td3 = document.getElementById("td3").checked;
+
+            if (e == "td1") {
+                document.getElementById("td2").checked = false;
+                document.getElementById("td3").checked = false;
+
+            }
+            if (e == "td2") {
+                document.getElementById("td1").checked = false;
+                document.getElementById("td3").checked = false;
+
+            }
+            if (e == "td3") {
+                document.getElementById("td1").checked = false;
+                document.getElementById("td2").checked = false;
+
+            }
+        }
+
+    </script>
+}
 
 @* @section scripts{
     <script type="text/javascript">

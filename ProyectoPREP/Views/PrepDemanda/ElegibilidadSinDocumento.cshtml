@@ -1075,7 +1075,7 @@
 
 								<div class="form-group col-md-7">
 									<strong>Fecha Próximo seguimiento:</strong>
-									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
 								</div>
 							</td>
 						</tr>
@@ -1210,6 +1210,29 @@
 			}
 		}
 
+		var ARV = (e) => {
+			var td1 = document.getElementById("td1").checked;
+			var td2 = document.getElementById("td2").checked;
+			var td3 = document.getElementById("td3").checked;
+
+			if (e == "td1") {
+				document.getElementById("td2").checked = false;
+				document.getElementById("td3").checked = false;
+
+			}
+			if (e == "td2") {
+				document.getElementById("td1").checked = false;
+				document.getElementById("td3").checked = false;
+
+			}
+			if (e == "td3") {
+				document.getElementById("td1").checked = false;
+				document.getElementById("td2").checked = false;
+
+			}
+		}
+
+
 		const calcularCreatinina = () => {
 			var KG = 2.205;
 			var Edad = document.getElementById("edad").value;
@@ -1301,82 +1324,12 @@
 			window.location.href = "https://" + local + origin;
 		}
 
-		const buscarEnPadron = () => {
-			//const Prefix = "402-1126691-7";
-			var Identificacion = document.getElementById("Identificacion").value;
-			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
-
-
-			if (TipoIdentificacion == "Seleccione") {
-				document.getElementById("divDatosGenerales").style = 'display:none';
-				document.getElementById("divFecha").style = 'display:none';
-
-				$("#cuerpoModal").empty();
-				document.getElementById("cuerpoModal").innerHTML = "Seleccione una opción";
-				$('#myModal').modal('show');
-				return;
-			}
-
-			if (Identificacion == "") {
-
-				$("#cuerpoModal").empty();
-				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar la cédula a validar.";
-				$('#myModal').modal('show');
-
-				return;
-			}
-
-			document.getElementById("spinner").style.display = "block";
-
-			$.post("@Url.Action("BuscarEnPadron","PrepDemanda")", { Prefix: Identificacion }, function (modelos) {
-
-				document.getElementById("spinner").style.display = "none";
-
-				if (modelos.status == false) {
-					var texto = modelos.msj;
-					$("#cuerpoModal").empty();
-					document.getElementById("cuerpoModal").innerHTML = texto;
-					$('#myModal').modal('show');
-
-				} else {
-					document.getElementById("divDatosGenerales").style = 'display:block';
-					document.getElementById("divElegibilidadPre").style = 'display:block';
-					document.getElementById("divBotones").style = 'display:block';
-					$("#Identificacion").attr("readonly", true);
-
-
-					var informacion = modelos.infoPaciente;
-					if (informacion.sexo == "M") {
-						document.getElementById("ddlSexo").value = ("M");
-
-					} else {
-						document.getElementById("ddlSexo").value = ("F");
-
-					}
-
-					document.getElementById("txtNombre").value = (informacion.nombres);
-					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
-					document.getElementById("txtDocumento").value = (Identificacion);
-					document.getElementById("edad").value = modelos.edad;
-					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento;
-
-					document.getElementById("ddlDocumentoOpcion").value = "Si";
-					$("#ddlDocumentoOpcion").attr("readonly", true);
-
-
-				}
-
-
-
-			});
-
-		}
 
 		const llenarMunicipio = () => {
 			$("#MunicipioResidencia").empty();
 			var ProvinciaResidencia = document.getElementById("ProvinciaResidencia").value;
 
-			$.post("@Url.Action("llenarMunicipio","DatosGenerales")", { id: ProvinciaResidencia }, function (modelos) {
+			$.post("@Url.Action("llenarMunicipio","PrepDemanda")", { id: ProvinciaResidencia }, function (modelos) {
 				var municipios = modelos.lista
 				console.log(modelos);
 				for (let i = 0; i < municipios.length; i++) {
@@ -1396,6 +1349,7 @@
 		function nav(value) {
 			if (value != "") { location.href = value }
 		}
+
 		const habilitarInput = () => {
 
 			var descendiente = document.getElementById("ddlDecendiente").value;
@@ -1413,17 +1367,7 @@
 
 			}
 
-			// if (ddlDocumentoOpcion == "Si") {
-			// 	$("#txtDocumento").removeAttr("disabled");
-			// 	document.getElementById("identificacion").style.display = "";
-
-
-			// }else{
-			// 	$("#txtDocumento").attr("disabled", true);
-			// 	document.getElementById("identificacion").style.display = "none";
-
-
-			// }
+		
 
 			if (ddlContactoConfianza == "SI") {
 

@@ -110,8 +110,8 @@
                         }
 
 
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
-                        {
+@*                         @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
+ *@                        {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     REPORTES
@@ -143,11 +143,11 @@
 
                     <div style="display: flex; align-items: center;" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div style="flex-grow: 1;">
-                            <label class="datos">@User.Identity.Name</label>
+                            <label class="datos">@* @User.Identity.Name *@</label>
                             <br />
-                            <label style="font-weight:500" class="datos">@User.FindFirst("Depertamento").Value</label>
+                            <label style="font-weight:500" class="datos">@* @User.FindFirst("Depertamento").Value *@</label>
                         </div>
-                        <div class="logo">@User.Identity.Name.Substring(0,1)</div>
+                        <div class="logo">@* @User.Identity.Name.Substring(0,1) *@</div>
                     </div>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="right: 0; left: auto;">

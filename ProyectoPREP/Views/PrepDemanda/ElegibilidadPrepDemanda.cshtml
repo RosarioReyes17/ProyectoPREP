@@ -1079,7 +1079,7 @@
 
 									<div class="form-group col-md-7">
 										<strong>Fecha Próximo seguimiento:</strong>
-										<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+										<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
 									</div>
 								</td>
 							</tr>
@@ -1178,6 +1178,7 @@
 
 @section scripts{
 	<script type="text/javascript">
+
 		function ValidarCelular(a, id) {
 
 			var datos = a;
@@ -1284,6 +1285,7 @@
 				document.getElementById("chkaclaramiento2").checked = true;
 			}
 		}
+		
 		document.getElementById('formulario').addEventListener('submit', function (event) {
 			event.preventDefault(); // Evita el envío del formulario
 			$('#myModal').modal('show'); // Muestra el modal
@@ -1302,6 +1304,27 @@
 			document.getElementById('formulario').submit(); // Envía el formulario
 		}
 
+		var ARV = (e) => {
+			var td1 = document.getElementById("td1").checked;
+			var td2 = document.getElementById("td2").checked;
+			var td3 = document.getElementById("td3").checked;
+
+			if (e == "td1") {
+				document.getElementById("td2").checked = false;
+				document.getElementById("td3").checked = false;
+
+			}
+			if (e == "td2") {
+				document.getElementById("td1").checked = false;
+				document.getElementById("td3").checked = false;
+
+			}
+			if (e == "td3") {
+				document.getElementById("td1").checked = false;
+				document.getElementById("td2").checked = false;
+
+			}
+		}
 
 		const paginaPrincipal = () => {
 			var local = window.location.host;
@@ -1385,7 +1408,7 @@
 			$("#MunicipioResidencia").empty();
 			var ProvinciaResidencia = document.getElementById("ProvinciaResidencia").value;
 
-			$.post("@Url.Action("llenarMunicipio","DatosGenerales")", { id: ProvinciaResidencia }, function (modelos) {
+			$.post("@Url.Action("llenarMunicipio","PrepDemanda")", { id: ProvinciaResidencia }, function (modelos) {
 				var municipios = modelos.lista
 				console.log(modelos);
 				for (let i = 0; i < municipios.length; i++) {
@@ -1402,9 +1425,11 @@
 				//MunicipioResidencia
 			});
 		}
+		
 		function nav(value) {
 			if (value != "") { location.href = value }
 		}
+		
 		const habilitarInput = () => {
 
 			var descendiente = document.getElementById("ddlDecendiente").value;

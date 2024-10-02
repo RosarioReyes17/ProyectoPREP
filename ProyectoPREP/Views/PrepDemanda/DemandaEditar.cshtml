@@ -12,6 +12,8 @@
 	@Html.HiddenFor(d => d.IdPaciente)
 	@Html.HiddenFor(d => d.Usuario)
 	@Html.HiddenFor(d => d.IdDeptoDepend)
+	@Html.HiddenFor(d => d.TipoDocumento)
+	@Html.HiddenFor(d => d.Estatus)
 
 	<div id="divFormPrEP" class="form-invisible">
 
@@ -986,13 +988,13 @@
 									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
 
 									<br>
-									<input name="SecrecionUretral" class="sindromico" type="checkbox" value="true" /> Secrecion Uretral
+									<input name="SecrecionUretral" class="sindromico" type="checkbox" checked="@Model.SecrecionUretral" /> Secrecion Uretral
 									<br>
-									<input name="SecrecionVaginal" class="sindromico" type="checkbox" value="true" /> Secrecion Vaginal
+									<input name="SecrecionVaginal" class="sindromico" type="checkbox" checked="@Model.SecrecionVaginal" /> Secrecion Vaginal
 									<br>
-									<input name="UlceraGenital" class="sindromico" type="checkbox" value="true" /> Ulcera genital
+									<input name="UlceraGenital" class="sindromico" type="checkbox" checked="@Model.UlceraGenital" /> Ulcera genital
 									<br>
-									<input name="VerrugasGenitales" class="sindromico" type="checkbox" value="true" /> Verrugas genitales
+									<input name="VerrugasGenitales" class="sindromico" type="checkbox" checked="@Model.VerrugasGenitales" /> Verrugas genitales
 									<br />
 									<span style="color:red">@TempData["Sindromico"]</span>
 
@@ -1016,9 +1018,9 @@
 							<td>
 								<strong>PrEP(ARV) Prescrita:</strong>
 								<br>
-								<input id="td1" onclick="ARV(this.id);" name="PrepArvTdfFtc" value="true" class="styled" type="checkbox"> TDF/FTC <br>
-								<input id="td2" onclick="ARV(this.id);" name="PrepArvTdf3tc" class="styled" value="true" type="checkbox"> TDF/3TC <br>
-								<input id="td3" onclick="ARV(this.id);" name="PrepArvTafFtc" class="styled" value="true" type="checkbox"> TAF/FTC <br />
+								<input id="td1" onclick="ARV(this.id);" name="PrepArvTdfFtc" checked="@Model.PrepArvTdfFtc" class="styled" type="checkbox"> TDF/FTC <br>
+								<input id="td2" onclick="ARV(this.id);" name="PrepArvTdf3tc" class="styled" checked="@Model.PrepArvTdf3tc" type="checkbox"> TDF/3TC <br>
+								<input id="td3" onclick="ARV(this.id);" name="PrepArvTafFtc" class="styled" checked="@Model.PrepArvTafFtc" type="checkbox"> TAF/FTC <br />
 								<span style="color:red">
 									@TempData["ARV"]
 								</span>
@@ -1220,6 +1222,27 @@
 		}
 
 
+		var ARV = (e) => {
+			var td1 = document.getElementById("td1").checked;
+			var td2 = document.getElementById("td2").checked;
+			var td3 = document.getElementById("td3").checked;
+
+			if (e == "td1") {
+				document.getElementById("td2").checked = false;
+				document.getElementById("td3").checked = false;
+
+			}
+			if (e == "td2") {
+				document.getElementById("td1").checked = false;
+				document.getElementById("td3").checked = false;
+
+			}
+			if (e == "td3") {
+				document.getElementById("td1").checked = false;
+				document.getElementById("td2").checked = false;
+
+			}
+		}
 
 
 		const llenarMunicipio = () => {

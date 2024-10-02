@@ -123,7 +123,7 @@ public partial class DbPrepContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=190.94.103.222,3342;Initial Catalog=DB_PREP; TrustServerCertificate=True;User Id=snsintranet;Password=Oblgg573uow4yZE8dt5L");
+        => optionsBuilder.UseSqlServer("Data Source=10.38.0.190,3342;Initial Catalog=DB_PREP; TrustServerCertificate=True;User Id=snsintranet;Password=Oblgg573uow4yZE8dt5L");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

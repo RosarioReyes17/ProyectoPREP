@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace ProyectoPREP.Controllers
 {
-    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+    //[Authorize(Roles = "Administrador,Psicólogo Medicos")]
     public class PrepDemandaController : Controller
 	{
 		// GET: PrepDemanda
@@ -20,9 +20,34 @@ namespace ProyectoPREP.Controllers
 
 			this.db = _db;
 		}
+
+		[HttpPost]
+		public JsonResult llenarMunicipio(int id)
+		{
+			bool status = true;
+			var lista = new List<VwMunicipio>();
+
+			try
+			{
+				lista = (from a in db.VwMunicipios
+						 where Convert.ToInt64(a.IdProvincia) == id
+						 select a).ToList();
+
+
+			}
+			catch (Exception ex)
+			{
+				status = false;
+			}
+
+			var result = new { status, lista };
+			return Json(result);
+		}
+
 		public ActionResult ElegibilidadPrepDemanda()
 		{
-			
+			ViewBag.Municipio = db.VwMunicipios.ToList();
+
 			return View();
 		}
 
@@ -37,9 +62,16 @@ namespace ProyectoPREP.Controllers
 
 				datos.IdDeptoDepend = IdDeptoDepend;
 				datos.Usuario = Convert.ToString(idUser);
+				datos.EstatusId = 1;
+				datos.TipoDocumento = "C";
+
+				DateTime fechaNacimiento1 = (DateTime)datos.FechaNacimiento;
+				var edad = CalcularEdadPrep(fechaNacimiento1);
+
+				datos.Edad = edad;
 
 				//REVISAR - LE QUITÉ EL COMENTARIO PARA VER SI LOS DATOS ESTABAN LLEGANDO
-                db.TblPrepDemanda.Add(datos);
+				db.TblPrepDemanda.Add(datos);
                 db.SaveChanges();
 
                 return RedirectToAction("HomePrepDemanda", "PrepDemanda");
@@ -106,9 +138,42 @@ namespace ProyectoPREP.Controllers
 			ViewBag.Apellido = datos.Apellidos;
 
 			ViewBag.Sexo = datos.Sexo;
+			ViewBag.Edad = datos.Edad;
+			ViewBag.Peso = datos.Peso;
+			ViewBag.Genero = datos.Genero;
 			ViewBag.nacionalidad = nacionalidad.Nacionalidad;
 			ViewBag.IdPaciente = datos.IdPaciente;
+			ViewBag.IdPred = datos.IdPaciente;
 			return View();
+		}
+
+		[HttpPost]
+		public ActionResult SeguimientoPrepDemanda(TblPrepDemandaSeguimiento datos)
+		{
+			try
+			{
+				int idUser = Convert.ToInt32(User.GetUserId());
+				int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+				datos.IdDeptoDepend = IdDeptoDepend;
+				datos.Usuario = Convert.ToString(idUser);
+				datos.UsuarioModifico = Convert.ToString(idUser);
+				datos.FechaModificacion = DateTime.Now;
+
+				//REVISAR - LE QUITÉ EL COMENTARIO PARA VER SI LOS DATOS ESTABAN LLEGANDO
+				db.TblPrepDemandaSeguimientos.Add(datos);
+				db.SaveChanges();
+
+				return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+
+			}
+
+			catch (Exception ex)
+			{
+
+				throw new Exception(ex.Message);
+			}
+
 		}
 
 
@@ -159,7 +224,7 @@ namespace ProyectoPREP.Controllers
 			ViewBag.Municipios = lista;
 			ViewBag.IdMunicipios = model1.MunicipioResidencia;
 			ViewBag.IdProvincia = model1.ProvinciaResidencia;
-			//ViewBag.tipoDocumento = model1.TipoDocumento;
+			ViewBag.tipoDocumento = model1.TipoDocumento;
 			ViewBag.documento = model1.Documento;
 			return View(datos);
 		}
@@ -175,6 +240,7 @@ namespace ProyectoPREP.Controllers
 			demanda.FechaModificacion = DateTime.Now;
 			demanda.UsuarioModifico = Convert.ToString(idUser);
 			demanda.IdDeptoDepend = IdDeptoDepend;
+			demanda.EstatusId = 1;
 
 
 
