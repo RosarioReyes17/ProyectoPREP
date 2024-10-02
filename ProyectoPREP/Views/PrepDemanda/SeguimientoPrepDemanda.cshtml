@@ -577,6 +577,13 @@
             }
         }
 
+        const paginaPrincipal = () => {
+            var local = window.location.host;
+            console.log(local);
+            var origin = "/PrepDemanda/HomePrepDemanda";
+            window.location.href = "https://" + local + origin;
+        }
+
     </script>
 }
 
