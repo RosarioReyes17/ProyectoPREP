@@ -204,8 +204,13 @@ namespace ProyectoPREP.Controllers
 
 			}
 
+
+
 			return View(lista);
+
+
         }
+
 
 
 		public ActionResult DemandaEditar(int id)
@@ -445,8 +450,33 @@ namespace ProyectoPREP.Controllers
 		}
 
 
+        public ActionResult SeguimientosVer(int id)
+        {
+            var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
+			var segui = db.TblPrepDemandaSeguimientos.Where(s=> s.IdPaciente == datos.IdPaciente ).ToList();
 
 
+            ViewBag.Nombres = datos.Nombres;
+            ViewBag.Apellidos = datos.Apellidos;
 
-	}
+            ViewBag.Sexo = datos.Sexo;
+
+            ViewBag.IdPaciente = datos.IdPaciente;
+            return View(segui);
+        }
+
+
+        [HttpGet]
+        public ActionResult SeguimientosVerPorId(int id)
+        {
+            var segui = db.TblPrepDemandaSeguimientos.Where(d => d.IdSeguimiento == id).FirstOrDefault();
+			var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == segui.IdPaciente);
+
+            ViewBag.Nombres = datos.Nombres;
+            ViewBag.Apellidos = datos.Apellidos;
+            ViewBag.IdPaciente = datos.IdPaciente;
+
+            return View(segui);
+        }
+    }
 }

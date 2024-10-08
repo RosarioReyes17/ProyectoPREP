@@ -1,0 +1,121 @@
+﻿@model List<TblPrepDemandaSeguimiento>
+
+
+<h2>Histórico de seguimientos por paciente</h2>
+
+<div class="pull-right" style="padding:10px">
+
+    <a title="Agregar Seguimiento" class="btn btn-success" href="@Url.Action("SeguimientoPrepDemanda", "PrepDemanda", new { id = ViewBag.IdPaciente })">
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+</div>  
+
+<table class="table">
+    <tbody>
+        <tr>
+
+            <th>
+                ID Paciente
+            </th>
+            <th>
+                Nombres
+            </th>
+            <th>    
+                Apellidos
+            </th>
+            <th>Sexo</th>
+
+        </tr>
+        <tr>
+            <td>@ViewBag.IdPaciente</td>
+            <td>@ViewBag.Nombres</td>
+            <td>@ViewBag.Apellidos</td>
+            <td>@ViewBag.Sexo</td>
+        </tr>
+    </tbody>
+</table>
+
+@* <h5>Seguimientos</h5>
+ *@
+<table class="table">
+    <thead>
+        <tr>
+            <th> ID Seguimiento </th>
+            <th>Fecha Seguimiento</th>
+            <th>Acciones</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.IdSeguimiento
+                </td>
+
+
+
+                @if (item.FechaSeguimiento.HasValue)
+                {
+                    <td>@item.FechaSeguimiento.Value.ToString("dd-MM-yyyy")</td>
+                }
+                else
+                {
+                    <td>Sin Informacion</td>
+                }
+
+                @*                 <td>@item.ResultadoPruebaVih</td>
+
+            @if (item.FechaPruebaVih.HasValue)
+            {
+            <td>@item.FechaPruebaVih.Value.ToString("dd-MM-yyyy")</td>
+            }
+            else
+            {
+            <td>Sin Informacion</td>
+            }
+
+            @if (item.FechaReintegro.HasValue)
+            {
+            <td>@item.FechaReintegro.Value.ToString("dd-MM-yyyy")</td>
+            }
+            else
+            {
+            <td>No Ha Sido Reintegrado</td>
+            } *@
+
+                <td>
+                    <a class="btnSeguimiento2" href="~/PrepDemanda/SeguimientosVerPorId/@item.IdSeguimiento">Ver Seguimiento</a> |
+                </td>
+
+            </tr>
+
+
+        }
+
+    </tbody>
+</table>
+
+<br>
+<br>
+
+<br>
+
+<br>
+
+@* <a id="btnRetonar" onclick="history.back();"> Volver al Listado de Pacientes Registrados en PrEP</a> *@
+
+<button onclick="history.back();" class="btn btn-danger" style="margin-left: 5px;">
+    <i class="fa-solid fa-backward"></i> Volver atrás
+</button>
+
+
+<br>
+<br>
+
+<br>
+
+

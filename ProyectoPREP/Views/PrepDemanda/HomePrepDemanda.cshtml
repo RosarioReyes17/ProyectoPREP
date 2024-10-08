@@ -76,8 +76,12 @@
                     <td>@item.Nacionalidad</td>
                     <td>@item.FechaIngresoSai.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     <td>
-                        <a class="btn btnElegibilidad " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.IdPaciente">Seguimiento</a>
                         <a title="Modificar la ficha inicial" class="btn btn-info " href="~/PrepDemanda/DemandaEditar/@item.IdPaciente"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                        <a title="Añadir Seguimiento" class="btn btn-info " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.IdPaciente"><i class="glyphicon glyphicon-plus-sign"></i></a>
+
+                        <a title="Ver Seguimientos" class="btn btn-info " href="~/PrepDemanda/SeguimientosVer/@item.IdPaciente"><i class="glyphicon glyphicon-eye-open"></i></a>
+
 
                     </td> 
                   

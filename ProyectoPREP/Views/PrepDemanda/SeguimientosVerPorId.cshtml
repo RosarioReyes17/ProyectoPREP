@@ -7,14 +7,17 @@
 <div divinfo="">
 
     <h5>Información del Paciente</h5>
-    <strong>ID PREP:</strong>
-    <span>@ViewBag.IdPred</span>
+    <strong>ID del paciente:</strong>
+    <span>@ViewBag.IdPaciente</span>
     <br>
 
-    <strong>Paciente PREP:</strong>
-    <span id="spPacienteNombre" name="spEsatus">@ViewBag.Nombre</span>
+    <strong>Nombres:</strong>
+    <span id="spPacienteNombre" name="spEsatus">@ViewBag.Nombres</span>
     <br>
 
+    <strong>Apellidos:</strong>
+    <span>@ViewBag.Apellidos</span>
+    <br>
 </div>
 
 
@@ -27,6 +30,7 @@
     <input name="" id="Genero" type="hidden" value="@ViewBag.Genero" />
     <input name="" id="FechaIngresoSai" type="hidden" value="@ViewBag.FechaIngresoSai" />
     <input name="IdPaciente" id="IdPaciente" type="hidden" value="@ViewBag.IdPaciente" />
+
 
 
     <div id="divFormPrEP">
@@ -109,7 +113,7 @@
 
                         </td>
                     </tr>
-                   @*  <tr>
+                  @*   <tr>
                         <td>
                             <div>
                                 <label>¿Desea realizar la prueba de Creatinina?</label>
@@ -117,8 +121,8 @@
 
                             </div>
                         </td>
-                    </tr>
-                    <tr id="creatinina" class="form-invisible">
+                    </tr> *@
+                    @* <tr id="creatinina" class="form-invisible">
                         <td colspan="2">
                             <div class="form-group col-md-8">
                                 <label style="color:red">
@@ -220,40 +224,44 @@
 
                         </td>
                         <td colspan="1" style="width:310px">
-                            <input type="checkbox" id="check1" name="Linfadenopatias" class="chSignos" disabled="disabled" value="true"> Linfadenopatias cervicales e inguinales
+                            <input type="checkbox" id="check1" name="Linfadenopatias" class="chSignos" disabled="disabled" value="true"
+                            @(Model.Linfadenopatias == true ? "checked" : "")> Linfadenopatias cervicales e inguinales
                             <br>
-                            <input type="checkbox" id="check2" name="FiebreDesconocida" class="chSignos" disabled="disabled" value="true"> Fiebre de origen desconocido
+                            <input type="checkbox" id="check2" name="FiebreDesconocida" class="chSignos" disabled="disabled" value="true"
+                            @(Model.FiebreDesconocida == true ? "checked" : "")> Fiebre de origen desconocido
                             <br>
-                            <input type="checkbox" id="check3" name="DiarreaProlongada" class="chSignos" disabled="disabled" value="true"> Diarrea prolongada de origen desconocido
+                            <input type="checkbox" id="check3" name="DiarreaProlongada" class="chSignos" disabled="disabled" value="true"
+                            @(Model.DiarreaProlongada == true ? "checked" : "")> Diarrea prolongada de origen desconocido
                             <br>
-                            <input type="checkbox" id="check4" name="ErupcionesPiel" class="chSignos" disabled="disabled" value="true"> Erupciones en la piel
+                            <input type="checkbox" id="check4" name="ErupcionesPiel" class="chSignos" disabled="disabled" value="true"
+                            @(Model.ErupcionesPiel == true ? "checked" : "")> Erupciones en la piel
                             <br>
-                            <input type="checkbox" id="check5" name="InfeccionesRecurrentes" class="chSignos" disabled="disabled" value="true"> Infecciones Recurrentes
+                            <input type="checkbox" id="check5" name="InfeccionesRecurrentes" class="chSignos" disabled="disabled" value="true"
+                            @(Model.InfeccionesRecurrentes == true ? "checked" : "")> Infecciones Recurrentes
                             <br>
-                            <input type="checkbox" id="check6" name="HepatoEsplenomegalia" class="chSignos" disabled="disabled" value="true"> Hepato/esplenomegalia
+                            <input type="checkbox" id="check6" name="HepatoEsplenomegalia" class="chSignos" disabled="disabled" value="true"
+                            @(Model.HepatoEsplenomegalia == true ? "checked" : "")> Hepato/esplenomegalia
                             <br>
                         </td>
+
                         <td colspan="1">
-                         
                         </td>
                         <td colspan="1">
-                         
-                              
                         </td>
                     </tr>
 
-                  @*   <tr>
-                        <td colspan="2">
-                            <label>¿Desea realizar la prueba de Sifilis?</label>
-                            <input onchange="mostrarSifilis();" type="checkbox" id="vihS" />
-                        </td>
+                    @*   <tr>
+                    <td colspan="2">
+                    <label>¿Desea realizar la prueba de Sifilis?</label>
+                    <input onchange="mostrarSifilis();" type="checkbox" id="vihS" />
+                    </td>
                     </tr>
 
                     <tr>
-                        <td colspan="2">
-                            <label>¿Desea realizar la prueba de Sifilis y Hepatitis?</label>
-                            <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
-                        </td>
+                    <td colspan="2">
+                    <label>¿Desea realizar la prueba de Sifilis y Hepatitis?</label>
+                    <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
+                    </td>
                     </tr> *@
 
 
@@ -262,65 +270,77 @@
                             <div class="form-group">
                                 Sifilis(VDRL) Realizada:
                                 <br>
-                                <input  id="rdsifilis1" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
-                                <input  id="rdsifilis2" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="Reactivo"> Reactivo
+                                <input id="rdsifilis1" data-val="true" class="styled habilitarSifilisBC"
+                                       type="radio" name="Sifilis" value="No Reactivo"
+                                @(Model.Sifilis == "No Reactivo" ? "checked" : "")> No Reactivo
+                                <input id="rdsifilis2" data-val="true" class="styled habilitarSifilisBC"
+                                       type="radio" name="Sifilis" value="Reactivo"
+                                @(Model.Sifilis == "Reactivo" ? "checked" : "")> Reactivo
                                 <br>
                                 <span asp-validation-for="Sifilis" style="color:red;margin-left:20px"></span>
 
-                                <input  style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                                <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1"
+                                       onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
                                 <span asp-validation-for="SifilisFecha" style="color:red;margin-left:20px"></span>
-
                             </div>
                         </td>
+
                         <td id="hepatitisB" colspan="2">
                             HBsAg Realizada:
                             <br>
-                            <input id="rdHBsAg1" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Negativo"> Negativo
-                            <input id="rdHBsAg2" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HbsAg" onclick="habilitarInputHBsAg(this.value)" value="Positivo"> Positivo
+                            <input id="rdHBsAg1" data-val="true" class="styled habilitarSifilisBC"
+                                   type="radio" name="HbsAg" value="Negativo"
+                            @(Model.HbsAg == "Negativo" ? "checked" : "")> Negativo
+                            <input id="rdHBsAg2" data-val="true" class="styled habilitarSifilisBC"
+                                   type="radio" name="HbsAg" value="Positivo"
+                            @(Model.HbsAg == "Positivo" ? "checked" : "")> Positivo
                             <br>
                             <span asp-validation-for="HbsAg" style="color:red;margin-left:20px"></span>
 
-                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio."  id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechaHBsAg1"
+                                   onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
                             <span asp-validation-for="HbsAgFecha" style="color:red;margin-left:20px"></span>
-
-
                         </td>
 
-                        <td style="" id="hepatitisC" colspan="1">
-
-
+                        <td id="hepatitisC" colspan="1">
                             Hepatitis C Realizada:
                             <br>
-                            <input id="rdHepatitis1" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Negativo"> Negativo
-                            <input id="rdHepatitis2" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HepatitisC" onclick="habilitarInputHepatitis(this.value)" value="Positivo"> Positivo
+                            <input id="rdHepatitis1" data-val="true" class="styled habilitarSifilisBC"
+                                   type="radio" name="HepatitisC" value="Negativo"
+                            @(Model.HepatitisC == "Negativo" ? "checked" : "")> Negativo
+                            <input id="rdHepatitis2" data-val="true" class="styled habilitarSifilisBC"
+                                   type="radio" name="HepatitisC" value="Positivo"
+                            @(Model.HepatitisC == "Positivo" ? "checked" : "")> Positivo
                             <br>
                             <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
 
-                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false"  id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
-                            <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
-
+                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechaHepatitis"
+                                   onkeydown="return false" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <span asp-validation-for="HepatitisCFecha" style="color:red;margin-left:20px"></span>
                         </td>
-
                     </tr>
-                  
-                
+
+
+
                     <tr>
                         <td colspan="1">
                             Repetición de la PrEP prescrita:
                             <br>
                             ARV Prescritos
                             <br>
-                            <input type="checkbox" onclick="ARV(this.id);" id="td1" name="PrepArvTdfFtc" value="true">
+                            <input type="checkbox" onclick="ARV(this.id);" id="td1" name="PrepArvTdfFtc" value="true"
+                            @(Model.PrepArvTdfFtc == true ? "checked" : "")>
                             TDF/FTC
                             <br>
-                            <input type="checkbox" onclick="ARV(this.id);" id="td2" name="PrepArvTdf3tc" value="true">
+                            <input type="checkbox" onclick="ARV(this.id);" id="td2" name="PrepArvTdf3tc" value="true"
+                            @(Model.PrepArvTdf3tc == true ? "checked" : "")>
                             TDF/3TC
                             <br>
-                            <input type="checkbox" onclick="ARV(this.id);" id="td3" name="PrepArvTafFtc" value="true">
+                            <input type="checkbox" onclick="ARV(this.id);" id="td3" name="PrepArvTafFtc" value="true"
+                            @(Model.PrepArvTafFtc == true ? "checked" : "")>
                             TAF/FTC
                             <br />
                             <span style="color:red">@TempData["ARV"]</span>
-
                         </td>
                         <td colspan="2">
                             Meses de prescripción
@@ -336,10 +356,9 @@
 
                         </td>
                         <td colspan="1">
-                       
                         </td>
                     </tr>
-                 
+
                 </tbody>
             </table>
         </div>
@@ -468,7 +487,7 @@
 
 @section scripts{
 
-	<script type="text/javascript">
+    <script type="text/javascript">
         var tieneSintomas = (e) => {
             var valor = e;
 
@@ -482,7 +501,7 @@
 
             }
         }
-       
+
         function cerrarModalMenor() {
             $('#menor').modal('hide'); // Cierra el modal
         }
@@ -583,6 +602,23 @@
             var origin = "/PrepDemanda/HomePrepDemanda";
             window.location.href = "https://" + local + origin;
         }
+
+
+
+        // Selecciona todos los inputs, textareas y selects
+        const elements = document.querySelectorAll('input, textarea, select');
+
+        // Recorre cada elemento y lo hace readonly o disabled según corresponda
+        elements.forEach(element => {
+            // Si es un select o un tipo que no soporta readonly (checkbox, radio), se deshabilita
+            if (element.tagName.toLowerCase() === 'select' ||
+                element.type === 'checkbox' || element.type === 'radio') {
+                element.disabled = true;
+            } else {
+                // Para input de texto y textarea, se usa readonly
+                element.readOnly = true;
+            }
+        });
 
     </script>
 }
