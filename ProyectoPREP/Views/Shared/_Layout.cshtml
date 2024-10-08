@@ -53,9 +53,9 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @*  <li class="nav-item">
+                         <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li> *@
+                        </li>
 
                         @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
                         {
@@ -99,9 +99,9 @@
                                     SEGURIDAD
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
-@*                                     <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LIMITAR PERMISOS</a>
+                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LIMITAR PERMISOS</a>
                                     <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTAR ROLES</a>
-                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTAR SECCIONES</a> *@
+                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTAR SECCIONES</a>
                                     <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="VerUsuarios">ROLES USUARIOS</a>
                                     <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="ValidarMenoresEdad">LISTADO DE VALIDACIONES</a>
 
@@ -110,8 +110,8 @@
                         }
 
 
-@*                         @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
- *@                        {
+                        @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
+                        {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     REPORTES
@@ -143,11 +143,11 @@
 
                     <div style="display: flex; align-items: center;" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div style="flex-grow: 1;">
-                            <label class="datos">@* @User.Identity.Name *@</label>
+                            <label class="datos">@User.Identity.Name</label>
                             <br />
-                            <label style="font-weight:500" class="datos">@* @User.FindFirst("Depertamento").Value *@</label>
+                            <label style="font-weight:500" class="datos">@User.FindFirst("Depertamento").Value</label>
                         </div>
-                        <div class="logo">@* @User.Identity.Name.Substring(0,1) *@</div>
+                        <div class="logo">@User.Identity.Name.Substring(0,1)</div>
                     </div>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="right: 0; left: auto;">
