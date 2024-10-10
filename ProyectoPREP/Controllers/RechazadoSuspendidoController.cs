@@ -18,7 +18,7 @@ namespace ProyectoPREP.Controllers
         {
             this.db = _db;
         }
-        [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+        [Authorize(Roles = "Administrador")]
 
         public ActionResult Reintegrar(int id)
         {
@@ -33,7 +33,7 @@ namespace ProyectoPREP.Controllers
             return View(formulario);
         }
 
-        [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public ActionResult Reintegrar(FormularioPrep formulario,DateTime FechaReintegro, int idDatos, int idFormulario)
         {
@@ -78,7 +78,7 @@ namespace ProyectoPREP.Controllers
 
         }
 
-        [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+        [Authorize(Roles = "Administrador,PrEP Normal,Ambos")]
 
         public ActionResult Suspender(int id)
         {
@@ -94,7 +94,7 @@ namespace ProyectoPREP.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+        [Authorize(Roles = "Administrador,PrEP Normal,Ambos")]
 
         [HttpPost]
         public ActionResult Suspender(int idDatos, TratamientoPrep tratamiento)

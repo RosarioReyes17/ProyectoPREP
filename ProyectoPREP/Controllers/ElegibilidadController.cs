@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace ProyectoPREP.Controllers
 {
-    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+    [Authorize(Roles = "Administrador,PrEP Normal,Ambos")]
 
     public class ElegibilidadController : Controller
 	{

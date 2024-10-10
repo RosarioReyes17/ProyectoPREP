@@ -11,7 +11,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace ProyectoPREP.Controllers
 {
-    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+    [Authorize(Roles = "Administrador,PrEP Normal,Ambos")]
 
     public class GestionPacientesController : Controller
     {
@@ -96,6 +96,7 @@ namespace ProyectoPREP.Controllers
 
             return View(lista);
         }
+
         [Authorize(Roles = "Administrador")]
 
         public ActionResult RecibirPacientesAdmin()
@@ -146,6 +147,8 @@ namespace ProyectoPREP.Controllers
             return RedirectToAction("RecibirPacientes", "GestionPacientes");
         }
 
+        [Authorize(Roles = "Administrador")]
+
         public ActionResult AceptarPacientesAdmin(int id)
         {
             int idUser = Convert.ToInt32(User.GetUserId());
@@ -164,6 +167,7 @@ namespace ProyectoPREP.Controllers
             db.SaveChanges();
             return RedirectToAction("RecibirPacientesAdmin", "GestionPacientes");
         }
+        [Authorize(Roles = "Administrador")]
 
         public ActionResult RechazarPacientesAdmin(int id)
         {

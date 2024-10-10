@@ -41,9 +41,27 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
 
-                <a class="navbar-brand d-flex align-items-center" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">
-                    <img src="~/content/img/vectores/sns-icono.svg" alt="Logo" width="40" height="40">
-                </a>
+
+                @if (User.IsInRole("Administrador") || User.IsInRole("Ambos"))
+                {
+                    <a class="navbar-brand d-flex align-items-center" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">
+                        <img src="~/content/img/vectores/sns-icono.svg" alt="Logo" width="40" height="40">
+                    </a>
+                }
+                
+                @if (User.IsInRole("PrEP Normal"))
+                {
+                    <a class="navbar-brand d-flex align-items-center" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">
+                        <img src="~/content/img/vectores/sns-icono.svg" alt="Logo" width="40" height="40">
+                    </a>
+                }
+
+                @if (User.IsInRole("PrEP Demanda"))
+                {
+                    <a class="navbar-brand d-flex align-items-center" asp-controller="PrepDemanda" asp-action="ElegibilidadPrepDemanda">
+                        <img src="~/content/img/vectores/sns-icono.svg" alt="Logo" width="40" height="40">
+                    </a>
+                }
 
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -53,42 +71,51 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                         <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
+                        
+                        @if (User.IsInRole("Administrador") || User.IsInRole("PrEP Normal") || User.IsInRole("Ambos"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    GESTIÓN DE PREP
+                                    PrEP
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
-                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">CONSULTA DE PREP</a>
-                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="DatosGenerales" asp-action="CreateCedula">REGISTRO DE PREP</a>
-
-                                </div>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    TRANSFERENCIA
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
-
-                                    @if (User.IsInRole("Psicólogo Medicos"))
+                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="DatosGenerales" asp-action="CreateCedula">Pacientes</a>
+                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="DatosGenerales" asp-action="DatosGeneralesPorElegibilidad">Consultas</a>
+                                    @if (User.IsInRole("PrEP Normal") || User.IsInRole("Ambos"))
                                     {
-                                        <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientes">RECIBIR PACIENTES</a>
+                                        <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientes">Transferencias</a>
 
                                     }
                                     @if (User.IsInRole("Administrador"))
                                     {
-                                        <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientesAdmin">RECIBIR PACIENTES</a>
+                                        <a style="color:white" class="dropdown-item" asp-area="" asp-controller="Gestionpacientes" asp-action="RecibirPacientesAdmin">Transferencias</a>
 
                                     }
+                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="" asp-action="#">Reportes</a>
 
                                 </div>
                             </li>
+
+                       
+                        }
+
+
+                        @if (User.IsInRole("Administrador") || User.IsInRole("PrEP Demanda") || User.IsInRole("Ambos"))
+                        {
+
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    PrEP a Demanda
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
+                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="PrepDemanda" asp-action="HomePrepDemanda">Pacientes</a>
+                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">Reportes</a>
+
+                                </div>
+                            </li>
+
+
                         }
 
 
@@ -96,45 +123,17 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    SEGURIDAD
+                                    Administración
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
-                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LIMITAR PERMISOS</a>
-                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTAR ROLES</a>
-                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">LISTAR SECCIONES</a>
-                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="VerUsuarios">ROLES USUARIOS</a>
-                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="ValidarMenoresEdad">LISTADO DE VALIDACIONES</a>
+                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="VerUsuarios">Roles Usuarios</a>
+                                    <a style="color:white;" class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="ValidarMenoresEdad">Listado de Validaciones</a>
 
                                 </div>
                             </li>
                         }
 
 
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Psicólogo Medicos"))
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    REPORTES
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
-                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="#" asp-action="#">REPORTES PACIENTES DETALLADO</a>
-
-                                </div>
-                            </li>
-
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    PREP DEMANDA
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 10pt; padding: 20px 5px 20px 5px; background-color: #17a2b8">
-                                    <a style="color:white" class="dropdown-item" asp-area="" asp-controller="PrepDemanda" asp-action="HomePrepDemanda">PREP DEMANDA</a>
-
-                                </div>
-                            </li>
-
-
-                        }
 
 
                     </ul>

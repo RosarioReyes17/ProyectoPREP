@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace ProyectoPREP.Controllers
 {
-    //[Authorize(Roles = "Administrador,Psicólogo Medicos")]
+    [Authorize(Roles = "Administrador,Ambos,PrEP Demanda")]
     public class PrepDemandaController : Controller
 	{
 		// GET: PrepDemanda
@@ -254,38 +254,6 @@ namespace ProyectoPREP.Controllers
 			return RedirectToAction("HomePrepDemanda", "PrepDemanda");
 
 		}
-
-		/*public ActionResult DatosGeneralesPorElegibilidad(int id)
-		{
-			int idUser = Convert.ToInt32(User.GetUserId());
-			int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
-			string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
-
-			var lista = new List<DatosGenerales>();
-			string sql = "DatosGeneralesPorElegibilidad";
-			string sqlAdmin = "DatosGeneralesPorElegibilidadAdmin";
-
-			if (admin == "Administrador")
-			{
-				using (var connection = new SqlConnection(db.Database.GetConnectionString()))
-				{
-					lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
-					return View(lista);
-
-				}
-			}
-
-
-			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
-			{
-				lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
-
-			}
-
-			ViewBag.Establecimientos = db.VwUsuariosEstablecimientos.ToList();
-
-			return View(lista);
-		}*/
 
 		
 

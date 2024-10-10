@@ -13,7 +13,7 @@ using X.PagedList;
 
 namespace ProyectoPREP.Controllers
 {
-    [Authorize(Roles = "Administrador,Psicólogo Medicos")]
+    [Authorize(Roles = "Administrador,PrEP Normal,Ambos")]
 
     public class DatosGeneralesController : Controller
     {
