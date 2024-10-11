@@ -58,7 +58,7 @@
 				<td>
 					<div class="form-group col-2 ">
 						Fecha de ingreso (*):
-						<input onkeydown="return false" asp-for="FechaIngresoSai" id="txtFechaRegistroPrep" name="FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+						<input onkeydown="return false" asp-for="FechaIngresoSai" id="txtFechaRegistroPrep" name="FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="quitarValidacionFecha(this)">
 						<span asp-validation-for="FechaIngresoSai" style="color:red; margin-left:10px"></span>
 					</div>
 				</td>
@@ -505,8 +505,7 @@
 						<td>
 							13. Peso(libras) (*): <br>
 							<input asp-for="Peso" id="txtPeso" name="Peso" class="form-control" type="number"
-								   min="90" max="350" placeholder="Introduzca su Peso en Lbs." data-val="true" data-val-required="Este campo es obligatorio."
-								   oninput="validateWeight(this)">
+								   min="90" max="350" placeholder="Introduzca su Peso en Lbs." data-val="true" data-val-required="Este campo es obligatorio.">
 							<span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
 						</td>
 
@@ -803,7 +802,7 @@
 								Fecha de realización (Prueba VIH) (*):
 								<br>
 								<div class="form-group col-md-8">
-									<input id="txtFechaRealizacionPrueba" onkeydown="return false";" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="FechaPruebaVih" class="form-control pruebaVIH" type="date">
+									<input id="txtFechaRealizacionPrueba" onkeydown="return false" ;" data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="SexoConVihpositivo" name="FechaPruebaVih" class="form-control pruebaVIH" type="date">
 									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
 								</div>
 							</td>
@@ -816,7 +815,7 @@
 								<br>
 								<div class="form-group col-md-8">
 
-									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." name="FechaEntregaVih" class="form-control pruebaVIH " type="date" />
+									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control pruebaVIH " type="date" />
 									<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
 								</div>
 							</td>
@@ -870,7 +869,7 @@
 
 									Fecha:
 									<br>
-									<input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaCreatinina" name="FechaCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+									<input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" onchange="quitarValidacionFecha(this)" data-val-required="Este campo es obligatorio." asp-for="FechaCreatinina" name="FechaCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
 									<span asp-validation-for="FechaCreatinina" style="color:red;"></span>
 									<br>
 									Resultado:
@@ -943,8 +942,10 @@
 									<span asp-validation-for="Sifilis" style="color:red;"></span>
 
 									<br />
-									<input id="txtfechasifilis1" data-val="true" disabled data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date habilitarSifilis segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
-									<br />
+									<input id="txtfechasifilis1" data-val="true" disabled data-val-required="Este campo es obligatorio."
+										   name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date habilitarSifilis segundaParte"
+										   type="date" style="display:initial;width: 155px;" placeholder="Fecha"
+										   onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
 									<span asp-validation-for="SifilisFecha" style="color:red;"></span>
 								</div>
@@ -973,8 +974,9 @@
 									<span asp-validation-for="HbsAg" style="color:red;"></span>
 									<br />
 
-									<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" disabled data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control habilitarSifilisB col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
-									<br />
+									<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" disabled data-val="true" data-val-required="Este campo es obligatorio."
+										   onkeydown="return false" name="HbsAgFecha" class="form-control habilitarSifilisB col-sm-5  date segundaParte"
+										   type="date" style="display:initial;width: 155px;" placeholder="Fecha" onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
 									<span asp-validation-for="HbsAgFecha" style="color:red;"></span>
 								</div>
@@ -1000,8 +1002,10 @@
 									<span asp-validation-for="HepatitisC" style="color:red;"></span>
 
 									<br />
-									<input id="txtfechaHepatitis" onkeydown="return false" disabled asp-for="HepatitisCFecha" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control habilitarSifilisC col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
-									<br />
+									<input id="txtfechaHepatitis" onkeydown="return false" disabled asp-for="HepatitisCFecha" data-val="true"
+										   data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control habilitarSifilisC col-sm-8 date segundaParte"
+										   type="date" style="display:initial;width: 155px;" placeholder="Fecha"
+										   onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
 									<span asp-validation-for="HepatitisCFecha" style="color:red;"></span>
 								</div>
@@ -1021,10 +1025,10 @@
 									</div>
 
 									<div style="margin-left: 24px;">
-										<input id="ITDSindromico1" asp-for="SexoConVihpositivo" required onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+										<input id="ITDSindromico1" asp-for="ItsDiagnosticoPresuntivo" required onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
 										<label for="ITDSindromico1">No</label>
 									</div>
-									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+									<span asp-validation-for="ItsDiagnosticoPresuntivo" style="color:red;"></span>
 
 									<br>
 									<input name="SecrecionUretral" disabled class="sindromico" type="checkbox" value="true" /> Secrecion Uretral
@@ -1035,7 +1039,8 @@
 									<br>
 									<input name="VerrugasGenitales" disabled class="sindromico" type="checkbox" value="true" /> Verrugas genitales
 									<br />
-									<span style="color:red">@TempData["Sindromico"]</span>
+									@* <span style="color:red">@TempData["Sindromico"]</span> *@
+									<span id="checkboxValidationError" style="color:red; display:none;"></span>
 
 								</div>
 
@@ -1227,62 +1232,98 @@
 			}
 		}
 
-		var mostrarSifilis = () => {
 
+
+
+		var mostrarSifilis = () => {
 			var vihS = document.getElementById("vihS").checked;
 
-			if (vihS == true) {
-
+			if (vihS) {
 				$(".habilitarSifilis").removeAttr("disabled");
-
-			}
-			else {
-
+			} else {
 				$(".habilitarSifilis").attr("disabled", true);
-
+				$(".habilitarSifilis").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarSifilis[type='date']").val(''); // Limpiar campos de fecha
+				resetValidation($(".habilitarSifilis"));
 			}
 		}
 
-
 		var mostrarHepatitis = () => {
-
 			var vihH = document.getElementById("vihH").checked;
 
-			if (vihH == true) {
+			if (vihH) {
 				$(".habilitarSifilisB").removeAttr("disabled");
-
 			} else {
 				$(".habilitarSifilisB").attr("disabled", true);
-
+				$(".habilitarSifilisB").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarSifilisB[type='date']").val(''); // Limpiar campos de fecha
+				resetValidation($(".habilitarSifilisB"));
 			}
 		}
 
 		var mostrarHepatitisC = () => {
-
 			var vihHC = document.getElementById("vihHC").checked;
 
-			if (vihHC == true) {
+			if (vihHC) {
 				$(".habilitarSifilisC").removeAttr("disabled");
-
 			} else {
 				$(".habilitarSifilisC").attr("disabled", true);
-
+				$(".habilitarSifilisC").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarSifilisC[type='date']").val(''); // Limpiar campos de fecha
+				resetValidation($(".habilitarSifilisC"));
 			}
 		}
 
-		var habilitarInputsindrómico = (e) => {
-			var valor = e;
-			if (valor == "Si") {
 
-				$(".sindromico").removeAttr("disabled");
 
-			}
-			if (valor == "No") {
-				$(".sindromico").attr("disabled", true);
-
-			}
-
+		function quitarValidacionFecha(element) {
+			// Remover mensaje de validación y clase de error
+			$(element).removeClass("input-validation-error");
+			$(element).closest('.form-group').find("span.field-validation-error")
+				.addClass("field-validation-valid")
+				.removeClass("field-validation-error")
+				.text('');
 		}
+
+
+
+
+		var habilitarInputsindrómico = (value) => {
+			// Oculta el mensaje de validación del radio button
+			$("span[asp-validation-for='ItsDiagnosticoPresuntivo']").text("").hide();
+
+			if (value === "Si") {
+				// Habilita los checkboxes
+				$(".sindromico").prop("disabled", false);
+
+				// Validación al cambiar el estado de los checkboxes
+				$(".sindromico").change(function () {
+					validarCheckboxes();
+				});
+
+				// Verifica la condición de los checkboxes cuando se selecciona "Sí"
+				validarCheckboxes();
+
+			} else if (value === "No") {
+				// Deshabilita y desmarca los checkboxes y oculta el mensaje de validación de los checkboxes
+				$(".sindromico").prop("checked", false).prop("disabled", true);
+				$("#checkboxValidationError").text("").hide();
+			}
+		}
+
+		var validarCheckboxes = () => {
+			// Revisa si al menos un checkbox está seleccionado
+			if ($(".sindromico:checked").length === 0) {
+				// Muestra el mensaje de error si no hay ningún checkbox marcado
+				$("#checkboxValidationError").text("Debe seleccionar al menos una opción.").show();
+			} else {
+				// Oculta el mensaje de error si hay al menos un checkbox marcado
+				$("#checkboxValidationError").text("").hide();
+			}
+		}
+
+
+
 
 		const calcularCreatinina = () => {
 			var KG = 2.205;
