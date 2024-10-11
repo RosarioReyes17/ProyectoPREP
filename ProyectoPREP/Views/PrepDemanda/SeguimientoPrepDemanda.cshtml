@@ -109,62 +109,7 @@
 
                         </td>
                     </tr>
-                   @*  <tr>
-                        <td>
-                            <div>
-                                <label>¿Desea realizar la prueba de Creatinina?</label>
-                                <input onchange="mostrarCreatinina();" type="checkbox" id="vihC" /><br />
 
-                            </div>
-                        </td>
-                    </tr>
-                    <tr id="creatinina" class="form-invisible">
-                        <td colspan="2">
-                            <div class="form-group col-md-8">
-                                <label style="color:red">
-                                    Tiene más de 6 meses en terapia hormonal (solo aplica para hombres):
-                                    <input type="checkbox" id="chkHormonal" name="chkHormonal" class="habilitarCreatinina" disabled onchange="calcularCreatininaCheck()" value="true">
-
-                                </label>
-                                <br />
-                                Resultado de Creatinina(Plasmatica):
-                                <br>
-                                <input id="CreatininaValor" data-val="true" data-val-required="Este campo obligatorio." onchange="calcularCreatinina(value);" name="CreatininaValor" step=".1" type="number" min="0.1" max="60" style="width: 100%;" class=" habilitarCreatinina form-control col-sm-2">
-
-                                <br>
-                                <br>
-                                Resultado:
-                                <input id="ResultadoCreatinina" readonly name="ResultadoCreatinina" class="form-control habilitarCreatinina" />
-
-                            </div>
-
-                            <div class="form-group col-md-8">
-                                Fecha:
-                                <input id="txtFechaResultadoCreatinina" onkeydown="return false" name="txtFechaResultadoCreatinina" class="form-control col-sm-3 habilitarCreatinina " type="date">
-                            </div>
-                            <br>NOTA: Recuerde realizar la prueba de Creatinina cada 6 meses.
-                        </td>
-                        <td colspan="2">
-
-                            Rango valores de Creatinina
-                            <br>
-                            <ul>
-                                <li> 61-70 ml/min</li>
-                                <li>71-80 ml/min</li>
-                                <li>81-90 ml/min</li>
-                                <li>91-100 ml/min</li>
-                                <li>&gt;100 ml/min</li>
-                            </ul>
-                            <br>
-                            <span style="font-size:1em;">
-                                - Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]<br>
-                                - Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]<br>
-                                - Utilizar la fórmula de mujeres en mujeres biológicas y Trans que <br>
-                                tengan más de 6 meses en terapia de reemplazo hormonal.
-
-                            </span>
-                        </td>
-                    </tr> *@
                     <tr id="VIHp">
 
                         <td colspan="2">
@@ -261,26 +206,29 @@
                         <td id="sifilis" colspan="1">
                             <div class="form-group">
                                 Sifilis(VDRL) Realizada:
+                                <input onchange="mostrarSifilis();" type="checkbox" id="vihS" />
                                 <br>
-                                <input  id="rdsifilis1" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
-                                <input  id="rdsifilis2" data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisBC" type="radio" name="Sifilis" value="Reactivo"> Reactivo
+                                <input id="rdsifilis1" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilis" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
+                                <input id="rdsifilis2" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilis" type="radio" name="Sifilis" value="Reactivo"> Reactivo
                                 <br>
                                 <span asp-validation-for="Sifilis" style="color:red;margin-left:20px"></span>
 
-                                <input  style="width:300px" data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                                <input style="width:300px" disabled data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="Sifilis habilitarSifilis form-control" type="date" placeholder="Fecha">
                                 <span asp-validation-for="SifilisFecha" style="color:red;margin-left:20px"></span>
 
                             </div>
                         </td>
                         <td id="hepatitisB" colspan="2">
                             HBsAg Realizada:
+                            <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
+
                             <br>
-                            <input id="rdHBsAg1" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HbsAg" value="Negativo"> Negativo
-                            <input id="rdHBsAg2" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HbsAg" onclick="habilitarInputHBsAg(this.value)" value="Positivo"> Positivo
+                            <input id="rdHBsAg1" disabled data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisB" type="radio" name="HbsAg" value="Negativo"> Negativo
+                            <input id="rdHBsAg2" disabled data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisB" type="radio" name="HbsAg" value="Positivo"> Positivo
                             <br>
                             <span asp-validation-for="HbsAg" style="color:red;margin-left:20px"></span>
 
-                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio."  id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <input style="width:300px" disabled data-val="true" data-val-required="Este campo obligatorio." id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisB form-control" type="date" placeholder="Fecha">
                             <span asp-validation-for="HbsAgFecha" style="color:red;margin-left:20px"></span>
 
 
@@ -290,13 +238,15 @@
 
 
                             Hepatitis C Realizada:
+                            <input onchange="mostrarHepatitisC();" type="checkbox" id="vihHC" />
+
                             <br>
-                            <input id="rdHepatitis1" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HepatitisC" value="Negativo"> Negativo
-                            <input id="rdHepatitis2" data-val="true" data-val-required="Este campo obligatorio."  class="styled habilitarSifilisBC" type="radio" name="HepatitisC" onclick="habilitarInputHepatitis(this.value)" value="Positivo"> Positivo
+                            <input id="rdHepatitis1" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilisC" type="radio" name="HepatitisC" value="Negativo"> Negativo
+                            <input id="rdHepatitis2" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilisC" type="radio" name="HepatitisC" value="Positivo"> Positivo
                             <br>
                             <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
 
-                            <input style="width:300px" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false"  id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisBC form-control" type="date" placeholder="Fecha">
+                            <input style="width:300px" data-val="true" disabled data-val-required="Este campo obligatorio." onkeydown="return false" id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisC form-control" type="date" placeholder="Fecha">
                             <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
 
                         </td>
@@ -469,6 +419,57 @@
 @section scripts{
 
 	<script type="text/javascript">
+
+        var mostrarSifilis = () => {
+            var vihS = document.getElementById("vihS").checked;
+
+            if (vihS) {
+                $(".habilitarSifilis").removeAttr("disabled");
+            } else {
+                $(".habilitarSifilis").attr("disabled", true);
+                $(".habilitarSifilis").prop("checked", false); // Limpiar selección de los radios
+                $(".habilitarSifilis[type='date']").val(''); // Limpiar campos de fecha
+            }
+        }
+
+        var mostrarHepatitis = () => {
+            var vihH = document.getElementById("vihH").checked;
+
+            if (vihH) {
+                $(".habilitarSifilisB").removeAttr("disabled");
+            } else {
+                $(".habilitarSifilisB").attr("disabled", true);
+                $(".habilitarSifilisB").prop("checked", false); // Limpiar selección de los radios
+                $(".habilitarSifilisB[type='date']").val(''); // Limpiar campos de fecha
+            }
+        }
+
+        var mostrarHepatitisC = () => {
+            var vihHC = document.getElementById("vihHC").checked;
+
+            if (vihHC) {
+                $(".habilitarSifilisC").removeAttr("disabled");
+            } else {
+                $(".habilitarSifilisC").attr("disabled", true);
+                $(".habilitarSifilisC").prop("checked", false); // Limpiar selección de los radios
+                $(".habilitarSifilisC[type='date']").val(''); // Limpiar campos de fecha
+
+            }
+        }
+
+        var mostrarVIH = (e) => {
+
+            if (e == "Si") {
+                $(".habilitarVIH").removeAttr("disabled");
+            } else {
+                $(".habilitarVIH").attr("disabled", true);
+                $(".habilitarVIH").prop("checked", false); // Limpiar selección de los radios
+                $(".habilitarVIH[type='date']").val(''); // Limpiar campos de fecha
+
+            }
+        }
+
+
         var tieneSintomas = (e) => {
             var valor = e;
 

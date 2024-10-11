@@ -506,7 +506,7 @@
 							13. Peso(libras) (*): <br>
 							<input asp-for="Peso" id="txtPeso" name="Peso" class="form-control" type="number"
 								   min="90" max="350" placeholder="Introduzca su Peso en Lbs." data-val="true" data-val-required="Este campo es obligatorio.">
-							<span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
+							<span asp-validation-for="Peso" lang="es-do" style="color:red; margin-left:30px"></span>
 						</td>
 
 						<td>
@@ -781,20 +781,20 @@
 							<td>
 								¿Prueba de VIH realizada? (*)
 								<div class="radio radio-info">
-									<input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="SeronegativoVih" ;" class="styled" type="radio" value="Si">
+									<input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." onclick="mostrarVIH(value);" asp-for="SeronegativoVih" name="SeronegativoVih" class="styled" type="radio" value="Si">
 									<label for="chkSeronegativo1">
 										Si
 									</label>
 								</div>
 								<div class="radio radio-info">
-									<input id="chkSeronegativo2" required asp-for="SexoConVihpositivo" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled" type="radio" value="No">
+									<input id="chkSeronegativo2" required asp-for="SeronegativoVih" name="SeronegativoVih" onclick="mostrarVIH(value);" class="styled" type="radio" value="No">
 									<label for="chkSeronegativo2">
 										No
 									</label>
 
 								</div>
 								<label>Nota:</label> resultados de prueba no debe de tener más de 48 horas.
-								<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:20px"></span>
+								<span asp-validation-for="SeronegativoVih" style="color:red;margin-left:20px"></span>
 
 							</td>
 
@@ -802,11 +802,10 @@
 								Fecha de realización (Prueba VIH) (*):
 								<br>
 								<div class="form-group col-md-8">
-									<input id="txtFechaRealizacionPrueba" onkeydown="return false" ;" data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="SexoConVihpositivo" name="FechaPruebaVih" class="form-control pruebaVIH" type="date">
-									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+									<input id="txtFechaRealizacionPrueba" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control habilitarVIH pruebaVIH" type="date">
+									<span asp-validation-for="FechaPruebaVih" style="color:red;"></span>
 								</div>
 							</td>
-
 
 
 
@@ -815,7 +814,7 @@
 								<br>
 								<div class="form-group col-md-8">
 
-									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control pruebaVIH " type="date" />
+									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control habilitarVIH pruebaVIH " type="date" />
 									<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
 								</div>
 							</td>
@@ -824,14 +823,14 @@
 								Resultado de la Prueba del VIH (*):
 								<br>
 								<div class="radio radio-info">
-									<input id="rdVIH1" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo">
+									<input id="rdVIH1" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo">
 									<label for="rdVIH1">
 										Negativo
 									</label>
 								</div>
 
 								<div class="radio radio-info">
-									<input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo">
+									<input id="rdVIH2" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo">
 									<label for="rdVIH2">
 
 										Positivo
@@ -930,13 +929,13 @@
 									<br />
 
 									<div style="margin-left: 24px;">
-										<input id="rdsifilis1" asp-for="Sifilis" disabled data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" class=" habilitarSifilis styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+										<input id="rdsifilis1" asp-for="Sifilis" disabled data-val="true" data-val-required="Este campo es obligatorio." class=" habilitarSifilis styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
 										<label for="rdsifilis1">No Reactivo</label>
 
 
 									</div>
 									<div style="margin-left: 24px;">
-										<input id="rdsifilis2" disabled onclick="habilitarInputSifilis(value);" asp-for="Sifilis" class="styled habilitarSifilis segundaParte" type="radio" name="Sifilis" value="Reactivo">
+										<input id="rdsifilis2" disabled asp-for="Sifilis" class="styled habilitarSifilis segundaParte" type="radio" name="Sifilis" value="Reactivo">
 										<label for="rdsifilis2">Reactivo</label>
 									</div>
 									<span asp-validation-for="Sifilis" style="color:red;"></span>
@@ -963,12 +962,12 @@
 									<br />
 
 									<div style="margin-left: 24px;">
-										<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" disabled data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);" class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Negativo">
+										<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" disabled data-val-required="Este campo es obligatorio."  class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Negativo">
 										<label for="rdHBsAg1">Negativo</label>
 									</div>
 
 									<div style="margin-left: 24px;">
-										<input id="rdHBsAg2" asp-for="HbsAg" disabled onclick="habilitarInputHBsAg(value);" class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Positivo">
+										<input id="rdHBsAg2" asp-for="HbsAg" disabled  class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Positivo">
 										<label for="rdHBsAg2">Positivo</label>
 									</div>
 									<span asp-validation-for="HbsAg" style="color:red;"></span>
@@ -991,12 +990,12 @@
 									<br />
 									<br />
 									<div style="margin-left:24px">
-										<input id="rdHepatitis1" asp-for="HepatitisC" disabled data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHepatitis(value);" class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Negativo">
+										<input id="rdHepatitis1" asp-for="HepatitisC" disabled data-val="true" data-val-required="Este campo es obligatorio."  class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Negativo">
 										<label for="rdHepatitis1">Negativo</label>
 									</div>
 
 									<div style="margin-left:24px">
-										<input id="rdHepatitis2" asp-for="HepatitisC" disabled onclick="habilitarInputHepatitis(value);" class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Positivo">
+										<input id="rdHepatitis2" asp-for="HepatitisC" disabled class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Positivo">
 										<label for="rdHepatitis2">Positivo</label>
 									</div>
 									<span asp-validation-for="HepatitisC" style="color:red;"></span>
@@ -1169,6 +1168,7 @@
 
 @section scripts{
 	<script type="text/javascript">
+
 		function ValidarCelular(a, id) {
 
 			var datos = a;
@@ -1233,6 +1233,17 @@
 		}
 
 
+		var mostrarVIH = (e) => {
+
+			if (e == "Si") {
+				$(".habilitarVIH").removeAttr("disabled");
+			} else {
+				$(".habilitarVIH").attr("disabled", true);
+				$(".habilitarVIH").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarVIH[type='date']").val(''); // Limpiar campos de fecha
+				
+			}
+		}
 
 
 		var mostrarSifilis = () => {
@@ -1244,7 +1255,6 @@
 				$(".habilitarSifilis").attr("disabled", true);
 				$(".habilitarSifilis").prop("checked", false); // Limpiar selección de los radios
 				$(".habilitarSifilis[type='date']").val(''); // Limpiar campos de fecha
-				resetValidation($(".habilitarSifilis"));
 			}
 		}
 
@@ -1257,7 +1267,6 @@
 				$(".habilitarSifilisB").attr("disabled", true);
 				$(".habilitarSifilisB").prop("checked", false); // Limpiar selección de los radios
 				$(".habilitarSifilisB[type='date']").val(''); // Limpiar campos de fecha
-				resetValidation($(".habilitarSifilisB"));
 			}
 		}
 
@@ -1270,7 +1279,7 @@
 				$(".habilitarSifilisC").attr("disabled", true);
 				$(".habilitarSifilisC").prop("checked", false); // Limpiar selección de los radios
 				$(".habilitarSifilisC[type='date']").val(''); // Limpiar campos de fecha
-				resetValidation($(".habilitarSifilisC"));
+
 			}
 		}
 
@@ -1284,8 +1293,6 @@
 				.removeClass("field-validation-error")
 				.text('');
 		}
-
-
 
 
 		var habilitarInputsindrómico = (value) => {
@@ -1321,8 +1328,6 @@
 				$("#checkboxValidationError").text("").hide();
 			}
 		}
-
-
 
 
 		const calcularCreatinina = () => {
