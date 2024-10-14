@@ -144,6 +144,15 @@ namespace ProyectoPREP.Controllers
                         new Claim("IdRegion",IsValidUser.ID_Region),
                     };
 
+                    if (usuarioRole.RolesId == 8)
+                    {
+                        var claimsIdentityDemanda = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentityDemanda));
+
+                        return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+
+                    }
+
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
