@@ -13,5 +13,6 @@
         public DateTime Fecha_Ingreso_SAI { get; set; }
         public int Estatus { get; set; }
         public int IdDeptoDepend { get; set; }
+        public bool Condicion { get; set; }
     }
 }

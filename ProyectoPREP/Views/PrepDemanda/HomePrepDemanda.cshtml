@@ -1,4 +1,4 @@
-﻿@model List<TblPrepDemanda>
+﻿@model List<DatosGenerales>
 @using X.PagedList.Mvc.Core
 @using X.PagedList;
 
@@ -62,29 +62,31 @@
                 <th>Nacionalidad</th>
                 <th>Fecha de registro</th>
                 <th>Acciones</th>
+                <th style="display:none">condicion</th>
 
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.IdPaciente</td>
+                <tr id="myRow">
+                    <td>@item.Id</td>
                     <td>@item.Nombres</td>
                     <td>@item.Apellidos</td>
                     <td>@item.Sexo</td>
-                    <td>@item.Nacionalidad</td>
-                    <td>@item.FechaIngresoSai.ToString("dd-MM-yyyy").Substring(0, 10)</td>
+                    <td>@item.NOMBRE_CORTO_ES</td>
+                    <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     <td>
-                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/PrepDemanda/DemandaEditar/@item.IdPaciente"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/PrepDemanda/DemandaEditar/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
 
-                        <a title="Añadir Seguimiento" class="btn btn-info " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.IdPaciente"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                        <a title="Añadir Seguimiento" class="btn btn-info " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.Id"><i class="glyphicon glyphicon-plus-sign"></i></a>
 
-                        <a title="Ver Seguimientos" class="btn btn-info " href="~/PrepDemanda/SeguimientosVer/@item.IdPaciente"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a title="Ver Seguimientos" class="btn btn-info " href="~/PrepDemanda/SeguimientosVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
 
 
-                    </td> 
-                  
+                    </td>
+                    <td style="display:none" id="condicion">@item.Condicion</td>
+
 
                 </tr>
             }
@@ -94,3 +96,19 @@
 </div>
 
 
+@section scripts{
+	<script type="text/javascript">
+
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var condicion = document.getElementById("condicion").innerHTML;
+
+            if (condicion == "True") {
+                document.getElementById("myRow").style.backgroundColor = "red";
+            }
+        });
+	</script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

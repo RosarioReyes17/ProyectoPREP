@@ -74,6 +74,7 @@ namespace ProyectoPREP.Controllers
 				db.TblPrepDemanda.Add(datos);
                 db.SaveChanges();
 
+
                 return RedirectToAction("HomePrepDemanda", "PrepDemanda");
 
             }
@@ -183,7 +184,7 @@ namespace ProyectoPREP.Controllers
 			int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
 			string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
 
-			var lista = new List<TblPrepDemanda>();
+			var lista = new List<DatosGenerales>();
 			string sql = "ListaPrep_Demanda";
 			string sqlAdmin = "ListaPrep_Demanda";
 
@@ -191,7 +192,7 @@ namespace ProyectoPREP.Controllers
 			{
 				using (var connection = new SqlConnection(db.Database.GetConnectionString()))
 				{
-					lista = connection.Query<TblPrepDemanda>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+					lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
 					return View(lista);
 
 				}
@@ -200,7 +201,7 @@ namespace ProyectoPREP.Controllers
 
 			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
 			{
-				lista = connection.Query<TblPrepDemanda>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+				lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
 			}
 

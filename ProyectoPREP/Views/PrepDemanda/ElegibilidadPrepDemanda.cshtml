@@ -1136,8 +1136,8 @@
 
 
 @* Modal para notifcar que se registró un paciente satisfactoriamente
- *@
-@* <div class="modal" id="myModal" tabindex="-1" role="dialog">
+ *@ 
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -1151,12 +1151,12 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" onclick="cerrarModal();" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" onclick="confirmarEnvio();" class="btn btn-primary">Confirmar</button>
+				<button type="button" onclick="cerrarModal();" class="btn btn-primary">Confirmar</button>
 			</div>
 		</div>
 	</div>
 </div>
- *@
+
 <div class="modal" id="menor" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -1353,10 +1353,10 @@
 			}
 		}
 		
-		document.getElementById('formulario').addEventListener('submit', function (event) {
-			event.preventDefault(); // Evita el envío del formulario
-			$('#myModal').modal('show'); // Muestra el modal
-		});
+		// document.getElementById('formulario').addEventListener('submit', function (event) {
+		// 	event.preventDefault(); // Evita el envío del formulario
+		// 	$('#myModal').modal('show'); // Muestra el modal
+		// });
 
 		function cerrarModal() {
 			$('#myModal').modal('hide'); // Cierra el modal
