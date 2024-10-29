@@ -119,7 +119,7 @@ namespace ProyectoPREP.Controllers
 
         public ActionResult DatosGeneralesPorAprobado()
         {
-
+            int commandTimeout = 120;
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorAprobado";
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
@@ -132,7 +132,7 @@ namespace ProyectoPREP.Controllers
             {
                 using (var connection = new SqlConnection(db.Database.GetConnectionString()))
                 {
-                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure,commandTimeout:commandTimeout).ToList();
                     return View(lista);
 
                 }

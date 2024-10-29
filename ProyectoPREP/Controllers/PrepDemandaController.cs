@@ -46,7 +46,9 @@ namespace ProyectoPREP.Controllers
 
 		public ActionResult ElegibilidadPrepDemanda()
 		{
-			ViewBag.Municipio = db.VwMunicipios.ToList();
+            //TempData["Mensaje"] = "Operación realizada exitosamente";
+
+            ViewBag.Municipio = db.VwMunicipios.ToList();
 
 			return View();
 		}
@@ -186,7 +188,7 @@ namespace ProyectoPREP.Controllers
 
 			var lista = new List<DatosGenerales>();
 			string sql = "ListaPrep_Demanda";
-			string sqlAdmin = "ListaPrep_Demanda";
+			string sqlAdmin = "ListaPrep_DemandaAdmin";
 
 			if (admin == "Administrador")
 			{
@@ -201,7 +203,7 @@ namespace ProyectoPREP.Controllers
 
 			using (var connection = new SqlConnection(db.Database.GetConnectionString()))
 			{
-				lista = connection.Query<DatosGenerales>(sql, commandType: System.Data.CommandType.StoredProcedure).ToList();
+				lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
 			}
 

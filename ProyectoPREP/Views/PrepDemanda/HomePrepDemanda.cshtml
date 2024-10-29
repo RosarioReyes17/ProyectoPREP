@@ -59,6 +59,7 @@
                 <th>Nombres</th>
                 <th>Apellidos</th>
                 <th>Sexo</th>
+                <th>Documento</th>
                 <th>Nacionalidad</th>
                 <th>Fecha de registro</th>
                 <th>Acciones</th>
@@ -69,23 +70,24 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr id="myRow">
+                <tr class="condicion" id="@item.Id">
                     <td>@item.Id</td>
                     <td>@item.Nombres</td>
                     <td>@item.Apellidos</td>
                     <td>@item.Sexo</td>
+                    <td>@item.Documento</td>
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     <td>
-                        <a title="Modificar la ficha inicial" class="btn btn-info " href="~/PrepDemanda/DemandaEditar/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a title="Modificar la fecha inicial" class="btn btn-info " href="~/PrepDemanda/DemandaEditar/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
 
-                        <a title="Añadir Seguimiento" class="btn btn-info " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.Id"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                        <a title="Añadir Seguimiento" class="btn accion btn-info " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.Id"><i class="glyphicon glyphicon-plus-sign"></i></a>
 
                         <a title="Ver Seguimientos" class="btn btn-info " href="~/PrepDemanda/SeguimientosVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
 
 
                     </td>
-                    <td style="display:none" id="condicion">@item.Condicion</td>
+                    <td style="display:none" class="condi">@item.Condicion</td>
 
 
                 </tr>
@@ -101,11 +103,21 @@
 
 
         document.addEventListener("DOMContentLoaded", function (event) {
-            var condicion = document.getElementById("condicion").innerHTML;
+            var condicion = document.querySelectorAll(".condicion");
 
-            if (condicion == "True") {
-                document.getElementById("myRow").style.backgroundColor = "red";
-            }
+            condicion.forEach(function (c) {
+                var id = c.id;
+                var cond = c.cells[8].innerHTML;
+                if (cond == "True") {
+                    c.style.backgroundColor = "red";
+                   // c.cells[7].style.display = "none";
+                    c.cells[7].children[1].style.display = "none";
+                    
+                }
+            });
+
+
+     
         });
 	</script>
 	@{

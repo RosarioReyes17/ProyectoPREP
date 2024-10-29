@@ -75,13 +75,14 @@
                 <th>Nacionalidad</th>
                 <th>Fecha de registro</th>
                 <th>Acciones</th>
+                <th style="display:none">condicion</th>
 
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="condicion" id="@item.Id">
                     <td>@item.Id</td>
                     <td>@item.Nombres</td>
                     <td>@item.Apellidos</td>
@@ -95,6 +96,7 @@
                         <a title="Ver elegibilidad" class="btn btn-info " href="~/Elegibilidad/ElegibilidadVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
 
                     </td>
+                    <td style="display:none" class="condi">@item.Condicion</td>
 
                 </tr>
             }
@@ -102,81 +104,30 @@
     </table>
 
 </div>
-@* <div class="d-flex justify-content-center">
-    <ul class="pagination" style="margin: 0 auto;">
-        <li class="page-item @(Model.IsFirstPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = 1 })">Primera</a>
-        </li>
-        <li class="page-item @(Model.IsFirstPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = Model.PageNumber - 1 })">Anterior</a>
-        </li>
-        <li class="page-item @(Model.IsLastPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = Model.PageNumber + 1 })">Siguiente</a>
-        </li>
-        <li class="page-item @(Model.IsLastPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("ConsultaDatosGenerales", new { page = Model.PageCount })">Última</a>
-        </li>
-    </ul>
-</div> *@
 
 
-@* @section scripts{
+
+
+@section scripts{
     <script type="text/javascript">
-        $(document).ready(function () {
-
-            var table = $('#miTabla').DataTable({
 
 
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var condicion = document.querySelectorAll(".condicion");
 
-                columnDefs: [{
-                    targets: -1,
-                    className: 'right'
-                }],
-                "paging": true,
-                "pageLength": 10,
-                "searching": true,
+            condicion.forEach(function (c) {
+                var id = c.id;
+                var cond = c.cells[8].innerHTML;
+                if (cond == "True") {
+                    c.style.backgroundColor = "red";
 
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-
-                drawCallback: function () {
-
-                    $('#miTabla').find('li').css('background-color', '');
-
-
-                    $('#miTabla').find('li.active').css('background-color', '#5bc0de');
-                },
+                }
             });
-
-
-            $('#tablaContainer').css('display', 'block');
-
         });
 
 
-        function nav(value) {
-            if (value != "") { location.href = value }
-        }
-
-
     </script>
-
-} *@
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

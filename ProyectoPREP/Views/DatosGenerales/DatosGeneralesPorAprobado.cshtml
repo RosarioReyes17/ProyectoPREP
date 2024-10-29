@@ -8,8 +8,6 @@
     ProyectoPREP.Models.DbPrepContext Entidad = new ProyectoPREP.Models.DbPrepContext();
 }
 
-@* <link href="~/css/prepstyles.css" rel="stylesheet" />
- *@
 
 
 
@@ -63,9 +61,9 @@
 </div>
 
 
-<div style="display: none;" id="tablaContainer">
+<div style="display: none" id="tablaContainer">
 
-    <table id="miTabla" class="table">
+    <table id="miTabla" class="table" width="100%">
         <thead>
             <tr>
                 <th>ID</th>
@@ -76,13 +74,15 @@
                 <th>Nacionalidad</th>
                 <th>Fecha de registro</th>
                 <th>Acciones</th>
+                <th style="display:none">condicion</th>
+
 
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="condicion" id="@item.Id">
                     <td>@item.Id</td>
                     <td>@item.Nombres</td>
                     <td>@item.Apellidos</td>
@@ -112,6 +112,8 @@
 
 
                     </td>
+                    <td style="display:none;width:5px" class="condi">@item.Condicion</td>
+
 
                 </tr>
             }
@@ -121,67 +123,30 @@
 
 
 
-@* @section scripts{
+@section scripts{
     <script type="text/javascript">
-        $(document).ready(function () {
-            // Configurar DataTables
-            var table = $('#miTabla').DataTable({
-                "responsive": true,
-                "searching": true,
-                "info": false,
-                "paging": false, // Desactivar paginación
-                "lengthChange": false, // Desactivar el cambio de longitud de página
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                },
-                drawCallback: function () {
-                    // Mostrar la tabla después de que se haya inicializado DataTable
-                    $('#tablaContainer').css('display', 'block');
 
-                    // Ocultar todas las filas excepto la primera
-                    $('#miTabla tbody tr').not(':first').hide();
-                },
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var condicion = document.querySelectorAll(".condicion");
+
+            condicion.forEach(function (c) {
+                var id = c.id;
+                var cond = c.cells[8].innerHTML;
+                if (cond == "True") {
+                    c.style.backgroundColor = "red";
+
+                }
             });
 
-            var delayTimer;
 
-            // Configurar evento de búsqueda al escribir en la barra de búsqueda
-            $('#miTabla_filter input').on('input', function () {
-                var searchTerm = this.value.toLowerCase();
-                console.log("Input event: " + searchTerm);
 
-                // Limpiar temporizador anterior
-                clearTimeout(delayTimer);
-
-                // Configurar un nuevo temporizador
-                delayTimer = setTimeout(function () {
-                    // Filtrar la tabla después del retraso
-                    table.search(searchTerm).draw();
-
-                    // Mostrar todas las filas después de la búsqueda
-                    $('#miTabla tbody tr').show();
-
-                    // Ocultar todas las filas excepto la primera después de la búsqueda
-                    $('#miTabla tbody tr').not(':first').hide();
-                }, 10); // Reducido a 100 ms
-            });
         });
-
-        function nav(value) {
-            if (value != "") { location.href = value }
-        }
     </script>
-} *@
-
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
 
 
