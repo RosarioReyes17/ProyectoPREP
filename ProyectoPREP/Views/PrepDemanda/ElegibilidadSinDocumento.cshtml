@@ -823,7 +823,7 @@
 								Resultado de la Prueba del VIH (*):
 								<br>
 								<div class="radio radio-info">
-									<input id="rdVIH1" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo">
+									<input id="rdVIH1" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." name="ResultadoPruebaVih" value="Negativo">
 									<label for="rdVIH1">
 										Negativo
 									</label>
@@ -1106,19 +1106,18 @@
 
 		</div>
 	</div>
-
+	<input id="paId" type="hidden" value="@TempData["idPaciente"]" />
 	<div id="divMensaje" style="color:red;"></div>
 	<div id="divBotones" style="display: block;">
-		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
+		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success"><i class="fa-solid fa-check"></i> Registrar</button>
 		<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
 		<br />
 		<br />
-		<label></label>
+		<p id="paciId" style="font-size:20px;display:none"><b>El Id del paciente es: </b>@TempData["idPaciente"]</p>
+		<br />
+		<br />
 	</div>
-	<script>
 
-
-	</script>
 </form>
 
 
@@ -1389,10 +1388,11 @@
 				document.getElementById("chkaclaramiento2").checked = true;
 			}
 		}
-		document.getElementById('formulario').addEventListener('submit', function (event) {
-			event.preventDefault(); // Evita el envío del formulario
-			$('#myModal').modal('show'); // Muestra el modal
-		});
+		
+		// document.getElementById('formulario').addEventListener('submit', function (event) {
+		// 	event.preventDefault(); // Evita el envío del formulario
+		// 	$('#myModal').modal('show'); // Muestra el modal
+		// });
 
 		function cerrarModal() {
 			$('#myModal').modal('hide'); // Cierra el modal
@@ -1494,64 +1494,76 @@
 
 		};
 
-		document.addEventListener("DOMContentLoaded", function () {
-			// Agregar un controlador de eventos al formulario
-			document.getElementById("formulario").addEventListener("submit", function (event) {
-				// Obtener el valor del campo de peso
-				var pesoInput = document.getElementById("txtPeso");
-				var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
-				var pesoMin = parseFloat(pesoInput.min);
-				var pesoMax = parseFloat(pesoInput.max);
+		document.addEventListener("DOMContentLoaded", function (event) {
+			var idpa = document.getElementById("paId").value;
 
-				// Verificar si el campo de peso está vacío
-				if (isNaN(peso) || pesoInput.value.trim() === "") {
-					// Mostrar mensaje de error para campo obligatorio
-					document.getElementById("pesoValidationMsg").innerText = "Este campo es obligatorio.";
-					// Evitar el envío del formulario
-					event.preventDefault();
-				} else if (peso < pesoMin || peso > pesoMax) {
-					// Mostrar mensaje de error para valor fuera del rango
-					document.getElementById("pesoValidationMsg").innerText = "El peso debe estar entre " + pesoMin + " y " + pesoMax + " libras.";
-					// Evitar el envío del formulario
-					event.preventDefault();
-				} else {
-					// Limpiar mensaje de error si el valor es válido
-					document.getElementById("pesoValidationMsg").innerText = "";
-				}
-			});
-		});
+			if(idpa != ""){
+				document.getElementById("paciId").style.display = "";
+				document.getElementById("Cancelar").innerHTML = "Retroceder";
+				document.getElementById("Cancelar").style.backgroundColor = "#005476";
+				$("#Ejecutar").attr("disabled", true);
 
-		document.addEventListener("DOMContentLoaded", function () {
-			// Agregar un controlador de eventos al formulario
-			var formulario = document.getElementById("formulario");
-			if (formulario) {
-				formulario.addEventListener("submit", function (event) {
-					// Obtener el valor del campo de talla
-					var tallaInput = document.getElementById("TallaPulgadas");
-					if (tallaInput) {
-						var talla = parseFloat(tallaInput.value); // Convertir a número
-						var tallaMin = parseFloat(tallaInput.min);
-						var tallaMax = parseFloat(tallaInput.max);
-
-						// Verificar si el campo de talla está vacío o no es un número
-						if (isNaN(talla) || tallaInput.value.trim() === "") {
-							// Mostrar mensaje de error para campo obligatorio
-							document.getElementById("tallaPulgadaValidation").innerText = "Este campo es obligatorio.";
-							// Evitar el envío del formulario
-							event.preventDefault();
-						} else if (talla < tallaMin || talla > tallaMax) {
-							// Mostrar mensaje de error para valor fuera del rango
-							document.getElementById("tallaPulgadaValidation").innerText = "Este número debe estar entre " + tallaMin + " y " + tallaMax + ".";
-							// Evitar el envío del formulario
-							event.preventDefault();
-						} else {
-							// Limpiar mensaje de error si el valor es válido
-							document.getElementById("tallaPulgadaValidation").innerText = "";
-						}
-					}
-				});
 			}
 		});
+
+		// document.addEventListener("DOMContentLoaded", function () {
+		// 	// Agregar un controlador de eventos al formulario
+		// 	document.getElementById("formulario").addEventListener("submit", function (event) {
+		// 		// Obtener el valor del campo de peso
+		// 		var pesoInput = document.getElementById("txtPeso");
+		// 		var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
+		// 		var pesoMin = parseFloat(pesoInput.min);
+		// 		var pesoMax = parseFloat(pesoInput.max);
+
+		// 		// Verificar si el campo de peso está vacío
+		// 		if (isNaN(peso) || pesoInput.value.trim() === "") {
+		// 			// Mostrar mensaje de error para campo obligatorio
+		// 			document.getElementById("pesoValidationMsg").innerText = 0;
+		// 			// Evitar el envío del formulario
+		// 			event.preventDefault();
+		// 		} else if (peso < pesoMin || peso > pesoMax) {
+		// 			// Mostrar mensaje de error para valor fuera del rango
+		// 			document.getElementById("pesoValidationMsg").innerText = "El peso debe estar entre " + pesoMin + " y " + pesoMax + " libras.";
+		// 			// Evitar el envío del formulario
+		// 			event.preventDefault();
+		// 		} else {
+		// 			// Limpiar mensaje de error si el valor es válido
+		// 			document.getElementById("pesoValidationMsg").innerText = "";
+		// 		}
+		// 	});
+		// });
+
+		// document.addEventListener("DOMContentLoaded", function () {
+		// 	// Agregar un controlador de eventos al formulario
+		// 	var formulario = document.getElementById("formulario");
+		// 	if (formulario) {
+		// 		formulario.addEventListener("submit", function (event) {
+		// 			// Obtener el valor del campo de talla
+		// 			var tallaInput = document.getElementById("TallaPulgadas");
+		// 			if (tallaInput) {
+		// 				var talla = parseFloat(tallaInput.value); // Convertir a número
+		// 				var tallaMin = parseFloat(tallaInput.min);
+		// 				var tallaMax = parseFloat(tallaInput.max);
+
+		// 				// Verificar si el campo de talla está vacío o no es un número
+		// 				if (isNaN(talla) || tallaInput.value.trim() === "") {
+		// 					// Mostrar mensaje de error para campo obligatorio
+		// 					document.getElementById("tallaPulgadaValidation").innerText = "Este campo es obligatorio.";
+		// 					// Evitar el envío del formulario
+		// 					event.preventDefault();
+		// 				} else if (talla < tallaMin || talla > tallaMax) {
+		// 					// Mostrar mensaje de error para valor fuera del rango
+		// 					document.getElementById("tallaPulgadaValidation").innerText = "Este número debe estar entre " + tallaMin + " y " + tallaMax + ".";
+		// 					// Evitar el envío del formulario
+		// 					event.preventDefault();
+		// 				} else {
+		// 					// Limpiar mensaje de error si el valor es válido
+		// 					document.getElementById("tallaPulgadaValidation").innerText = 0;
+		// 				}
+		// 			}
+		// 		});
+		// 	}
+		// });
 
 
 		$(document).ready(function () {
