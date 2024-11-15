@@ -30,7 +30,7 @@
 
                         <br />
                             
-                        <a style="background:#d9edf7" asp-action="ElegibilidadPrepDemanda" asp-controller="PrepDemanda" class="btn"><i class="fa fa-plus"></i> Crear nuevo</a>
+                        <a asp-action="ElegibilidadPrepDemanda" asp-controller="PrepDemanda" class="btn btn-success"><i class="fa fa-plus"></i> Crear nuevo</a>
 
 
                     </div>
@@ -79,11 +79,11 @@
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
                     <td>
-                        <a title="Modificar la fecha inicial" class="btn btn-info " href="~/PrepDemanda/DemandaEditar/@item.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a title="Modificar la ficha inicial" class="btn accion" style="background-color: #ffc107" href="~/PrepDemanda/DemandaEditar/@item.Id"><i class="glyphicon glyphicon-pencil" style="filter:brightness(0) invert(1)"></i></a>
 
-                        <a title="Añadir Seguimiento" class="btn accion btn-info " href="~/PrepDemanda/SeguimientoPrepDemanda/@item.Id"><i class="glyphicon glyphicon-plus-sign"></i></a>
+                        <a title="Añadir Seguimiento" class="btn accion btn-info" style="background-color: #5cb85c" href="~/PrepDemanda/SeguimientoPrepDemanda/@item.Id"><i class="glyphicon glyphicon-plus-sign"></i></a>
 
-                        <a title="Ver Seguimientos" class="btn btn-info " href="~/PrepDemanda/SeguimientosVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a title="Ver Seguimientos" class="btn accion btn-info" href="~/PrepDemanda/SeguimientosVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
 
 
                     </td>
@@ -111,6 +111,7 @@
                 if (cond == "True") {
                     c.style.backgroundColor = "red";
                    // c.cells[7].style.display = "none";
+                    c.cells[7].children[0].style.display = "none";
                     c.cells[7].children[1].style.display = "none";
                     
                 }
