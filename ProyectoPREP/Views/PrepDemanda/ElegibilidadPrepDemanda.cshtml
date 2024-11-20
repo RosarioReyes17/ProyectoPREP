@@ -1079,6 +1079,8 @@
 										<option value="2">2</option>
 										<option value="3">3</option>
 									</select>
+									<span asp-validation-for="MesesPrescripcion" style="color:red;"></span>
+
 								</td>
 								<td>
 
@@ -1086,6 +1088,8 @@
 									<div class="form-group col-md-7">
 										<strong>Fecha Próximo seguimiento:</strong>
 										<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+										<span asp-validation-for="FechaProximoSeguimiento" style="color:red;"></span>
+
 									</div>
 								</td>
 							</tr>
@@ -1095,6 +1099,8 @@
 								<td colspan="4">
 									Observaciones:<br>
 									<input type="text" id="Observaciones" name="Observaciones" asp-for="Observaciones" class="form-control" autocomplete="error">
+									<span asp-validation-for="Observaciones" style="color:red;"></span>
+
 								</td>
 							</tr>
 
@@ -1116,12 +1122,10 @@
 			<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
 			<br />
 			<br />
-			<label></label>
+			<p id="paciId" style="font-size:20px;"><b>El Id del paciente es: </b>@TempData["idPaciente"]</p>
+			<br />
+			<br />
 		</div>
-		<script>
-
-
-		</script>
 
 
 	</form>
@@ -1560,6 +1564,19 @@
 
 
 		};
+
+
+		document.addEventListener("DOMContentLoaded", function (event) {
+			var idpa = document.getElementById("paId").value;
+
+			if (idpa != "") {
+				document.getElementById("paciId").style.display = "";
+				document.getElementById("Cancelar").innerHTML = "Retroceder";
+				document.getElementById("Cancelar").style.backgroundColor = "#005476";
+				$("#Ejecutar").attr("disabled", true);
+
+			}
+		});
 
 		// document.addEventListener("DOMContentLoaded", function () {
 		// 	// Agregar un controlador de eventos al formulario

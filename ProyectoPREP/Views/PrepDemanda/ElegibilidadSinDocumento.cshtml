@@ -1078,6 +1078,8 @@
 									<option value="2">2</option>
 									<option value="3">3</option>
 								</select>
+								<span asp-validation-for="MesesPrescripcion" style="color:red;"></span>
+
 							</td>
 							<td>
 
@@ -1085,6 +1087,8 @@
 								<div class="form-group col-md-7">
 									<strong>Fecha Próximo seguimiento:</strong>
 									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+									<span asp-validation-for="FechaProximoSeguimiento" style="color:red;"></span>
+
 								</div>
 							</td>
 						</tr>
@@ -1094,6 +1098,8 @@
 							<td colspan="4">
 								Observaciones:<br>
 								<input type="text" id="Observaciones" name="Observaciones" asp-for="Observaciones" class="form-control" autocomplete="error">
+								<span asp-validation-for="Observaciones" style="color:red;"></span>
+
 							</td>
 						</tr>
 

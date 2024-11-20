@@ -76,12 +76,14 @@ namespace ProyectoPREP.Controllers
 				db.TblPrepDemanda.Add(datos);
                 db.SaveChanges();
 
+				var Upaciente = datos.IdPaciente;
+				TempData["idPaciente"] = Upaciente;
+				//return View();
+				return RedirectToAction("HomePrepDemanda", "PrepDemanda");
 
-                return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+			}
 
-            }
-
-            catch (Exception ex)
+			catch (Exception ex)
             {
 
                 throw new Exception(ex.Message);
