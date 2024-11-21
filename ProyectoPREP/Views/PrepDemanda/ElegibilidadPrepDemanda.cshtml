@@ -1115,18 +1115,16 @@
 		</div>
 
 
+		<input id="paId" type="hidden" value="@TempData["idPaciente"]" />
 
 		<div id="divMensaje" style="color:red;"></div>
 		<div id="divBotones" style="display: block;">
 			<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
 			<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
-			<br />
-			<br />
-			<p id="paciId" style="font-size:20px;"><b>El Id del paciente es: </b>@TempData["idPaciente"]</p>
-			<br />
-			<br />
+			
 		</div>
-
+		<br />
+		<br />
 
 	</form>
 
@@ -1185,6 +1183,29 @@
 	</div>
 </div>
 
+
+<div class="modal" id="pacienteModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:red; margin-left: 90px;">
+					Informacion del paciente
+				</h5>
+				<button type="button" onclick="cerrarModalPaciente();" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="paciIdM" style="font-size:20px;display:none"><b>El Id del paciente es: </b>@TempData["idPaciente"]</p>
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="cerrarModalPaciente();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 @section scripts{
 	<script type="text/javascript">
@@ -1370,6 +1391,11 @@
 		function cerrarModalMenor() {
 			$('#menor').modal('hide'); // Cierra el modal
 		}
+
+		function cerrarModalPaciente() {
+			$('#pacienteModal').modal('hide'); // Cierra el modal
+		}
+
 
 		// function confirmarEnvio() {
 		// 	cerrarModal(); // Cierra el modal
@@ -1570,10 +1596,11 @@
 			var idpa = document.getElementById("paId").value;
 
 			if (idpa != "") {
-				document.getElementById("paciId").style.display = "";
+				document.getElementById("paciIdM").style.display = "";
 				document.getElementById("Cancelar").innerHTML = "Retroceder";
 				document.getElementById("Cancelar").style.backgroundColor = "#005476";
 				$("#Ejecutar").attr("disabled", true);
+				$("#pacienteModal").modal("show");
 
 			}
 		});
