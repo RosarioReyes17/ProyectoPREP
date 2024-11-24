@@ -9,7 +9,7 @@
 
 <form id="formulario" action="/PrepDemanda/ElegibilidadSinDocumento" method="post">
 	<div id="divValidarUsuario" class="form-visible">
-		<h3>Identificarse en PrEP</h3>
+		<h3>Identificarse en PrEP a Demanda</h3>
 		<table class="table">
 			<tbody>
 				<tr style="display:none">
@@ -780,6 +780,7 @@
 						<tr>
 							<td>
 								¿Prueba de VIH realizada? (*)
+								<label>Resultados de prueba no deben de tener más de 48 horas.</label>
 								<div class="radio radio-info">
 									<input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." onclick="mostrarVIH(value);" asp-for="SeronegativoVih" name="SeronegativoVih" class="styled" type="radio" value="Si">
 									<label for="chkSeronegativo1">
@@ -793,15 +794,14 @@
 									</label>
 
 								</div>
-								<label>Nota:</label> resultados de prueba no debe de tener más de 48 horas.
 								<span asp-validation-for="SeronegativoVih" style="color:red;margin-left:20px"></span>
 
 							</td>
 
 							<td>
-								Fecha de realización (Prueba VIH) (*):
+								Fecha de realización VIH (*):
 								<br>
-								<div class="form-group col-md-8">
+								<div class="form-group col-md-10">
 									<input id="txtFechaRealizacionPrueba" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control habilitarVIH pruebaVIH" type="date">
 									<span asp-validation-for="FechaPruebaVih" style="color:red;"></span>
 								</div>
@@ -810,9 +810,9 @@
 
 
 							<td>
-								Fecha de resultados(Prueba VIH) (*):
+								Fecha de resultados VIH (*):
 								<br>
-								<div class="form-group col-md-8">
+								<div class="form-group col-md-10">
 
 									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control habilitarVIH pruebaVIH " type="date" />
 									<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
@@ -820,7 +820,7 @@
 							</td>
 
 							<td>
-								Resultado de la Prueba del VIH (*):
+								Resultado de la Prueba VIH (*):
 								<br>
 								<div class="radio radio-info">
 									<input id="rdVIH1" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." name="ResultadoPruebaVih" value="Negativo">
@@ -1058,21 +1058,23 @@
 					<tbody>
 						<tr>
 
-							<td>
+
+							<td id="idcheckarv">
 								<strong>PrEP(ARV) Prescrita:</strong>
 								<br>
-								<input id="td1" onclick="ARV(this.id);" name="PrepArvTdfFtc" value="true" class="styled" type="checkbox"> TDF/FTC <br>
-								<input id="td2" onclick="ARV(this.id);" name="PrepArvTdf3tc" class="styled" value="true" type="checkbox"> TDF/3TC <br>
-								<input id="td3" onclick="ARV(this.id);" name="PrepArvTafFtc" class="styled" value="true" type="checkbox"> TAF/FTC <br />
-								<span style="color:red">
-									@TempData["ARV"]
+								<input id="td1" onclick="validateCheckboxes();" name="PrepArvTdfFtc" value="true" class="styled" type="checkbox"> TDF/FTC <br>
+								<input id="td2" onclick="validateCheckboxes();" name="PrepArvTdf3tc" class="styled" value="true" type="checkbox"> TDF/3TC <br>
+								<input id="td3" onclick="validateCheckboxes();" name="PrepArvTafFtc" class="styled" value="true" type="checkbox"> TAF/FTC <br>
+								<span id="error-message" style="color:red; display:none;">
+									Debe seleccionar <br> al menos una opción.
 								</span>
 							</td>
+							
 							<td>
 
 								<strong>Meses de prescripción</strong>
 
-								<select id="Meses_prescripcion" required name="MesesPrescripcion" asp-for="MesesPrescripcion" class="form-control" autocomplete="error">
+								<select id="Meses_prescripcion" required name="MesesPrescripcion" asp-for="MesesPrescripcion" data-val="true" data-val-required="Este campo es obligatorio." class="form-control" autocomplete="error">
 									<option value="">--Seleccione--</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
@@ -1086,7 +1088,7 @@
 
 								<div class="form-group col-md-7">
 									<strong>Fecha Próximo seguimiento:</strong>
-									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" class="form-control center" type="date" onchange="quitarValidacionFecha(this)" autocomplete="error">
 									<span asp-validation-for="FechaProximoSeguimiento" style="color:red;"></span>
 
 								</div>
@@ -1116,9 +1118,9 @@
 
 	<div id="divMensaje" style="color:red;"></div>
 	<div id="divBotones" style="display: block;">
-		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success"><i class="fa-solid fa-check"></i> Registrar</button>
+		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" onclick="validateCheckboxes()"><i class="fa-solid fa-check"></i> Registrar</button>
 		<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
-	</div>
+
 	<br />
 	<br />
 
@@ -1174,14 +1176,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" style="color:red; margin-left: 90px;">
-					Informacion del paciente
+					INFORMACIÓN DEL PACIENTE
 				</h5>
 				<button type="button" onclick="cerrarModalPaciente();" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<p id="paciIdM" style="font-size:20px;display:none"><b>El Id del paciente es: </b>@TempData["idPaciente"]</p>
+				<p id="paciIdM" style="font-size:20px;display:none"><b>EL ID DEL PACIENTE ES: </b>@TempData["idPaciente"]</p>
 
 
 			</div>
@@ -1192,6 +1194,28 @@
 	</div>
 </div>
 
+@* <div class="modal" id="vih" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:red; margin-left: 90px;">
+					¡ADVERTENCIA!
+				</h5>
+				<button type="button" onclick="cerrarModalVIH();" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="cuerpoModalvih" style="text-align:center">La persona registrada no es elegible para PREP porque tiene un resultado VIH+.</p>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="VIHPositivo();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+				<button type="button" onclick="cerrarModalVIH();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div> *@
 
 @section scripts{
 	<script type="text/javascript">
@@ -1648,6 +1672,35 @@
 			if (event.key === 'restrictDate') {
 				applyDateRestriction();
 			}
+		});
+
+		function validateCheckboxes() {
+			// Obtén los checkboxes dentro del <td> con id "idcheckarv"
+			const checkboxes = document.querySelectorAll('#idcheckarv input[type="checkbox"]');
+			const errorMessage = document.getElementById('error-message');
+
+			// Verifica si al menos uno está seleccionado
+			const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+			if (isChecked) {
+				// Oculta el mensaje de error si al menos un checkbox está seleccionado
+				errorMessage.style.display = 'none';
+				return true; // Permite el envío del formulario
+			} else {
+				// Muestra el mensaje de error si ninguno está seleccionado
+				errorMessage.style.display = 'block';
+				return false; // Evita el envío del formulario
+			}
+		}
+
+		// Evento para que el mensaje desaparezca al presionar cualquier checkbox
+		document.querySelectorAll('#idcheckarv input[type="checkbox"]').forEach(checkbox => {
+			checkbox.addEventListener('change', () => {
+				const errorMessage = document.getElementById('error-message');
+				if (checkbox.checked) {
+					errorMessage.style.display = 'none';
+				}
+			});
 		});
 
 	</script>
