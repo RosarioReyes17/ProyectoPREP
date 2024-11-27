@@ -22,6 +22,46 @@ namespace ProyectoPREP.Controllers
 		}
 
 		[HttpPost]
+		public JsonResult VIHPositivo(DateTime FechaPruebaVih, DateTime FechaEntregaVih, string Nombres, string Apellidos, 
+			 string TieneDocumentos, string Documento, DateTime FechaIngresoSai, string Genero,int Nacionalidad,
+			 int MunicipioResidencia,int ProvinciaResidencia)
+		{
+			int idUser = Convert.ToInt32(User.GetUserId());
+			int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+			bool status = true;
+
+			var demanda = new TblPrepDemanda();
+			demanda.EstatusId = 6;
+			demanda.SeronegativoVih = "SI";
+			demanda.FechaPruebaVih = FechaPruebaVih;
+			demanda.FechaEntregaVih = FechaEntregaVih;
+			demanda.Nombres = Nombres;
+			demanda.Apellidos = Apellidos;
+			demanda.FechaIngresoSai = FechaIngresoSai;
+			demanda.TieneDocumentos = TieneDocumentos;
+			demanda.Documento = Documento;
+			demanda.ResultadoPruebaVih = "Positivo";
+			demanda.IdDeptoDepend = IdDeptoDepend;
+			demanda.Genero = Genero;
+			demanda.Nacionalidad = Nacionalidad;
+			demanda.MunicipioResidencia = MunicipioResidencia;
+			demanda.ProvinciaResidencia = ProvinciaResidencia;
+			demanda.Sexo = "M";
+
+			demanda.Usuario = Convert.ToString(idUser);
+
+			db.TblPrepDemanda.Add(demanda);
+			db.SaveChanges();
+
+			string idPaciente = Convert.ToString(demanda.IdPaciente);
+
+			var result = new { status,idPaciente };
+			return Json(result);
+		}
+
+
+		[HttpPost]
 		public JsonResult llenarMunicipio(int id)
 		{
 			bool status = true;

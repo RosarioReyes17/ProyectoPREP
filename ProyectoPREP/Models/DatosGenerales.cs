@@ -12,6 +12,7 @@
         public string Documento { get; set; }
         public DateTime Fecha_Ingreso_SAI { get; set; }
         public int Estatus { get; set; }
+        public int EstatusId { get; set; }
         public int IdDeptoDepend { get; set; }
         public bool Condicion { get; set; }
     }

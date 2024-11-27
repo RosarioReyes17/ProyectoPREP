@@ -64,6 +64,7 @@
                 <th>Fecha de registro</th>
                 <th>Acciones</th>
                 <th style="display:none">condicion</th>
+                <th style="display:none">Estatus</th>
 
             </tr>
         </thead>
@@ -87,7 +88,8 @@
 
 
                     </td>
-                    <td style="display:none" class="condi">@item.Condicion</td>
+                    <td style="display:none" class="">@item.Condicion</td>
+                    <td style="display:none" class="">@item.EstatusId</td>
 
 
                 </tr>
@@ -120,6 +122,29 @@
 
      
         });
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var condicion = document.querySelectorAll(".condicion");
+
+            condicion.forEach(function (c) {
+                var id = c.id;
+                var cond = c.cells[9].innerHTML;
+                if (cond == 6) {
+                    c.style.backgroundColor = "blue";
+                    // c.cells[7].style.display = "none";
+                    c.cells[7].children[0].style.display = "none";
+                    c.cells[7].children[1].style.display = "none";
+
+                }
+            });
+
+
+
+        });
+
+
+
+
 	</script>
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
