@@ -829,7 +829,7 @@
 									Resultado de la Prueba VIH (*):
 									<br>
 									<div class="radio radio-info">
-										<input id="rdVIH1" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo">
+										<input id="rdVIH1" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." name="ResultadoPruebaVih" value="Negativo">
 										<label for="rdVIH1">
 											Negativo
 										</label>
@@ -1211,8 +1211,125 @@
 	</div>
 </div>
 
+<div class="modal" id="vih" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:red; margin-left: 90px;">
+					¡ADVERTENCIA!
+				</h5>
+				<button type="button" onclick="cerrarModalVIH();" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="cuerpoModalvih" style="text-align:center">La persona registrada no es elegible para PREP porque tiene un resultado VIH+.</p>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="btnvih" onclick="VIHPositivo();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+				<button type="button" onclick="cerrarModalVIH();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 @section scripts{
 	<script type="text/javascript">
+
+
+		const VIHPositivo = () => {
+			$("#MunicipioResidencia").empty();
+			var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
+			var FechaEntregaVih = document.getElementById("FechaEntregaVih").value;
+			var Nombres = document.getElementById("txtNombre").value;
+			var Apellidos = document.getElementById("txtApellido").value;
+			var TieneDocumentos = document.getElementById("ddlDocumentoOpcion").value;
+			var Documento = document.getElementById("txtDocumento").value;
+			var FechaIngresoSai = document.getElementById("txtFechaRegistroPrep").value;
+			var Genero = document.getElementById("ddlGenero").value;
+			var Sexo = document.getElementById("ddlSexo").value;
+			var Nacionalidad = document.getElementById("ddlNacionalidad").value;
+			var ProvinciaResidencia = document.getElementById("ProvinciaResidencia").value;
+			var MunicipioResidencia = document.getElementById("MunicipioResidencia").value;
+
+
+			$.post("@Url.Action("VIHPositivo","PrepDemanda")", {
+				FechaPruebaVih: FechaPruebaVih
+				, FechaEntregaVih: FechaEntregaVih, Nombres: Nombres, Apellidos: Apellidos, TieneDocumentos: TieneDocumentos
+				, Documento: Documento, FechaIngresoSai: FechaIngresoSai, Genero: Genero, MunicipioResidencia: MunicipioResidencia
+				, Nacionalidad: Nacionalidad, ProvinciaResidencia: ProvinciaResidencia
+			}, function (modelos) {
+				console.log(modelos);
+				document.getElementById("paciIdM").innerHTML = "";
+				document.getElementById("paciIdM").style.display = "";
+				document.getElementById("paciIdM").innerHTML = "EL ID DEL PACIENTE ES: " + modelos.idPaciente;
+				document.getElementById("rdVIH1").disabled = true;
+				document.getElementById("rdVIH2").disabled = true;
+				document.getElementById("Cancelar").innerHTML = "Retroceder";
+				document.getElementById("Cancelar").style.backgroundColor = "#005476";
+				$("#Ejecutar").attr("disabled", true);
+				$('#vih').modal('hide');
+				$("#pacienteModal").modal("show");
+				//setTimeout(paginaPrincipal, 1000);
+			});
+		}
+
+		const cerrarModalVIH = () => {
+
+			$('#vih').modal('hide');
+		}
+
+		var resultadoVIH = (e) => {
+			var valor = e;
+			var Nombres = document.getElementById("txtNombre").value;
+			var Apellidos = document.getElementById("txtApellido").value;
+			var Genero = document.getElementById("ddlGenero").value;
+			var Sexo = document.getElementById("ddlSexo").value;
+			var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
+			var FechaEntregaVih = document.getElementById("FechaEntregaVih").value;
+			var Nacionalidad = document.getElementById("ddlNacionalidad").value;
+			var ProvinciaResidencia = document.getElementById("ProvinciaResidencia").value;
+			var MunicipioResidencia = document.getElementById("MunicipioResidencia").value;
+			var FechaIngresoSai = document.getElementById("txtFechaRegistroPrep").value;
+
+
+
+			if (valor == "Negativo") {
+				$("#chkNoSignos1").removeAttr("disabled");
+				$("#chkNoSignos2").removeAttr("disabled");
+
+			}
+
+			if (valor == "Positivo") {
+				//$("#cuerpoModal").empty();
+
+
+				if (Nombres == "" || Apellidos == " " || Genero == "" || Sexo == "" || FechaEntregaVih == "" ||
+					FechaPruebaVih == "" || Nacionalidad == "" || ProvinciaResidencia == "" || MunicipioResidencia == "" || FechaIngresoSai == "") {
+					document.getElementById("cuerpoModalvih").innerHTML = "";
+					document.getElementById("cuerpoModalvih").innerHTML = "Faltan campos por llenar";
+					$("#btnvih").attr("disabled", true);
+					document.getElementById("rdVIH2").checked = false;
+					$('#vih').modal('show');
+					return;
+				}
+				else {
+
+					$("#btnvih").removeAttr("disabled");
+					document.getElementById("cuerpoModalvih").innerHTML = "";
+					document.getElementById("cuerpoModalvih").innerHTML = "La persona registrada no es elegible para PREP porque tiene un resultado VIH+.";
+
+					$('#vih').modal('show');
+					//VIHPositivo();
+					//
+					document.getElementById("rdVIH2").checked = false;
+				}
+
+			}
+
+		}
 
 		var mostrarVIH = (e) => {
 

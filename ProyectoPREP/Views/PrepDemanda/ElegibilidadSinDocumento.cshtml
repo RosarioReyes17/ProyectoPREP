@@ -1273,6 +1273,7 @@
 			var Nacionalidad = document.getElementById("ddlNacionalidad").value;
 			var ProvinciaResidencia = document.getElementById("ProvinciaResidencia").value;
 			var MunicipioResidencia = document.getElementById("MunicipioResidencia").value;
+			var FechaIngresoSai = document.getElementById("txtFechaRegistroPrep").value;
 
 
 
@@ -1287,7 +1288,7 @@
 
 
 				if (Nombres == "" || Apellidos == " " || Genero == "" || Sexo == "" || FechaEntregaVih == "" || 
-				FechaPruebaVih == "" || Nacionalidad =="" || ProvinciaResidencia == "" || MunicipioResidencia == "") {
+					FechaPruebaVih == "" || Nacionalidad == "" || ProvinciaResidencia == "" || MunicipioResidencia == "" || FechaIngresoSai =="") {
 					document.getElementById("cuerpoModalvih").innerHTML = "";
 					document.getElementById("cuerpoModalvih").innerHTML = "Faltan campos por llenar";
 					$("#btnvih").attr("disabled", true);

@@ -79,8 +79,10 @@
                     <td>@item.Documento</td>
                     <td>@item.NOMBRE_CORTO_ES</td>
                     <td>@item.Fecha_Ingreso_SAI.ToString("dd-MM-yyyy").Substring(0, 10)</td>
-                    <td>
+                    <td style="width:15%">
                         <a title="Modificar la ficha inicial" class="btn accion" style="background-color: #ffc107" href="~/PrepDemanda/DemandaEditar/@item.Id"><i class="glyphicon glyphicon-pencil" style="filter:brightness(0) invert(1)"></i></a>
+
+                        <a title="Ver Ficha Inicial" class="btn accion btn-info" style="background-color: gray" href="~/PrepDemanda/DemandaVer/@item.Id"><i class="glyphicon glyphicon-eye-open"></i></a>
 
                         <a title="Añadir Seguimiento" class="btn accion btn-info" style="background-color: #5cb85c" href="~/PrepDemanda/SeguimientoPrepDemanda/@item.Id"><i class="glyphicon glyphicon-plus-sign"></i></a>
 
@@ -114,7 +116,7 @@
                     c.style.backgroundColor = "red";
                    // c.cells[7].style.display = "none";
                     c.cells[7].children[0].style.display = "none";
-                    c.cells[7].children[1].style.display = "none";
+                    c.cells[7].children[2].style.display = "none";
                     
                 }
             });
@@ -133,7 +135,7 @@
                     c.style.backgroundColor = "blue";
                     // c.cells[7].style.display = "none";
                     c.cells[7].children[0].style.display = "none";
-                    c.cells[7].children[1].style.display = "none";
+                    c.cells[7].children[2].style.display = "none";
 
                 }
             });

@@ -136,6 +136,26 @@ namespace ProyectoPREP.Controllers
 
 			return View();
 		}
+		
+		public ActionResult DemandaVer(int id)
+		{
+			var lista = new List<VwMunicipio>();
+			var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
+			var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+			var model1 = db.TblPrepDemanda.Where(x => x.IdPaciente == id).FirstOrDefault();
+
+			lista = (from b in db.VwMunicipios
+					 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model1.ProvinciaResidencia)
+					 select b).ToList();
+
+			ViewBag.Municipios = lista;
+			ViewBag.IdMunicipios = model1.MunicipioResidencia;
+			ViewBag.IdProvincia = model1.ProvinciaResidencia;
+			ViewBag.tipoDocumento = model1.TipoDocumento;
+			ViewBag.documento = model1.Documento;
+			return View(datos);
+		}
 
 		[HttpPost]
 		public ActionResult ElegibilidadSinDocumento(TblPrepDemanda datos)
