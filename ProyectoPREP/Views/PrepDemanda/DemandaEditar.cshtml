@@ -23,7 +23,7 @@
 				<td>
 					<div class="form-group col-2 ">
 						Fecha de ingreso (*):
-						<input onkeydown="return false" asp-for="FechaIngresoSai" id="txtFechaRegistroPrep" name="FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+						<input onkeydown="return false" asp-for="FechaIngresoSai" id="txtFechaRegistroPrep" name="FechaIngresoSai" class="form-control" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="quitarValidacionFecha(this)">
 						<span asp-validation-for="FechaIngresoSai" style="color:red; margin-left:10px"></span>
 					</div>
 				</td>
@@ -747,58 +747,57 @@
 						<tr>
 							<td>
 								¿Prueba de VIH realizada? (*)
+								<label>Resultados de prueba no deben de tener más de 48 horas.</label>
 								<div class="radio radio-info">
-									<input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." asp-for="SexoConVihpositivo" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="Si">
+									<input id="chkSeronegativo1" data-val="true" data-val-required="Este campo es obligatorio." onclick="mostrarVIH(value);" asp-for="SeronegativoVih" name="SeronegativoVih" class="styled" type="radio" value="Si">
 									<label for="chkSeronegativo1">
 										Si
 									</label>
 								</div>
 								<div class="radio radio-info">
-									<input id="chkSeronegativo2" required asp-for="SexoConVihpositivo" name="SeronegativoVih" onclick="habilitarInputVIH(value);" class="styled habilitarPCR" type="radio" value="No">
+									<input id="chkSeronegativo2" required asp-for="SeronegativoVih" name="SeronegativoVih" onclick="mostrarVIH(value);" class="styled" type="radio" value="No">
 									<label for="chkSeronegativo2">
 										No
 									</label>
 
 								</div>
-								<label>Nota:</label> resultados de prueba no debe de tener más de 48 horas.
-								<span asp-validation-for="SexoConVihpositivo" style="color:red;margin-left:20px"></span>
+								<span asp-validation-for="SeronegativoVih" style="color:red;margin-left:20px"></span>
 
 							</td>
 
 							<td>
-								Fecha de realización (Prueba VIH) (*):
+								Fecha de realización VIH (*):
 								<br>
-								<div class="form-group col-md-8">
-									<input id="txtFechaRealizacionPrueba" onkeydown="return false" onchange="diferenciaFecha();" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control pruebaVIH habilitarPCR" type="date">
-									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+								<div class="form-group col-md-10">
+									<input id="txtFechaRealizacionPrueba" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control habilitarVIH pruebaVIH" type="date">
+									<span asp-validation-for="FechaPruebaVih" style="color:red;"></span>
 								</div>
 							</td>
 
 
 
-
 							<td>
-								Fecha de resultados(Prueba VIH) (*):
+								Fecha de resultados VIH (*):
 								<br>
-								<div class="form-group col-md-8">
+								<div class="form-group col-md-10">
 
-									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" data-val="true" data-val-required="Este campo es obligatorio." name="FechaEntregaVih" class="form-control pruebaVIH habilitarPCR " type="date" />
+									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control habilitarVIH pruebaVIH " type="date" />
 									<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
 								</div>
 							</td>
 
 							<td>
-								Resultado de la Prueba del VIH (*):
+								Resultado de la Prueba VIH (*):
 								<br>
 								<div class="radio radio-info">
-									<input id="rdVIH1" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Negativo">
+									<input id="rdVIH1" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" data-val="true" data-val-required="Este campo es obligatorio." name="ResultadoPruebaVih" value="Negativo">
 									<label for="rdVIH1">
 										Negativo
 									</label>
 								</div>
 
 								<div class="radio radio-info">
-									<input id="rdVIH2" class="styled pruebaVIH" asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo">
+									<input id="rdVIH2" class="styled habilitarVIH pruebaVIH" disabled asp-for="ResultadoPruebaVih" type="radio" required onclick="resultadoVIH(value);" name="ResultadoPruebaVih" value="Positivo">
 									<label for="rdVIH2">
 
 										Positivo
@@ -836,7 +835,7 @@
 
 									Fecha:
 									<br>
-									<input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaCreatinina" name="FechaCreatinina" class="segundaParte form-control col-sm-2 date" type="date">
+									<input id="txtFechaResultadoCreatinina" onkeydown="return false" data-val="true" data-val-required="Este campo es obligatorio." asp-for="FechaCreatinina" name="FechaCreatinina" class="segundaParte form-control col-sm-2 date" type="date" onchange="quitarValidacionFecha(this)">
 									<span asp-validation-for="FechaCreatinina" style="color:red;"></span>
 									<br>
 									Resultado:
@@ -892,26 +891,29 @@
 
 								<div class="form-group radio">
 									Sifilis(VDRL) Realizada:
+									<input onchange="mostrarSifilis();" type="checkbox" id="vihS" />
 									<br />
 									<br />
 
 									<div style="margin-left: 24px;">
-										<input id="rdsifilis1" asp-for="Sifilis" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputSifilis(value);" class="styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+										<input id="rdsifilis1" asp-for="Sifilis" disabled data-val="true" data-val-required="Este campo es obligatorio." class=" habilitarSifilis styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
 										<label for="rdsifilis1">No Reactivo</label>
 
 
 									</div>
 									<div style="margin-left: 24px;">
-										<input id="rdsifilis2" required onclick="habilitarInputSifilis(value);" asp-for="Sifilis" class="styled segundaParte" type="radio" name="Sifilis" value="Reactivo">
+										<input id="rdsifilis2" disabled asp-for="Sifilis" class="styled habilitarSifilis segundaParte" type="radio" name="Sifilis" value="Reactivo">
 										<label for="rdsifilis2">Reactivo</label>
 									</div>
 									<span asp-validation-for="Sifilis" style="color:red;"></span>
 
 									<br />
-									<input id="txtfechasifilis1" data-val="true" data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+									<input id="txtfechasifilis1" data-val="true" disabled data-val-required="Este campo es obligatorio."
+										   name="SifilisFecha" asp-for="SifilisFecha" onkeydown="return false" class="form-control col-sm-2 date habilitarSifilis segundaParte"
+										   type="date" style="display:initial;width: 155px;" placeholder="Fecha"
+										   onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
-									<br />
-									<span asp-validation-for="SifilisFecha"  style="color:red;"></span>
+									<span asp-validation-for="SifilisFecha" style="color:red;"></span>
 								</div>
 
 
@@ -921,23 +923,26 @@
 
 								<div class="form-group radio ">
 									HBsAg Realizada:
+									<input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
+
 									<br />
 									<br />
 
 									<div style="margin-left: 24px;">
-										<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHBsAg(value);" class="styled segundaParte" type="radio" name="HbsAg" value="Negativo">
+										<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" disabled data-val-required="Este campo es obligatorio." class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Negativo">
 										<label for="rdHBsAg1">Negativo</label>
 									</div>
 
 									<div style="margin-left: 24px;">
-										<input id="rdHBsAg2" asp-for="HbsAg" required onclick="habilitarInputHBsAg(value);" class="styled segundaParte" type="radio" name="HbsAg" value="Positivo">
+										<input id="rdHBsAg2" asp-for="HbsAg" disabled class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Positivo">
 										<label for="rdHBsAg2">Positivo</label>
 									</div>
 									<span asp-validation-for="HbsAg" style="color:red;"></span>
 									<br />
 
-									<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
-									<br />
+									<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" disabled data-val="true" data-val-required="Este campo es obligatorio."
+										   onkeydown="return false" name="HbsAgFecha" class="form-control habilitarSifilisB col-sm-5  date segundaParte"
+										   type="date" style="display:initial;width: 155px;" placeholder="Fecha" onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
 									<span asp-validation-for="HbsAgFecha" style="color:red;"></span>
 								</div>
@@ -947,22 +952,26 @@
 
 								<div class="form-group radio">
 									Hepatitis C Realizada:
+									<input onchange="mostrarHepatitisC();" type="checkbox" id="vihHC" />
+
 									<br />
 									<br />
 									<div style="margin-left:24px">
-										<input id="rdHepatitis1" asp-for="HepatitisC" data-val="true" data-val-required="Este campo es obligatorio." onclick="habilitarInputHepatitis(value);" class="styled segundaParte" type="radio" name="HepatitisC" value="Negativo">
+										<input id="rdHepatitis1" asp-for="HepatitisC" disabled data-val="true" data-val-required="Este campo es obligatorio." class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Negativo">
 										<label for="rdHepatitis1">Negativo</label>
 									</div>
 
 									<div style="margin-left:24px">
-										<input id="rdHepatitis2" asp-for="HepatitisC" required onclick="habilitarInputHepatitis(value);" class="styled segundaParte" type="radio" name="HepatitisC" value="Positivo">
+										<input id="rdHepatitis2" asp-for="HepatitisC" disabled class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Positivo">
 										<label for="rdHepatitis2">Positivo</label>
 									</div>
 									<span asp-validation-for="HepatitisC" style="color:red;"></span>
 
 									<br />
-									<input id="txtfechaHepatitis" onkeydown="return false" asp-for="HepatitisCFecha" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
-									<br />
+									<input id="txtfechaHepatitis" onkeydown="return false" disabled asp-for="HepatitisCFecha" data-val="true"
+										   data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control habilitarSifilisC col-sm-8 date segundaParte"
+										   type="date" style="display:initial;width: 155px;" placeholder="Fecha"
+										   onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
 									<span asp-validation-for="HepatitisCFecha" style="color:red;"></span>
 								</div>
@@ -982,21 +991,22 @@
 									</div>
 
 									<div style="margin-left: 24px;">
-										<input id="ITDSindromico1" asp-for="SexoConVihpositivo" required onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
+										<input id="ITDSindromico1" asp-for="ItsDiagnosticoPresuntivo" required onclick="habilitarInputsindrómico(value);" class="styled segundaParte" type="radio" name="ItsDiagnosticoPresuntivo" value="No">
 										<label for="ITDSindromico1">No</label>
 									</div>
-									<span asp-validation-for="SexoConVihpositivo" style="color:red;"></span>
+									<span asp-validation-for="ItsDiagnosticoPresuntivo" style="color:red;"></span>
 
 									<br>
-									<input name="SecrecionUretral" class="sindromico" type="checkbox" checked="@Model.SecrecionUretral" /> Secrecion Uretral
+									<input name="SecrecionUretral" disabled class="sindromico" type="checkbox" value="true" /> Secrecion Uretral
 									<br>
-									<input name="SecrecionVaginal" class="sindromico" type="checkbox" checked="@Model.SecrecionVaginal" /> Secrecion Vaginal
+									<input name="SecrecionVaginal" disabled class="sindromico" type="checkbox" value="true" /> Secrecion Vaginal
 									<br>
-									<input name="UlceraGenital" class="sindromico" type="checkbox" checked="@Model.UlceraGenital" /> Ulcera genital
+									<input name="UlceraGenital" disabled class="sindromico" type="checkbox" value="true" /> Ulcera genital
 									<br>
-									<input name="VerrugasGenitales" class="sindromico" type="checkbox" checked="@Model.VerrugasGenitales" /> Verrugas genitales
+									<input name="VerrugasGenitales" disabled class="sindromico" type="checkbox" value="true" /> Verrugas genitales
 									<br />
-									<span style="color:red">@TempData["Sindromico"]</span>
+									@* <span style="color:red">@TempData["Sindromico"]</span> *@
+									<span id="checkboxValidationError" style="color:red; display:none;"></span>
 
 								</div>
 
@@ -1041,7 +1051,7 @@
 
 								<div class="form-group col-md-7">
 									<strong>Fecha Próximo seguimiento:</strong>
-									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
+									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" onchange="quitarValidacionFecha(this)" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" required autocomplete="error">
 								</div>
 							</td>
 						</tr>
@@ -1165,7 +1175,7 @@
 
 @* Modal para notifcar que se registró un paciente satisfactoriamente
  *@
-<div class="modal" id="myModal" tabindex="-1" role="dialog">
+@* <div class="modal" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -1184,7 +1194,7 @@
 		</div>
 	</div>
 </div>
-
+ *@
 
 @section scripts{
 	<script type="text/javascript">
@@ -1208,19 +1218,19 @@
 		}
 
 
-		document.getElementById('formulario').addEventListener('submit', function (event) {
-			event.preventDefault(); // Evita el envío del formulario
-			$('#myModal').modal('show'); // Muestra el modal
-		});
+		// document.getElementById('formulario').addEventListener('submit', function (event) {
+		// 	event.preventDefault(); // Evita el envío del formulario
+		// 	$('#myModal').modal('show'); // Muestra el modal
+		// });
 
-		function cerrarModal() {
-			$('#myModal').modal('hide'); // Cierra el modal
-		}
+		// function cerrarModal() {
+		// 	$('#myModal').modal('hide'); // Cierra el modal
+		// }
 
-		function confirmarEnvio() {
-			cerrarModal(); // Cierra el modal
-			document.getElementById('formulario').submit(); // Envía el formulario
-		}
+		// function confirmarEnvio() {
+		// 	cerrarModal(); // Cierra el modal
+		// 	document.getElementById('formulario').submit(); // Envía el formulario
+		// }
 
 
 		var ARV = (e) => {
@@ -1444,6 +1454,146 @@
 				applyDateRestriction();
 			}
 		});
+
+		var mostrarVIH = (e) => {
+
+			if (e == "Si") {
+				$(".habilitarVIH").removeAttr("disabled");
+			} else {
+				$(".habilitarVIH").attr("disabled", true);
+				$(".habilitarVIH").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarVIH[type='date']").val(''); // Limpiar campos de fecha
+
+			}
+		}
+
+
+		var mostrarSifilis = () => {
+			var vihS = document.getElementById("vihS").checked;
+
+			if (vihS) {
+				$(".habilitarSifilis").removeAttr("disabled");
+			} else {
+				$(".habilitarSifilis").attr("disabled", true);
+				$(".habilitarSifilis").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarSifilis[type='date']").val(''); // Limpiar campos de fecha
+			}
+		}
+
+		var mostrarHepatitis = () => {
+			var vihH = document.getElementById("vihH").checked;
+
+			if (vihH) {
+				$(".habilitarSifilisB").removeAttr("disabled");
+			} else {
+				$(".habilitarSifilisB").attr("disabled", true);
+				$(".habilitarSifilisB").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarSifilisB[type='date']").val(''); // Limpiar campos de fecha
+			}
+		}
+
+		var mostrarHepatitisC = () => {
+			var vihHC = document.getElementById("vihHC").checked;
+
+			if (vihHC) {
+				$(".habilitarSifilisC").removeAttr("disabled");
+			} else {
+				$(".habilitarSifilisC").attr("disabled", true);
+				$(".habilitarSifilisC").prop("checked", false); // Limpiar selección de los radios
+				$(".habilitarSifilisC[type='date']").val(''); // Limpiar campos de fecha
+
+			}
+		}
+
+
+		function quitarValidacionFecha(element) {
+			// Remover mensaje de validación y clase de error
+			$(element).removeClass("input-validation-error");
+			$(element).closest('.form-group').find("span.field-validation-error")
+				.addClass("field-validation-valid")
+				.removeClass("field-validation-error")
+				.text('');
+		}
+
+		var habilitarInputsindrómico = (value) => {
+			// Oculta el mensaje de validación del radio button
+			$("span[asp-validation-for='ItsDiagnosticoPresuntivo']").text("").hide();
+
+			if (value === "Si") {
+				// Habilita los checkboxes
+				$(".sindromico").prop("disabled", false);
+
+				// Validación al cambiar el estado de los checkboxes
+				$(".sindromico").change(function () {
+					validarCheckboxes();
+				});
+
+				// Verifica la condición de los checkboxes cuando se selecciona "Sí"
+				validarCheckboxes();
+
+			} else if (value === "No") {
+				// Deshabilita y desmarca los checkboxes y oculta el mensaje de validación de los checkboxes
+				$(".sindromico").prop("checked", false).prop("disabled", true);
+				$("#checkboxValidationError").text("").hide();
+			}
+		}
+
+
+
+		var validarCheckboxes = () => {
+			// Revisa si al menos un checkbox está seleccionado
+			if ($(".sindromico:checked").length === 0) {
+				// Muestra el mensaje de error si no hay ningún checkbox marcado
+				$("#checkboxValidationError").text("Debe seleccionar al menos una opción.").show();
+			} else {
+				// Oculta el mensaje de error si hay al menos un checkbox marcado
+				$("#checkboxValidationError").text("").hide();
+			}
+		}
+
+
+
+		// Aplicar restricción al cargar la página
+		document.addEventListener('DOMContentLoaded', (event) => {
+			applyDateRestriction();
+		});
+
+		// Escuchar cambios en localStorage para actualizar la restricción de fecha dinámicamente
+		window.addEventListener('storage', (event) => {
+			if (event.key === 'restrictDate') {
+				applyDateRestriction();
+			}
+		});
+
+		function validateCheckboxes() {
+			// Obtén los checkboxes dentro del <td> con id "idcheckarv"
+			const checkboxes = document.querySelectorAll('#idcheckarv input[type="checkbox"]');
+			const errorMessage = document.getElementById('error-message');
+
+			// Verifica si al menos uno está seleccionado
+			const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+			if (isChecked) {
+				// Oculta el mensaje de error si al menos un checkbox está seleccionado
+				errorMessage.style.display = 'none';
+				return true; // Permite el envío del formulario
+			} else {
+				// Muestra el mensaje de error si ninguno está seleccionado
+				errorMessage.style.display = 'block';
+				return false; // Evita el envío del formulario
+			}
+		}
+
+		// Evento para que el mensaje desaparezca al presionar cualquier checkbox
+		document.querySelectorAll('#idcheckarv input[type="checkbox"]').forEach(checkbox => {
+			checkbox.addEventListener('change', () => {
+				const errorMessage = document.getElementById('error-message');
+				if (checkbox.checked) {
+					errorMessage.style.display = 'none';
+				}
+			});
+		});
+
 
 	</script>
 	@{
