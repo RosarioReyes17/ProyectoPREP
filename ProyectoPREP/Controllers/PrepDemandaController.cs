@@ -22,45 +22,6 @@ namespace ProyectoPREP.Controllers
 		}
 
 		[HttpPost]
-        public JsonResult VIHPositivoSeguimiento(int IdPaciente,DateTime FechaSeguimiento, DateTime FechaPruebaVih)
-        {
-            bool status = true;
-            int idUser = Convert.ToInt32(User.GetUserId());
-            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
-
-
-            var prep = db.TblPrepDemanda.FirstOrDefault(X => X.IdPaciente == IdPaciente);
-			var seguimiento = new TblPrepDemandaSeguimiento();
-
-			prep.EstatusId = 6;
-            prep.Usuario = Convert.ToString(idUser);
-            prep.UsuarioModifico = Convert.ToString(idUser);
-            prep.FechaModificacion = DateTime.Now;
-            seguimiento.IdDeptoDepend = IdDeptoDepend;
-
-
-            seguimiento.IdPaciente = IdPaciente;
-            seguimiento.Usuario = Convert.ToString(idUser);
-            seguimiento.UsuarioModifico = Convert.ToString(idUser);
-            seguimiento.FechaModificacion = DateTime.Now;
-            seguimiento.FechaPruebaVih = FechaPruebaVih;
-            seguimiento.FechaSeguimiento = FechaSeguimiento;
-            seguimiento.IdDeptoDepend = IdDeptoDepend;
-			seguimiento.ResultadoPruebaVih = "Positivo";
-
-
-            db.Entry(prep).State = EntityState.Modified;
-            db.TblPrepDemandaSeguimientos.Add(seguimiento);
-            db.SaveChanges();
-
-
-
-            var result = new { status };
-            return Json(result);
-        }
-
-
-        [HttpPost]
 		public JsonResult VIHPositivo(DateTime FechaPruebaVih, DateTime FechaEntregaVih, string Nombres, string Apellidos, 
 			 string TieneDocumentos, string Documento, DateTime FechaIngresoSai, string Genero,int Nacionalidad,
 			 int MunicipioResidencia,int ProvinciaResidencia)

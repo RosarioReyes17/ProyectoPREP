@@ -47,7 +47,7 @@
                             Fecha de registro de seguimiento:
                             <div class="form-group col-md-8">
 
-                                <input id="FechaSeguimiento" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaSeguimiento" name="FechaSeguimiento" class="form-control col-sm-3 date" type="date">
+                                <input id="FechaSeguimiento" onchange="diferenciaFecha()" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaSeguimiento" name="FechaSeguimiento" class="form-control col-sm-3 date" type="date">
                                 <span asp-validation-for="FechaSeguimiento" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -304,32 +304,51 @@
         </a>
     </div>
 
+    <div class="modal" id="menor" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color:red; margin-left: 90px;">
+                        Advertencia
+                    </h5>
+                    <button type="button" onclick="cerrarModalMenor();" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="creatininaMenor60();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+                    <button type="button" onclick="cerrarModalMenor();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal" id="vih" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" style="color:red; margin-left: 90px;">
-                        ¡ADVERTENCIA!
+                        Advertencia
                     </h5>
                     <button type="button" onclick="cerrarModalVIH();" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p id="cuerpoModalvih" style="text-align:center">La persona registrada no es elegible para PREP porque tiene un resultado VIH+.</p>
+                    <p id="cuerpoModalvih" style="text-align:center">La persona registrada no es legible para PREP porque tiene un resultado VIH+.</p>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnvih" onclick="VIHPositivo();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+                    <button type="button" onclick="VIHPositivo();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
                     <button type="button" onclick="cerrarModalVIH();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
-
-
 
     <div class="modal" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -356,7 +375,28 @@
 
 </form>
 
-    
+<div class="modal" id="menor" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:red; margin-left: 90px;">
+                    Advertencia
+                </h5>
+                <button type="button" onclick="cerrarModalMenor();" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="paginaPrincipal();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+                <button type="button" onclick="cerrarModalMenor();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <style>
@@ -379,72 +419,6 @@
 @section scripts{
 
 	<script type="text/javascript">
-
-
-        const VIHPositivo = () => {
-            $("#MunicipioResidencia").empty();
-            var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
-            var FechaSeguimiento = document.getElementById("FechaSeguimiento").value;
-            var IdPaciente = document.getElementById("IdPaciente").value;
-        
-
-
-            $.post("@Url.Action("VIHPositivoSeguimiento","PrepDemanda")", {
-                IdPaciente: IdPaciente, FechaPruebaVih: FechaPruebaVih, FechaSeguimiento: FechaSeguimiento
-            }, function (modelos) {
-                console.log(modelos);
-              
-              //  $("#Ejecutar").attr("disabled", true);
-               // $('#vih').modal('show');
-                setTimeout(paginaPrincipal, 1000);
-            });
-        }
-
-        const cerrarModalVIH = () => {
-
-            $('#vih').modal('hide');
-        }
-
-        var resultadoVIH = (e) => {
-            var valor = e;
-            var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
-            var FechaSeguimiento = document.getElementById("FechaSeguimiento").value;
-
-
-
-            if (valor == "Negativo") {
-                $("#chkNoSignos1").removeAttr("disabled");
-                $("#chkNoSignos2").removeAttr("disabled");
-
-            }
-
-            if (valor == "Positivo") {
-                //$("#cuerpoModal").empty();
-
-
-                if (FechaPruebaVih == "" || FechaSeguimiento == "") {
-                    document.getElementById("cuerpoModalvih").innerHTML = "";
-                    document.getElementById("cuerpoModalvih").innerHTML = "Faltan campos por llenar";
-                    $("#btnvih").attr("disabled", true);
-                    document.getElementById("rdVIH2").checked = false;
-                    $('#vih').modal('show');
-                    return;
-                }
-                else {
-
-                    $("#btnvih").removeAttr("disabled");
-                    document.getElementById("cuerpoModalvih").innerHTML = "";
-                    document.getElementById("cuerpoModalvih").innerHTML = "La persona registrada no es elegible para PREP porque tiene un resultado VIH+.";
-
-                    $('#vih').modal('show');
-                    //VIHPositivo();
-                    //
-                    document.getElementById("rdVIH2").checked = false;
-                }
-
-            }
-
-        }
 
         var mostrarSifilis = () => {
             var vihS = document.getElementById("vihS").checked;
@@ -614,3 +588,430 @@
     </script>
 }
 
+@* @section scripts{
+    <script type="text/javascript">
+
+        window.onload = function () {
+            var sexo = document.getElementById("sexo").value;
+            var fechaIngreso = new Date(document.getElementById("FechaIngresoSai").value);
+            var minDateIngreso = new Date(fechaIngreso.setDate(fechaIngreso.getDate() - 0)).toISOString().split("T")[0];
+
+            if (sexo == "F") {
+                $(".lactante").removeAttr("disabled");
+                document.getElementById("embarazada").style.display = "";
+                document.getElementById("lactante").style.display = "";
+            }
+
+            document.getElementById("txtFechaSeguimiento").setAttribute('min', minDateIngreso);
+
+        }
+
+        var habilitarInputHBsAg = (e) => {
+            var valor = e;
+            if (valor == "Positivo") {
+
+                $("#cuerpoModal").empty();
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico especializado";
+                $('#myModal').modal('show');
+
+            }
+
+        }
+
+        var habilitarInputHepatitis = (e) => {
+            var valor = e;
+            if (valor == "Positivo") {
+
+                $("#cuerpoModal").empty();
+                document.getElementById("cuerpoModal").innerHTML = "Referir a servicio médico especializado";
+                $('#myModal').modal('show');
+
+            }
+
+        }
+
+        var mostrarCreatinina = () => {
+
+            var vihC = document.getElementById("vihC").checked;
+
+            if (vihC == true) {
+                $(".habilitarCreatinina").removeAttr("disabled");
+                //document.getElementById("creatinina").style.display = "";
+
+            }
+            else {
+                // document.getElementById("creatinina").style.display = "none";
+                $(".habilitarCreatinina").attr("disabled", true);
+
+            }
+
+            var genero = document.getElementById("genero").value;
+            if (genero == "1") {
+                $("#chkHormonal").attr("disabled", true);
+
+            }
+        }
+
+        var mostrarSifilis = () => {
+
+            var vihS = document.getElementById("vihS").checked;
+
+            if (vihS == true) {
+                document.getElementById("vihH").checked = false;
+                mostrarHepatitis();
+
+                // document.getElementById("sifilisBC").style.display = "";
+                // document.getElementById("hepatitisB").style.display = "none";
+                // document.getElementById("hepatitisC").style.display = "none";
+
+                $("#rdsifilis1").removeAttr("disabled");
+                $("#rdsifilis2").removeAttr("disabled");
+                $("#txtfechasifilis1").removeAttr("disabled");
+
+            }
+            else {
+                // document.getElementById("sifilisBC").style.display = "none";
+                // document.getElementById("hepatitisB").style.display = "";
+                // document.getElementById("hepatitisC").style.display = "";
+
+                $("#rdsifilis1").attr("disabled", true);
+                $("#rdsifilis2").attr("disabled", true);
+                $("#txtfechasifilis1").attr("disabled", true);
+
+            }
+        }
+
+        var mostrarHepatitis = () => {
+
+            var vihH = document.getElementById("vihH").checked;
+
+            if (vihH == true) {
+                document.getElementById("vihS").checked = false;
+                mostrarSifilis();
+                // document.getElementById("sifilisBC").style.display = "";
+                $(".habilitarSifilisBC").removeAttr("disabled");
+
+            } else {
+                // document.getElementById("sifilisBC").style.display = "none";
+                $(".habilitarSifilisBC").attr("disabled", true);
+
+            }
+        }
+
+        const cerrarModalMenor = () => {
+
+            document.getElementById("CreatininaValor").value = "";
+            document.getElementById("ResultadoCreatinina").value = "";
+            $('#menor').modal('hide');
+
+
+        }
+        const cerrarModalVIH = () => {
+
+            $('#vih').modal('hide');
+        }
+
+        const cerrarModal = () => {
+
+            $('#myModal').modal('hide');
+        }
+
+
+        const creatininaMenor60 = () => {
+
+            var IdDatos = document.getElementById("IdDatos").value;
+            var FechaRegistroSeguimiento = document.getElementById("txtFechaSeguimiento").value;
+            var SignosVitalesTa = document.getElementById("SignosVitalesTa").value;
+            var SignosVitalesFc = document.getElementById("SignosVitalesFc").value;
+            var SignosVitalesFr = document.getElementById("SignosVitalesFr").value;
+            var Peso = document.getElementById("Peso").value;
+            var TallaPies = document.getElementById("TallaPies").value;
+            var TallaPulgadas = document.getElementById("TallaPulgadas").value;
+
+            $.post("@Url.Action("CreatininaMenor60","Seguimientos")", {
+                IdDatos: IdDatos, FechaRegistroSeguimiento: FechaRegistroSeguimiento, SignosVitalesTa: SignosVitalesTa,
+                SignosVitalesFc: SignosVitalesFc, SignosVitalesFr: SignosVitalesFr, Peso: Peso, TallaPies: TallaPies,
+                TallaPulgadas: TallaPulgadas
+            }, function (modelos) {
+                setTimeout(paginaPrincipal, 1000);
+
+                // paginaPrincipal();
+            })
+        }
+
+        const menorCreatina = () => {
+            var creatina = document.getElementById("ResultadoCreatinina").value;
+
+            if (creatina < 60) {
+                $('#menor').modal('show');
+
+
+            }
+        }
+
+        const calcularCreatinina = () => {
+            var KG = 2.205;
+            var Edad = @ViewBag.Edad;
+            var Peso = @ViewBag.Peso;
+            var sexo = document.getElementById("sexo").value;
+            var genero = document.getElementById("genero").value;
+            var chkHormonal = document.getElementById("chkHormonal").checked;
+            var PesoKG = Peso / KG;
+
+            var valorCreatinina = document.getElementById("CreatininaValor").value;
+
+            if (genero == "3" && chkHormonal == true) {
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+                setTimeout(menorCreatina, 1000);
+
+            }
+            if (genero == "1") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+
+
+            if (genero == "2") {
+                var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+            if (genero == "3" && chkHormonal == false) {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+            }
+
+            if (sexo == "M" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+
+            if (sexo == "F" && genero == "4") {
+
+                var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+                document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+            }
+            // Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
+            // Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
+            setTimeout(menorCreatina, 1000);
+        }
+
+        const calcularCreatininaCheck = () => {
+            var chkHormonal = document.getElementById("chkHormonal").checked;
+            var valorCreatinina = document.getElementById("CreatininaValor").value;
+            if (chkHormonal == false && valorCreatinina == "") {
+                return;
+            }
+            if (chkHormonal == false && valorCreatinina != "") {
+                calcularCreatinina();
+            }
+            if (chkHormonal == true && valorCreatinina == "") {
+                return;
+            }
+            if (chkHormonal == true && valorCreatinina != "") {
+                calcularCreatinina();
+            }
+
+
+
+
+        }
+
+        const VIHPositivo = () => {
+            var IdDatos = document.getElementById("IdDatos").value;
+            var FechaRegistroSeguimiento = document.getElementById("txtFechaSeguimiento").value;
+            var SignosVitalesTa = document.getElementById("SignosVitalesTa").value;
+            var SignosVitalesFc = document.getElementById("SignosVitalesFc").value;
+            var SignosVitalesFr = document.getElementById("SignosVitalesFr").value;
+            var Peso = document.getElementById("Peso").value;
+            var TallaPies = document.getElementById("TallaPies").value;
+            var TallaPulgadas = document.getElementById("TallaPulgadas").value;
+            var FechaPruebaVih = document.getElementById("txtFechaRealizacionPrueba").value;
+            var ResultadoPruebaVih = document.getElementById("rdVIH2").value;
+
+            $.post("@Url.Action("VIHPositivo","Seguimientos")", {
+                IdDatos: IdDatos, FechaRegistroSeguimiento: FechaRegistroSeguimiento, SignosVitalesTa: SignosVitalesTa,
+                SignosVitalesFc: SignosVitalesFc, SignosVitalesFr: SignosVitalesFr, Peso: Peso, TallaPies: TallaPies,
+                TallaPulgadas: TallaPulgadas, FechaPruebaVih: FechaPruebaVih, ResultadoPruebaVih: ResultadoPruebaVih
+            }, function (modelos) {
+                console.log(modelos);
+                setTimeout(paginaPrincipal, 1000);
+                // paginaPrincipal();
+            });
+        }
+
+        var resultadoVIH = (e) => {
+            var valor = e;
+
+            if (valor == "Negativo") {
+                $("#chkNoSignos1").removeAttr("disabled");
+                $("#chkNoSignos2").removeAttr("disabled");
+
+            }
+
+            if (valor == "Positivo") {
+                //$("#cuerpoModal").empty();
+                // document.getElementById("cuerpoModal").innerHTML = "El ciudadano debe ser referido al programa nacional VIH. El formulario se da por terminado y rechaza la solicitud";
+                $('#vih').modal('show');
+                //VIHPositivo();
+                //
+                document.getElementById("rdVIH2").checked = false;
+            }
+
+        }
+
+
+        const paginaPrincipal = () => {
+            var local = window.location.host;
+            console.log(local);
+            var origin = "/DatosGenerales/DatosGeneralesPorElegibilidad";
+            window.location.href = "https://" + local + origin;
+        }
+
+
+        var tieneSintomas = (e) => {
+            var valor = e;
+
+            if (valor == "Si") {
+                $(".chSignos").removeAttr("disabled");
+
+            }
+
+            if (valor == "No") {
+                $(".chSignos").attr("disabled", true);
+
+            }
+        }
+
+        var habilitarInputsindrómico = (e) => {
+            var valor = e;
+            if (valor == "Si") {
+
+                $(".sindromico").removeAttr("disabled");
+
+            }
+            if (valor == "No") {
+                $(".sindromico").attr("disabled", true);
+
+            }
+
+        }
+
+        var ARV = (e) => {
+            var td1 = document.getElementById("td1").checked;
+            var td2 = document.getElementById("td2").checked;
+            var td3 = document.getElementById("td3").checked;
+
+            if (e == "td1") {
+                document.getElementById("td2").checked = false;
+                document.getElementById("td3").checked = false;
+
+            }
+            if (e == "td2") {
+                document.getElementById("td1").checked = false;
+                document.getElementById("td3").checked = false;
+
+            }
+            if (e == "td3") {
+                document.getElementById("td1").checked = false;
+                document.getElementById("td2").checked = false;
+
+            }
+        }
+
+
+        var diferenciaFecha = () => {
+            var fechaPrueba = new Date(document.getElementById("txtFechaSeguimiento").value);
+            var fechaPrueba1 = new Date(document.getElementById("txtFechaSeguimiento").value);
+
+            var minDate = new Date(fechaPrueba.setDate(fechaPrueba.getDate() - 6)).toISOString().split("T")[0];
+            var max = new Date(fechaPrueba1.setDate(fechaPrueba1.getDate() - 0)).toISOString().split("T")[0];
+
+            var minDateSeguimiento = new Date(fechaPrueba1.setDate(fechaPrueba1.getDate() - 0)).toISOString().split("T")[0];
+
+            document.getElementById("FechaProximoSeguimiento").setAttribute('min', minDateSeguimiento);
+
+            document.getElementById("txtFechaRealizacionPrueba").setAttribute('min', minDate);
+            document.getElementById("txtFechaRealizacionPrueba").setAttribute('max', max);
+
+            document.getElementById("txtfechasifilis1").setAttribute('min', minDate);
+            document.getElementById("txtfechasifilis1").setAttribute('max', max);
+
+            document.getElementById("txtfechaHBsAg1").setAttribute('min', minDate);
+            document.getElementById("txtfechaHBsAg1").setAttribute('max', max);
+
+            document.getElementById("txtfechaHepatitis").setAttribute('min', minDate);
+            document.getElementById("txtfechaHepatitis").setAttribute('max', max);
+
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            var formulario = document.getElementById("formularioSeguimiento");
+            if (formulario) {
+                formulario.addEventListener("submit", function (event) {
+                    // Obtener el valor del campo de talla
+                    var tallaInput = document.getElementById("TallaPulgadas");
+                    if (tallaInput) {
+                        var talla = parseFloat(tallaInput.value); // Convertir a número
+                        var tallaMin = parseFloat(tallaInput.min);
+                        var tallaMax = parseFloat(tallaInput.max);
+
+                        // Verificar si el campo de talla está vacío o no es un número
+                        if (isNaN(talla) || tallaInput.value.trim() === "") {
+                            // Mostrar mensaje de error para campo obligatorio
+                            document.getElementById("tallaPulgadaValidation").innerText = "Este campo es obligatorio.";
+                            // Evitar el envío del formulario
+                            event.preventDefault();
+                        } else if (talla < tallaMin || talla > tallaMax) {
+                            // Mostrar mensaje de error para valor fuera del rango
+                            document.getElementById("tallaPulgadaValidation").innerText = "Este número debe estar entre " + tallaMin + " y " + tallaMax + ".";
+                            // Evitar el envío del formulario
+                            event.preventDefault();
+                        } else {
+                            // Limpiar mensaje de error si el valor es válido
+                            document.getElementById("tallaPulgadaValidation").innerText = "";
+                        }
+                    }
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            document.getElementById("formularioSeguimiento").addEventListener("submit", function (event) {
+                // Obtener el valor del campo de peso
+                var pesoInput = document.getElementById("Peso");
+                var peso = parseFloat(pesoInput.value.trim()); // Eliminar espacios en blanco y convertir a número
+                var pesoMin = parseFloat(pesoInput.min);
+                var pesoMax = parseFloat(pesoInput.max);
+
+                // Verificar si el campo de peso está vacío
+                if (isNaN(peso) || pesoInput.value.trim() === "") {
+                    // Mostrar mensaje de error para campo obligatorio
+                    document.getElementById("pesoValidationMsg").innerText = "Este campo es obligatorio.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else if (peso < pesoMin || peso > pesoMax) {
+                    // Mostrar mensaje de error para valor fuera del rango
+                    document.getElementById("pesoValidationMsg").innerText = "El peso debe estar entre " + pesoMin + " y " + pesoMax + " libras.";
+                    // Evitar el envío del formulario
+                    event.preventDefault();
+                } else {
+                    // Limpiar mensaje de error si el valor es válido
+                    document.getElementById("pesoValidationMsg").innerText = "";
+                }
+            });
+        });
+
+
+    </script>
+}
+ *@
