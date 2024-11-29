@@ -1088,7 +1088,9 @@
 
 								<div class="form-group col-md-7">
 									<strong>Fecha Próximo seguimiento:</strong>
-									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" class="form-control center" type="date" onchange="quitarValidacionFecha(this)" autocomplete="error">
+									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" data-val="true"
+									data-val-required="Este campo es obligatorio." onkeydown="return false" class="form-control center" type="date" onchange="quitarValidacionFecha(this)" 
+									autocomplete="error">
 									<span asp-validation-for="FechaProximoSeguimiento" style="color:red;"></span>
 
 								</div>
@@ -1120,7 +1122,7 @@
 	<div id="divBotones" style="display: block;">
 		<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" onclick="validateCheckboxes()"><i class="fa-solid fa-check"></i> Registrar</button>
 		<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
-
+	</div>
 	<br />
 	<br />
 

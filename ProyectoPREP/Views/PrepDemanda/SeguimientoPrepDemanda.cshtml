@@ -44,14 +44,20 @@
                     <tr>
 
                         <td colspan="1">
-                            Fecha de registro de seguimiento:
+                            <label for="FechaSeguimiento">Fecha de registro de seguimiento:</label>
+                            <br />
                             <div class="form-group col-md-8">
-
-                                <input id="FechaSeguimiento" onchange="diferenciaFecha()" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaSeguimiento" name="FechaSeguimiento" class="form-control col-sm-3 date" type="date">
-                                <span asp-validation-for="FechaSeguimiento" style="color:red;margin-left:20px"></span>
-
+                                <input id="FechaSeguimiento"
+                                       onchange="quitarValidacionFecha(this)"
+                                       data-val="true"
+                                       data-val-required="Este campo es obligatorio."
+                                       onkeydown="return false"
+                                       asp-for="FechaSeguimiento"
+                                       name="FechaSeguimiento"
+                                       class="form-control col-sm-3 date"
+                                       type="date">
+                                <span asp-validation-for="FechaSeguimiento" style="color:red; margin-left:20px"></span>
                             </div>
-
                         </td>
 
 
@@ -88,20 +94,46 @@
 
                         <td colspan="2">
                             Medidas Antropometrícas:
-                            <br>
-                            <label style="width:50px">Peso:</label>
-                            <input style="width:200px; margin-left:50px;" id="Peso" asp-for="Peso" name="Peso" type="number" data-val="true" data-val-required="Este campo obligatorio." min="90" max="350" class="form-control2" placeholder="Introduzca su Peso en Lbs.">
-                            <span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:20px;"></span>
 
                             <br>
-                            <label class="label-width">Talla Pies:</label>
-                            <input style="width:200px; margin-left:32px;" id="TallaPies" asp-for="TallaPies" name="TallaPies" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" min="1" placeholder="Introduzca su Talla en Pies.">
-                            <span asp-validation-for="TallaPies" style="color:red; margin-left:20px;"></span>
+                            <label class="label-width">Peso:</label>
+                            <input asp-for="Peso"
+                                   id="txtPeso"
+                                   name="Peso"
+                                   class="form-control"
+                                   type="number"
+                                   min="90"
+                                   max="350"
+                                   placeholder="Introduzca su Peso en Lbs."
+                                   data-val="true"
+                                   data-val-required="Este campo es obligatorio.">
+                            <span id="pesoValidationMsg" lang="es-do" style="color:red; margin-left:30px"></span>
+
+
+                            <br>
+                            <label class="label-width">Talla en Pies:</label>
+                            <input asp-for="TallaPies"
+                                   id="txtTallaPies"
+                                   name="TallaPies"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Introduzca su Talla en Pies."
+                                   data-val="true"
+                                   data-val-required="Este campo es obligatorio.">
+                            <span id="tallaPiesValidation" lang="es-do" style="color:red; margin-left:30px"></span>
+
 
                             <br>
                             <label class="label-width">Talla Pulgadas:</label>
-                            <input style="width:200px; margin-left:-2px" id="TallaPulgadas" asp-for="TallaPulgadas" name="TallaPulgadas" data-val="true" data-val-required="Este campo obligatorio." class="form-control2" type="number" placeholder="Introduzca su Talla en Pulg." min="0" max="12">
-                            <span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:20px;"></span>
+                            <input asp-for="TallaPulgadas"
+                                   id="TallaPulgadas"
+                                   name="TallaPulgadas"
+                                   class="form-control"
+                                   type="number"
+                                   min="0"
+                                   max="12"
+                                   placeholder="Introduzca su Talla en Pulgadas.">
+                            <span id="tallaPulgadaValidation" lang="es-do" style="color:red; margin-left:30px"></span>
 
 
 
@@ -111,12 +143,13 @@
                     </tr>
 
                     <tr id="VIHp">
-
+                         
                         <td colspan="2">
-                            Fecha de realización(Prueba VIH):
+                            <label>Fecha de realización(Prueba VIH):</label>
                             <br>
                             <div class="form-group col-md-4">
-                                <input id="txtFechaRealizacionPrueba" data-val="true" data-val-required="Este campo obligatorio." onkeydown="return false" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control col-3 date" type="date">
+                                <input id="txtFechaRealizacionPrueba" data-val="true" data-val-required="Este campo obligatorio." onchange="quitarValidacionFecha(this)" 
+                                    onkeydown="return false" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control col-3 date" type="date">
                                 <span asp-validation-for="FechaPruebaVih" style="color:red;margin-left:20px"></span>
 
                             </div>
@@ -146,44 +179,31 @@
                     </tr>
                     <tr>
                         <td colspan="1">
-                            <label>
-                                ¿Se consultó acerca de los signos y síntomas de infección aguda por VIH?
-                            </label>
+                            <label>¿Se consultó acerca de los signos y síntomas de infección aguda por VIH?</label>
                             <div class="radio radio-info">
-                                <input id="chkconsultaVIH1" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." onclick="tieneSintomas(this.value);" asp-for="ConsultaSignosInfeccion" name="ConsultaSignosInfeccion" class="styled" type="radio" value="Si">
-                                <label for="chkconsultaVIH1">
-                                    Si
-                                </label>
+                                <input id="chkconsultaVIH1" style="margin-left:0px;" name="ConsultaSignosInfeccion" class="styled" type="radio" value="Si" onclick="handleRadioChange(this.value);">
+                                <label for="chkconsultaVIH1">Si</label>
                             </div>
                             <div class="radio radio-info">
-                                <input id="chkconsultaVIH2" style="margin-left:0px;" data-val="true" data-val-required="Este campo obligatorio." onclick="tieneSintomas(this.value);" asp-for="ConsultaSignosInfeccion" name="ConsultaSignosInfeccion" class="styled" type="radio" value="No">
-                                <label for="chkconsultaVIH2">
-                                    No
-                                </label>
+                                <input id="chkconsultaVIH2" style="margin-left:0px;" name="ConsultaSignosInfeccion" class="styled" type="radio" value="No" onclick="handleRadioChange(this.value);">
+                                <label for="chkconsultaVIH2">No</label>
                             </div>
-                            <span asp-validation-for="ConsultaSignosInfeccion" style="color:red;margin-left:20px"></span>
-
+                            <span id="radioValidationMessage" style="color:red; display:none;">Este campo es obligatorio.</span>
                         </td>
                         <td colspan="1" style="width:310px">
-                            <input type="checkbox" id="check1" name="Linfadenopatias" class="chSignos" disabled="disabled" value="true"> Linfadenopatias cervicales e inguinales
+                            <input type="checkbox" id="check1" name="Linfadenopatias" class="chSignos" disabled value="true"> Linfadenopatias cervicales e inguinales
                             <br>
-                            <input type="checkbox" id="check2" name="FiebreDesconocida" class="chSignos" disabled="disabled" value="true"> Fiebre de origen desconocido
+                            <input type="checkbox" id="check2" name="FiebreDesconocida" class="chSignos" disabled value="true"> Fiebre de origen desconocido
                             <br>
-                            <input type="checkbox" id="check3" name="DiarreaProlongada" class="chSignos" disabled="disabled" value="true"> Diarrea prolongada de origen desconocido
+                            <input type="checkbox" id="check3" name="DiarreaProlongada" class="chSignos" disabled value="true"> Diarrea prolongada de origen desconocido
                             <br>
-                            <input type="checkbox" id="check4" name="ErupcionesPiel" class="chSignos" disabled="disabled" value="true"> Erupciones en la piel
+                            <input type="checkbox" id="check4" name="ErupcionesPiel" class="chSignos" disabled value="true"> Erupciones en la piel
                             <br>
-                            <input type="checkbox" id="check5" name="InfeccionesRecurrentes" class="chSignos" disabled="disabled" value="true"> Infecciones Recurrentes
+                            <input type="checkbox" id="check5" name="InfeccionesRecurrentes" class="chSignos" disabled value="true"> Infecciones Recurrentes
                             <br>
-                            <input type="checkbox" id="check6" name="HepatoEsplenomegalia" class="chSignos" disabled="disabled" value="true"> Hepato/esplenomegalia
+                            <input type="checkbox" id="check6" name="HepatoEsplenomegalia" class="chSignos" disabled value="true"> Hepato/esplenomegalia
                             <br>
-                        </td>
-                        <td colspan="1">
-                         
-                        </td>
-                        <td colspan="1">
-                         
-                              
+                            <span id="checkboxValidationMessage" style="color:red; display:none;">Debes seleccionar al menos una opción de los signos y síntomas.</span>
                         </td>
                     </tr>
 
@@ -203,91 +223,129 @@
 
 
                     <tr id="sifilisBC">
+
                         <td id="sifilis" colspan="1">
-                            <div class="form-group">
+
+
+                            <div class="form-group radio">
                                 Sifilis(VDRL) Realizada:
                                 <input onchange="mostrarSifilis();" type="checkbox" id="vihS" />
-                                <br>
-                                <input id="rdsifilis1" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilis" type="radio" name="Sifilis" value="No Reactivo"> No Reactivo
-                                <input id="rdsifilis2" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilis" type="radio" name="Sifilis" value="Reactivo"> Reactivo
-                                <br>
-                                <span asp-validation-for="Sifilis" style="color:red;margin-left:20px"></span>
+                                <br />
+                                <br />
 
-                                <input style="width:300px" disabled data-val="true" data-val-required="Este campo obligatorio." id="txtfechasifilis1" onkeydown="return false" asp-for="SifilisFecha" name="SifilisFecha" class="Sifilis habilitarSifilis form-control" type="date" placeholder="Fecha">
-                                <span asp-validation-for="SifilisFecha" style="color:red;margin-left:20px"></span>
+                                <div style="margin-left: 24px;">
+                                    <input id="rdsifilis1" asp-for="Sifilis" disabled data-val="true" data-val-required="Este campo es obligatorio." class=" habilitarSifilis styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+                                    <label for="rdsifilis1">No Reactivo</label>
 
+
+                                </div>
+                                <div style="margin-left: 24px;">
+                                    <input id="rdsifilis2" disabled asp-for="Sifilis" class="styled habilitarSifilis segundaParte" type="radio" name="Sifilis" value="Reactivo">
+                                    <label for="rdsifilis2">Reactivo</label>
+                                </div>
+                                <span asp-validation-for="Sifilis" style="color:red;"></span>
+
+                                <br />
+                                <input id="txtfechasifilis1" data-val="true" disabled data-val-required="Este campo es obligatorio."
+                                       name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date habilitarSifilis segundaParte"
+                                       type="date" style="display:initial;width: 155px;" placeholder="Fecha"
+                                       onchange="quitarValidacionFecha(this)" />									<br />
+                                <br />
+                                <span asp-validation-for="SifilisFecha" style="color:red;"></span>
                             </div>
+
+
                         </td>
                         <td id="hepatitisB" colspan="2">
-                            HBsAg Realizada:
-                            <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
-
-                            <br>
-                            <input id="rdHBsAg1" disabled data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisB" type="radio" name="HbsAg" value="Negativo"> Negativo
-                            <input id="rdHBsAg2" disabled data-val="true" data-val-required="Este campo obligatorio." class="styled habilitarSifilisB" type="radio" name="HbsAg" value="Positivo"> Positivo
-                            <br>
-                            <span asp-validation-for="HbsAg" style="color:red;margin-left:20px"></span>
-
-                            <input style="width:300px" disabled data-val="true" data-val-required="Este campo obligatorio." id="txtfechaHBsAg1" onkeydown="return false" asp-for="HbsAgFecha" name="HbsAgFecha" class="habilitarSifilisB form-control" type="date" placeholder="Fecha">
-                            <span asp-validation-for="HbsAgFecha" style="color:red;margin-left:20px"></span>
 
 
+                            <div class="form-group radio ">
+                                HBsAg Realizada:
+                                <input onchange="mostrarHepatitis();" type="checkbox" id="vihH" />
+
+                                <br />
+                                <br />
+
+                                <div style="margin-left: 24px;">
+                                    <input id="rdHBsAg1" asp-for="HbsAg" data-val="true" disabled data-val-required="Este campo es obligatorio." class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Negativo">
+                                    <label for="rdHBsAg1">Negativo</label>
+                                </div>
+
+                                <div style="margin-left: 24px;">
+                                    <input id="rdHBsAg2" asp-for="HbsAg" disabled class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Positivo">
+                                    <label for="rdHBsAg2">Positivo</label>
+                                </div>
+                                <span asp-validation-for="HbsAg" style="color:red;"></span>
+                                <br />
+
+                                <input id="txtfechaHBsAg1" asp-for="HbsAgFecha" disabled data-val="true" data-val-required="Este campo es obligatorio."
+                                       onkeydown="return false" name="HbsAgFecha" class="form-control habilitarSifilisB col-sm-5  date segundaParte"
+                                       type="date" style="display:initial;width: 155px;" placeholder="Fecha" onchange="quitarValidacionFecha(this)" />									<br />
+                                <br />
+                                <span asp-validation-for="HbsAgFecha" style="color:red;"></span>
+                            </div>
                         </td>
 
                         <td style="" id="hepatitisC" colspan="1">
 
+                            <div class="form-group radio">
+                                Hepatitis C Realizada:
+                                <input onchange="mostrarHepatitisC();" type="checkbox" id="vihHC" />
 
-                            Hepatitis C Realizada:
-                            <input onchange="mostrarHepatitisC();" type="checkbox" id="vihHC" />
+                                <br />
+                                <br />
+                                <div style="margin-left:24px">
+                                    <input id="rdHepatitis1" asp-for="HepatitisC" disabled data-val="true" data-val-required="Este campo es obligatorio." class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Negativo">
+                                    <label for="rdHepatitis1">Negativo</label>
+                                </div>
 
-                            <br>
-                            <input id="rdHepatitis1" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilisC" type="radio" name="HepatitisC" value="Negativo"> Negativo
-                            <input id="rdHepatitis2" data-val="true" disabled data-val-required="Este campo obligatorio." class="styled habilitarSifilisC" type="radio" name="HepatitisC" value="Positivo"> Positivo
-                            <br>
-                            <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
+                                <div style="margin-left:24px">
+                                    <input id="rdHepatitis2" asp-for="HepatitisC" disabled class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Positivo">
+                                    <label for="rdHepatitis2">Positivo</label>
+                                </div>
+                                <span asp-validation-for="HepatitisC" style="color:red;"></span>
 
-                            <input style="width:300px" data-val="true" disabled data-val-required="Este campo obligatorio." onkeydown="return false" id="txtfechaHepatitis" asp-for="HepatitisCFecha" name="HepatitisCFecha" class="habilitarSifilisC form-control" type="date" placeholder="Fecha">
-                            <span asp-validation-for="HepatitisC" style="color:red;margin-left:20px"></span>
-
+                                <br />
+                                <input id="txtfechaHepatitis" onkeydown="return false" disabled asp-for="HepatitisCFecha" data-val="true"
+                                       data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control habilitarSifilisC col-sm-8 date segundaParte"
+                                       type="date" style="display:initial;width: 155px;" placeholder="Fecha"
+                                       onchange="quitarValidacionFecha(this)" />									<br />
+                                <br />
+                                <span asp-validation-for="HepatitisCFecha" style="color:red;"></span>
+                            </div>
                         </td>
 
                     </tr>
-                  
+                                                 
                 
                     <tr>
-                        <td colspan="1">
-                            Repetición de la PrEP prescrita:
-                            <br>
-                            ARV Prescritos
-                            <br>
-                            <input type="checkbox" onclick="ARV(this.id);" id="td1" name="PrepArvTdfFtc" value="true">
-                            TDF/FTC
-                            <br>
-                            <input type="checkbox" onclick="ARV(this.id);" id="td2" name="PrepArvTdf3tc" value="true">
-                            TDF/3TC
-                            <br>
-                            <input type="checkbox" onclick="ARV(this.id);" id="td3" name="PrepArvTafFtc" value="true">
-                            TAF/FTC
-                            <br />
-                            <span style="color:red">@TempData["ARV"]</span>
 
+
+                        <td id="idcheckarv">
+                            <strong>PrEP(ARV) Prescrita:</strong>
+                            <br>
+                            <input id="td1" onclick="validateCheckboxes();" name="PrepArvTdfFtc" value="true" class="styled" type="checkbox"> TDF/FTC <br>
+                            <input id="td2" onclick="validateCheckboxes();" name="PrepArvTdf3tc" class="styled" value="true" type="checkbox"> TDF/3TC <br>
+                            <input id="td3" onclick="validateCheckboxes();" name="PrepArvTafFtc" class="styled" value="true" type="checkbox"> TAF/FTC <br>
+                            <span id="error-message" style="color:red; display:none;">
+                                Debe seleccionar <br> al menos una opción.
+                            </span>
                         </td>
-                        <td colspan="2">
-                            Meses de prescripción
 
-                            <select id="Meses_prescripcion" data-val="true" data-val-required="Este campo obligatorio." style="width:300px;" asp-for="MesesPrescripcion" name="MesesPrescripcion" class="form-control">
+                        <td>
+
+                            <strong>Meses de prescripción</strong>
+
+                            <select id="Meses_prescripcion" required name="MesesPrescripcion" asp-for="MesesPrescripcion" data-val="true" data-val-required="Este campo es obligatorio." class="form-control" autocomplete="error">
                                 <option value="">--Seleccione--</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
-                            <span asp-validation-for="MesesPrescripcion" style="color:red;margin-left:20px"></span>
-
+                            <span asp-validation-for="MesesPrescripcion" style="color:red;"></span>
 
                         </td>
-                        <td colspan="1">
                        
-                        </td>
                     </tr>
                  
                 </tbody>
@@ -298,7 +356,7 @@
     <br />
 
     <div style="margin-block-end:40px">
-        <button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary"><i class="glyphicon glyphicon-saved"></i>Registrar Seguimiento</button>
+        <button type="submit" name="Ejecutar" onclick="validateCheckboxes()" id="Ejecutar" class="btn btn-primary"><i class="glyphicon glyphicon-saved"></i>Registrar Seguimiento</button>
         <a href="javascript:history.back();" class="btn btn-danger" style="margin-left: 5px;">
             <i class="glyphicon glyphicon-remove"></i> Cancelar
         </a>
@@ -584,6 +642,232 @@
             var origin = "/PrepDemanda/HomePrepDemanda";
             window.location.href = "https://" + local + origin;
         }
+
+        function validateCheckboxes() {
+            // Obtén los checkboxes dentro del <td> con id "idcheckarv"
+            const checkboxes = document.querySelectorAll('#idcheckarv input[type="checkbox"]');
+            const errorMessage = document.getElementById('error-message');
+
+            // Verifica si al menos uno está seleccionado
+            const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+            if (isChecked) {
+                // Oculta el mensaje de error si al menos un checkbox está seleccionado
+                errorMessage.style.display = 'none';
+                return true; // Permite el envío del formulario
+            } else {
+                // Muestra el mensaje de error si ninguno está seleccionado
+                errorMessage.style.display = 'block';
+                return false; // Evita el envío del formulario
+            }
+        }
+
+        // Evento para que el mensaje desaparezca al presionar cualquier checkbox
+        document.querySelectorAll('#idcheckarv input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const errorMessage = document.getElementById('error-message');
+                if (checkbox.checked) {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+
+        function quitarValidacionFecha(element) {
+			// Remover mensaje de validación y clase de error
+			$(element).removeClass("input-validation-error");
+			$(element).closest('.form-group').find("span.field-validation-error")
+				.addClass("field-validation-valid")
+				.removeClass("field-validation-error")
+				.text('');
+		}
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            const formulario = document.getElementById("formularioSeguimiento");
+
+            if (formulario) {
+                formulario.addEventListener("submit", function (event) {
+                    // Validar el campo de talla
+                    if (!validarTalla()) {
+                        event.preventDefault(); // Evitar el envío del formulario
+                    }
+                });
+            }
+
+            function validarTalla() {
+                const tallaInput = document.getElementById("TallaPulgadas");
+                const errorSpan = document.getElementById("tallaPulgadaValidation");
+
+                if (!tallaInput || !errorSpan) return false; // Prevenir errores si falta algún elemento
+
+                const talla = parseFloat(tallaInput.value); // Convertir a número
+                const tallaMin = parseFloat(tallaInput.min);
+                const tallaMax = parseFloat(tallaInput.max);
+
+                // Validar si el campo está vacío o no es un número
+                if (isNaN(talla)) {
+                    errorSpan.textContent = "Este campo es obligatorio.";
+                    return false;
+                }
+
+                // Validar si el valor está fuera del rango
+                if (talla < tallaMin || talla > tallaMax) {
+                    errorSpan.textContent = `Este número debe estar entre ${tallaMin} y ${tallaMax}.`;
+                    return false;
+                }
+
+                // Limpiar el mensaje de error si todo está bien
+                errorSpan.textContent = "";
+                return true;
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Agregar un controlador de eventos al formulario
+            const formulario = document.getElementById("formularioSeguimiento");
+
+            if (formulario) {
+                formulario.addEventListener("submit", function (event) {
+                    // Validar el campo de peso
+                    if (!validarPeso()) {
+                        event.preventDefault(); // Evitar el envío del formulario
+                    }
+                });
+            }
+
+            function validarPeso() {
+                const pesoInput = document.getElementById("txtPeso");
+                const errorSpan = document.getElementById("pesoValidationMsg");
+
+                if (!pesoInput || !errorSpan) return false; // Prevenir errores si falta algún elemento
+
+                const peso = parseFloat(pesoInput.value); // Convertir a número
+                const pesoMin = parseFloat(pesoInput.min);
+                const pesoMax = parseFloat(pesoInput.max);
+
+                // Validar si el campo está vacío o no es un número
+                if (isNaN(peso)) {
+                    errorSpan.textContent = "Este campo es obligatorio.";
+                    return false;
+                }
+
+                // Validar si el valor está fuera del rango
+                if (peso < pesoMin || peso > pesoMax) {
+                    errorSpan.textContent = `El peso debe estar entre ${pesoMin} y ${pesoMax} libras.`;
+                    return false;
+                }
+
+                // Limpiar el mensaje de error si todo está bien
+                errorSpan.textContent = "";
+                return true;
+            }
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const tallaInput = document.getElementById("txtTallaPies");
+            const errorSpan = document.getElementById("tallaPiesValidation");
+            const formulario = document.getElementById("formularioSeguimiento");
+
+            if (tallaInput && formulario) {
+                // Validación en tiempo real para permitir solo números
+                tallaInput.addEventListener("input", function () {
+                    const valor = tallaInput.value;
+
+                    // Permitir solo números
+                    if (!/^\d*$/.test(valor)) {
+                        tallaInput.value = valor.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+                    }
+
+                    // Limpiar el mensaje de error en tiempo real si se corrige
+                    if (tallaInput.value.trim() !== "") {
+                        errorSpan.textContent = "";
+                    }
+                });
+
+                // Validación al enviar el formulario
+                formulario.addEventListener("submit", function (event) {
+                    const valor = tallaInput.value.trim();
+
+                    if (valor === "") {
+                        // Mostrar error si está vacío
+                        errorSpan.textContent = "Este campo es obligatorio.";
+                        event.preventDefault(); // Evitar envío del formulario
+                    }
+                });
+            }
+        });
+
+
+
+        function handleRadioChange(value) {
+            const checkboxes = document.querySelectorAll('.chSignos');
+            const checkboxValidationMessage = document.getElementById('checkboxValidationMessage');
+            const radioValidationMessage = document.getElementById('radioValidationMessage');
+
+            // Ocultar mensaje de validación del radio
+            radioValidationMessage.style.display = "none";
+
+            if (value === "Si") {
+                checkboxes.forEach(cb => {
+                    cb.disabled = false; // Habilitar los checkboxes
+                    // Escuchar cambios en tiempo real
+                    cb.addEventListener('change', handleCheckboxValidation);
+                });
+                // Mostrar mensaje si no hay ninguno seleccionado
+                handleCheckboxValidation();
+            } else {
+                // Deshabilitar y desmarcar checkboxes, ocultar mensaje de validación
+                checkboxes.forEach(cb => {
+                    cb.disabled = true;
+                    cb.checked = false;
+                    cb.removeEventListener('change', handleCheckboxValidation);
+                });
+                checkboxValidationMessage.style.display = "none";
+            }
+        }
+
+        function handleCheckboxValidation() {
+            const checkboxes = document.querySelectorAll('.chSignos');
+            const checkboxValidationMessage = document.getElementById('checkboxValidationMessage');
+            const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            // Mostrar u ocultar mensaje según el estado de los checkboxes
+            checkboxValidationMessage.style.display = anyChecked ? "none" : "inline";
+        }
+
+        // Validar radios al enviar el formulario
+        function validateForm(event) {
+            const radios = document.querySelectorAll('input[name="ConsultaSignosInfeccion"]');
+            const checkboxes = document.querySelectorAll('.chSignos');
+            const radioValidationMessage = document.getElementById('radioValidationMessage');
+            const checkboxValidationMessage = document.getElementById('checkboxValidationMessage');
+
+            const isRadioSelected = Array.from(radios).some(radio => radio.checked);
+            const anyCheckboxChecked = Array.from(checkboxes).some(cb => cb.checked);
+
+            // Validar radios
+            if (!isRadioSelected) {
+                radioValidationMessage.style.display = "inline";
+                event.preventDefault();
+            } else {
+                radioValidationMessage.style.display = "none";
+            }
+
+            // Validar checkboxes solo si "Si" está seleccionado
+            const selectedRadio = document.querySelector('input[name="ConsultaSignosInfeccion"]:checked');
+            if (selectedRadio && selectedRadio.value === "Si" && !anyCheckboxChecked) {
+                checkboxValidationMessage.style.display = "inline";
+                event.preventDefault();
+            } else {
+                checkboxValidationMessage.style.display = "none";
+            }
+        }
+
+        // Asignar la validación al evento submit del formulario
+        document.querySelector('form').addEventListener('submit', validateForm);
 
     </script>
 }
