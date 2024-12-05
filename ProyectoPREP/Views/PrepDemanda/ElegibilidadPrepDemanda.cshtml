@@ -808,7 +808,7 @@
 									Fecha de realización VIH (*):
 									<br>
 									<div class="form-group col-md-10">
-										<input id="txtFechaRealizacionPrueba" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control habilitarVIH pruebaVIH" type="date">
+										<input id="txtFechaRealizacionPrueba" max="@DateTime.Now.ToString("yyyy-MM-dd")" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control habilitarVIH pruebaVIH" type="date">
 										<span asp-validation-for="FechaPruebaVih" style="color:red;"></span>
 									</div>
 								</td>
@@ -820,7 +820,7 @@
 									<br>
 									<div class="form-group col-md-10">
 
-										<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control habilitarVIH pruebaVIH " type="date" />
+										<input id="FechaEntregaVih" max="@DateTime.Now.ToString("yyyy-MM-dd")" onkeydown="return false" asp-for="FechaEntregaVih" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control habilitarVIH pruebaVIH " type="date" />
 										<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
 									</div>
 								</td>
@@ -948,7 +948,7 @@
 										<span asp-validation-for="Sifilis" style="color:red;"></span>
 
 										<br />
-										<input id="txtfechasifilis1" data-val="true" disabled data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date habilitarSifilis segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+										<input id="txtfechasifilis1" data-val="true" max="@DateTime.Now.ToString("yyyy-MM-dd")" disabled data-val-required="Este campo es obligatorio." name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date habilitarSifilis segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
 										<br />
 										<br />
 										<span asp-validation-for="SifilisFecha" style="color:red;"></span>
@@ -978,7 +978,7 @@
 										<span asp-validation-for="HbsAg" style="color:red;"></span>
 										<br />
 
-										<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" disabled data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control habilitarSifilisB col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
+										<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" max="@DateTime.Now.ToString("yyyy-MM-dd")" disabled data-val="true" data-val-required="Este campo es obligatorio." onkeydown="return false" name="HbsAgFecha" class="form-control habilitarSifilisB col-sm-5  date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha">
 										<br />
 										<br />
 										<span asp-validation-for="HbsAgFecha" style="color:red;"></span>
@@ -1005,7 +1005,7 @@
 										<span asp-validation-for="HepatitisC" style="color:red;"></span>
 
 										<br />
-										<input id="txtfechaHepatitis" onkeydown="return false" disabled asp-for="HepatitisCFecha" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control habilitarSifilisC col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
+										<input id="txtfechaHepatitis" onkeydown="return false" max="@DateTime.Now.ToString("yyyy-MM-dd")" disabled asp-for="HepatitisCFecha" data-val="true" data-val-required="Este campo es obligatorio." name="HepatitisCFecha" class="form-control habilitarSifilisC col-sm-8 date segundaParte" type="date" style="display:initial;width: 155px;" placeholder="Fecha" oninvalid="GetMensajeError('El campo fecha hepatitis es requerido.')">
 										<br />
 										<br />
 										<span asp-validation-for="HepatitisCFecha" style="color:red;"></span>
@@ -1088,7 +1088,7 @@
 
 									<div class="form-group col-md-7">
 										<strong>Fecha Próximo seguimiento:</strong>
-										<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" data-val="true" data-val-required="Este campo es obligatorio." autocomplete="error">
+										<input asp-for="FechaProximoSeguimiento" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" onkeydown="return false" class="form-control center" type="date" data-val="true" data-val-required="Este campo es obligatorio." autocomplete="error">
 										<span asp-validation-for="FechaProximoSeguimiento" style="color:red;"></span>
 
 									</div>

@@ -802,7 +802,7 @@
 								Fecha de realización VIH (*):
 								<br>
 								<div class="form-group col-md-10">
-									<input id="txtFechaRealizacionPrueba" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control habilitarVIH pruebaVIH" type="date">
+									<input id="txtFechaRealizacionPrueba" max="@DateTime.Now.ToString("yyyy-MM-dd")" onkeydown="return false" data-val="true" disabled data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" asp-for="FechaPruebaVih" name="FechaPruebaVih" class="form-control habilitarVIH pruebaVIH" type="date">
 									<span asp-validation-for="FechaPruebaVih" style="color:red;"></span>
 								</div>
 							</td>
@@ -814,7 +814,7 @@
 								<br>
 								<div class="form-group col-md-10">
 
-									<input id="FechaEntregaVih" onkeydown="return false" asp-for="FechaEntregaVih" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control habilitarVIH pruebaVIH " type="date" />
+									<input id="FechaEntregaVih" max="@DateTime.Now.ToString("yyyy-MM-dd")" onkeydown="return false" asp-for="FechaEntregaVih" disabled data-val="true" data-val-required="Este campo es obligatorio." onchange="quitarValidacionFecha(this)" name="FechaEntregaVih" class="form-control habilitarVIH pruebaVIH " type="date" />
 									<span asp-validation-for="FechaEntregaVih" style="color:red"></span>
 								</div>
 							</td>
@@ -906,7 +906,7 @@
 									</label>
 								</div>
 								<div class="radio radio-info">
-									<input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="No" readonly>
+									<input id="chkaclaramiento2" required asp-for="AclaramientoCreatinina" max="@DateTime.Now.ToString("yyyy-MM-dd")" name="AclaramientoCreatinina" class="styled segundaParte" type="radio" value="No" readonly>
 									<label for="chkaclaramiento2">
 										No
 									</label>
@@ -942,7 +942,7 @@
 
 									<br />
 									<input id="txtfechasifilis1" data-val="true" disabled data-val-required="Este campo es obligatorio."
-										   name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" class="form-control col-sm-2 date habilitarSifilis segundaParte"
+										   name="SifilisFecha" asp-for="Sifilis" onkeydown="return false" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control col-sm-2 date habilitarSifilis segundaParte"
 										   type="date" style="display:initial;width: 155px;" placeholder="Fecha"
 										   onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
@@ -974,7 +974,7 @@
 									<br />
 
 									<input id="txtfechaHBsAg1" asp-for="HbsAgFecha" disabled data-val="true" data-val-required="Este campo es obligatorio."
-										   onkeydown="return false" name="HbsAgFecha" class="form-control habilitarSifilisB col-sm-5  date segundaParte"
+										   onkeydown="return false" name="HbsAgFecha" max="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control habilitarSifilisB col-sm-5  date segundaParte"
 										   type="date" style="display:initial;width: 155px;" placeholder="Fecha" onchange="quitarValidacionFecha(this)" />									<br />
 									<br />
 									<span asp-validation-for="HbsAgFecha" style="color:red;"></span>
@@ -1089,7 +1089,7 @@
 								<div class="form-group col-md-7">
 									<strong>Fecha Próximo seguimiento:</strong>
 									<input asp-for="FechaProximoSeguimiento" id="FechaProximoSeguimiento" name="FechaProximoSeguimiento" data-val="true"
-									data-val-required="Este campo es obligatorio." onkeydown="return false" class="form-control center" type="date" onchange="quitarValidacionFecha(this)" 
+									data-val-required="Este campo es obligatorio." min="@DateTime.Now.ToString("yyyy-MM-dd")" onkeydown="return false" class="form-control center" type="date" onchange="quitarValidacionFecha(this)" 
 									autocomplete="error">
 									<span asp-validation-for="FechaProximoSeguimiento" style="color:red;"></span>
 
