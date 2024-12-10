@@ -169,6 +169,98 @@ namespace ProyectoPREP.Controllers
             }
 			
 		}
+		public ActionResult ElegibilidadPasaporte()
+		{
+            //TempData["Mensaje"] = "Operación realizada exitosamente";
+
+            ViewBag.Municipio = db.VwMunicipios.ToList();
+
+			return View();
+		}
+
+
+		[HttpPost]
+		public ActionResult ElegibilidadPasaporte(TblPrepDemanda datos)
+		{
+			try
+            {
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+				datos.IdDeptoDepend = IdDeptoDepend;
+				datos.Usuario = Convert.ToString(idUser);
+				datos.EstatusId = 1;
+				datos.TipoDocumento = "P";
+
+				DateTime fechaNacimiento1 = (DateTime)datos.FechaNacimiento;
+				var edad = CalcularEdadPrep(fechaNacimiento1);
+
+				datos.Edad = edad;
+
+				//REVISAR - LE QUITÉ EL COMENTARIO PARA VER SI LOS DATOS ESTABAN LLEGANDO
+				db.TblPrepDemanda.Add(datos);
+                db.SaveChanges();
+
+				var Upaciente = datos.IdPaciente;
+				TempData["idPaciente"] = Upaciente;
+				//return View();
+				return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+
+			}
+
+			catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+			
+		}
+		public ActionResult ElegibilidadNSS()
+		{
+            //TempData["Mensaje"] = "Operación realizada exitosamente";
+
+            ViewBag.Municipio = db.VwMunicipios.ToList();
+
+			return View();
+		}
+
+
+		[HttpPost]
+		public ActionResult ElegibilidadNSS(TblPrepDemanda datos)
+		{
+			try
+            {
+                int idUser = Convert.ToInt32(User.GetUserId());
+                int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
+				datos.IdDeptoDepend = IdDeptoDepend;
+				datos.Usuario = Convert.ToString(idUser);
+				datos.EstatusId = 1;
+				datos.TipoDocumento = "NSS";
+
+				DateTime fechaNacimiento1 = (DateTime)datos.FechaNacimiento;
+				var edad = CalcularEdadPrep(fechaNacimiento1);
+
+				datos.Edad = edad;
+
+				//REVISAR - LE QUITÉ EL COMENTARIO PARA VER SI LOS DATOS ESTABAN LLEGANDO
+				db.TblPrepDemanda.Add(datos);
+                db.SaveChanges();
+
+				var Upaciente = datos.IdPaciente;
+				TempData["idPaciente"] = Upaciente;
+				//return View();
+				return RedirectToAction("HomePrepDemanda", "PrepDemanda");
+
+			}
+
+			catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+			
+		}
 
 		public ActionResult ElegibilidadSinDocumento()
 		{
@@ -176,25 +268,6 @@ namespace ProyectoPREP.Controllers
 			return View();
 		}
 		
-		public ActionResult DemandaVer(int id)
-		{
-			var lista = new List<VwMunicipio>();
-			var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
-			var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
-
-			var model1 = db.TblPrepDemanda.Where(x => x.IdPaciente == id).FirstOrDefault();
-
-			lista = (from b in db.VwMunicipios
-					 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model1.ProvinciaResidencia)
-					 select b).ToList();
-
-			ViewBag.Municipios = lista;
-			ViewBag.IdMunicipios = model1.MunicipioResidencia;
-			ViewBag.IdProvincia = model1.ProvinciaResidencia;
-			ViewBag.tipoDocumento = model1.TipoDocumento;
-			ViewBag.documento = model1.Documento;
-			return View(datos);
-		}
 
 		[HttpPost]
 		public ActionResult ElegibilidadSinDocumento(TblPrepDemanda datos)
@@ -231,6 +304,26 @@ namespace ProyectoPREP.Controllers
 				throw new Exception(ex.Message);
 			}
 
+		}
+		
+		public ActionResult DemandaVer(int id)
+		{
+			var lista = new List<VwMunicipio>();
+			var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
+			var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
+
+			var model1 = db.TblPrepDemanda.Where(x => x.IdPaciente == id).FirstOrDefault();
+
+			lista = (from b in db.VwMunicipios
+					 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model1.ProvinciaResidencia)
+					 select b).ToList();
+
+			ViewBag.Municipios = lista;
+			ViewBag.IdMunicipios = model1.MunicipioResidencia;
+			ViewBag.IdProvincia = model1.ProvinciaResidencia;
+			ViewBag.tipoDocumento = model1.TipoDocumento;
+			ViewBag.documento = model1.Documento;
+			return View(datos);
 		}
 
 		public ActionResult SeguimientoPrepDemanda(int id)
@@ -372,14 +465,14 @@ namespace ProyectoPREP.Controllers
 			var msj = "";
 			Padron_Imp InfoPaciente = null;
 			int Resultado = 0;
-			var SolicitudPrep = db.TblPrepDemanda.Where(x => x.Documento == Prefix).FirstOrDefault();
+			var SolicitudPrep = db.DatosGenerales.Where(x => x.Documento == Prefix).FirstOrDefault();
 			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
 
 
 			if (SolicitudPrep != null)
 			{
 
-				msj = "El Ciudadano posee actualmente una solicitud de PrEP con el ID: " + SolicitudPrep.IdPaciente + " " + SolicitudPrep.Nombres +
+				msj = "El Ciudadano posee actualmente una solicitud de PrEP con el ID: " + SolicitudPrep.Id + " " + SolicitudPrep.Nombres +
 					" " + SolicitudPrep.Apellidos + " " + centros.FirstOrDefault().NombreCentro;
 
 				result = new
@@ -397,18 +490,6 @@ namespace ProyectoPREP.Controllers
 				//Validamos el porque vamos a buscar
 
 				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
-
-				if (InfoPaciente.sexo == "F")
-				{
-					msj = "Este paciente no suele ser registrado porque es de sexo Femenino";
-
-					result = new
-					{
-						status,
-						msj
-					};
-					return Json(result);
-				}
 
 				if (InfoPaciente != null && InfoPaciente.valido == true)
 				{
@@ -463,10 +544,86 @@ namespace ProyectoPREP.Controllers
 					return Json(result);
 
 				}
-				
-				if (Resultado == 3)
+			}
+
+			status = true;
+			string fechaNacimiento = InfoPaciente.fecha_nacimiento.Date.ToString("yyyy-MM-dd");
+			DateTime fechaNacimiento1 = InfoPaciente.fecha_nacimiento.Date;
+			var edad = CalcularEdadPrep(fechaNacimiento1);
+			result = new { status, InfoPaciente, fechaNacimiento, edad };
+			return Json(result);
+		}
+
+
+		[HttpPost]
+		public ActionResult ValidarNSS(string Seleccion, string Prefix)
+		{
+
+			var result = new object { };
+			bool status = false;
+			var msj = "";
+			Padron_Imp InfoPaciente = null;
+			int Resultado = 0;
+			var SolicitudPrep = db.DatosGenerales.Where(x => x.Documento == Prefix).FirstOrDefault();
+			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
+
+
+			if (SolicitudPrep != null)
+			{
+
+				msj = "El Ciudadano posee actualmente una solicitud de PrEP con el ID: " + SolicitudPrep.Id + " " + SolicitudPrep.Nombres +
+					" " + SolicitudPrep.Apellidos + " " + centros.FirstOrDefault().NombreCentro;
+
+				result = new
 				{
-					msj = "El Ciudadano no califica, se encuentra registrado en Prep con VIH Positivo.";
+					status,
+					msj
+				};
+				return Json(result);
+
+
+			}
+			else
+			{
+
+				//Validamos el porque vamos a buscar
+
+				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
+
+				if (InfoPaciente != null && InfoPaciente.valido == true)
+				{
+					try
+					{
+						Resultado = ValidarExisteEnFappsSIRENPPrep(Prefix);
+					}
+					catch (Exception ex)
+					{
+						msj = "El NSS consultado no ha retornado ningún valor";
+						result = new
+						{
+							status,
+							msj
+						};
+						return Json(result);
+
+					}
+				}
+
+				if (Resultado == 1)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en FAPPS.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+
+				if (Resultado == 2)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en SIRENP con VIH Positivo.";
 					result = new
 					{
 						status,
@@ -478,10 +635,92 @@ namespace ProyectoPREP.Controllers
 			}
 
 			status = true;
-			string fechaNacimiento = InfoPaciente.fecha_nacimiento.Date.ToString("yyyy-MM-dd");
-			DateTime fechaNacimiento1 = InfoPaciente.fecha_nacimiento.Date;
-			var edad = CalcularEdadPrep(fechaNacimiento1);
-			result = new { status, InfoPaciente, fechaNacimiento, edad };
+			result = new { status, InfoPaciente };
+			return Json(result);
+		}
+
+
+		[HttpPost]
+		public ActionResult ValidarPasaporte(string Seleccion, string Prefix)
+		{
+
+			var result = new object { };
+			bool status = false;
+			var msj = "";
+			Padron_Imp InfoPaciente = null;
+			int Resultado = 0;
+			var SolicitudPrep = db.DatosGenerales.Where(x => x.Documento == Prefix).FirstOrDefault();
+			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
+
+
+			if (SolicitudPrep != null)
+			{
+
+				msj = "El Ciudadano posee actualmente una solicitud de PrEP con el ID: " + SolicitudPrep.Id + " " + SolicitudPrep.Nombres +
+					" " + SolicitudPrep.Apellidos + " " + centros.FirstOrDefault().NombreCentro;
+
+				result = new
+				{
+					status,
+					msj
+				};
+				return Json(result);
+
+
+			}
+			else
+			{
+
+				//Validamos el porque vamos a buscar
+
+				InfoPaciente = Query_Padron_Imp.Query_Imp(Prefix);
+
+				if (InfoPaciente != null && InfoPaciente.valido == true)
+				{
+					try
+					{
+						Resultado = ValidarExisteEnFappsSIRENPPrep(Prefix);
+					}
+					catch (Exception ex)
+					{
+						msj = "El pasaporte consultado no ha retornado ningún valor";
+						result = new
+						{
+							status,
+							msj
+						};
+						return Json(result);
+
+					}
+				}
+
+				if (Resultado == 1)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en FAPPS.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+
+				if (Resultado == 2)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en SIRENP con VIH Positivo.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+			}
+
+			status = true;
+			result = new { status, InfoPaciente };
 			return Json(result);
 		}
 

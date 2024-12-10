@@ -16,22 +16,22 @@
 				<td>
 					<strong>Tipo de Identificación(*):</strong>
 					<select id="TipoIdentificacion" name="TipoIdentificacion" onChange=nav(this.value) class="form-control" required oninvalid="GetMensajeError('Debe seleccionar un tipo de identificación.')" oninput="" autocomplete="error">
+						<option value="/PrepDemanda/ElegibilidadPasaporte">Pasaporte</option>
 						<option value="/PrepDemanda/ElegibilidadPrepDemanda">Cédula</option>
 						<option value="/PrepDemanda/ElegibilidadSinDocumento">Sin Documentación</option>
-						<option value="/PrepDemanda/ElegibilidadPasaporte">Pasaporte</option>
 						<option value="/PrepDemanda/ElegibilidadNSS">NSS</option>
-						
+
 
 					</select>
 				</td>
 				<td>
 					<strong>Identificación:</strong>
-					<input type="text" oninput="this.value = this.value.replace(/[^0-9,-]/,'')" id="Identificacion" minlength="13" maxlength="13" class="form-control ui-autocomplete-input" onkeypress="ValidarCedulaPasaporte(this.value)" required>
+					<input type="text" id="Identificacion" minlength="13" maxlength="13" class="form-control ui-autocomplete-input" required>
 
 				</td>
 				<td colspan="2">
 					<br>
-					<input type="button" id="btnIdentificar" onclick="buscarEnPadron()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
+					<input type="button" id="btnIdentificar" onclick="validarPasaporte()" name="btnIdentificar" value="Validar" class="btn" style="margin-bottom: 0px; background-color: #5cb85c; color: white;" autocomplete="error" require="true" />
 					<button onclick="window.location.href = '/PrepDemanda/HomePrepDemanda';" class="btn btn-danger" style="margin-left: 5px;">
 						<i class="fa-solid fa-backward"></i> Volver atrás
 					</button>
@@ -49,7 +49,7 @@
 </div>
 
 <div id="divDatosGenerales" style="display:none">
-	<form id="formulario" action="/PrepDemanda/ElegibilidadPrepDemanda" method="post">
+	<form id="formulario" action="/PrepDemanda/ElegibilidadPasaporte" method="post">
 
 		<input type="hidden" id="edad" />
 
@@ -80,12 +80,12 @@
 						<tr>
 							<td>
 								1. Nombres (*):
-								<input asp-for="Nombres" readonly id="txtNombre" name="Nombres" placeholder="Introduzca sus nombres" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
+								<input asp-for="Nombres" id="txtNombre" name="Nombres" placeholder="Introduzca sus nombres" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="Nombres" style="color:red;margin-left:30px"></span>
 							</td>
 							<td>
 								2. Apellidos (*):
-								<input asp-for="Apellidos" readonly id="txtApellido" name="Apellidos" placeholder="Introduzca sus apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
+								<input asp-for="Apellidos" id="txtApellido" name="Apellidos" placeholder="Introduzca sus apellidos" class="form-control" data-val="true" data-val-required="Este campo es obligatorio.">
 								<span asp-validation-for="Apellidos" style="color:red;margin-left:30px"></span>
 							</td>
 
@@ -107,7 +107,7 @@
 
 							<td>
 								5. Fecha de Nacimiento (*):<br>
-								<input readonly onkeydown="return false" asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
+								<input onkeydown="return false" asp-for="FechaNacimiento" id="txtFechaNacimiento" name="FechaNacimiento" class="form-control col-1" type="date" data-val="true" data-val-required="Este campo es obligatorio." max="@DateTime.Now.ToString("yyyy-MM-dd")">
 								<span asp-validation-for="FechaNacimiento" style="color:red; margin-left:20px"></span>
 							</td>
 						</tr>
@@ -497,10 +497,10 @@
 						</tr>
 						<tr>
 							@*REVISAR LA EDAD*@
-						@* 	<td>
-								12. Edad:
-								<input asp-for="Edad" id="txtEdad" name="Edad" class="form-control" type="number" placeholder="Introduzca su edad." autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
-								<span asp-validation-for="Edad" style="color:red;margin-left:30px"></span>
+							@* 	<td>
+							12. Edad:
+							<input asp-for="Edad" id="txtEdad" name="Edad" class="form-control" type="number" placeholder="Introduzca su edad." autocomplete="error" require="true" data-val="true" data-val-required="Este campo obligatorio.">
+							<span asp-validation-for="Edad" style="color:red;margin-left:30px"></span>
 
 							</td> *@
 							@*REVISAR LA EDAD*@
@@ -795,12 +795,12 @@
 										<label for="chkSeronegativo2">
 											No
 										</label>
-										
+
 									</div>
 									<span asp-validation-for="SeronegativoVih" style="color:red;margin-left:20px"></span>
-									
 
-									
+
+
 
 								</td>
 
@@ -936,7 +936,7 @@
 										<br />
 
 										<div style="margin-left: 24px;">
-											<input id="rdsifilis1" asp-for="Sifilis" disabled  data-val="true" data-val-required="Este campo es obligatorio."  class=" habilitarSifilis styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
+											<input id="rdsifilis1" asp-for="Sifilis" disabled data-val="true" data-val-required="Este campo es obligatorio." class=" habilitarSifilis styled segundaParte" type="radio" name="Sifilis" value="No Reactivo">
 											<label for="rdsifilis1">No Reactivo</label>
 
 
@@ -967,7 +967,7 @@
 										<br />
 
 										<div style="margin-left: 24px;">
-											<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" disabled data-val-required="Este campo es obligatorio."  class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Negativo">
+											<input id="rdHBsAg1" asp-for="HbsAg" data-val="true" disabled data-val-required="Este campo es obligatorio." class="styled habilitarSifilisB segundaParte" type="radio" name="HbsAg" value="Negativo">
 											<label for="rdHBsAg1">Negativo</label>
 										</div>
 
@@ -999,7 +999,7 @@
 										</div>
 
 										<div style="margin-left:24px">
-											<input id="rdHepatitis2" asp-for="HepatitisC" disabled  class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Positivo">
+											<input id="rdHepatitis2" asp-for="HepatitisC" disabled class="styled habilitarSifilisC segundaParte" type="radio" name="HepatitisC" value="Positivo">
 											<label for="rdHepatitis2">Positivo</label>
 										</div>
 										<span asp-validation-for="HepatitisC" style="color:red;"></span>
@@ -1122,11 +1122,11 @@
 		<div id="divBotones" style="display: block;">
 			<button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-success" onclick="validateCheckboxes()" autocomplete="error" require="true"><i class="fa-solid fa-check"></i> Registrar</button>
 			<a href="HomePrepDemanda" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> Cancelar</a>
-			
+
 		</div>
 		<br />
 		<br />
-		<label ></label>
+		<label></label>
 
 
 
@@ -1143,7 +1143,7 @@
 
 
 @* Modal para notifcar que se registró un paciente satisfactoriamente
- *@ 
+ *@
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -1499,7 +1499,7 @@
 				document.getElementById("chkaclaramiento2").checked = true;
 			}
 		}
-		
+
 		// document.getElementById('formulario').addEventListener('submit', function (event) {
 		// 	event.preventDefault(); // Evita el envío del formulario
 		// 	$('#myModal').modal('show'); // Muestra el modal
@@ -1552,7 +1552,7 @@
 			window.location.href = "https://" + local + origin;
 		}
 
-		const buscarEnPadron = () => {
+		const validarPasaporte = () => {
 			//const Prefix = "402-1126691-7";
 			var Identificacion = document.getElementById("Identificacion").value;
 			var TipoIdentificacion = document.getElementById("TipoIdentificacion").value;
@@ -1560,7 +1560,7 @@
 
 			if (TipoIdentificacion == "Seleccione") {
 				document.getElementById("divDatosGenerales").style = 'display:none';
-				document.getElementById("divFecha").style = 'display:none';
+				document.getElementById("divElegibilidadPre").style = 'display:none';
 
 				$("#cuerpoModal").empty();
 				document.getElementById("cuerpoModal").innerHTML = "Seleccione una opción";
@@ -1571,7 +1571,7 @@
 			if (Identificacion == "") {
 
 				$("#cuerpoModal").empty();
-				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar la cédula a validar.";
+				document.getElementById("cuerpoModal").innerHTML = "El espacio no puede estar en blanco, debe agregar el pasaporte  a validar.";
 				$('#myModal').modal('show');
 
 				return;
@@ -1579,7 +1579,7 @@
 
 			document.getElementById("spinner").style.display = "block";
 
-			$.post("@Url.Action("BuscarEnPadron","PrepDemanda")", { Prefix: Identificacion }, function (modelos) {
+			$.post("@Url.Action("ValidarPasaporte","PrepDemanda")", { Prefix: Identificacion }, function (modelos) {
 
 				document.getElementById("spinner").style.display = "none";
 
@@ -1597,25 +1597,17 @@
 
 
 					var informacion = modelos.infoPaciente;
-					if (informacion.sexo == "M") {
-						document.getElementById("ddlSexo").value = ("M");
 
-					} else {
-						document.getElementById("ddlSexo").value = ("F");
 
-					}
 
-					document.getElementById("txtNombre").value = (informacion.nombres);
-					document.getElementById("txtApellido").value = (informacion.apellido1 + " " + informacion.apellido2);
 					document.getElementById("txtDocumento").value = (Identificacion);
 					document.getElementById("edad").value = modelos.edad;
-					document.getElementById("txtFechaNacimiento").value = modelos.fechaNacimiento;
+
 
 					document.getElementById("ddlDocumentoOpcion").value = "Si";
 					$("#ddlDocumentoOpcion").attr("readonly", true);
 					$("#txtDocumento").attr("readonly", true);
-
-					
+					//document.getElementById("divFormPrEP").style.border = "2px solid #005476"
 
 				}
 
@@ -1646,11 +1638,11 @@
 				//MunicipioResidencia
 			});
 		}
-		
+
 		function nav(value) {
 			if (value != "") { location.href = value }
 		}
-		
+
 		const habilitarInput = () => {
 
 			var descendiente = document.getElementById("ddlDecendiente").value;
