@@ -186,6 +186,7 @@ namespace ProyectoPREP.Controllers
             var lista = new List<DatosGenerales>();
             string sql = "DatosGeneralesPorSuspendido";
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+            ViewBag.rol = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
 
 
             string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
