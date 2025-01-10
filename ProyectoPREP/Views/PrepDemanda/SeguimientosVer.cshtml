@@ -5,7 +5,7 @@
 
 <div class="pull-right" style="padding:10px">
 
-    <a title="Agregar Seguimiento" class="btn btn-success" href="@Url.Action("SeguimientoPrepDemanda", "PrepDemanda", new { id = ViewBag.IdPaciente })">
+    <a title="Agregar Seguimiento" id="btnAgregar" class="btn btn-success" href="@Url.Action("SeguimientoPrepDemanda", "PrepDemanda", new { id = ViewBag.IdPaciente })">
         <i class="glyphicon glyphicon-plus"></i>
     </a>
 </div>  
@@ -26,7 +26,7 @@
             <th>Sexo</th>
 
         </tr>
-        <tr>
+        <tr class="condicion">
             <td>@ViewBag.IdPaciente</td>
             <td>@ViewBag.Nombres</td>
             <td>@ViewBag.Apellidos</td>
@@ -43,6 +43,7 @@
             <th> ID Seguimiento </th>
             <th>Fecha Seguimiento</th>
             <th>Acciones</th>
+
 
 
         </tr>
@@ -66,6 +67,7 @@
                 {
                     <td>Sin Informacion</td>
                 }
+
 
                 @*                 <td>@item.ResultadoPruebaVih</td>
 
@@ -99,6 +101,8 @@
     </tbody>
 </table>
 
+<input type="hidden" id="estatussId" value="@ViewBag.estatusId" />
+<input type="hidden" id="condicionn" value="@ViewBag.condicionnn" />
 <br>
 <br>
 
@@ -119,3 +123,41 @@
 <br>
 
 
+@section scripts{
+    <script type="text/javascript">
+
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var estatussId = document.getElementById("estatussId").value;
+
+           
+            if (estatussId == "6") {
+                document.getElementById("btnAgregar").style.display = "none";
+
+            }
+           
+
+        });
+        
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var condicionn = document.getElementById("condicionn").value;
+
+            if (condicionn == "True") {
+
+                document.getElementById("btnAgregar").style.display = "none";
+
+            }
+
+           
+
+        });
+
+
+
+
+
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

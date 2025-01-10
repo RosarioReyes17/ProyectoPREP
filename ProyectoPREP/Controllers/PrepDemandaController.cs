@@ -444,7 +444,16 @@ namespace ProyectoPREP.Controllers
 			demanda.FechaModificacion = DateTime.Now;
 			demanda.UsuarioModifico = Convert.ToString(idUser);
 			demanda.IdDeptoDepend = IdDeptoDepend;
-			demanda.EstatusId = 1;
+			if (demanda.ResultadoPruebaVih == "Positivo")
+			{
+                demanda.EstatusId = 6;
+
+			}
+			else
+			{
+				demanda.EstatusId = 1;
+
+			}
 
 
 
@@ -765,9 +774,33 @@ namespace ProyectoPREP.Controllers
 
         public ActionResult SeguimientosVer(int id)
         {
+            int idUser = Convert.ToInt32(User.GetUserId());
+            int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+
             var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
 			var segui = db.TblPrepDemandaSeguimientos.Where(s=> s.IdPaciente == datos.IdPaciente ).ToList();
+			var condicion = "";
 
+
+            var lista = new DatosGenerales();
+            string sql = "ListaPrep_Demanda";
+            string sqlAdmin = "ListaPrep_DemandaAdmin";
+
+
+
+            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            {
+                lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).FirstOrDefault(x=> x.Id == id);
+
+            }
+
+			if (lista.Condicion == true)
+			{
+				condicion = "True";
+			}
+
+			ViewBag.estatusId = lista.EstatusId;
+			ViewBag.condicionnn = condicion;
 
             ViewBag.Nombres = datos.Nombres;
             ViewBag.Apellidos = datos.Apellidos;
