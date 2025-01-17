@@ -65,8 +65,8 @@ namespace ProyectoPREP.Controllers
         [HttpGet]
         public ActionResult ElegibilidadVerPorId(int id)
         {
-            var elegi = db.ElegibilidadPreps.FirstOrDefault(d => d.Id == id);
             var elegiHistoco = db.ElegibilidadPrepHistoricos.FirstOrDefault(d => d.IdFila == id);
+            var elegi = db.ElegibilidadPreps.FirstOrDefault(d => d.Id == elegiHistoco.IdElegibilidadPrep);
             var formu = db.FormularioPreps.FirstOrDefault(d => d.Id == elegi.FormularioPrepId);
             var datos = db.DatosGenerales.FirstOrDefault(d => d.Id == formu.DatosGeneralesId);
             var nacionalidad = db.VwNacionalidads.FirstOrDefault(x => Convert.ToInt32(x.IdNacionalidad) == datos.Nacionalidad);
