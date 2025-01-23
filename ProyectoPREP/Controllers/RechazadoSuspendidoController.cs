@@ -18,7 +18,7 @@ namespace ProyectoPREP.Controllers
         {
             this.db = _db;
         }
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador,PrEP Normal,Ambos")]
 
         public ActionResult Reintegrar(int id)
         {
@@ -33,7 +33,7 @@ namespace ProyectoPREP.Controllers
             return View(formulario);
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador,PrEP Normal,Ambos")]
         [HttpPost]
         public ActionResult Reintegrar(FormularioPrep formulario,DateTime FechaReintegro, int idDatos, int idFormulario)
         {

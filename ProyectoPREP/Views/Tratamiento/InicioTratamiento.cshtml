@@ -98,8 +98,8 @@
     <br>
 
     <button type="submit" name="Ejecutar" id="Ejecutar" class="btn btn-primary" autocomplete="error"><i class="glyphicon glyphicon-saved"></i>Procesar Tratamiento</button>
-    <a onclick="rechazarTratamiento();" id="btnRechazar" name="btnRechazar" class="btn btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i>Rechazar Tratamiento</a>
-    <a asp-action="DatosGeneralesPorTratamiento" asp-controller="DatosGenerales" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
+@*     <a onclick="rechazarTratamiento();" id="btnRechazar" name="btnRechazar" class="btn btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i>Rechazar Tratamiento</a>
+ *@    <a asp-action="DatosGeneralesPorTratamiento" asp-controller="DatosGenerales" name="Cancelar" id="Cancelar" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>Cancelar</a>
   
 
 
@@ -217,7 +217,7 @@
                 idDatos: idDatos, ObservacionesModal: ObservacionesModal
             }, function (modelos) {
                 //setTimeout(paginaPrincipal, 1000);
-
+                //btnRechazar
                 paginaPrincipal();
             })
         }
