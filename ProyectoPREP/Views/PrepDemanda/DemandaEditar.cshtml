@@ -15,6 +15,8 @@
 	@Html.HiddenFor(d => d.TipoDocumento)
 	@Html.HiddenFor(d => d.Estatus)
 
+	<input type="hidden" id="txtEdad" value="@ViewBag.Edad" />
+
 	<div id="divFormPrEP" class="form-invisible">
 
 		<div id="divDatosGenerales" style="display: block;">
@@ -487,7 +489,7 @@
 					<tr>
 						<td>
 							15. ¿Cómo se consideras a ti mismo? (*):
-							<select class="form-control" asp-for="Genero" id="ddlGenero" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
+							<select class="form-control" onchange="cambioGenero();" asp-for="Genero" id="ddlGenero" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="1">Hombre</option>
 								<option value="2">Mujer</option>
@@ -1173,9 +1175,39 @@
 </form>
 
 
+<div class="modal" id="menor" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:red; margin-left: 90px;">
+					Advertencia
+				</h5>
+				<button type="button" onclick="cerrarModalMenor();" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="cerrarModalMenor();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+				<button type="button" onclick="cerrarModalMenor();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
 
 @section scripts{
 	<script type="text/javascript">
+
+		function cerrarModalMenor() {
+			$('#menor').modal('hide'); // Cierra el modal
+		}
+
 
 		function ValidarCelular(a, id) {
 
@@ -1196,6 +1228,93 @@
 
 		}
 
+		const calcularCreatininaCheck = () => {
+			var chkHormonal = document.getElementById("chkHormonal").checked;
+			var valorCreatinina = document.getElementById("txtValorCreatinina").value;
+			if (chkHormonal == false && valorCreatinina == "") {
+				return;
+			}
+			if (chkHormonal == false && valorCreatinina != "") {
+				calcularCreatinina();
+			}
+			if (chkHormonal == true && valorCreatinina == "") {
+				return;
+			}
+			if (chkHormonal == true && valorCreatinina != "") {
+				calcularCreatinina();
+			}
+
+
+
+
+		}
+
+		const calcularCreatinina = () => {
+			var KG = 2.205;
+			var Edad = document.getElementById("txtEdad").value;
+			var Peso = document.getElementById("txtPeso").value;
+			var sexo = document.getElementById("ddlSexo").value;
+			var genero = document.getElementById("ddlGenero").value;
+			var chkHormonal = document.getElementById("chkHormonal").checked;
+			var PesoKG = Peso / KG;
+
+			var valorCreatinina = document.getElementById("txtValorCreatinina").value;
+
+			if (genero == "3" && chkHormonal == true) {
+				var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+				setTimeout(menorCreatina, 1000);
+
+			}
+
+			if (genero == "1") {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+
+
+			if (genero == "2") {
+				var Resultado = ((140 - Edad) * PesoKG * 0.85) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+			if (genero == "3" && chkHormonal == false) {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+			}
+
+			if (sexo == "M" && genero == "4") {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+
+			if (sexo == "F" && genero == "4") {
+
+				var Resultado = ((140 - Edad) * PesoKG) / (72 * valorCreatinina);
+				document.getElementById("ResultadoCreatinina").value = Resultado.toFixed(3);
+
+			}
+			// Hombres:[140-(edad) x Peso(Kg)]/[72 x Creatinina plasmatica]
+			// Mujeres:[140-(edad) x Peso(Kg) x 0.85]/[72 x Creatinina plasmatica]
+			setTimeout(menorCreatina, 1000);
+		}
+
+		const menorCreatina = () => {
+			var creatina = document.getElementById("ResultadoCreatinina").value;
+
+			if (creatina < 60) {
+				$('#menor').modal('show');
+
+
+			} else {
+				document.getElementById("chkaclaramiento2").checked = true;
+			}
+		}
 
 		var ARV = (e) => {
 			var td1 = document.getElementById("td1").checked;
@@ -1470,6 +1589,21 @@
 			}
 		}
 
+		var cambioGenero = () => {
+			var genero = document.getElementById("ddlGenero").value;
+			if(genero == "3"){
+				$("#chkHormonal").removeAttr("disabled");
+
+			}
+			else{
+				$("#chkHormonal").attr("disabled", true);
+
+			}
+
+		}
+
+
+
 		window.onload = function () {
 			//var vihC = document.getElementById("ResultadoCreatinina").value;
 			var chkSeronegativo1 = document.getElementById("chkSeronegativo1").checked;
@@ -1480,8 +1614,14 @@
 			var rdHepatitis1 = document.getElementById("rdHepatitis1").checked;
 			var rdHepatitis2 = document.getElementById("rdHepatitis2").checked;
 			var sindromico = document.getElementById("ITDSindromico2").checked;
+			var genero = document.getElementById("ddlGenero").value;
 
 		
+			if(genero != "3"){
+
+				$("#chkHormonal").attr("disabled", true);
+
+			}
 
 			if (chkSeronegativo1 == true) {
 				mostrarVIH("Si");

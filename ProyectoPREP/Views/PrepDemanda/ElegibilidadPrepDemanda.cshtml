@@ -523,7 +523,7 @@
 						<tr>
 							<td>
 								15. ¿Cómo se consideras a ti mismo? (*):
-								<select class="form-control" asp-for="Genero" id="ddlGenero" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
+								<select class="form-control" asp-for="Genero" id="ddlGenero" onchange="cambioGenero();" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
 									<option value="">--Seleccione--</option>
 									<option value="1">Hombre</option>
 									<option value="2">Mujer</option>
@@ -1187,6 +1187,28 @@
 	</div>
 </div>
 
+<div class="modal" id="menor" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:red; margin-left: 90px;">
+					Advertencia
+				</h5>
+				<button type="button" onclick="cerrarModalMenor();" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="cuerpoModalMenor" style="text-align:center">El ciudadano tiene un aclaramiento de creatinina(TfGe) menor 60ml/min. El formulario se da por terminado y rechazada la solicitud.</p>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" onclick="cerrarModalMenor();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+				<button type="button" onclick="cerrarModalMenor();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="modal" id="pacienteModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
@@ -1238,6 +1260,18 @@
 @section scripts{
 	<script type="text/javascript">
 
+		var cambioGenero = () => {
+			var genero = document.getElementById("ddlGenero").value;
+			if(genero == "3"){
+				$("#chkHormonal").removeAttr("disabled");
+
+			}
+			else{
+				$("#chkHormonal").attr("disabled", true);
+
+			}
+
+		}
 
 		const VIHPositivo = () => {
 			$("#MunicipioResidencia").empty();
@@ -1499,6 +1533,28 @@
 				document.getElementById("chkaclaramiento2").checked = true;
 			}
 		}
+
+		const calcularCreatininaCheck = () => {
+			var chkHormonal = document.getElementById("chkHormonal").checked;
+			var valorCreatinina = document.getElementById("txtValorCreatinina").value;
+			if (chkHormonal == false && valorCreatinina == "") {
+				return;
+			}
+			if (chkHormonal == false && valorCreatinina != "") {
+				calcularCreatinina();
+			}
+			if (chkHormonal == true && valorCreatinina == "") {
+				return;
+			}
+			if (chkHormonal == true && valorCreatinina != "") {
+				calcularCreatinina();
+			}
+
+
+
+
+		}
+
 		
 		// document.getElementById('formulario').addEventListener('submit', function (event) {
 		// 	event.preventDefault(); // Evita el envío del formulario

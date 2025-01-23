@@ -520,7 +520,7 @@
 					<tr>
 						<td>
 							15. ¿Cómo se consideras a ti mismo? (*):
-							<select class="form-control" asp-for="Genero" id="ddlGenero" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
+							<select class="form-control" asp-for="Genero" id="ddlGenero" onchange="cambioGenero();" name="Genero" data-val="true" data-val-required="Este campo obligatorio.">
 								<option value="">--Seleccione--</option>
 								<option value="1">Hombre</option>
 								<option value="2">Mujer</option>
@@ -1165,7 +1165,7 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" onclick="paginaPrincipal();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
+				<button type="button" onclick="cerrarModalMenor();" class="btn btn-secondary " data-dismiss="modal">Aceptar</button>
 				<button type="button" onclick="cerrarModalMenor();" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>
@@ -1221,6 +1221,20 @@
 
 @section scripts{
 	<script type="text/javascript">
+
+
+		var cambioGenero = () => {
+			var genero = document.getElementById("ddlGenero").value;
+			if (genero == "3") {
+				$("#chkHormonal").removeAttr("disabled");
+
+			}
+			else {
+				$("#chkHormonal").attr("disabled", true);
+
+			}
+
+		}
 
 		const VIHPositivo = () => {
 			$("#MunicipioResidencia").empty();
@@ -1534,11 +1548,37 @@
 				document.getElementById("chkaclaramiento2").checked = true;
 			}
 		}
-		
-		// document.getElementById('formulario').addEventListener('submit', function (event) {
-		// 	event.preventDefault(); // Evita el envío del formulario
-		// 	$('#myModal').modal('show'); // Muestra el modal
-		// });
+
+		const calcularCreatininaCheck = () => {
+			var chkHormonal = document.getElementById("chkHormonal").checked;
+			var valorCreatinina = document.getElementById("txtValorCreatinina").value;
+			if (chkHormonal == false && valorCreatinina == "") {
+				return;
+			}
+			if (chkHormonal == false && valorCreatinina != "") {
+				calcularCreatinina();
+			}
+			if (chkHormonal == true && valorCreatinina == "") {
+				return;
+			}
+			if (chkHormonal == true && valorCreatinina != "") {
+				calcularCreatinina();
+			}
+
+		}
+
+		const calcularEdad = () => {
+			var fechaNacimiento = document.getElementById("txtFechaNacimiento").value;
+
+
+			$.post("@Url.Action("CalcularEdadSinDocumentos","PrepDemanda")", {
+				fechaNacimiento: fechaNacimiento
+			}, function (modelos) {
+				console.log(modelos);
+				document.getElementById("edad").value = modelos.edad
+
+			});
+		}
 
 		function cerrarModal() {
 			$('#myModal').modal('hide'); // Cierra el modal

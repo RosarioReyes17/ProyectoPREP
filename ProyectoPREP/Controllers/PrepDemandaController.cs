@@ -125,9 +125,7 @@ namespace ProyectoPREP.Controllers
 
 		public ActionResult ElegibilidadPrepDemanda()
 		{
-            //TempData["Mensaje"] = "Operación realizada exitosamente";
-
-            ViewBag.Municipio = db.VwMunicipios.ToList();
+			//TempData["Mensaje"] = "Operación realizada exitosamente";
 
 			return View();
 		}
@@ -264,6 +262,7 @@ namespace ProyectoPREP.Controllers
 
 		public ActionResult ElegibilidadSinDocumento()
 		{
+			ViewBag.Municipio = db.VwMunicipios.ToList();
 
 			return View();
 		}
@@ -424,6 +423,14 @@ namespace ProyectoPREP.Controllers
 			lista = (from b in db.VwMunicipios
 					 where Convert.ToInt64(b.IdProvincia) == Convert.ToInt64(model1.ProvinciaResidencia)
 					 select b).ToList();
+
+
+
+			ViewBag.Municipio = db.VwMunicipios.ToList();
+			//ViewBag.Peso = datos.Peso;
+			ViewBag.Edad = datos.Edad;
+			//ViewBag.Sexo = datos.Sexo;
+			//ViewBag.Genero = datos.Genero;
 
 			ViewBag.Municipios = lista;
 			ViewBag.IdMunicipios = model1.MunicipioResidencia;
@@ -743,6 +750,33 @@ namespace ProyectoPREP.Controllers
 				return fechaActual.Year - fechaNacimiento.Year;
 			}
 			return fechaActual.Year - fechaNacimiento.Year - 1;
+		}
+
+
+		public JsonResult CalcularEdadSinDocumentos(DateTime fechaNacimiento)
+		{
+			bool status = true;
+			var lista = new List<VwMunicipio>();
+			int edad = 0;
+			try
+			{
+				DateTime fechaActual = DateTime.Now;
+				if (fechaActual.Month > fechaNacimiento.Month || fechaNacimiento.Month == fechaActual.Month && fechaActual.Day > fechaNacimiento.Day)
+				{
+					edad = fechaActual.Year - fechaNacimiento.Year;
+				}
+				edad = fechaActual.Year - fechaNacimiento.Year - 1;
+
+
+
+			}
+			catch (Exception ex)
+			{
+				status = false;
+			}
+
+			var result = new { status, edad };
+			return Json(result);
 		}
 
 
