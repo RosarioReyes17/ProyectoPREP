@@ -810,6 +810,7 @@ namespace ProyectoPREP.Controllers
         {
             int idUser = Convert.ToInt32(User.GetUserId());
             int IdDeptoDepend = Convert.ToInt32(User.GetIdDepartamento());
+            string admin = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(x => x.Value).FirstOrDefault();
 
             var datos = db.TblPrepDemanda.FirstOrDefault(d => d.IdPaciente == id);
 			var segui = db.TblPrepDemandaSeguimientos.Where(s=> s.IdPaciente == datos.IdPaciente ).ToList();
@@ -820,13 +821,24 @@ namespace ProyectoPREP.Controllers
             string sql = "ListaPrep_Demanda";
             string sqlAdmin = "ListaPrep_DemandaAdmin";
 
-
-
-            using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+            if (admin == "Administrador")
             {
-                lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).FirstOrDefault(x=> x.Id == id);
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sqlAdmin, commandType: System.Data.CommandType.StoredProcedure).FirstOrDefault(x => x.Id == id);
 
+                }
+			}
+			else
+			{
+                using (var connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+                    lista = connection.Query<DatosGenerales>(sql, new { IdDeptoDepend }, commandType: System.Data.CommandType.StoredProcedure).FirstOrDefault(x => x.Id == id);
+
+                }
             }
+
+         
 
 			if (lista.Condicion == true)
 			{
