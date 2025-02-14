@@ -522,6 +522,12 @@ namespace ProyectoPREP.Controllers
                 }
             }
 
+            if (InfoPaciente.apellido2 == null)
+            {
+                InfoPaciente.apellido2 = "";
+
+			}
+
             status = true;
             string fechaNacimiento = InfoPaciente.fecha_nacimiento.Date.ToString("yyyy-MM-dd");
             DateTime fechaNacimiento1 = InfoPaciente.fecha_nacimiento.Date;

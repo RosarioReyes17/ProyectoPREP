@@ -482,7 +482,9 @@ namespace ProyectoPREP.Controllers
 			Padron_Imp InfoPaciente = null;
 			int Resultado = 0;
 			var SolicitudPrep = db.DatosGenerales.Where(x => x.Documento == Prefix).FirstOrDefault();
+			var SolicitudPrepDemanda = db.TblPrepDemanda.Where(x => x.Documento == Prefix).FirstOrDefault();
 			var centros = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrep.IdDeptoDepend);
+			var centrosDemanda = db.VwCentrosSaludPrEps.Where(x => x.IdCentro == SolicitudPrepDemanda.IdDeptoDepend);
 
 
 			if (SolicitudPrep != null)
@@ -499,6 +501,17 @@ namespace ProyectoPREP.Controllers
 				return Json(result);
 
 
+			}	
+			else if(SolicitudPrepDemanda != null){
+				msj = "El Ciudadano posee actualmente una solicitud de PrEP Demanda con el ID: " + SolicitudPrepDemanda.IdPaciente + " " + SolicitudPrepDemanda.Nombres +
+					" " + SolicitudPrepDemanda.Apellidos + " " + centrosDemanda.FirstOrDefault().NombreCentro;
+
+				result = new
+				{
+					status,
+					msj
+				};
+				return Json(result);
 			}
 			else
 			{
@@ -560,6 +573,24 @@ namespace ProyectoPREP.Controllers
 					return Json(result);
 
 				}
+				
+				if (Resultado == 3)
+				{
+					msj = "El Ciudadano no califica, se encuentra registrado en SIRENP y FAPPS.";
+					result = new
+					{
+						status,
+						msj
+					};
+					return Json(result);
+
+				}
+			}
+
+			if (InfoPaciente.apellido2 == null)
+			{
+				InfoPaciente.apellido2 = "";
+
 			}
 
 			status = true;
